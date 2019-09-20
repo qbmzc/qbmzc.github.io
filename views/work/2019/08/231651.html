@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Spring Boot Docker | congco</title>
+    <meta name="description" content="得道者多助，失道者寡助">
+    <link rel="icon" href="/favicon.ico">
+  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    
+    <link rel="preload" href="/assets/css/0.styles.92830278.css" as="style"><link rel="preload" href="/assets/js/app.e8499967.js" as="script"><link rel="preload" href="/assets/js/4.671682c8.js" as="script"><link rel="preload" href="/assets/js/1.a98ce3df.js" as="script"><link rel="preload" href="/assets/js/33.fc19c175.js" as="script"><link rel="prefetch" href="/assets/js/10.46de9ecb.js"><link rel="prefetch" href="/assets/js/11.9c2a9083.js"><link rel="prefetch" href="/assets/js/12.cef8694f.js"><link rel="prefetch" href="/assets/js/13.75b2fea7.js"><link rel="prefetch" href="/assets/js/14.dda9c7f5.js"><link rel="prefetch" href="/assets/js/15.acbf50c9.js"><link rel="prefetch" href="/assets/js/16.0c1ae99a.js"><link rel="prefetch" href="/assets/js/17.3f3a454c.js"><link rel="prefetch" href="/assets/js/18.f2236f7b.js"><link rel="prefetch" href="/assets/js/19.2f460235.js"><link rel="prefetch" href="/assets/js/20.a905d223.js"><link rel="prefetch" href="/assets/js/21.9e66950a.js"><link rel="prefetch" href="/assets/js/22.b290a1db.js"><link rel="prefetch" href="/assets/js/23.1fb665fd.js"><link rel="prefetch" href="/assets/js/24.29e3b9de.js"><link rel="prefetch" href="/assets/js/25.85f9fcc6.js"><link rel="prefetch" href="/assets/js/26.3fc11a1f.js"><link rel="prefetch" href="/assets/js/27.30c3d008.js"><link rel="prefetch" href="/assets/js/28.d7096af8.js"><link rel="prefetch" href="/assets/js/29.c98b8b99.js"><link rel="prefetch" href="/assets/js/30.59128df0.js"><link rel="prefetch" href="/assets/js/31.9a579f0f.js"><link rel="prefetch" href="/assets/js/32.eead4caf.js"><link rel="prefetch" href="/assets/js/34.1525560a.js"><link rel="prefetch" href="/assets/js/35.50be3254.js"><link rel="prefetch" href="/assets/js/36.e3af60ca.js"><link rel="prefetch" href="/assets/js/37.c15db4dd.js"><link rel="prefetch" href="/assets/js/38.886a0554.js"><link rel="prefetch" href="/assets/js/39.bd110f62.js"><link rel="prefetch" href="/assets/js/40.411752c8.js"><link rel="prefetch" href="/assets/js/41.e36c584f.js"><link rel="prefetch" href="/assets/js/42.50b41c70.js"><link rel="prefetch" href="/assets/js/43.975cc080.js"><link rel="prefetch" href="/assets/js/44.b69f3750.js"><link rel="prefetch" href="/assets/js/45.cf127702.js"><link rel="prefetch" href="/assets/js/46.8e651665.js"><link rel="prefetch" href="/assets/js/47.e4ea1181.js"><link rel="prefetch" href="/assets/js/48.d1201087.js"><link rel="prefetch" href="/assets/js/49.99c67989.js"><link rel="prefetch" href="/assets/js/5.228945f5.js"><link rel="prefetch" href="/assets/js/50.7905cbb6.js"><link rel="prefetch" href="/assets/js/51.b20a6291.js"><link rel="prefetch" href="/assets/js/52.ac13f0ed.js"><link rel="prefetch" href="/assets/js/53.8a94324b.js"><link rel="prefetch" href="/assets/js/54.3cf33039.js"><link rel="prefetch" href="/assets/js/55.b54acb4f.js"><link rel="prefetch" href="/assets/js/56.ef17c230.js"><link rel="prefetch" href="/assets/js/57.46dd3e90.js"><link rel="prefetch" href="/assets/js/58.099c54df.js"><link rel="prefetch" href="/assets/js/59.78aa717a.js"><link rel="prefetch" href="/assets/js/6.a52d2182.js"><link rel="prefetch" href="/assets/js/7.b40f46a7.js"><link rel="prefetch" href="/assets/js/8.d5bb28a6.js"><link rel="prefetch" href="/assets/js/9.371425f6.js"><link rel="prefetch" href="/assets/js/vendors~flowchart.cf4a823e.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.92830278.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div><div class="theme-container"><div><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/head.png" alt="congco" class="logo"> <span class="site-name">congco</span></a> <div class="links"><div class="color-picker"><a class="color-button"><i class="iconfont reco-color"></i></a> <div class="color-picker-menu" style="display:none;"><div class="theme-options"><!----> <div class="dark-theme-options toggle-option"><label for="dark-theme-toggle">Enable Dark Theme?</label> <input id="dark-theme-toggle" type="checkbox" checked="checked"></div></div></div></div> <div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link"><i class="iconfont reco-home"></i>
+  Home
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      Category
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/category/congco.html" class="nav-link"><i class="iconfont undefined"></i>
+  congco
+</a></li><li class="dropdown-item"><!----> <a href="/category/Linux.html" class="nav-link"><i class="iconfont undefined"></i>
+  Linux
+</a></li><li class="dropdown-item"><!----> <a href="/category/work.html" class="nav-link"><i class="iconfont undefined"></i>
+  work
+</a></li><li class="dropdown-item"><!----> <a href="/category/Java.html" class="nav-link"><i class="iconfont undefined"></i>
+  Java
+</a></li><li class="dropdown-item"><!----> <a href="/category/Python.html" class="nav-link"><i class="iconfont undefined"></i>
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/category/wuw.html" class="nav-link"><i class="iconfont undefined"></i>
+  wuw
+</a></li></ul></div></div><div class="nav-item"><a href="/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  Tag
+</a></div><div class="nav-item"><a href="/timeLine/" class="nav-link"><i class="iconfont reco-date"></i>
+  TimeLine
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-message"></i>
+      Contact
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://github.com/qbmzc" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-github"></i>
+  GitHub
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="https://www.jianshu.com/u/1fa980d5267b" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-jianshu"></i>
+  简书
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="https://me.csdn.net/qbmzc" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-csdn"></i>
+  CSDN
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="https://gitlab.com/congco?nav_source=navbar" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-gitlab"></i>
+  GitLab
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li></ul></div></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link"><i class="iconfont reco-home"></i>
+  Home
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      Category
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/category/congco.html" class="nav-link"><i class="iconfont undefined"></i>
+  congco
+</a></li><li class="dropdown-item"><!----> <a href="/category/Linux.html" class="nav-link"><i class="iconfont undefined"></i>
+  Linux
+</a></li><li class="dropdown-item"><!----> <a href="/category/work.html" class="nav-link"><i class="iconfont undefined"></i>
+  work
+</a></li><li class="dropdown-item"><!----> <a href="/category/Java.html" class="nav-link"><i class="iconfont undefined"></i>
+  Java
+</a></li><li class="dropdown-item"><!----> <a href="/category/Python.html" class="nav-link"><i class="iconfont undefined"></i>
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/category/wuw.html" class="nav-link"><i class="iconfont undefined"></i>
+  wuw
+</a></li></ul></div></div><div class="nav-item"><a href="/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  Tag
+</a></div><div class="nav-item"><a href="/timeLine/" class="nav-link"><i class="iconfont reco-date"></i>
+  TimeLine
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-message"></i>
+      Contact
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="https://github.com/qbmzc" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-github"></i>
+  GitHub
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="https://www.jianshu.com/u/1fa980d5267b" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-jianshu"></i>
+  简书
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="https://me.csdn.net/qbmzc" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-csdn"></i>
+  CSDN
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="https://gitlab.com/congco?nav_source=navbar" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-gitlab"></i>
+  GitLab
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li></ul></div></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>Spring Boot Docker</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/views/work/2019/08/231651.html#壹" class="sidebar-link">壹</a><ul class="sidebar-sub-headers"></ul></li><li><a href="/views/work/2019/08/231651.html#贰" class="sidebar-link">贰</a><ul class="sidebar-sub-headers"></ul></li><li><a href="/views/work/2019/08/231651.html#叁" class="sidebar-link">叁</a><ul class="sidebar-sub-headers"></ul></li><li><a href="/views/work/2019/08/231651.html#肆" class="sidebar-link">肆</a><ul class="sidebar-sub-headers"></ul></li><li><a href="/views/work/2019/08/231651.html#伍" class="sidebar-link">伍</a><ul class="sidebar-sub-headers"></ul></li></ul></section></li></ul> </aside> <div><main class="page reco-hide"> <div class="page-title"><h1>Spring Boot Docker</h1> <hr> <div data-v-362e684e><i class="iconfont reco-account" data-v-362e684e><span data-v-362e684e>congco</span></i> <i class="iconfont reco-date" data-v-362e684e><span data-v-362e684e>2019/8/23</span></i> <span id="/views/work/2019/08/231651.html" data-flag-title="Your Article Title" class="leancloud-visitors" data-v-2e99e05a data-v-362e684e><i class="iconfont reco-eye" style="margin-right: .5rem" data-v-2e99e05a></i> <a class="leancloud-visitors-count" style="font-size:.9rem;font-weight:normal;color:#999;" data-v-2e99e05a></a></span> <i class="iconfont reco-tag tags" data-v-362e684e><span class="tag-item" data-v-362e684e>
+      spring boot
+    </span><span class="tag-item" data-v-362e684e>
+      docker
+    </span></i></div></div> <div class="content__default"><p><img src="https://s2.ax1x.com/2019/08/23/mDRwz6.jpg" alt="mDRwz6.jpg"></p> <h2 id="壹"><a href="#壹" aria-hidden="true" class="header-anchor">#</a> 壹</h2> <p>创建一个<code>Spring Boot</code>应用</p> <div class="language-java line-numbers-mode"><pre class="language-java"><code><span class="token keyword">package</span> <span class="token namespace">com<span class="token punctuation">.</span>keeep<span class="token punctuation">.</span>bamboo</span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token namespace">org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>boot</span><span class="token punctuation">.</span><span class="token class-name">SpringApplication</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token namespace">org<span class="token punctuation">.</span>springframework<span class="token punctuation">.</span>boot<span class="token punctuation">.</span>autoconfigure</span><span class="token punctuation">.</span><span class="token class-name">SpringBootApplication</span><span class="token punctuation">;</span>
+
+<span class="token comment">/**
+ * update on 2019年08月23日10:06:35
+ *
+ * @author congco
+ */</span>
+<span class="token annotation punctuation">@SpringBootApplication</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">BambooApplication</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">SpringApplication</span><span class="token punctuation">.</span><span class="token function">run</span><span class="token punctuation">(</span><span class="token class-name">BambooApplication</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span> args<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span>
+
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br></div></div><p>项目结构</p> <div class="language-tree line-numbers-mode"><pre class="language-text"><code>├── bamboo.iml
+├── Dockerfile #Dockerfile文件位于项目根目录下
+├── HELP.md
+├── mvnw
+├── mvnw.cmd
+├── pom.xml
+├── README.md
+└── src
+    ├── main
+    │   ├── java
+    │   └── resources
+    └── test
+        └── java
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br></div></div><h2 id="贰"><a href="#贰" aria-hidden="true" class="header-anchor">#</a> 贰</h2> <p><code>Dockerfile</code></p> <div class="language-dockerfile line-numbers-mode"><pre class="language-text"><code>FROM openjdk:8-jdk-alpine
+VOLUME /tmp
+COPY target/*.jar app.jar
+ENTRYPOINT [&quot;java&quot;,&quot;-Djava.security.egd=file:/dev/./urandom&quot;,&quot;-jar&quot;,&quot;/app.jar&quot;]
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br></div></div><h2 id="叁"><a href="#叁" aria-hidden="true" class="header-anchor">#</a> 叁</h2> <p><code>pom.xml</code></p> <p>使用<code>dockerfile-maven-plugin</code>构建镜像</p> <div class="language-xml line-numbers-mode"><pre class="language-xml"><code> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>docker.image.prefix</span><span class="token punctuation">&gt;</span></span>congco<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>docker.image.prefix</span><span class="token punctuation">&gt;</span></span>
+<span class="token comment">&lt;!-- dockerfile-maven-plugin --&gt;</span>
+ <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>build</span><span class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>plugins</span><span class="token punctuation">&gt;</span></span>
+  			<span class="token comment">&lt;!-- dockerfile-maven 插件 --&gt;</span>     
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>plugin</span><span class="token punctuation">&gt;</span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">&gt;</span></span>com.spotify<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">&gt;</span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">&gt;</span></span>dockerfile-maven-plugin<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">&gt;</span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">&gt;</span></span>1.4.9<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">&gt;</span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>configuration</span><span class="token punctuation">&gt;</span></span>
+                    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>repository</span><span class="token punctuation">&gt;</span></span>${docker.image.prefix}/${project.artifactId}<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>repository</span><span class="token punctuation">&gt;</span></span>
+                <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>configuration</span><span class="token punctuation">&gt;</span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>plugin</span><span class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>plugins</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>build</span><span class="token punctuation">&gt;</span></span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br></div></div><h2 id="肆"><a href="#肆" aria-hidden="true" class="header-anchor">#</a> 肆</h2> <p><code>build&amp;push</code></p> <div class="language-bash line-numbers-mode"><pre class="language-bash"><code>$ mvn package docker:build 
+$ docker push <span class="token operator">&lt;</span>image:tags<span class="token operator">&gt;</span>
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br></div></div><h2 id="伍"><a href="#伍" aria-hidden="true" class="header-anchor">#</a> 伍</h2> <p>附录：</p> <ol><li>阿里云镜像加速器</li></ol> <p><img src="https://s2.ax1x.com/2019/08/23/mDwzp4.png" alt="mDwzp4.png"></p> <ol start="2"><li><code>idea</code>中的配置使用</li></ol> <p><img src="https://s2.ax1x.com/2019/08/23/mD66C6.png" alt="mD66C6.png"> <img src="https://s2.ax1x.com/2019/08/23/mD6s4x.png" alt="mD6s4x.png"></p> <ol start="3"><li>参考 <a href="https://spring.io/guides/gs/spring-boot-docker/" target="_blank" rel="noopener noreferrer">Spring-Boot-Docker <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li></ol></div> <!----> <footer class="page-edit"><!----> <div class="last-updated"><span class="prefix">Last Updated: </span> <span class="time">8/23/2019, 4:55:25 PM</span></div></footer> <!----> </main> <div class="valine-wrapper" data-v-5029e45b><div id="valine" data-v-5029e45b></div></div></div> <div class="back-to-ceiling" style="right:1rem;bottom:6rem;width:2.5rem;height:2.5rem;border-radius:.25rem;line-height:2.5rem;background-color:rgba(231, 234, 241,.5);display:none;" data-v-cd623d78 data-v-cd623d78><i class="iconfont reco-up" data-v-cd623d78></i></div></div></div></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.e8499967.js" defer></script><script src="/assets/js/4.671682c8.js" defer></script><script src="/assets/js/1.a98ce3df.js" defer></script><script src="/assets/js/33.fc19c175.js" defer></script>
+  </body>
+</html>
