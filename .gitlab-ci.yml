@@ -1,0 +1,14 @@
+image: node:latest
+
+cache:
+  paths:
+  - node_modules/ # 缓存 node_modules，加速编译
+pages:
+  script:
+  - yarn install
+  - yarn run build
+  artifacts:
+    paths:
+    - public
+  only:
+  - master
