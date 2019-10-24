@@ -19,7 +19,7 @@ module.exports = {
           { text: '简书', link: 'https://www.jianshu.com/u/1fa980d5267b', icon: 'reco-jianshu' },
           { text: 'CSDN', link: 'https://me.csdn.net/qbmzc', icon: 'reco-csdn' },
           { text: 'GitLab', link: 'https://gitlab.com/congco?nav_source=navbar',icon: 'reco-gitlab'},
-          //{ text: '语雀', link: 'https://www.yuque.com/congco', icon: 'yuque' },
+          { text: '语雀', link: 'https://www.yuque.com/congco', icon: 'reco-yuque' },
         ]
       }
     ],
