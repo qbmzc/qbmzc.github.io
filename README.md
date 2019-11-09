@@ -1,50 +1,5 @@
-# vuepress-theme-reco-cli
+# congco
 
-Blog generation tool for vuepress-theme-reco 
+## 个人博客项目
 
-## Version
-
-|Version|VuePress|VuePress-theme-reco|
-|-|:-:|:-:|
-|0.x|0.x|0.x|
-|1.x|1.x|1.x|
-
-## Experience
-
-```bash
-# create
-npx vuepress-theme-reco-cli init my-blog
-# or
-npm install  -g
-reco-cli init my-blog
-
-# install
-cd my-blog
-npm install
-
-# run
-npm run dev
-
-# build
-npm run build
-```
-
-**if yarn**
-
-```bash
-# create
-npx vuepress-theme-reco-cli init my-blog
-#or
-yarn global add vuepress-theme-reco-cli
-reco-cli init my-blog
-
-# install
-cd my-blog
-yarn install
-
-# run
-yarn dev
-
-# build
-yarn build
-```
+![ui5Yb6.jpg](https://s2.ax1x.com/2019/09/23/ui5Yb6.jpg)
