@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 yarn build &&
 cd public
 git init
