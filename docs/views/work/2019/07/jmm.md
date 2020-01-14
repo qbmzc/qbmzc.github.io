@@ -6,6 +6,7 @@ tags:
 categories:
  - Java
 ---
+
 &emsp;&emsp;JMM,Java的内存模型。  
 ![内存模型](https://cdn.nlark.com/yuque/0/2019/png/375439/1565322782688-assets/web-upload/e5a91255-bc46-4093-9fc1-923d774f6fe9.png)
 ## 原子性（Atomicity）
