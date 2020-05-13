@@ -24,6 +24,8 @@ GROUP BY name;
 
 ## 获取需要导入的表
 
+[MySQL中 如何查询表名中包含某字段的表](https://www.cnblogs.com/acm-bingzi/p/mysql-information-schema.html)
+
 ```sql
 select TABLE_SCHEMA,TABLE_NAME 
 from information_schema.TABLES 
