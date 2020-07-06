@@ -1,6 +1,6 @@
 module.exports = {
-  title: "congco",
-  description: '得道者多助，失道者寡助',
+  title: "SnowNull",
+  description: '没想好',
   dest: 'public',
   head: [
     ['link', { rel: 'icon', href: '/favicon.ico' }],
@@ -12,14 +12,14 @@ module.exports = {
     nav: [
       { text: 'Home', link: '/', icon: 'reco-home' },
       { text: 'TimeLine', link: '/timeLine/', icon: 'reco-date' },
+      { text: 'Compass', link: 'https://snowyan.gitee.io/compass/', icon: 'reco-other' },
       { text: 'Contact', 
         icon: 'reco-message',
         items: [
           { text: 'GitHub', link: 'https://github.com/qbmzc', icon: 'reco-github' },
           { text: '简书', link: 'https://www.jianshu.com/u/1fa980d5267b', icon: 'reco-jianshu' },
            { text: 'Gitee', link: 'https://gitee.com/snowyan', icon: 'reco-mayun' },
-          { text: 'GitLab', link: 'https://gitlab.com/congco?nav_source=navbar',icon: 'reco-gitlab'},
-          // { text: '语雀', link: 'https://www.yuque.com/congco', icon: 'reco-yuque' },
+          { text: 'GitLab', link: 'https://gitlab.com/congco?nav_source=navbar',icon: 'reco-gitlab'}
         ]
       }
     ],
@@ -35,6 +35,7 @@ module.exports = {
       }
     },
     logo: '/head.png', //对应public中的head.png
+    authorAvatar: '/head.png', //对应public中的head.png
     // 搜索设置
     search: true,
     searchMaxSuggestions: 10,
