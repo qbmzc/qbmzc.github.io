@@ -1,6 +1,6 @@
 module.exports = {
   title: "SnowNull",
-  description: '没想好',
+  description: '是心动',
   dest: 'public',
   head: [
     ['link', { rel: 'icon', href: '/favicon.ico' }],
