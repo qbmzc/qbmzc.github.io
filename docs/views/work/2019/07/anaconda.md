@@ -8,23 +8,15 @@ categories:
  - work
 
 ---
-# Anaconda
-
-![系统信息](https://raw.githubusercontent.com/qbmzc/images/master/mdimage/2019/2019-07-19_18-42.png?token=AGMSQSVY7DOUY27FXLCZNDS5GGTUM)
-
 ## 安装
 
 [Anaconda网址](https://www.anaconda.com/)
 
 [下载地址](https://www.anaconda.com/distribution/)
 
-![1](https://raw.githubusercontent.com/qbmzc/images/master/mdimage/2019/2019-07-19_18-44.png?token=AGMSQSR5KPLI4RLF4U5T23K5GGTM4)
-
-清华镜像
+## 清华开源镜像
 
 [地址](https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/)
-
-![2](https://raw.githubusercontent.com/qbmzc/images/master/mdimage/2019/2019-07-19_18-58.png?token=AGMSQSRJVGNRMVIZXRJ5LTC5GGTRG)
 
 选择对应的版本，以下是`Linux`系统环境安装
 
