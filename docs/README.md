@@ -1,6 +1,6 @@
 ---
 home: true
-bgImage: 'https://gitee.com/snowyan/image/raw/master/1597213762_20200812142916909_146983385.jpg'
+bgImage: 'https://gitee.com/snowyan/image/raw/master/1593416227_20200629153703553_889902192.png'
 bgImageStyle: {
   height: '350px'
 }
