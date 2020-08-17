@@ -2,7 +2,7 @@
 
 ## 个人博客项目
 
-[gitt地址](https://gitee.com/snowyan/blog)
+[gitee地址](https://gitee.com/snowyan/blog)
 
 ```bash
 git@gitee.com:snowyan/blog.git
