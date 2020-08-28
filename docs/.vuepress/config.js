@@ -12,14 +12,15 @@ module.exports = {
     nav: [
       { text: 'Home', link: '/', icon: 'reco-home' },
       { text: 'TimeLine', link: '/timeLine/', icon: 'reco-date' },
-      { text: 'Compass', link: 'https://snowyan.gitee.io/compass/', icon: 'reco-other' },
-      { text: 'Contact', 
+      /*   { text: 'Compass', link: 'https://snowyan.gitee.io/compass/', icon: 'reco-other' }, */
+      {
+        text: 'Contact',
         icon: 'reco-message',
         items: [
           { text: 'GitHub', link: 'https://github.com/qbmzc', icon: 'reco-github' },
-          { text: '简书', link: 'https://www.jianshu.com/u/1fa980d5267b', icon: 'reco-jianshu' },
-           { text: 'Gitee', link: 'https://gitee.com/snowyan', icon: 'reco-mayun' },
-          { text: 'GitLab', link: 'https://gitlab.com/congco?nav_source=navbar',icon: 'reco-gitlab'}
+          /*    { text: '简书', link: 'https://www.jianshu.com/u/1fa980d5267b', icon: 'reco-jianshu' }, */
+          { text: 'Gitee', link: 'https://gitee.com/snowyan', icon: 'reco-mayun' },
+          { text: 'GitLab', link: 'https://gitlab.com/congco?nav_source=navbar', icon: 'reco-gitlab' }
         ]
       }
     ],
