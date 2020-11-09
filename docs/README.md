@@ -1,7 +1,7 @@
 ---
 home: true
-bgImage: 'https://gitee.com/snowyan/image/raw/master/bg/bg0.png'
-# bgImage: 'https://gitee.com/snowyan/image/raw/master/wallhaven-5weyz8.jpg'
+#bgImage: 'https://gitee.com/snowyan/image/raw/master/bg/bg0.png'
+bgImage: 'https://gitee.com/snowyan/image/raw/master/wallhaven-5weyz8.jpg'
 bgImageStyle: {
   height: '350px'
 }
