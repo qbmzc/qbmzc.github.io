@@ -4,7 +4,13 @@ module.exports = {
   dest: 'public',
   head: [
     ['link', { rel: 'icon', href: '/favicon.ico' }],
-    ['meta', { name: 'viewport', content: 'width=device-width,initial-scale=1,user-scalable=no' }]
+    ['meta', { name: 'viewport', content: 'width=device-width,initial-scale=1,user-scalable=no' }],
+    /* <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/gh/qbmzc/live2d-widget@latest/autoload.js"></script> 
+看板娘
+*/
+/*     ['link', { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/font-awesome/css/font-awesome.min.css' }],
+    ['script', { src: 'https://cdn.jsdelivr.net/gh/qbmzc/live2d-widget@latest/autoload.js' }] */
   ],
   theme: 'reco',
   themeConfig: {
@@ -72,5 +78,8 @@ module.exports = {
   markdown: {
     lineNumbers: true
   },
-  plugins: ['@vuepress/medium-zoom', 'flowchart']
+  plugins: [
+    '@vuepress/medium-zoom', 
+    'flowchart' ]
+
 }  
