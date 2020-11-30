@@ -1,7 +1,7 @@
 module.exports = {
   title: "SnowNull",
   description: '流云与风，苍穹游牧。',
-  dest: 'public',
+  dest: '',
   head: [
     ['link', { rel: 'icon', href: '/favicon.ico' }],
     ['meta', { name: 'viewport', content: 'width=device-width,initial-scale=1,user-scalable=no' }],
