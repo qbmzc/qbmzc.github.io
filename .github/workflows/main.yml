@@ -20,7 +20,7 @@ jobs:
 
       # 生成静态文件
       - name: Build
-        run: yarn install && yarn build
+        run: yarn install && yarn run build
 
       # 部署到 GitHub Pages
       - name: Deploy
