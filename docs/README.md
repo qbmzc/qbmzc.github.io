@@ -1,6 +1,6 @@
 ---
 home: true
-bgImage: 'https://gitee.com/snowyan/image/raw/master/bg/bg0.png'
+bgImage: 'https://s2.ax1x.com/2019/08/29/mbXwOf.png'
 #bgImage: 'https://gitee.com/snowyan/image/raw/master/wallhaven-5weyz8.jpg'
 bgImageStyle: {
   height: '350px'
