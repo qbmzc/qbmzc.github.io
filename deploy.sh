@@ -2,7 +2,8 @@
 yarn build &&
 cd docs/.vuepress/dist
 git init
+git remote add origin git@gitee.com:snowyan/snowyan.git
 git add -A
 git commit -m 'deploy'
 # deploy to gitee
-git push -f git@gitee.com:snowyan/snowyan.git master
+git push --force origin main
