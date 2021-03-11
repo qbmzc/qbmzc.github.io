@@ -6,4 +6,4 @@ git remote add origin git@gitee.com:snowyan/snowyan.git
 git add -A
 git commit -m 'deploy'
 # deploy to gitee
-git push --force origin main
+git push --force origin master
