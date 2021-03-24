@@ -1,6 +1,6 @@
 ---
-title: yarn cache clean
-date: 2021/3/9
+title: 模板
+date: 2021-3-9
 categories:
   - work
 tags:
