@@ -9,8 +9,7 @@ categories:
 
 &emsp;&emsp;JMM,Java的内存模型。
 
-![内存模型](https://cdn.nlark.com/yuque/0/2019/png/375439/1565322782688-assets/web-upload/e5a91255-bc46-4093-9fc1-923d774f6fe9.png)
-
+![JMM](https://i.loli.net/2021/03/24/qMia5s23J9fdlr7.png)
 ## 原子性（Atomicity）
 
 > 原子性是指一个操作是不可中断的。即使是在多个线程一起执行的时候，一个操作一旦开始，就不会被其他线程干扰。  
@@ -90,8 +89,7 @@ a=b+c
 d=e-f
 ```
 
-![指令重排前](https://raw.githubusercontent.com/qbmzc/images/master/mdimage/2019/08/20190806092156066_1331857751.png)
-
+![指令重排前](https://gitee.com/snowyan/image/raw/master/md/20190806092156066_1331857751.png)
 ![指令调换](https://raw.githubusercontent.com/qbmzc/images/master/mdimage/2019/08/20190806092207322_887558282.png)
 
 ![指令重排后](https://raw.githubusercontent.com/qbmzc/images/master/mdimage/2019/08/20190806092218994_1027072772.png)
