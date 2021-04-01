@@ -101,7 +101,7 @@ public class Singleton {
 5. }  
 ```
 
- 这种方式是Effective Java作者Josh Bloch 提倡的方式，它不仅能避免多线程同步问题，而且还能防止反序列化重新创建新的对象，可谓是很坚强的壁垒啊，不过，个人认为由于1.5中才加入enum特性，用这种方式写不免让人感觉生疏，在实际工作中，我也很少看见有人这么写过。
+ 这种方式是Effective Java作者Josh Bloch 提倡的方式，它不仅能避免多线程同步问题，而且还能防止反序列化重新创建新的对象。
 
 ## 第七种（双重校验锁）
 
@@ -121,9 +121,15 @@ public class Singleton {
 13.     }  
 14. }  
 ```
+需要注意singleton采用`volatile`关键字修饰也是很有必要。
+`singleton = new Singleton();`这段代码其实是分为三步执行：
+1. 为singleton分配内存空间
+2. 初始化singleton
+3. 将singleton指向分配的内存地址
 
-在JDK1.5之后，双重检查锁定才能够正常达到单例效果。
+但是由于 JVM 具有指令重排的特性，执行顺序有可能变成 1->3->2。指令重排在单线程环境下不会出现问题，但是在多线程环境下会导致一个线程获得还没有初始化的实例。例如，线程 T1 执行了 1 和 3，此时 T2 调用getsingleton() 后发现singleton不为空，因此返回singleton，但此时singleton还未被初始化。
 
+使用`volatile`可以禁止 JVM 的指令重排，保证在多线程环境下也能正常运行
 ## 总结
 
 有两个问题需要注意：
