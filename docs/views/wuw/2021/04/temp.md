@@ -1,0 +1,18 @@
+---
+title: Portainer-docker可视化管理工具
+date: 2021-04-25
+categories:
+  - Linux
+tags:
+  - docker
+---
+
+![96wvpd](https://gitee.com/snowyan/image/raw/master/md/wallhaven-96wvpd.png)
+
+<!-- more -->
+
+## 问题
+
+```bash
+docker run -d -p 9000:9000 --restart=always -v /var/run/docker.sock:/var/run/docker.sock --name my-prtainer portainer/portainer-ce
+```
