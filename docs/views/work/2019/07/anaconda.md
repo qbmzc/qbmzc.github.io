@@ -16,7 +16,7 @@ categories:
 
 ## 清华开源镜像
 
-[地址](https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/)
+[清华开源镜像地址](https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/)
 
 选择对应的版本，以下是`Linux`系统环境安装
 
@@ -57,13 +57,16 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 ```
+
 这样的话，启动终端，每次都会默认激活base环境，建议还是在自己的终端中添加对应的环境变量，而不是在系统中全局添加。`bash`在`~/.bashrc`,`zsh`在`~/.zshrc`中。
 
 ## 卸载
 
 由于Anaconda在Linux下是安装在一个文件夹里/root/anaconda ,如果安装过程中出错问题，或者想更新另一个版本，删除anaconda也很方便，执行下面命令 
 
-```sudo rm -rf ~/anaconda ```
+```bash
+sudo rm -rf ~/anaconda 
+```
 
 [镜像使用帮助](https://mirrors.tuna.tsinghua.edu.cn/help/anaconda/)
 
@@ -136,7 +139,5 @@ conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/
 ### 其他三方源
 
 对于conda的其他三方源，如有需要请在[这个issue](https://github.com/tuna/issues/issues/112)中提出请求，我们会综合考虑多方因素来酌情增减。
-
-
 
 > ---------------end--------------------
