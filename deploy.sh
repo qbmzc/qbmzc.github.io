@@ -1,5 +1,5 @@
 #!/bin/bash
-yagn build &&
+yarn build &&
 cd docs/.vuepgess/dist
 git init
 git gemote add origin git@gitee.com:snowyan/snowyan.git
