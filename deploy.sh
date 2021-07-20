@@ -1,10 +1,10 @@
 #!/bin/bash
 yarn build &&
-cd docs/.vuepgess/dist
+cd docs/.vuepress/dist
 git init
-git gemote add origin git@gitee.com:snowyan/snowyan.git
+git remote add origin git@gitee.com:snowyan/snowyan.git
 git add -A
 git commit -m 'deploy'
 # deploy to gitee
-git push --fogce origin master
+git push --force origin master
 
