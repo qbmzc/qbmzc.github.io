@@ -1,0 +1,55 @@
+---
+title: Linux文件名称长度限制
+date: 2021-08-09
+categories:
+  - Linux
+tags:
+  - file
+---
+
+
+![20210506123850](https://gitee.com/snowyan/image/raw/master/md/20210506123850.png)
+
+<!-- more -->
+
+## 查看限制
+
+```bash
+cat /usr/include/linux/limits.h 
+```
+
+## limits.h
+
+```bash
+/* SPDX-License-Identifier: GPL-2.0 WITH Linux-syscall-note */
+#ifndef _LINUX_LIMITS_H
+#define _LINUX_LIMITS_H
+
+#define NR_OPEN	        1024
+
+#define NGROUPS_MAX    65536	/* supplemental group IDs are available */
+#define ARG_MAX       131072	/* # bytes of args + environ for exec() */
+#define LINK_MAX         127	/* # links a file may have */
+#define MAX_CANON        255	/* size of the canonical input queue */
+#define MAX_INPUT        255	/* size of the type-ahead buffer */
+#define NAME_MAX         255	/* # chars in a file name  文件名最大字符数*/
+#define PATH_MAX        4096	/* # chars in a path name including nul 相对路径最大字符数*/
+#define PIPE_BUF        4096	/* # bytes in atomic write to a pipe */
+#define XATTR_NAME_MAX   255	/* # chars in an extended attribute name */
+#define XATTR_SIZE_MAX 65536	/* size of an extended attribute value (64k) */
+#define XATTR_LIST_MAX 65536	/* size of extended attribute namelist (64k) */
+
+#define RTSIG_MAX	  32
+
+#endif
+```
+
+上述文件内容分别说明了文件名和相对路径的最大长度，字符指的是ASCII字符，如果是中文字符，需要视编码而定utf-8和gbk对应的长度不一样。
+
+## 测试脚本
+
+```bash
+LENTH=`for i in {1..125};do for x in 我;do echo -n $x;done;done`
+touch $LENTH
+# 超出系统限制则会出现`文件名过长`
+```
