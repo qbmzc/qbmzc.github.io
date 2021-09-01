@@ -2,6 +2,8 @@
 
 ## 个人博客项目
 
+## gitee限制良多，不再更新部署
+
 [gitee地址](https://gitee.com/snowyan/blog)
 
 ```bash
