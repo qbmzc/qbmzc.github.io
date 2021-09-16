@@ -9,6 +9,6 @@ pages:
   - yarn run build
   artifacts:
     paths:
-    - public
+    - docs/.vuepress/dist
   only:
   - master
