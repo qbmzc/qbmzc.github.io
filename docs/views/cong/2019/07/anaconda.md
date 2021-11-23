@@ -6,8 +6,14 @@ tags:
  - python
 categories:
  - work
+prev: 312125.md
+next: build_blog.md
 
 ---
+![a](https://gitee.com/snowyan/image/raw/master/2021/202111231105094.png)
+
+<!-- more -->
+
 ## 安装
 
 [Anaconda网址](https://www.anaconda.com/)

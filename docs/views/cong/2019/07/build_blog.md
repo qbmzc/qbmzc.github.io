@@ -6,7 +6,14 @@ tags:
  - vuepress
 categories:
  - wuw
+prev: anaconda.md
+next: hmm.md
+
 ---
+![a](https://gitee.com/snowyan/image/raw/master/2021/202111231106767.png)
+
+<!-- more -->
+
 ## 效果图
 
 ![1563803554554](https://raw.githubusercontent.com/qbmzc/images/master/mdimage/2019/1563803554554.png)

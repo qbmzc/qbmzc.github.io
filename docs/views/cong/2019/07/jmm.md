@@ -5,7 +5,14 @@ tags:
  - JMM
 categories:
  - Java
+prev: build_blog.md
+next: tomcat.md
+
 ---
+
+![a](https://gitee.com/snowyan/image/raw/master/2021/202111231223195.png)
+
+<!-- more -->
 
 &emsp;&emsp;JMM,Java的内存模型。
 
@@ -126,7 +133,7 @@ b=a+1;
 
 1. 内存可见性
 2. 防止指令重排
-  
+
 `volatile`修饰符适用于以下场景：某个属性被多个线程共享，其中有一个线程修改了此属性，其他线程可以立即得到修改后的值。
 
 ```java

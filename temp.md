@@ -7,9 +7,12 @@ tags:
   - js
 keys:
  - 57f7e0a8a0b9055fa6cb7f3a03889387
+sticky: 1
+prev: 
+next:
 ---
 
-![20210829111150](https://gitee.com/snowyan/image/raw/master/2021/20210829111150.jpg)
+
 
 <!-- more -->
 
@@ -30,3 +33,4 @@ yarn cache clean
 ```js
 yarn install
 ```
+
