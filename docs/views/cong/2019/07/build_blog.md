@@ -7,7 +7,7 @@ tags:
 categories:
  - wuw
 prev: anaconda.md
-next: hmm.md
+next: jmm.md
 
 ---
 ![a](https://gitee.com/snowyan/image/raw/master/2021/202111231106767.png)
