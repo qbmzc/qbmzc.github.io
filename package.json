@@ -11,6 +11,5 @@
         "@vuepress/plugin-medium-zoom": "1.0.0-alpha.0",
         "vuepress": "1.5.0",
         "vuepress-theme-reco": "^1.6.6"
-    },
-    "dependencies": {}
+    }
 }
