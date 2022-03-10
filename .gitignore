@@ -5,4 +5,4 @@ dist/
 public/
 .vscode/
 .DS_Store
-docs/views/cong/.obsidian/app.json
+.obsidian
