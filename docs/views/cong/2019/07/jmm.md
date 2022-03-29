@@ -10,7 +10,7 @@ next: tomcat.md
 
 ---
 
-![a](https://gitee.com/snowyan/image/raw/master/2021/202111231223195.png)
+![a](https://cdn.jsdelivr.net/gh/qbmzc/images/2021/202111231223195.png)
 
 <!-- more -->
 
@@ -96,7 +96,7 @@ a=b+c
 d=e-f
 ```
 
-![指令重排前](https://gitee.com/snowyan/image/raw/master/md/20190806092156066_1331857751.png)
+![指令重排前](https://cdn.jsdelivr.net/gh/qbmzc/images/md/20190806092156066_1331857751.png)
 ![指令调换](https://raw.githubusercontent.com/qbmzc/images/master/mdimage/2019/08/20190806092207322_887558282.png)
 
 ![指令重排后](https://raw.githubusercontent.com/qbmzc/images/master/mdimage/2019/08/20190806092218994_1027072772.png)
