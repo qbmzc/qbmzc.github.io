@@ -1,6 +1,6 @@
 ---
 home: true
-bgImage: 'https://cdn.jsdelivr.net/gh/qbmzc/images/bg/bg2.jpg'
+bgImage: 'https://fastly.jsdelivr.net/gh/qbmzc/images/bg/bg2.jpg'
 bgImageStyle: {
   height: '350px',
   
