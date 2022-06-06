@@ -1,6 +1,6 @@
 ---
 home: true
-bgImage: 'https://gitee.com/snowyan/image/raw/master/bg/bg2.jpg'
+bgImage: 'https://fastly.jsdelivr.net/gh/qbmzc/images/bg/bg2.jpg'
 bgImageStyle: {
   height: '350px',
   

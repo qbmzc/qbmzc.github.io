@@ -10,7 +10,7 @@ prev: jmm.md
 next: ../08/010913
 
 ---
-![a](https://gitee.com/snowyan/image/raw/master/2021/202111231225363.png)
+![a](https://fastly.jsdelivr.net/gh/qbmzc/images/2021/202111231225363.png)
 
 <!-- more -->
 

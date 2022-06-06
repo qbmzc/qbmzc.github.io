@@ -10,7 +10,7 @@ prev: anaconda.md
 next: jmm.md
 
 ---
-![a](https://gitee.com/snowyan/image/raw/master/2021/202111231106767.png)
+![a](https://fastly.jsdelivr.net/gh/qbmzc/images/2021/202111231106767.png)
 
 <!-- more -->
 
