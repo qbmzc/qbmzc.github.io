@@ -99,7 +99,6 @@ update t_fs_file_98	 set file_url=replace(file_url,'trialos.com/','trialos.com.c
 update t_fs_file_99	 set file_url=replace(file_url,'trialos.com/','trialos.com.cn/'),preview_url=replace(preview_url,'trialos.com/','trialos.com.cn/');
 update t_fs_file_100 set file_url=replace(file_url,'trialos.com/','trialos.com.cn/'),preview_url=replace(preview_url,'trialos.com/','trialos.com.cn/');
  -- hls/
-update t_hls_transcoding/
-set m3u8_url_sd=replace(m3u8_url_sd, 'trialos.com/', 'trialos.com.cn/'),
+update t_hls_transcoding set m3u8_url_sd=replace(m3u8_url_sd, 'trialos.com/', 'trialos.com.cn/'),
     m3u8_url_hd=replace(m3u8_url_hd, 'trialos.com/', 'trialos.com.cn/'),
     m3u8_url_fluent=replace(m3u8_url_fluent, 'trialos.com/', 'trialos.com.cn/');
