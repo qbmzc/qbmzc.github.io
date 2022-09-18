@@ -15,11 +15,11 @@ module.exports = {
   themeConfig: {
     type: 'blog',
     nav: [
-      { text: '首页', link: '/', icon: 'reco-home' },
-      { text: '时间轴', link: '/timeLine/', icon: 'reco-date' },
-      { text: '指南针', link: 'https://snowyan.gitee.io/compass/', icon: 'reco-other' },
+      { text: 'home', link: '/', icon: 'reco-home' },
+      { text: 'timeline', link: '/timeLine/', icon: 'reco-date' },
+      // { text: '指南针', link: 'https://snowyan.gitee.io/compass/', icon: 'reco-other' },
       {
-        text: '联系',
+        text: 'message',
         icon: 'reco-message',
         items: [
           { text: 'GitHub', link: 'https://github.com/qbmzc', icon: 'reco-github' },
@@ -33,11 +33,11 @@ module.exports = {
     blogConfig: {
       category: {
         location: 2, // 在导航栏菜单中所占的位置，默认2
-        text: '分类' // 默认 “分类”
+        text: 'category' // 默认 “分类”
       },
       tag: {
         location: 3, // 在导航栏菜单中所占的位置，默认3
-        text: '标签' // 默认 “标签”，Message Board
+        text: 'tag' // 默认 “标签”，Message Board
       }
     },
     logo: '/head.png', //对应public中的head.png
