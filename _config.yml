@@ -2,13 +2,13 @@
 ## Docs: https://hexo.io/docs/configuration.html
 ## Source: https://github.com/hexojs/hexo/
 
-# Site
-title: Hexo
+# Si
+title: 沐曦留曳
 subtitle: ''
-description: ''
+description: 流云与风，苍穹游牧
 keywords:
-author: John Doe
-language: en
+author: cong
+language: zh
 timezone: ''
 
 # URL
@@ -97,7 +97,7 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: landscape
+theme: kratos-rebirth
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
