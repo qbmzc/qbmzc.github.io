@@ -9,7 +9,7 @@ on:
 env:
   GIT_USER: qbmzc
   GIT_EMAIL: mxlyzc@163.com
-  DEPLOY_REPO: qbmzc.github.io
+  DEPLOY_REPO: qbmzc/qbmzc.github.io
   DEPLOY_BRANCH: main
 
 jobs:
