@@ -103,5 +103,5 @@ theme: kratos-rebirth
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: git
-  repo: 
+  repo: qbmzc.github.io
   branch: main
