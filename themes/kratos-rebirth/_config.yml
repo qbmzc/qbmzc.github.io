@@ -44,6 +44,7 @@ vendors:
       version: 9.1.1
     meting:
       version: 2.0.1
+   
 
 # 自定义样式
 customStyles:
@@ -200,8 +201,8 @@ search:
 jsconfig:
   main:
     cover:
-      randomAmount: 20 # 表示从1~20
-      baseUrl: null # 使用默认值（不单独配置），将跟随 vendors 中的相关设定选择是否使用 cdn
+      randomAmount: 32 # 表示从1~20
+      baseUrl: /images/thumb/ # 使用默认值（不单独配置），将跟随 vendors 中的相关设定选择是否使用 cdn
       filenameTemplate: "thumb_{no}.webp" 
     createTime: "2019/05/06 17:03:12"
     donateBtn: "支持我~"
