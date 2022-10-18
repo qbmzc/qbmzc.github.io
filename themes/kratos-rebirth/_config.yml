@@ -1,7 +1,7 @@
 # Global 全局配置
 site_analytics: ''
 hoster: <a href="https://github.io" target="_blank">Github Pages</a>
-site_logo: ''
+site_logo: '/images/favicon.ico'
 snow: false
 click_animate_js: 'candy'
 enable_dark: true
