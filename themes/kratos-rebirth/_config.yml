@@ -141,8 +141,8 @@ waline:
 gitalk:
   clientID: '56e6a743c63b9c4faa93'
   clientSecret: '888b7234051c5c2ed6ea7bdf18e8b5a2678775f1'
-  # repo: 'Kratos-Rebirth-Demo'
-  # owner: 'Candinya'
+  repo: 'gitalk-comments'
+  owner: 'qbmzc'
   # admin: 
   #   - 'Candinya'
   # distractionFreeMode: false
