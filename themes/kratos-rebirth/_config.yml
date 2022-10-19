@@ -143,8 +143,8 @@ gitalk:
   clientSecret: '888b7234051c5c2ed6ea7bdf18e8b5a2678775f1'
   repo: 'gitalk-comments'
   owner: 'qbmzc'
-  # admin: 
-  #   - 'Candinya'
+  admin: 
+     - 'qbmzc'
   # distractionFreeMode: false
 
 # Gitment [Gitment](https://github.com/imsun/gitment/) 评论相关
