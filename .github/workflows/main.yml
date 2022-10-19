@@ -41,7 +41,7 @@ jobs:
 
       - name: Configuration environment
         env:
-          HEXO_DEPLOY_PRI: ${{ secrets.ACCESS_TOKEN }}
+          HEXO_DEPLOY_PRI: ${{ secrets.HEXO_DEPLOY_KEY }}
         run: |
           sudo timedatectl set-timezone "Asia/Shanghai"
           mkdir -p ~/.ssh/
