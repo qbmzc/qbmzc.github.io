@@ -709,10 +709,10 @@ hexo-server@^3.0.0:
     picocolors "^1.0.0"
     serve-static "^1.14.1"
 
-hexo-theme-kratos-rebirth@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/hexo-theme-kratos-rebirth/-/hexo-theme-kratos-rebirth-2.1.0.tgz#f6b19660c99e109a4bce9c24bec37e7c5a7f5649"
-  integrity sha512-hhrLb0mMIH34P41/ZSiDOKt+uW1NJxCzgjibsSHikmngLknwAHMdz95pEmd2trUf3Qr1h5BPIaDz5ehBgtEt2A==
+hexo-theme-kratos-rebirth@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/hexo-theme-kratos-rebirth/-/hexo-theme-kratos-rebirth-2.1.1.tgz#4dcacf3ace4fab030b8debed73118fb6d88f9e7d"
+  integrity sha512-IAhuTzsiklRpGXjQFwU7WNlsqhbbE1HiuHy5vnJEjDPBQv6X+Ept0e4fkcePiC4Sgimn8bLFyTw/52K0hMgh6w==
 
 hexo-theme-landscape@^0.0.3:
   version "0.0.3"
