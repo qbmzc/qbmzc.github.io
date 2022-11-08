@@ -610,12 +610,12 @@ hexo-fs@^3.0.1, hexo-fs@^3.1.0:
     graceful-fs "^4.1.11"
     hexo-util "^2.0.0"
 
-hexo-generator-archive@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.npmmirror.com/hexo-generator-archive/-/hexo-generator-archive-1.0.0.tgz"
-  integrity sha512-24TeanDGpMBUIq37DHpSESQbeN6ssZ06edsGSI76tN4Yit50TgsgzP5g5DSu0yJk0jUtHJntysWE8NYAlFXibA==
+hexo-generator-archive@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/hexo-generator-archive/-/hexo-generator-archive-2.0.0.tgz#bd93f17848843bb5bface81103d81f5be1a8b2c9"
+  integrity sha512-KikJk7dGFbtNHOgqtLFGf5T/S8n1paGp+Gy0KfVDz+HKYhGbXOouyiZkmc3O9KrYt6ja14rmkMhq7KKGtvfehw==
   dependencies:
-    hexo-pagination "1.0.0"
+    hexo-pagination "3.0.0"
 
 hexo-generator-category@^2.0.0:
   version "2.0.0"
@@ -631,12 +631,12 @@ hexo-generator-index@^3.0.0:
   dependencies:
     hexo-pagination "3.0.0"
 
-hexo-generator-tag@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.npmmirror.com/hexo-generator-tag/-/hexo-generator-tag-1.0.0.tgz"
-  integrity sha512-JDoB2T1EncRlyGSjuAhkGxRfKkN8tq0i8tFlk9I4q2L6iYxPaUnFenhji0oxufTADC16/IchuPjmMk//dt8Msg==
+hexo-generator-tag@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/hexo-generator-tag/-/hexo-generator-tag-2.0.0.tgz#f5a18c92b2f28063a76008b4090a7cea81fbbcc0"
+  integrity sha512-1px/hF3veEohWDN8jjzchQhaiz+uOStUvvMaBJC9vWOlALh30UFcapL8IrvAwwJZjFRVA+WqGgDRqoQ8+yaaFw==
   dependencies:
-    hexo-pagination "1.0.0"
+    hexo-pagination "3.0.0"
 
 hexo-i18n@^1.0.0:
   version "1.0.0"
@@ -708,10 +708,10 @@ hexo-server@^3.0.0:
     picocolors "^1.0.0"
     serve-static "^1.14.1"
 
-hexo-theme-kratos-rebirth@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/hexo-theme-kratos-rebirth/-/hexo-theme-kratos-rebirth-2.1.0.tgz#f6b19660c99e109a4bce9c24bec37e7c5a7f5649"
-  integrity sha512-hhrLb0mMIH34P41/ZSiDOKt+uW1NJxCzgjibsSHikmngLknwAHMdz95pEmd2trUf3Qr1h5BPIaDz5ehBgtEt2A==
+hexo-theme-kratos-rebirth@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/hexo-theme-kratos-rebirth/-/hexo-theme-kratos-rebirth-2.1.1.tgz#4dcacf3ace4fab030b8debed73118fb6d88f9e7d"
+  integrity sha512-IAhuTzsiklRpGXjQFwU7WNlsqhbbE1HiuHy5vnJEjDPBQv6X+Ept0e4fkcePiC4Sgimn8bLFyTw/52K0hMgh6w==
 
 hexo-theme-landscape@^0.0.3:
   version "0.0.3"
