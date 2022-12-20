@@ -101,6 +101,22 @@ public class Singleton {
 5. }  
 ```
 
+```java
+package com.cong.devola.config;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+public enum ObjectMapperEnum {
+    INSTANCE;
+
+    private static final ObjectMapper objectMapper = new ObjectMapper();
+
+    public ObjectMapper getObjectMapper() {
+        return objectMapper;
+    }
+}
+```
+
  这种方式是Effective Java作者Josh Bloch 提倡的方式，它不仅能避免多线程同步问题，而且还能防止反序列化重新创建新的对象。
 
 ## 第七种（双重校验锁）
