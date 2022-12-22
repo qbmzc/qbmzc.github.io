@@ -1,6 +1,6 @@
 ---
 title: 生成自签名证书
-date: 2022-10-26
+date: 2022-12-26
 tags:
   -  openssl
 categories:
