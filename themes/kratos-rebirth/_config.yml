@@ -169,7 +169,7 @@ aplayer:
   meting:
     server: netease
     type: playlist
-    id: 390728621
+    id: 120762846
   order: random
 
 # Widgets 侧边栏小挂件
@@ -218,9 +218,9 @@ jsconfig:
 
 # Site verify 站点验证相关配置内容
 site_verify:
-  google: 
-  baidu: 
-  bing: 
+  google: UKod-Z9MPCQONVZ77M_ajsvF8Vh7fVBvyb7cf
+  baidu: codeva-ANZQkWgkgD
+  bing: 2D2197DEE362D193B3EC29AFD3306341
 
 # Friends 友链相关内容
 friends:
