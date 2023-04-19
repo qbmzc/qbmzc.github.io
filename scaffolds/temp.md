@@ -1,6 +1,6 @@
 ---
 title: 生成自签名证书
-date: 2023-03-26
+date: 2023-04-26
 tags:
   -  openssl
 categories:
