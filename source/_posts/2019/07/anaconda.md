@@ -27,6 +27,7 @@ next: build_blog.md
 选择对应的版本，以下是`Linux`系统环境安装
 
 ```bash
+# 在文件下载所在目录执行，否则会找不到文件
 bash Anaconda3-2019.03-Linux-x86_64.sh
 ```
 
@@ -42,9 +43,9 @@ conda --version
 conda 4.7.5
 ```
 
-如果没有，需要配置环境变量，在终端输入`sudo vim /etc/profile`，打开`profile`文件。添加语句`export PATH=/home/congco/anaconda3/bin:$PATH`(注意：这里是自己本机的安装路径)，保存，退出。 
-重启终端，再次验证。
-這裏會引起一個問題，就是如果是gnome桌面環境的話，會導致gnome-tweaks 啓動失敗，參考博客[https://www.jianshu.com/p/c23aa0cf90df](https://www.jianshu.com/p/c23aa0cf90df)解決方案就是刪除上面的環境變量，使用`conda init`，如果使用安裝過程中的初始化，則沒有這個問題
+如果没有，需要配置环境变量，
+~~在终端输入`sudo vim /etc/profile`，打开`profile`文件。添加语句`export PATH=/home/congco/anaconda3/bin:$PATH`(注意：这里是自己本机的安装路径)，保存，退出。 ~~
+~~這裏會引起一個問題，就是如果是gnome桌面環境的話，會導致gnome-tweaks 啓動失敗，參考博客[https://www.jianshu.com/p/c23aa0cf90df](https://www.jianshu.com/p/c23aa0cf90df)解決方案就是刪除上面的環境變量，使用`conda init`，如果使用安裝過程中的初始化，則沒有這個問題~~
 使用`conda init`初始化環境變量信息
 
 ```bash
@@ -66,11 +67,37 @@ unset __conda_setup
 
 这样的话，启动终端，每次都会默认激活base环境，建议还是在自己的终端中添加对应的环境变量，而不是在系统中全局添加。`bash`在`~/.bashrc`,`zsh`在`~/.zshrc`中。
 
-## 卸载
+### 国内镜像`vim ~/.condarc`
+
+添加以下内容
+
+```bash
+channels:
+  - defaults
+show_channel_urls: true
+default_channels:
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/msys2
+custom_channels:
+  conda-forge: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+  msys2: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+  bioconda: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+  menpo: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+  pytorch: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+  pytorch-lts: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+  simpleitk: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+  deepmodeling: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/
+```
+
+## 卸载Anaconda
 
 由于Anaconda在Linux下是安装在一个文件夹里/root/anaconda ,如果安装过程中出错问题，或者想更新另一个版本，删除anaconda也很方便，执行下面命令 
 
 ```bash
+# 取消init
+conda init --reverse 
+# 删除文件夹
 sudo rm -rf ~/anaconda 
 ```
 
