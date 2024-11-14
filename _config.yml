@@ -93,6 +93,11 @@ pagination_dir: page
 include:
 exclude:
 ignore:
+# RSS 生成器配置
+feed:
+  type: rss
+  path: rss.xml
+  limit: 20  # 每次显示的文章数量
 
 # Extensions
 ## Plugins: https://hexo.io/plugins/
