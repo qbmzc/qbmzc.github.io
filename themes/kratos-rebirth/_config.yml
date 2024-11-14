@@ -90,7 +90,7 @@ contact:
     instance: 
     username: 
   github: qbmzc
-  rss:
+  rss: true
 timenotice: 本站已运行
 icp: 
 psr:
