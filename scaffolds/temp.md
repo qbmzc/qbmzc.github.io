@@ -1,6 +1,6 @@
 ---
 title: 生成自签名证书
-date: 2024-10-14
+date: {{date}} {{time}}
 tags:
   -  openssl
 categories:
