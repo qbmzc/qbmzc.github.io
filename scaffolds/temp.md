@@ -1,10 +1,10 @@
 ---
 title: 生成自签名证书
-date: 2024-12-06 14:06:09
+date: 2025-03-06 14:06:09
 tags:
-  -  openssl
+  - openssl
 categories:
-  -  Linux
+  - Linux
 toc: true
 ---
 
