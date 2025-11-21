@@ -1,0 +1,1514 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="/images/favicon.ico">
+  
+  <title>使用VuePress搭建个人博客 | 沐曦留曳</title>
+  <meta name="author" content="cong" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="daily, vuepress" />
+  
+  <meta property="og:type" content="article">
+<meta property="og:title" content="使用VuePress搭建个人博客">
+<meta property="og:url" content="https://qbmzc.github.io/2019/07/22/2019/07/build_blog/index.html">
+<meta property="og:site_name" content="沐曦留曳">
+<meta property="og:locale">
+<meta property="og:image" content="https://qbmzc.github.io/images/favicon.ico">
+<meta property="article:published_time" content="2019-07-21T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-11-21T06:36:31.539Z">
+<meta property="article:author" content="cong">
+<meta property="article:tag" content="daily">
+<meta property="article:tag" content="vuepress">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://qbmzc.github.io/images/favicon.ico">
+  <link rel="alternate" href="rss.xml" type="application/atom+xml">
+  <!-- 站点验证相关 -->
+  
+    
+      <meta name="google-site-verification" content="lV4cead5YlJ8KpODToP7dvzi-ihrxSqU0yYStYKj2ao" />
+    
+    
+      <meta name="baidu-site-verification" content="codeva-Zr6WlkDupK" />
+    
+    
+      <meta name="msvalidate.01" content="2D2197DEE362D193B3EC29AFD3306341" />
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" media="all"></script>
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-color-dark.min.css" media="(prefers-color-scheme: dark)"></script>
+    <script src="/js/kr-dark.min.js"></script>
+  
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" media="all"></script>
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="/vendors/font-awesome@4.7.0/css/font-awesome.min.css" media="all"></script>
+  <link rel="stylesheet" id="nprogress-css" href="/vendors/nprogress@0.2.0/nprogress.css" media="all"></script>
+  
+  
+  
+    <link rel="stylesheet" href="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css"></script>
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="/vendors/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/banner.webp');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">沐曦留曳</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>沐曦留曳</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article itemscope itemtype="https://schema.org/Article">
+    
+    <link itemprop="mainEntityOfPage" href="https://qbmzc.github.io/2019/07/22/2019/07/build_blog/">
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center" itemprop="name headline">使用VuePress搭建个人博客</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><time datetime="2019-07-21T16:00:00.000Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2019-07-22</time></li>
+                <li itemprop="author" itemscope itemtype="https://schema.org/Person">
+                    <i class="fa fa-user"></i> 作者 <span itemprop="name">cong</span>
+                </li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~6.26K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1763706991539"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+            
+            <hr />
+            <div itemprop="articleBody"><p><img src="https://fastly.jsdelivr.net/gh/qbmzc/images/2021/202111231106767.png" alt="a"></p>
+<span id="more"></span>
+
+<h2 id="效果图"><a href="#效果图" class="headerlink" title="效果图"></a>效果图</h2><p><img src="https://raw.githubusercontent.com/qbmzc/images/master/mdimage/2019/1563803554554.png" alt="1563803554554"></p>
+<h2 id="安装yarn"><a href="#安装yarn" class="headerlink" title="安装yarn"></a>安装<code>yarn</code></h2><p><a target="_blank" rel="noopener" href="https://yarn.bootcss.com/docs/install/#windows-stable">yarn地址</a></p>
+<p><img src="https://raw.githubusercontent.com/qbmzc/images/master/mdimage/2019/%E6%89%B9%E6%B3%A8%202019-07-22%20215621.png" alt="yarn"></p>
+<p>在使用 Yarn 之前，首先要在您的系统上安装 Yarn 。 以下列出了多种不同的安装方式，并且新的安装方式仍在继续添加：</p>
+<p>操作系统:</p>
+<h3 id="Arch-Linux"><a href="#Arch-Linux" class="headerlink" title="Arch Linux"></a>Arch Linux</h3><p>On Arch Linux, Yarn can be installed through the official package manager.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pacman -S yarn</span><br></pre></td></tr></table></figure>
+
+<h3 id="Path-Setup"><a href="#Path-Setup" class="headerlink" title="Path Setup"></a>Path Setup</h3><p>如果未在 PATH 环境变量中找到 yarn，请按照以下步骤添加 yarn 到 PATH 环境变量中，使其可以随处运行。</p>
+<p>注意：您的配置文件可能是 <code>.profile</code>、<code>.bash_profile</code>、<code>.bashrc</code>、<code>.zshrc</code> 等。</p>
+<ol>
+<li>将此项加入您的配置文件： <code>export PATH=&quot;$PATH:/opt/yarn-[version]/bin&quot;</code> （路径可能根据您安装 Yarn 的位置而有差异）</li>
+<li>在终端中，执行登录并登出以使更改生效</li>
+</ol>
+<p>为了可以全局访问 Yarn 的可执行文件，你需要在您的终端中设置 <code>PATH</code> 环境变量。若要执行此操作，请添加 <code>export PATH=&quot;$PATH:</code>yarn global bin<code>&quot;</code> 到您的配置文件中。</p>
+<p>通过如下命令测试 Yarn 是否安装成功：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn --version</span><br></pre></td></tr></table></figure>
+
+<p>如果是<code>Windows</code>系统，请选择对应的系统</p>
+<h3 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h3><p>在 Windows 系统中有三种安装 Yarn 的方式。</p>
+<h4 id="下载安装程序"><a href="#下载安装程序" class="headerlink" title="下载安装程序"></a>下载安装程序</h4><p>你将下载到一个 <code>.msi</code> 文件，当它运行时会指引你将 Yarn 安装到 Windows 上。</p>
+<p>如果你使用此安装程序，需要先安装 <a target="_blank" rel="noopener" href="https://nodejs.org/">Node.js</a>。</p>
+<p><a target="_blank" rel="noopener" href="https://yarn.bootcss.com/latest.msi">下载安装程序</a></p>
+<h4 id="通过-Chocolatey-安装"><a href="#通过-Chocolatey-安装" class="headerlink" title="通过 Chocolatey 安装"></a>通过 Chocolatey 安装</h4><p><a target="_blank" rel="noopener" href="https://chocolatey.org/">Chocolatey</a> 是一个 Windows 专用的软件包管理工具。 请按照此 <a target="_blank" rel="noopener" href="https://chocolatey.org/install">说明</a> 安装 Chocolatey 。</p>
+<p>安装 Chocolatey 之后，你就可以在控制台执行如下命令安装 Yarn 了：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">choco install yarn</span><br></pre></td></tr></table></figure>
+
+<p>这也会确保你安装了 <a target="_blank" rel="noopener" href="https://nodejs.org/">Node.js</a> 。</p>
+<h4 id="通过-Scoop-安装"><a href="#通过-Scoop-安装" class="headerlink" title="通过 Scoop 安装"></a>通过 Scoop 安装</h4><p><a target="_blank" rel="noopener" href="http://scoop.sh/">Scoop</a> 是一个用于 Windows 的基于命令行的安装工具。 请按照此 <a target="_blank" rel="noopener" href="https://github.com/lukesampson/scoop/wiki/Quick-Start">说明</a> 安装 Scoop 。</p>
+<p>Scoop 安装后，你就可以在控制台执行如下命令安装 Yarn 了：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scoop install yarn</span><br></pre></td></tr></table></figure>
+
+<p>如果 <a target="_blank" rel="noopener" href="https://nodejs.org/">Node.js</a> 未被安装，scoop 会提示你安装。 例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scoop install nodejs</span><br></pre></td></tr></table></figure>
+
+<h4 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h4><p>请将您的项目目录和 Yarn 的缓存目录 (%LocalAppData%\Yarn) 列入杀毒软件的白名单中，否则会因为每次向磁盘写入文件时而被扫描，导致安装软件包变得很慢。</p>
+<p>通过如下命令测试 Yarn 是否安装成功：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn --version</span><br></pre></td></tr></table></figure>
+
+<h2 id="VuePress"><a href="#VuePress" class="headerlink" title="VuePress"></a>VuePress</h2><p><a target="_blank" rel="noopener" href="http://caibaojian.com/vuepress/">VuePress中文网</a></p>
+<h3 id="全局安装"><a href="#全局安装" class="headerlink" title="全局安装"></a>全局安装</h3><p>如果你只是想随便用下 VuePress，你可以在全局安装它：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 全局安装</span></span><br><span class="line">npm install -g vuepress</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建一个 markdown 文件</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;# Hello VuePress&#x27;</span> &gt; README.md</span><br><span class="line"></span><br><span class="line"><span class="comment"># 开始编写文档</span></span><br><span class="line">vuepress dev</span><br><span class="line"></span><br><span class="line"><span class="comment"># 构建</span></span><br><span class="line">vuepress build</span><br></pre></td></tr></table></figure>
+
+<h3 id="在已有项目中安装"><a href="#在已有项目中安装" class="headerlink" title="在已有项目中安装"></a>在已有项目中安装</h3><p>如果你想要在一个已有项目中维护文档，就应该将 <code>VuePress</code>安装为本地依赖。此设置还允许你使用 <code>CI </code>或 <code>Netlify </code>服务，在推送时自动部署。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装为本地依赖项</span></span><br><span class="line">npm install -D vuepress</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建一个 docs 目录</span></span><br><span class="line"><span class="built_in">mkdir</span> docs</span><br><span class="line"><span class="comment"># 创建一个 markdown 文件</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;# Hello VuePress&#x27;</span> &gt; docs/README.md</span><br><span class="line"></span><br><span class="line"><span class="comment"># 开始编写文档</span></span><br><span class="line">npx vuepress dev docs</span><br></pre></td></tr></table></figure>
+
+<p>或者，给 <code>package.json</code> 添加一些 scripts 脚本：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;scripts&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;docs:dev&quot;</span><span class="punctuation">:</span> <span class="string">&quot;vuepress dev docs&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;docs:build&quot;</span><span class="punctuation">:</span> <span class="string">&quot;vuepress build docs&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>然后你就可以开始编写文档了：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run docs:dev</span><br></pre></td></tr></table></figure>
+
+<p>要生成静态资源，请运行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run docs:build</span><br></pre></td></tr></table></figure>
+
+<p>默认情况下，构建的文件会位于 <code>.vuepress/dist</code> 中，该文件可以通过 <code>.vuepress/config.js</code> 中的 <code>dest</code> 字段进行配置。构建的文件可以部署到任何静态文件服务器。关于如何部署到一些常用服务，请参考 <a target="_blank" rel="noopener" href="http://caibaojian.com/vuepress/guide/deploy.html">部署指南</a>。</p>
+<h2 id="使用主题"><a href="#使用主题" class="headerlink" title="使用主题"></a>使用主题</h2><p><code>vuepress-theme-reco</code></p>
+<p><strong># vuepress-theme-reco-cli</strong></p>
+<p>Blog generation tool for vuepress-theme-reco </p>
+<p><strong>## Version</strong></p>
+<p>|Version|VuePress|VuePress-theme-reco|</p>
+<p>|-|:-:|:-:|</p>
+<p>|0.x|0.x|0.x|</p>
+<p>|1.x|1.x|1.x|</p>
+<p><strong>## Experience</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># create</span></span><br><span class="line"></span><br><span class="line">npx vuepress-theme-reco-cli init my-blog</span><br><span class="line"></span><br><span class="line"><span class="comment"># or</span></span><br><span class="line"></span><br><span class="line">npm install  -g</span><br><span class="line"></span><br><span class="line">reco-cli init my-blog</span><br><span class="line"></span><br><span class="line"><span class="comment"># install</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> my-blog</span><br><span class="line"></span><br><span class="line">npm install</span><br><span class="line"></span><br><span class="line"><span class="comment"># run</span></span><br><span class="line"></span><br><span class="line">npm run dev</span><br><span class="line"></span><br><span class="line"><span class="comment"># build</span></span><br><span class="line"></span><br><span class="line">npm run build</span><br></pre></td></tr></table></figure>
+
+<p><em><strong>*if yarn*</strong></em></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># create</span></span><br><span class="line"></span><br><span class="line">npx vuepress-theme-reco-cli init my-blog</span><br><span class="line"></span><br><span class="line"><span class="comment">#or</span></span><br><span class="line"></span><br><span class="line">yarn global add vuepress-theme-reco-cli</span><br><span class="line"></span><br><span class="line">reco-cli init my-blog</span><br><span class="line"></span><br><span class="line"><span class="comment"># install</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> my-blog</span><br><span class="line"></span><br><span class="line">yarn install</span><br><span class="line"></span><br><span class="line"><span class="comment"># run</span></span><br><span class="line"></span><br><span class="line">yarn dev</span><br><span class="line"></span><br><span class="line"><span class="comment"># build</span></span><br><span class="line"></span><br><span class="line">yarn build</span><br></pre></td></tr></table></figure>
+
+<p>以上完成之后，你将会获得一个基础的博客网站，接下来是相关替换改造，选择一个<code>IDE</code>或者文本编辑器打开文件夹。</p>
+<p>比如<code>VSCode</code></p>
+<p>文件结构目录如下：</p>
+<p>![23g](<a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/qbmzc/images/master/mdimage/2019/%E6%89%B9%E6%B3%A8">https://raw.githubusercontent.com/qbmzc/images/master/mdimage/2019/批注</a> 2019-07-22 221844.png)</p>
+<p>修该配置文件，位于<code>.vuepress/config.js</code>,<code>.vuepress/public</code>文件夹为图片资源。</p>
+<p>主题作者已经做了详细的注释在配置文件中，以下可以修改的部分</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="attr">title</span>: <span class="string">&quot;congco&quot;</span>, <span class="comment">// 对应左上角的标题</span></span><br><span class="line">  <span class="attr">description</span>: <span class="string">&#x27;得道者多助，失道者寡助&#x27;</span>, <span class="comment">//对应首页的标语</span></span><br><span class="line">  <span class="attr">dest</span>: <span class="string">&#x27;dist&#x27;</span>, <span class="comment">//build命令打包地址，上面有论述，这里说明一下，作者默认为public，但是在.gitignore中忽略</span></span><br><span class="line">    <span class="comment">//了public，这就会导致git提交缺少图片资源文件。这里修该为dist,与当前文件目录一致。</span></span><br><span class="line">  <span class="attr">head</span>: [</span><br><span class="line">    [<span class="string">&#x27;link&#x27;</span>, &#123; <span class="attr">rel</span>: <span class="string">&#x27;icon&#x27;</span>, <span class="attr">href</span>: <span class="string">&#x27;/favicon.ico&#x27;</span> &#125;],<span class="comment">// 网站图标，可以通过PS自己制定</span></span><br><span class="line">    [<span class="string">&#x27;meta&#x27;</span>, &#123; <span class="attr">name</span>: <span class="string">&#x27;viewport&#x27;</span>, <span class="attr">content</span>: <span class="string">&#x27;width=device-width,initial-scale=1,user-scalable=no&#x27;</span> &#125;]</span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">theme</span>: <span class="string">&#x27;reco&#x27;</span>,</span><br><span class="line">  <span class="attr">themeConfig</span>: &#123;</span><br><span class="line">    <span class="attr">nav</span>: [</span><br><span class="line">      &#123; <span class="attr">text</span>: <span class="string">&#x27;Home&#x27;</span>, <span class="attr">link</span>: <span class="string">&#x27;/&#x27;</span>, <span class="attr">icon</span>: <span class="string">&#x27;reco-home&#x27;</span> &#125;,</span><br><span class="line">      &#123; <span class="attr">text</span>: <span class="string">&#x27;TimeLine&#x27;</span>, <span class="attr">link</span>: <span class="string">&#x27;/timeLine/&#x27;</span>, <span class="attr">icon</span>: <span class="string">&#x27;reco-date&#x27;</span> &#125;,</span><br><span class="line">      &#123; <span class="attr">text</span>: <span class="string">&#x27;Contact&#x27;</span>, </span><br><span class="line">        <span class="attr">icon</span>: <span class="string">&#x27;reco-message&#x27;</span>,</span><br><span class="line">        <span class="attr">items</span>: [ <span class="comment">//链接地址，根据自己情况修该，这里有些图标不存在，所以显示会有些问题</span></span><br><span class="line">          &#123; <span class="attr">text</span>: <span class="string">&#x27;GitHub&#x27;</span>, <span class="attr">link</span>: <span class="string">&#x27;https://github.com/qbmzc&#x27;</span>, <span class="attr">icon</span>: <span class="string">&#x27;reco-github&#x27;</span> &#125;, </span><br><span class="line">          &#123; <span class="attr">text</span>: <span class="string">&#x27;简书&#x27;</span>, <span class="attr">link</span>: <span class="string">&#x27;https://www.jianshu.com/u/1fa980d5267b&#x27;</span>, <span class="attr">icon</span>: <span class="string">&#x27;reco-jianshu&#x27;</span> &#125;,</span><br><span class="line">          &#123; <span class="attr">text</span>: <span class="string">&#x27;CSDN&#x27;</span>, <span class="attr">link</span>: <span class="string">&#x27;https://me.csdn.net/qbmzc&#x27;</span>, <span class="attr">icon</span>: <span class="string">&#x27;reco-csdn&#x27;</span> &#125;,</span><br><span class="line">          <span class="comment">// &#123; text: &#x27;gitlab&#x27;, link: &#x27;https://gitlab.com/congco?nav_source=navbar&#x27;, icon: &#x27;reco-gitlab&#x27; &#125;,</span></span><br><span class="line">          <span class="comment">// &#123; text: &#x27;语雀&#x27;, link: &#x27;https://www.yuque.com/congco&#x27;, icon: &#x27;reco-yuque&#x27; &#125;,</span></span><br><span class="line">        ]</span><br><span class="line">      &#125;</span><br><span class="line">    ],</span><br><span class="line">    <span class="comment">// 博客设置</span></span><br><span class="line">    <span class="attr">blogConfig</span>: &#123;</span><br><span class="line">      <span class="attr">category</span>: &#123;</span><br><span class="line">        <span class="attr">location</span>: <span class="number">2</span>, <span class="comment">// 在导航栏菜单中所占的位置，默认2</span></span><br><span class="line">        <span class="attr">text</span>: <span class="string">&#x27;Category&#x27;</span> <span class="comment">// 默认 “分类”</span></span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">tag</span>: &#123;</span><br><span class="line">        <span class="attr">location</span>: <span class="number">3</span>, <span class="comment">// 在导航栏菜单中所占的位置，默认3</span></span><br><span class="line">        <span class="attr">text</span>: <span class="string">&#x27;Tag&#x27;</span> <span class="comment">// 默认 “标签”</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">logo</span>: <span class="string">&#x27;/head.png&#x27;</span>,</span><br><span class="line">    <span class="comment">// 搜索设置</span></span><br><span class="line">    <span class="attr">search</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">searchMaxSuggestions</span>: <span class="number">10</span>,</span><br><span class="line">    <span class="comment">// 自动形成侧边导航</span></span><br><span class="line">    <span class="attr">sidebar</span>: <span class="string">&#x27;auto&#x27;</span>,</span><br><span class="line">    <span class="comment">// 最后更新时间</span></span><br><span class="line">    <span class="attr">lastUpdated</span>: <span class="string">&#x27;Last Updated&#x27;</span>,</span><br><span class="line">    <span class="comment">// 作者</span></span><br><span class="line">    <span class="attr">author</span>: <span class="string">&#x27;congco&#x27;</span>,</span><br><span class="line">    <span class="comment">// 备案号</span></span><br><span class="line">    <span class="attr">record</span>: <span class="string">&#x27;xxxx&#x27;</span>,</span><br><span class="line">    <span class="comment">// 项目开始时间</span></span><br><span class="line">    <span class="attr">startYear</span>: <span class="string">&#x27;2019&#x27;</span></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 密钥 (if your blog is private)</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// keyPage: &#123;</span></span><br><span class="line">    <span class="comment">//   keys: [&#x27;your password&#x27;],</span></span><br><span class="line">    <span class="comment">//   color: &#x27;#42b983&#x27;,</span></span><br><span class="line">    <span class="comment">//   lineColor: &#x27;#42b983&#x27;</span></span><br><span class="line">    <span class="comment">// &#125;,</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * valine 设置 (if you need valine comment )</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// valineConfig: &#123;</span></span><br><span class="line">    <span class="comment">//   appId: &#x27;...&#x27;,// your appId</span></span><br><span class="line">    <span class="comment">//   appKey: &#x27;...&#x27;, // your appKey</span></span><br><span class="line">    <span class="comment">// &#125;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">markdown</span>: &#123;</span><br><span class="line">    <span class="attr">lineNumbers</span>: <span class="literal">true</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">plugins</span>: [<span class="string">&#x27;@vuepress/medium-zoom&#x27;</span>, <span class="string">&#x27;flowchart&#x27;</span>]</span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
+
+<h2 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h2><blockquote>
+<p>首先需要创建一个使用用户名创建的仓库,例如：<code>https://foo.github.io</code></p>
+</blockquote>
+<h2 id="GitHub-页面"><a href="#GitHub-页面" class="headerlink" title="GitHub 页面"></a>GitHub 页面</h2><ol>
+<li>将 <code>.vuepress/config.js</code> 中的 <code>base</code> 设置为你的仓库名称。例如，如果你的仓库是 <code>https://github.com/foo/bar</code> ，则已部署的页面将在 <code>https://foo.github.io/bar</code> 上可用。在这种情况下，你应该将<code>base</code>设置为 <code>&quot;/bar/&quot;</code> 。</li>
+<li>在你的项目中，运行：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 构建</span></span><br><span class="line">yarn build</span><br><span class="line"></span><br><span class="line"><span class="comment"># 导航到构建输出目录</span></span><br><span class="line"><span class="built_in">cd</span> dist</span><br><span class="line"></span><br><span class="line">git init</span><br><span class="line">git add -A</span><br><span class="line">git commit -m <span class="string">&#x27;deploy&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 推到你仓库的的 master</span></span><br><span class="line"><span class="comment"># 将 &lt;USERNAME&gt;/&lt;REPO&gt; 替换为你的信息</span></span><br><span class="line">git push -f git@github.com:&lt;USERNAME&gt;/&lt;REPO&gt;.git master</span><br></pre></td></tr></table></figure>
+
+<p>你可以在 CI 设置中运行此脚本以启用每次推送时的自动部署。</p>
+<p>访问<code>&lt;USERNAME&gt;.github.io</code>即可看到效果。</p>
+</div>
+        </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/daily/" rel="tag">daily</a>, <a class="tag-none-link" href="/tags/vuepress/" rel="tag">vuepress</a>
+                </div>
+                <div class="pull-date">
+                    <time datetime="2025-11-21T06:36:31.539Z" itemprop="dateModified">最后编辑：2025-11-21</time>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" 一个普通的周末" href="/2019/07/21/2019/07/211821/">&lt; 上一篇</a>
+            </div>
+            
+            
+            <div class="nav-next clearfix">
+                <a title=" 坤伦决" href="/2019/07/22/2019/07/072221/">下一篇 &gt;</a>
+            </div>
+            
+        </nav>
+    
+    
+        <link rel="stylesheet" href="/vendors/gitalk@1.7.2/dist/gitalk.css"></script>
+<div id="gitalk-container" class="post-comments lazy-load" style="padding-left:2rem; padding-right:2rem;"></div>
+<script>
+    var load_comm = () => {
+        const init = () => {
+            console.log('Gitalk loading...');
+            const gitalk = new Gitalk(Object.assign({
+                id: '/2019/07/22/2019/07/build_blog/',
+                path: '/2019/07/22/2019/07/build_blog/'
+            }, JSON.parse('{"clientID":"56e6a743c63b9c4faa93","clientSecret":"888b7234051c5c2ed6ea7bdf18e8b5a2678775f1","repo":"gitalk-comments","owner":"qbmzc","admin":["qbmzc"]}')));
+
+            gitalk.render('gitalk-container');
+        }
+        if (typeof Gitalk === 'undefined') {
+            const src = '/vendors/gitalk@1.7.2/dist/gitalk.min.js';
+            $.getScript(src, init);
+        } else {
+            init();
+        }
+    };
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a></noscript>
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/avatar.webp" loading="lazy" decoding="auto" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center">流云与风，苍穹游牧</p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                499
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                8
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                229
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">137</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">151</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">29</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/congco/">congco</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/work/">work</a><span class="category-list-count">118</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wuw/">wuw</a><span class="category-list-count">48</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/">技术笔记</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/AES/" style="font-size: 0.6em;">AES</a> <a href="/tags/AI/" style="font-size: 0.7em;">AI</a> <a href="/tags/AWS/" style="font-size: 0.7em;">AWS</a> <a href="/tags/Arch/" style="font-size: 0.6em;">Arch</a> <a href="/tags/Arch-Linux/" style="font-size: 0.8em;">Arch Linux</a> <a href="/tags/ArchLinux/" style="font-size: 0.8em;">ArchLinux</a> <a href="/tags/CAS/" style="font-size: 0.6em;">CAS</a> <a href="/tags/CI-CD/" style="font-size: 0.6em;">CI/CD</a> <a href="/tags/Caffeine/" style="font-size: 0.6em;">Caffeine</a> <a href="/tags/CompletableFuture/" style="font-size: 0.7em;">CompletableFuture</a> <a href="/tags/DNS/" style="font-size: 0.8em;">DNS</a> <a href="/tags/Docker/" style="font-size: 0.6em;">Docker</a> <a href="/tags/Flask/" style="font-size: 0.6em;">Flask</a> <a href="/tags/Future/" style="font-size: 0.7em;">Future</a> <a href="/tags/GC/" style="font-size: 0.6em;">GC</a> <a href="/tags/GPT/" style="font-size: 0.6em;">GPT</a> <a href="/tags/GraalVM/" style="font-size: 0.8em;">GraalVM</a> <a href="/tags/HashMap/" style="font-size: 0.6em;">HashMap</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/14/2025/11/141727/"><i class="fa  fa-book"></i> karakeep</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111335/"><i class="fa  fa-book"></i> SonarQube 扫描支持多 JDK 版本的实践方案</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111045/"><i class="fa  fa-book"></i> 一次修复 PDF 中文乱码的排查记录</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/23/2025/10/221500/"><i class="fa  fa-book"></i> dig命令使用详解</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/13/2025/10/131645/"><i class="fa  fa-book"></i> DNS解析异常导致视频播放缓慢问题排查与解决</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  >
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        <li><a href="mailto:congco@foxmail.com"><i class="fa fa-envelope"></i></a></li>
+                        
+                        
+                        
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://github.com/qbmzc"><i class="fa fa-github"></i></a></li>
+                        <li><a target="_blank" rel="nofollow" href="/rss.xml"><i class="fa fa-rss"></i></a></li>
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2025 沐曦留曳 版权所有.</li>
+                            <li>本站已运行<span id="span_dt">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
+                            <li>Site built with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by cong.</li>
+                        </div>
+                        <div>
+                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
+                            <li>Hosted on <a href="https://github.io" target="_blank">Github Pages</a></li>
+                        </div>
+                        <div>
+                            
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="/vendors/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="/vendors/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+
+    <script defer src="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="/vendors/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>

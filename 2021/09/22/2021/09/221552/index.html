@@ -1,0 +1,1475 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="/images/favicon.ico">
+  
+  <title>AWS-S3 | 沐曦留曳</title>
+  <meta name="author" content="cong" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="aws-s3, java" />
+  
+  <meta property="og:type" content="article">
+<meta property="og:title" content="AWS-S3">
+<meta property="og:url" content="https://qbmzc.github.io/2021/09/22/2021/09/221552/index.html">
+<meta property="og:site_name" content="沐曦留曳">
+<meta property="og:locale">
+<meta property="og:image" content="https://qbmzc.github.io/images/favicon.ico">
+<meta property="article:published_time" content="2021-09-21T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-11-21T06:36:31.551Z">
+<meta property="article:author" content="cong">
+<meta property="article:tag" content="java">
+<meta property="article:tag" content="aws-s3">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://qbmzc.github.io/images/favicon.ico">
+  <link rel="alternate" href="rss.xml" type="application/atom+xml">
+  <!-- 站点验证相关 -->
+  
+    
+      <meta name="google-site-verification" content="lV4cead5YlJ8KpODToP7dvzi-ihrxSqU0yYStYKj2ao" />
+    
+    
+      <meta name="baidu-site-verification" content="codeva-Zr6WlkDupK" />
+    
+    
+      <meta name="msvalidate.01" content="2D2197DEE362D193B3EC29AFD3306341" />
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" media="all"></script>
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-color-dark.min.css" media="(prefers-color-scheme: dark)"></script>
+    <script src="/js/kr-dark.min.js"></script>
+  
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" media="all"></script>
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="/vendors/font-awesome@4.7.0/css/font-awesome.min.css" media="all"></script>
+  <link rel="stylesheet" id="nprogress-css" href="/vendors/nprogress@0.2.0/nprogress.css" media="all"></script>
+  
+  
+  
+    <link rel="stylesheet" href="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css"></script>
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="/vendors/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/banner.webp');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">沐曦留曳</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>沐曦留曳</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article itemscope itemtype="https://schema.org/Article">
+    
+    <link itemprop="mainEntityOfPage" href="https://qbmzc.github.io/2021/09/22/2021/09/221552/">
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center" itemprop="name headline">AWS-S3</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><time datetime="2021-09-21T16:00:00.000Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2021-09-22</time></li>
+                <li itemprop="author" itemscope itemtype="https://schema.org/Person">
+                    <i class="fa fa-user"></i> 作者 <span itemprop="name">cong</span>
+                </li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~6.13K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1763706991551"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+            
+            <hr />
+            <div itemprop="articleBody"><p><img src="https://fastly.jsdelivr.net/gh/qbmzc/images/2021/202109221604626.jpg" alt="out"></p>
+<span id="more"></span>
+
+<h2 id="AWS-S3"><a href="#AWS-S3" class="headerlink" title="AWS-S3"></a>AWS-S3</h2><h2 id="fs功能"><a href="#fs功能" class="headerlink" title="fs功能"></a>fs功能</h2><ol>
+<li>普通文件上传下载</li>
+<li>分片文件上传下载</li>
+<li>上传文件转换为pdf</li>
+<li></li>
+</ol>
+<h2 id="可通过配置代理访问"><a href="#可通过配置代理访问" class="headerlink" title="可通过配置代理访问"></a>可通过配置代理访问</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.taimeitech.paas.fs.client.proxy;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.taimeitech.framework.common.dto.ActionResult;</span><br><span class="line"><span class="keyword">import</span> com.taimeitech.framework.service.ServiceProxy;</span><br><span class="line"><span class="keyword">import</span> com.taimeitech.paas.fs.common.dto.ConvertPdfBaseParam;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"></span><br><span class="line"><span class="meta">@ServiceProxy(serviceName = &quot;$&#123;spring.application.name:fs-service&#125;&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">FsClientProxy</span> &#123;</span><br><span class="line">    <span class="meta">@PostMapping(&quot;/file/pdf/convert/&#123;fileId&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> ActionResult <span class="title function_">convertFileById</span><span class="params">(<span class="meta">@PathVariable(&quot;fileId&quot;)</span> String fileId, <span class="meta">@RequestParam(value = &quot;hurry&quot;, required = false)</span> Boolean hurry, <span class="meta">@RequestBody(required = false)</span> ConvertPdfBaseParam request)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/file/preview/&#123;fileId&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">preview</span><span class="params">(<span class="meta">@PathVariable(&quot;fileId&quot;)</span> String fileId, HttpServletRequest req, HttpServletResponse resp)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping(method = RequestMethod.GET, value = &quot;/file/getFile/&#123;fileId&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">rangeDownloadCheck</span><span class="params">(<span class="meta">@PathVariable(&quot;fileId&quot;)</span> String fileId, HttpServletResponse resp)</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Demo"><a href="#Demo" class="headerlink" title="Demo"></a>Demo</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-s3 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.amazonaws<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>aws-java-sdk-s3<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.12.70<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="创建存储桶"><a href="#创建存储桶" class="headerlink" title="创建存储桶"></a>创建存储桶</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 导入</span></span><br><span class="line"><span class="keyword">import</span> com.amazonaws.regions.Regions;</span><br><span class="line"><span class="keyword">import</span> com.amazonaws.services.s3.AmazonS3;</span><br><span class="line"><span class="keyword">import</span> com.amazonaws.services.s3.AmazonS3ClientBuilder;</span><br><span class="line"><span class="keyword">import</span> com.amazonaws.services.s3.model.AmazonS3Exception;</span><br><span class="line"><span class="keyword">import</span> com.amazonaws.services.s3.model.Bucket;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="comment">//代码</span></span><br><span class="line"><span class="keyword">if</span> (s3.doesBucketExistV2(bucket_name)) &#123;</span><br><span class="line">    System.out.format(<span class="string">&quot;Bucket %s already exists.\n&quot;</span>, bucket_name);</span><br><span class="line">    b = getBucket(bucket_name);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        b = s3.createBucket(bucket_name);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (AmazonS3Exception e) &#123;</span><br><span class="line">        System.err.println(e.getErrorMessage());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> b;</span><br></pre></td></tr></table></figure>
+
+<h3 id="上传对象"><a href="#上传对象" class="headerlink" title="上传对象"></a>上传对象</h3><p><code>putObject</code>方法，并为其提供存储桶名称、键名称和要上传的文件。<em>存储桶必须存在，否则将出现错误</em>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//	导入</span></span><br><span class="line"><span class="keyword">import</span> com.amazonaws.AmazonServiceException;</span><br><span class="line"><span class="keyword">import</span> com.amazonaws.regions.Regions;</span><br><span class="line"><span class="keyword">import</span> com.amazonaws.services.s3.AmazonS3;</span><br><span class="line"><span class="comment">//代码</span></span><br><span class="line">System.out.format(<span class="string">&quot;Uploading %s to S3 bucket %s...\n&quot;</span>, file_path, bucket_name);</span><br><span class="line"><span class="keyword">final</span> <span class="type">AmazonS3</span> <span class="variable">s3</span> <span class="operator">=</span> AmazonS3ClientBuilder.standard().withRegion(Regions.DEFAULT_REGION).build();</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    s3.putObject(bucket_name, key_name, <span class="keyword">new</span> <span class="title class_">File</span>(file_path));</span><br><span class="line">&#125; <span class="keyword">catch</span> (AmazonServiceException e) &#123;</span><br><span class="line">    System.err.println(e.getErrorMessage());</span><br><span class="line">    System.exit(<span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 大文件</span></span><br><span class="line"> <span class="comment">// 初始化s3Client</span></span><br><span class="line">s3 = initS3Client();</span><br><span class="line"><span class="type">TransferManager</span> <span class="variable">tm</span> <span class="operator">=</span> TransferManagerBuilder.standard().withS3Client(s3).build();</span><br><span class="line"><span class="type">Upload</span> <span class="variable">upload</span> <span class="operator">=</span> tm.upload(bucketName, fileId, file);</span><br><span class="line">log.info(<span class="string">&quot;Object upload started:&#123;&#125;&quot;</span>, fileId);</span><br><span class="line">upload.waitForCompletion();<span class="comment">//等待上传完成</span></span><br><span class="line">log.info(<span class="string">&quot;Object upload complete&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="下载对象"><a href="#下载对象" class="headerlink" title="下载对象"></a>下载对象</h3><p>使用卓越亚马逊客户端的<code>getObject</code>方法，并向其传递要下载的存储桶和对象的名称。如果成功，此方法将返回一个 <a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/sdk-for-java/v1/reference/com/amazonaws/services/s3/model/S3Object.html">S3Object</a>。<em>指定的存储桶和对象键必须存在，否则将出现错误</em>。</p>
+<p>您可以通过对 <code>getObjectContent</code> 调用 <code>S3Object</code> 来获取对象的内容。这将返回一个 <a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/sdk-for-java/v1/reference/com/amazonaws/services/s3/model/S3ObjectInputStream.html">S3ObjectInputStream</a>，其行为与标准 Java <code>InputStream</code> 对象的相同。</p>
+<p>以下示例从 S3 下载一个对象，然后将该对象的内容保存到一个文件（使用与对象键相同的名称）：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> com.amazonaws.AmazonServiceException;</span><br><span class="line"><span class="keyword">import</span> com.amazonaws.regions.Regions;</span><br><span class="line"><span class="keyword">import</span> com.amazonaws.services.s3.AmazonS3;</span><br><span class="line"><span class="keyword">import</span> com.amazonaws.services.s3.AmazonS3ClientBuilder;</span><br><span class="line"><span class="keyword">import</span> com.amazonaws.services.s3.model.S3Object;</span><br><span class="line"><span class="keyword">import</span> com.amazonaws.services.s3.model.S3ObjectInputStream;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"><span class="comment">// 代码</span></span><br><span class="line">System.out.format(<span class="string">&quot;Downloading %s from S3 bucket %s...\n&quot;</span>, key_name, bucket_name);</span><br><span class="line"><span class="keyword">final</span> <span class="type">AmazonS3</span> <span class="variable">s3</span> <span class="operator">=</span> AmazonS3ClientBuilder.standard().withRegion(Regions.DEFAULT_REGION).build();</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="type">S3Object</span> <span class="variable">o</span> <span class="operator">=</span> s3.getObject(bucket_name, key_name);</span><br><span class="line">    <span class="type">S3ObjectInputStream</span> <span class="variable">s3is</span> <span class="operator">=</span> o.getObjectContent();</span><br><span class="line">    <span class="type">FileOutputStream</span> <span class="variable">fos</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">FileOutputStream</span>(<span class="keyword">new</span> <span class="title class_">File</span>(key_name));</span><br><span class="line">    <span class="type">byte</span>[] read_buf = <span class="keyword">new</span> <span class="title class_">byte</span>[<span class="number">1024</span>];</span><br><span class="line">    <span class="type">int</span> <span class="variable">read_len</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span> ((read_len = s3is.read(read_buf)) &gt; <span class="number">0</span>) &#123;</span><br><span class="line">        fos.write(read_buf, <span class="number">0</span>, read_len);</span><br><span class="line">    &#125;</span><br><span class="line">    s3is.close();</span><br><span class="line">    fos.close();</span><br><span class="line">&#125; <span class="keyword">catch</span> (AmazonServiceException e) &#123;</span><br><span class="line">    System.err.println(e.getErrorMessage());</span><br><span class="line">    System.exit(<span class="number">1</span>);</span><br><span class="line">&#125; <span class="keyword">catch</span> (FileNotFoundException e) &#123;</span><br><span class="line">    System.err.println(e.getMessage());</span><br><span class="line">    System.exit(<span class="number">1</span>);</span><br><span class="line">&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">    System.err.println(e.getMessage());</span><br><span class="line">    System.exit(<span class="number">1</span>);</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="复制、移动或重命名对象"><a href="#复制、移动或重命名对象" class="headerlink" title="复制、移动或重命名对象"></a>复制、移动或重命名对象</h3><p>您可以使用 AmazonS3 客户端的<code>copyObject</code>方法。它采用要从中复制的存储桶的名称、要复制的对象以及目标存储桶名称。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> com.amazonaws.AmazonServiceException;</span><br><span class="line"><span class="keyword">import</span> com.amazonaws.regions.Regions;</span><br><span class="line"><span class="comment">//代码</span></span><br><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    s3.copyObject(from_bucket, object_key, to_bucket, object_key);</span><br><span class="line">&#125; <span class="keyword">catch</span> (AmazonServiceException e) &#123;</span><br><span class="line">    System.err.println(e.getErrorMessage());</span><br><span class="line">    System.exit(<span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line">System.out.println(<span class="string">&quot;Done!&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+
+
+<blockquote>
+<p><strong>注意</strong></p>
+<p>您可以将 <code>copyObject</code> 与 <a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/zh_cn/sdk-for-java/v1/developer-guide/examples-s3-objects.html#delete-object">deleteObject</a> 配合使用来<strong>移动</strong>或<strong>重命名</strong>对象，方式是先将对象复制到新名称 (您可以使用与源和目标相同的存储桶)，然后从对象的旧位置删除对象。</p>
+</blockquote>
+<h3 id="删除元数据"><a href="#删除元数据" class="headerlink" title="删除元数据"></a>删除元数据</h3><p>deleteObject</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> com.amazonaws.AmazonServiceException;</span><br><span class="line"><span class="keyword">import</span> com.amazonaws.regions.Regions;</span><br><span class="line"></span><br><span class="line"><span class="keyword">final</span> <span class="type">AmazonS3</span> <span class="variable">s3</span> <span class="operator">=</span> AmazonS3ClientBuilder.standard().withRegion(Regions.DEFAULT_REGION).build();</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    s3.deleteObject(bucket_name, object_key);</span><br><span class="line">&#125; <span class="keyword">catch</span> (AmazonServiceException e) &#123;</span><br><span class="line">    System.err.println(e.getErrorMessage());</span><br><span class="line">    System.exit(<span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="一次性删除多个对象"><a href="#一次性删除多个对象" class="headerlink" title="一次性删除多个对象"></a>一次性删除多个对象</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> com.amazonaws.AmazonServiceException;</span><br><span class="line"><span class="keyword">import</span> com.amazonaws.regions.Regions;</span><br><span class="line"><span class="keyword">import</span> com.amazonaws.services.s3.AmazonS3;</span><br><span class="line"></span><br><span class="line"><span class="keyword">final</span> <span class="type">AmazonS3</span> <span class="variable">s3</span> <span class="operator">=</span> AmazonS3ClientBuilder.standard().withRegion(Regions.DEFAULT_REGION).build();</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="type">DeleteObjectsRequest</span> <span class="variable">dor</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">DeleteObjectsRequest</span>(bucket_name)</span><br><span class="line">            .withKeys(object_keys);</span><br><span class="line">    s3.deleteObjects(dor);</span><br><span class="line">&#125; <span class="keyword">catch</span> (AmazonServiceException e) &#123;</span><br><span class="line">    System.err.println(e.getErrorMessage());</span><br><span class="line">    System.exit(<span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="相关文档"><a href="#相关文档" class="headerlink" title="相关文档"></a>相关文档</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://aws.amazon.com/cn/sdk-for-java/">https://aws.amazon.com/cn/sdk-for-java/</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.aws.amazon.com/zh_cn/sdk-for-java/v1/developer-guide/examples-s3-buckets.html">https://docs.aws.amazon.com/zh_cn&#x2F;sdk-for-java&#x2F;v1&#x2F;developer-guide&#x2F;examples-s3-buckets.html</a></li>
+</ul>
+</div>
+        </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/aws-s3/" rel="tag">aws-s3</a>, <a class="tag-none-link" href="/tags/java/" rel="tag">java</a>
+                </div>
+                <div class="pull-date">
+                    <time datetime="2025-11-21T06:36:31.551Z" itemprop="dateModified">最后编辑：2025-11-21</time>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" 重试｜RetryTemplate&amp;for" href="/2021/09/17/2021/09/171441/">&lt; 上一篇</a>
+            </div>
+            
+            
+            <div class="nav-next clearfix">
+                <a title=" AmazonWorkDocs" href="/2021/09/26/2021/09/261019/">下一篇 &gt;</a>
+            </div>
+            
+        </nav>
+    
+    
+        <link rel="stylesheet" href="/vendors/gitalk@1.7.2/dist/gitalk.css"></script>
+<div id="gitalk-container" class="post-comments lazy-load" style="padding-left:2rem; padding-right:2rem;"></div>
+<script>
+    var load_comm = () => {
+        const init = () => {
+            console.log('Gitalk loading...');
+            const gitalk = new Gitalk(Object.assign({
+                id: '/2021/09/22/2021/09/221552/',
+                path: '/2021/09/22/2021/09/221552/'
+            }, JSON.parse('{"clientID":"56e6a743c63b9c4faa93","clientSecret":"888b7234051c5c2ed6ea7bdf18e8b5a2678775f1","repo":"gitalk-comments","owner":"qbmzc","admin":["qbmzc"]}')));
+
+            gitalk.render('gitalk-container');
+        }
+        if (typeof Gitalk === 'undefined') {
+            const src = '/vendors/gitalk@1.7.2/dist/gitalk.min.js';
+            $.getScript(src, init);
+        } else {
+            init();
+        }
+    };
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a></noscript>
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/avatar.webp" loading="lazy" decoding="auto" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center">流云与风，苍穹游牧</p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                499
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                8
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                229
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">137</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">151</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">29</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/congco/">congco</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/work/">work</a><span class="category-list-count">118</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wuw/">wuw</a><span class="category-list-count">48</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/">技术笔记</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/AES/" style="font-size: 0.6em;">AES</a> <a href="/tags/AI/" style="font-size: 0.7em;">AI</a> <a href="/tags/AWS/" style="font-size: 0.7em;">AWS</a> <a href="/tags/Arch/" style="font-size: 0.6em;">Arch</a> <a href="/tags/Arch-Linux/" style="font-size: 0.8em;">Arch Linux</a> <a href="/tags/ArchLinux/" style="font-size: 0.8em;">ArchLinux</a> <a href="/tags/CAS/" style="font-size: 0.6em;">CAS</a> <a href="/tags/CI-CD/" style="font-size: 0.6em;">CI/CD</a> <a href="/tags/Caffeine/" style="font-size: 0.6em;">Caffeine</a> <a href="/tags/CompletableFuture/" style="font-size: 0.7em;">CompletableFuture</a> <a href="/tags/DNS/" style="font-size: 0.8em;">DNS</a> <a href="/tags/Docker/" style="font-size: 0.6em;">Docker</a> <a href="/tags/Flask/" style="font-size: 0.6em;">Flask</a> <a href="/tags/Future/" style="font-size: 0.7em;">Future</a> <a href="/tags/GC/" style="font-size: 0.6em;">GC</a> <a href="/tags/GPT/" style="font-size: 0.6em;">GPT</a> <a href="/tags/GraalVM/" style="font-size: 0.8em;">GraalVM</a> <a href="/tags/HashMap/" style="font-size: 0.6em;">HashMap</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/14/2025/11/141727/"><i class="fa  fa-book"></i> karakeep</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111335/"><i class="fa  fa-book"></i> SonarQube 扫描支持多 JDK 版本的实践方案</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111045/"><i class="fa  fa-book"></i> 一次修复 PDF 中文乱码的排查记录</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/23/2025/10/221500/"><i class="fa  fa-book"></i> dig命令使用详解</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/13/2025/10/131645/"><i class="fa  fa-book"></i> DNS解析异常导致视频播放缓慢问题排查与解决</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  >
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        <li><a href="mailto:congco@foxmail.com"><i class="fa fa-envelope"></i></a></li>
+                        
+                        
+                        
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://github.com/qbmzc"><i class="fa fa-github"></i></a></li>
+                        <li><a target="_blank" rel="nofollow" href="/rss.xml"><i class="fa fa-rss"></i></a></li>
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2025 沐曦留曳 版权所有.</li>
+                            <li>本站已运行<span id="span_dt">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
+                            <li>Site built with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by cong.</li>
+                        </div>
+                        <div>
+                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
+                            <li>Hosted on <a href="https://github.io" target="_blank">Github Pages</a></li>
+                        </div>
+                        <div>
+                            
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="/vendors/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="/vendors/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+
+    <script defer src="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="/vendors/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>

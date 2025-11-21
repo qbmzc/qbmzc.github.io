@@ -1,0 +1,1567 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="/images/favicon.ico">
+  
+  <title>GraalVM | 沐曦留曳</title>
+  <meta name="author" content="cong" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="GraalVM" />
+  
+  <meta name="description" content="GraalVM 会提前将 Java 应用程序编译为独立的二进制文件，这些二进制文件可立即启动，无需预热即可提供最佳性能，并且使用更少的资源。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GraalVM">
+<meta property="og:url" content="https://qbmzc.github.io/2024/01/14/2024/04/102109/index.html">
+<meta property="og:site_name" content="沐曦留曳">
+<meta property="og:description" content="GraalVM 会提前将 Java 应用程序编译为独立的二进制文件，这些二进制文件可立即启动，无需预热即可提供最佳性能，并且使用更少的资源。">
+<meta property="og:locale">
+<meta property="og:image" content="https://qbmzc.github.io/images/favicon.ico">
+<meta property="article:published_time" content="2024-01-13T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-11-21T06:36:31.561Z">
+<meta property="article:author" content="cong">
+<meta property="article:tag" content="GraalVM">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://qbmzc.github.io/images/favicon.ico">
+  <link rel="alternate" href="rss.xml" type="application/atom+xml">
+  <!-- 站点验证相关 -->
+  
+    
+      <meta name="google-site-verification" content="lV4cead5YlJ8KpODToP7dvzi-ihrxSqU0yYStYKj2ao" />
+    
+    
+      <meta name="baidu-site-verification" content="codeva-Zr6WlkDupK" />
+    
+    
+      <meta name="msvalidate.01" content="2D2197DEE362D193B3EC29AFD3306341" />
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" media="all"></script>
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-color-dark.min.css" media="(prefers-color-scheme: dark)"></script>
+    <script src="/js/kr-dark.min.js"></script>
+  
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" media="all"></script>
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="/vendors/font-awesome@4.7.0/css/font-awesome.min.css" media="all"></script>
+  <link rel="stylesheet" id="nprogress-css" href="/vendors/nprogress@0.2.0/nprogress.css" media="all"></script>
+  
+  
+  
+    <link rel="stylesheet" href="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css"></script>
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="/vendors/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/banner.webp');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">沐曦留曳</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>沐曦留曳</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article itemscope itemtype="https://schema.org/Article">
+    
+    <link itemprop="mainEntityOfPage" href="https://qbmzc.github.io/2024/01/14/2024/04/102109/">
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center" itemprop="name headline">GraalVM</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><time datetime="2024-01-13T16:00:00.000Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2024-01-14</time></li>
+                <li itemprop="author" itemscope itemtype="https://schema.org/Person">
+                    <i class="fa fa-user"></i> 作者 <span itemprop="name">cong</span>
+                </li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~3.50K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1763706991561"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+            
+                <div class="kratos-post-inner-toc">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E6%AD%A5%E9%AA%A4"><span class="toc-number">1.</span> <span class="toc-text">安装步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#idea%E6%96%B9%E5%BC%8F%E5%AE%89%E8%A3%85"><span class="toc-number">1.1.</span> <span class="toc-text">idea方式安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Linux"><span class="toc-number">1.2.</span> <span class="toc-text">Linux</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#macOS"><span class="toc-number">1.3.</span> <span class="toc-text">macOS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Windows"><span class="toc-number">1.4.</span> <span class="toc-text">Windows</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Docker"><span class="toc-number">1.5.</span> <span class="toc-text">Docker</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%A7%8B%E8%BF%90%E8%A1%8C%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F"><span class="toc-number">2.</span> <span class="toc-text">开始运行应用程序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-Spring-Boot-%E5%92%8C-GraalVM-%E6%9E%84%E5%BB%BA%E5%8E%9F%E7%94%9F%E9%95%9C%E5%83%8F"><span class="toc-number">3.</span> <span class="toc-text">使用 Spring Boot 和 GraalVM 构建原生镜像</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E7%94%9F%E9%95%9C%E5%83%8F"><span class="toc-number">3.1.</span> <span class="toc-text">原生镜像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%99%90%E5%88%B6"><span class="toc-number">3.2.</span> <span class="toc-text">限制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-GraalVM-native-image"><span class="toc-number">3.3.</span> <span class="toc-text">使用 GraalVM native-image</span></a></li></ol></li></ol>
+                </div>
+            
+            <hr />
+            <div itemprop="articleBody"><p>GraalVM 会提前将 Java 应用程序编译为独立的二进制文件，这些二进制文件可立即启动，无需预热即可提供最佳性能，并且使用更少的资源。</p>
+<span id="more"></span>
+
+
+<h2 id="安装步骤"><a href="#安装步骤" class="headerlink" title="安装步骤"></a>安装步骤</h2><p><a target="_blank" rel="noopener" href="https://www.graalvm.org/downloads/">下载地址</a></p>
+<p><img src="https://hehunfan-1300293535.cos.ap-shanghai.myqcloud.com/img/2022/202404102117438.gif" alt="202404102117438"></p>
+<h3 id="idea方式安装"><a href="#idea方式安装" class="headerlink" title="idea方式安装"></a>idea方式安装</h3><p><img src="https://hehunfan-1300293535.cos.ap-shanghai.myqcloud.com/img/2022/202404102123751.png" alt="202404102123751"></p>
+<h3 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h3><ol>
+<li>选择对应的版本和平台，下载GraalVM</li>
+<li>然后将.tar.gz文件移动到要安装的目录</li>
+<li>解压缩</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -xzf graalvm-jdk-&lt;version&gt;_linux-&lt;architecture&gt;.tar.gz</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>配置<code>JAVA_HOME</code></li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> JAVA_HOME=/opt/&lt;graalvm&gt;</span><br></pre></td></tr></table></figure>
+<p>将环境变量的值设置为 GraalVM bin 目录：<code>PATH</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> PATH=/opt/&lt;graalvm&gt;/bin:<span class="variable">$PATH</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>验证</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -version</span><br></pre></td></tr></table></figure>
+
+<h3 id="macOS"><a href="#macOS" class="headerlink" title="macOS"></a>macOS</h3><ol>
+<li>下载</li>
+<li>移除隔离属性（macOS Catalina 及更高版本需要）</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo xattr -r -d com.apple.quarantine graalvm-jdk-&lt;version&gt;_macos-&lt;architecture&gt;.tar.gz</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>解压</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -xzf graalvm-jdk-&lt;version&gt;_macos-&lt;architecture&gt;.tar.gz</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>移动到jvm路径</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo <span class="built_in">mv</span> graalvm-jdk-&lt;version&gt;_macos-&lt;architecture&gt; /Library/Java/JavaVirtualMachines</span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>设置环境变量</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#JAVA_HOME</span></span><br><span class="line"><span class="built_in">export</span> JAVA_HOME=/Library/Java/JavaVirtualMachines/&lt;graalvm&gt;/Contents/Home</span><br><span class="line"><span class="comment">#PATH</span></span><br><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$JAVA_HOME</span>/bin:<span class="variable">$PATH</span></span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>验证</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -version</span><br></pre></td></tr></table></figure>
+
+<h3 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h3><ol>
+<li><p>下载</p>
+</li>
+<li><p>移动到你想要安装的目录，并解压</p>
+</li>
+<li><p>设置环境变量</p>
+<ol>
+<li>命令方式设置</li>
+</ol>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">setx /M JAVA_HOME <span class="string">&quot;C:\Progra~1\Java\&lt;graalvm&gt;&quot;</span></span><br><span class="line"></span><br><span class="line">setx /M PATH <span class="string">&quot;<span class="variable">$JAVA_HOME</span>\bin;%PATH%&quot;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>通过 Windows GUI 设置环境变量：</li>
+</ol>
+<ul>
+<li><p>转到 Windows“开始”菜单，然后转到“设置”，然后转到“高级”。</p>
+</li>
+<li><p>单击环境变量。在“系统变量”部分，找到该变量并选择它。JAVA_HOME</p>
+</li>
+<li><p>单击编辑。</p>
+</li>
+<li><p>单击“新建”。</p>
+</li>
+<li><p>单击“浏览”以查找要添加的目录。单击“确定”进行确认。</p>
+</li>
+<li><p>重新启动命令提示符以重新加载环境变量。</p>
+<p>  <img src="https://hehunfan-1300293535.cos.ap-shanghai.myqcloud.com/img/2022/202404102134423.png" alt="202404102134423"></p>
+</li>
+</ul>
+</li>
+<li><p>重新启动终端，并执行<code>java -version</code>验证</p>
+</li>
+</ol>
+<h3 id="Docker"><a href="#Docker" class="headerlink" title="Docker"></a>Docker</h3><p><a target="_blank" rel="noopener" href="https://github.com/graalvm/container">在此处</a>查看 GraalVM Community Edition 容器映像的完整列表。</p>
+<ol>
+<li>拉取镜像</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull ghcr.io/graalvm/jdk-community:22</span><br></pre></td></tr></table></figure>
+<p>或者，若要将容器映像用作 Dockerfile 中的基础映像，请使用:</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> ghcr.io/graalvm/jdk-community:<span class="number">22</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>要使用特定 JDK 功能版本（例如 22）的实用程序拉取容器映像，请运行：native-image</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker pull ghcr.io/graalvm/native-image-community:22</span><br><span class="line"><span class="comment"># 带有工具链的实用程序拉取容器映像以创建完全静态链接的可执行文件</span></span><br><span class="line">docker pull ghcr.io/graalvm/native-image-community:22-muslib</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>验证</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">docker run -it --<span class="built_in">rm</span> --entrypoint /bin/bash ghcr.io/graalvm/native-image-community:22</span><br><span class="line"><span class="comment"># </span></span><br><span class="line"><span class="comment"># 检查 GraalVM 的版本及其安装位置</span></span><br><span class="line"><span class="built_in">env</span></span><br><span class="line"><span class="comment"># Java  </span></span><br><span class="line">java -version</span><br><span class="line"><span class="comment"># 检查版本</span></span><br><span class="line">native-image --version</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>在不指定处理器体系结构的情况下进行调用会拉取与 Docker 客户端匹配的处理器体系结构的容器映像。若要为其他平台体系结构拉取容器映像，请使用选项指定所需的平台体系结构，如下所示：<code>docker pull--platformlinux/amd64linux/aarch64</code></li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull --platform linux/aarch64 ghcr.io/graalvm/native-image-community:22</span><br></pre></td></tr></table></figure>
+
+<h2 id="开始运行应用程序"><a href="#开始运行应用程序" class="headerlink" title="开始运行应用程序"></a>开始运行应用程序</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HelloWorld</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;Hello, World!&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">javac HelloWorld.java</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">native-image HelloWorld</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 执行</span></span><br><span class="line">./helloworld</span><br><span class="line"><span class="comment">#输出</span></span><br><span class="line">Hello, World!</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 指定classpath</span></span><br><span class="line">native-image.cmd -classpath D:\Cong\Space\graalvm-demo\out\production\graalvm-demo com.cong.Hello</span><br></pre></td></tr></table></figure>
+<p><img src="https://hehunfan-1300293535.cos.ap-shanghai.myqcloud.com/img/2022/202404102249855.png" alt="202404102249855"></p>
+<h2 id="使用-Spring-Boot-和-GraalVM-构建原生镜像"><a href="#使用-Spring-Boot-和-GraalVM-构建原生镜像" class="headerlink" title="使用 Spring Boot 和 GraalVM 构建原生镜像"></a>使用 Spring Boot 和 GraalVM 构建原生镜像</h2><p>如何使用 Spring Boot 和 GraalVM 构建原生镜像应用。</p>
+<h3 id="原生镜像"><a href="#原生镜像" class="headerlink" title="原生镜像"></a>原生镜像</h3><p>原生（本地）镜像是一种将 Java 代码构建为独立可执行文件的技术。该可执行文件包括应用程序类、其依赖项的类、运行时库类以及来自 JDK 的静态链接本地代码。JVM 被打包到原生镜像中，因此在目标系统上不需要任何 Java 运行环境，但构建产物依赖于平台。因此，需要为每个支持的目标系统进行一次构建，在使用 Docker 等容器技术时会更加简单，将容器构建为一个目标系统，可以部署到任何 Docker 运行时。</p>
+<p>原生镜像具有各种优势，如即时启动和减少内存消耗。它们可以打包成轻量级的容器镜像，以实现更快、更高效的部署，并减少攻击面。</p>
+<h3 id="限制"><a href="#限制" class="headerlink" title="限制"></a>限制</h3><p>由于采用了 “闭环优化”，在编写应用代码和使用框架时必须注意一些 限制。简而言之：</p>
+<ul>
+<li>类初始化器可以在构建时执行，以实现更快的启动和更好的性能峰值。但必须意识到，这可能会破坏代码中的一些假设，例如，在加载文件时，该文件必须在构建时可用。</li>
+<li>反射和动态代理在运行时成本很高，因此在 “闭环优化” 假设下，在构建时进行了优化。在构建时执行时，可以不受限制地在类初始化器中使用。任何其他用途都必须向 AOT 编译器公布，Native Image builder 会尝试通过执行静态代码分析来达到这一目的。如果分析失败，就必须通过 配置文件 等方式提供相关信息。</li>
+<li>这同样适用于所有基于反射的技术，如 JNI 和序列化（Serialization）</li>
+<li>此外，Native Image builder 还提供了自己的原生接口，比 JNI 简单得多，开销也更低。<br>对于原生镜像构建，字节码在运行时不再可用，因此无法使用针对 JVMTI 的工具进行调试和监控。因此，必须使用本地调试器和监控工具。</li>
+</ul>
+<p>对于 Spring Boot，运行时不再完全支持 配置文件、条件 Bean 和 .enable 属性等功能。如果使用配置文件，则必须在构建时指定。</p>
+<h3 id="使用-GraalVM-native-image"><a href="#使用-GraalVM-native-image" class="headerlink" title="使用 GraalVM native-image"></a>使用 GraalVM native-image</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">rm</span> -rf target/native</span><br><span class="line">$ <span class="built_in">mkdir</span> -p target/native</span><br><span class="line">$ <span class="built_in">cd</span> target/native</span><br><span class="line">$ jar -xvf ../myproject-0.0.1-SNAPSHOT.jar</span><br><span class="line">$ native-image -H:Name=myproject @META-INF/native-image/argfile -<span class="built_in">cp</span> .:BOOT-INF/classes:`find BOOT-INF/lib | <span class="built_in">tr</span> <span class="string">&#x27;\n&#x27;</span> <span class="string">&#x27;:&#x27;</span>`</span><br><span class="line">$ <span class="built_in">mv</span> myproject ../</span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
+        </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/GraalVM/" rel="tag">GraalVM</a>
+                </div>
+                <div class="pull-date">
+                    <time datetime="2025-11-21T06:36:31.561Z" itemprop="dateModified">最后编辑：2025-11-21</time>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" spring.config.location多个文件" href="/2024/01/14/2024/04/191342/">&lt; 上一篇</a>
+            </div>
+            
+            
+            <div class="nav-next clearfix">
+                <a title=" Helm模版配置多个端口映射" href="/2024/01/14/2024/03/081541/">下一篇 &gt;</a>
+            </div>
+            
+        </nav>
+    
+    
+        <link rel="stylesheet" href="/vendors/gitalk@1.7.2/dist/gitalk.css"></script>
+<div id="gitalk-container" class="post-comments lazy-load" style="padding-left:2rem; padding-right:2rem;"></div>
+<script>
+    var load_comm = () => {
+        const init = () => {
+            console.log('Gitalk loading...');
+            const gitalk = new Gitalk(Object.assign({
+                id: '/2024/01/14/2024/04/102109/',
+                path: '/2024/01/14/2024/04/102109/'
+            }, JSON.parse('{"clientID":"56e6a743c63b9c4faa93","clientSecret":"888b7234051c5c2ed6ea7bdf18e8b5a2678775f1","repo":"gitalk-comments","owner":"qbmzc","admin":["qbmzc"]}')));
+
+            gitalk.render('gitalk-container');
+        }
+        if (typeof Gitalk === 'undefined') {
+            const src = '/vendors/gitalk@1.7.2/dist/gitalk.min.js';
+            $.getScript(src, init);
+        } else {
+            init();
+        }
+    };
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a></noscript>
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/avatar.webp" loading="lazy" decoding="auto" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center">流云与风，苍穹游牧</p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                499
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                8
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                229
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                    <aside id="krw-toc" class="widget widget-kratos-toc clearfix">
+    <div class="photo-background"></div>
+    <h4 class="widget-title no-after">
+        <i class="fa fa-compass"></i>
+        文章目录
+        <span class="toc-progress-bar" role="progressbar" aria-label="阅读进度："></span>
+    </h4>
+    <div class="textwidget">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E6%AD%A5%E9%AA%A4"><span class="toc-text">安装步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#idea%E6%96%B9%E5%BC%8F%E5%AE%89%E8%A3%85"><span class="toc-text">idea方式安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Linux"><span class="toc-text">Linux</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#macOS"><span class="toc-text">macOS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Windows"><span class="toc-text">Windows</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Docker"><span class="toc-text">Docker</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%A7%8B%E8%BF%90%E8%A1%8C%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F"><span class="toc-text">开始运行应用程序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-Spring-Boot-%E5%92%8C-GraalVM-%E6%9E%84%E5%BB%BA%E5%8E%9F%E7%94%9F%E9%95%9C%E5%83%8F"><span class="toc-text">使用 Spring Boot 和 GraalVM 构建原生镜像</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E7%94%9F%E9%95%9C%E5%83%8F"><span class="toc-text">原生镜像</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%99%90%E5%88%B6"><span class="toc-text">限制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-GraalVM-native-image"><span class="toc-text">使用 GraalVM native-image</span></a></li></ol></li></ol>
+    </div>
+</aside>
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">137</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">151</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">29</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/congco/">congco</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/work/">work</a><span class="category-list-count">118</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wuw/">wuw</a><span class="category-list-count">48</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/">技术笔记</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/AES/" style="font-size: 0.6em;">AES</a> <a href="/tags/AI/" style="font-size: 0.7em;">AI</a> <a href="/tags/AWS/" style="font-size: 0.7em;">AWS</a> <a href="/tags/Arch/" style="font-size: 0.6em;">Arch</a> <a href="/tags/Arch-Linux/" style="font-size: 0.8em;">Arch Linux</a> <a href="/tags/ArchLinux/" style="font-size: 0.8em;">ArchLinux</a> <a href="/tags/CAS/" style="font-size: 0.6em;">CAS</a> <a href="/tags/CI-CD/" style="font-size: 0.6em;">CI/CD</a> <a href="/tags/Caffeine/" style="font-size: 0.6em;">Caffeine</a> <a href="/tags/CompletableFuture/" style="font-size: 0.7em;">CompletableFuture</a> <a href="/tags/DNS/" style="font-size: 0.8em;">DNS</a> <a href="/tags/Docker/" style="font-size: 0.6em;">Docker</a> <a href="/tags/Flask/" style="font-size: 0.6em;">Flask</a> <a href="/tags/Future/" style="font-size: 0.7em;">Future</a> <a href="/tags/GC/" style="font-size: 0.6em;">GC</a> <a href="/tags/GPT/" style="font-size: 0.6em;">GPT</a> <a href="/tags/GraalVM/" style="font-size: 0.8em;">GraalVM</a> <a href="/tags/HashMap/" style="font-size: 0.6em;">HashMap</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/14/2025/11/141727/"><i class="fa  fa-book"></i> karakeep</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111335/"><i class="fa  fa-book"></i> SonarQube 扫描支持多 JDK 版本的实践方案</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111045/"><i class="fa  fa-book"></i> 一次修复 PDF 中文乱码的排查记录</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/23/2025/10/221500/"><i class="fa  fa-book"></i> dig命令使用详解</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/13/2025/10/131645/"><i class="fa  fa-book"></i> DNS解析异常导致视频播放缓慢问题排查与解决</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  >
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        <li><a href="mailto:congco@foxmail.com"><i class="fa fa-envelope"></i></a></li>
+                        
+                        
+                        
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://github.com/qbmzc"><i class="fa fa-github"></i></a></li>
+                        <li><a target="_blank" rel="nofollow" href="/rss.xml"><i class="fa fa-rss"></i></a></li>
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2025 沐曦留曳 版权所有.</li>
+                            <li>本站已运行<span id="span_dt">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
+                            <li>Site built with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by cong.</li>
+                        </div>
+                        <div>
+                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
+                            <li>Hosted on <a href="https://github.io" target="_blank">Github Pages</a></li>
+                        </div>
+                        <div>
+                            
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="/vendors/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="/vendors/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+
+    <script defer src="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="/vendors/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>

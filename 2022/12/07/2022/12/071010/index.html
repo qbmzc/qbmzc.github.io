@@ -1,0 +1,1519 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="/images/favicon.ico">
+  
+  <title>spring5中的WebClient | 沐曦留曳</title>
+  <meta name="author" content="cong" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="webclient" />
+  
+  <meta name="description" content="AsyncRestTemplate已弃用，  已弃用as of Spring 5.0, in favor of org.springframework.web.reactive.function.client.WebClient">
+<meta property="og:type" content="article">
+<meta property="og:title" content="spring5中的WebClient">
+<meta property="og:url" content="https://qbmzc.github.io/2022/12/07/2022/12/071010/index.html">
+<meta property="og:site_name" content="沐曦留曳">
+<meta property="og:description" content="AsyncRestTemplate已弃用，  已弃用as of Spring 5.0, in favor of org.springframework.web.reactive.function.client.WebClient">
+<meta property="og:locale">
+<meta property="og:image" content="https://qbmzc.github.io/images/favicon.ico">
+<meta property="article:published_time" content="2022-12-06T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-11-21T06:36:31.557Z">
+<meta property="article:author" content="cong">
+<meta property="article:tag" content="webclient">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://qbmzc.github.io/images/favicon.ico">
+  <link rel="alternate" href="rss.xml" type="application/atom+xml">
+  <!-- 站点验证相关 -->
+  
+    
+      <meta name="google-site-verification" content="lV4cead5YlJ8KpODToP7dvzi-ihrxSqU0yYStYKj2ao" />
+    
+    
+      <meta name="baidu-site-verification" content="codeva-Zr6WlkDupK" />
+    
+    
+      <meta name="msvalidate.01" content="2D2197DEE362D193B3EC29AFD3306341" />
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" media="all"></script>
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-color-dark.min.css" media="(prefers-color-scheme: dark)"></script>
+    <script src="/js/kr-dark.min.js"></script>
+  
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" media="all"></script>
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="/vendors/font-awesome@4.7.0/css/font-awesome.min.css" media="all"></script>
+  <link rel="stylesheet" id="nprogress-css" href="/vendors/nprogress@0.2.0/nprogress.css" media="all"></script>
+  
+  
+  
+    <link rel="stylesheet" href="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css"></script>
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="/vendors/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/banner.webp');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">沐曦留曳</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>沐曦留曳</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article itemscope itemtype="https://schema.org/Article">
+    
+    <link itemprop="mainEntityOfPage" href="https://qbmzc.github.io/2022/12/07/2022/12/071010/">
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center" itemprop="name headline">spring5中的WebClient</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><time datetime="2022-12-06T16:00:00.000Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2022-12-07</time></li>
+                <li itemprop="author" itemscope itemtype="https://schema.org/Person">
+                    <i class="fa fa-user"></i> 作者 <span itemprop="name">cong</span>
+                </li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~9.02K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1763706991557"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+            
+                <div class="kratos-post-inner-toc">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#WebClient%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="toc-number">1.</span> <span class="toc-text">WebClient的优势</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#WebFlux%E4%BD%BF%E7%94%A8"><span class="toc-number">2.</span> <span class="toc-text">WebFlux使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#WebClient%E5%AE%9E%E4%BE%8B%E5%88%9B%E5%BB%BA"><span class="toc-number">3.</span> <span class="toc-text">WebClient实例创建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%94%AF%E6%8C%81%E7%9A%84%E5%8F%AF%E9%80%89%E9%85%8D%E7%BD%AE"><span class="toc-number">4.</span> <span class="toc-text">支持的可选配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%93%8D%E5%BA%94%E7%BB%93%E6%9E%9C%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="toc-number">5.</span> <span class="toc-text">获取响应结果的方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%A0%E4%BD%8D%E7%AC%A6%E4%BC%A0%E5%8F%82"><span class="toc-number">6.</span> <span class="toc-text">占位符传参</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#POST-JSON"><span class="toc-number">7.</span> <span class="toc-text">POST JSON</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0"><span class="toc-number">8.</span> <span class="toc-text">文件上传</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD"><span class="toc-number">9.</span> <span class="toc-text">文件下载</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#subscribe-%E8%AE%A2%E9%98%85%EF%BC%88%E9%9D%9E%E9%98%BB%E5%A1%9E%E5%BC%8F%E8%B0%83%E7%94%A8%EF%BC%89"><span class="toc-number">10.</span> <span class="toc-text">subscribe 订阅（非阻塞式调用）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-number">11.</span> <span class="toc-text">参考资料</span></a></li></ol>
+                </div>
+            
+            <hr />
+            <div itemprop="articleBody"><p><code>AsyncRestTemplate</code>已弃用，</p>
+<blockquote>
+<p>已弃用<br>as of Spring 5.0, in favor of org.springframework.web.reactive.function.client.WebClient</p>
+</blockquote>
+<span id="more"></span>
+
+
+
+<h2 id="WebClient的优势"><a href="#WebClient的优势" class="headerlink" title="WebClient的优势"></a>WebClient的优势</h2><ul>
+<li>非阻塞响应式IO，单位时间内有限资源下支持更高的并发量。</li>
+<li>支持使用Java8 Lambda表达式函数。</li>
+<li>支持同步、异步、Stream流式传输。</li>
+</ul>
+<h2 id="WebFlux使用"><a href="#WebFlux使用" class="headerlink" title="WebFlux使用"></a>WebFlux使用</h2><p>maven依赖</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-webflux<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="WebClient实例创建"><a href="#WebClient实例创建" class="headerlink" title="WebClient实例创建"></a>WebClient实例创建</h2><ul>
+<li>WebClient。create()</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testCreate</span><span class="params">()</span> &#123;</span><br><span class="line">    Mono&lt;String&gt; mono = WebClient</span><br><span class="line">            <span class="comment">//创建WenClient实例</span></span><br><span class="line">            .create()</span><br><span class="line">            <span class="comment">//方法调用，WebClient中提供了多种方法</span></span><br><span class="line">            .method(HttpMethod.GET)</span><br><span class="line">            <span class="comment">//请求url</span></span><br><span class="line">            .uri(<span class="string">&quot;http://localhost:8080/hello&quot;</span>)</span><br><span class="line">            <span class="comment">//获取响应结果</span></span><br><span class="line">            .retrieve()</span><br><span class="line">            <span class="comment">//将结果转换为指定类型</span></span><br><span class="line">            .bodyToMono(String.class);</span><br><span class="line">    <span class="comment">//block方法返回最终调用结果，block方法是阻塞的</span></span><br><span class="line">    System.out.println(<span class="string">&quot;响应结果：&quot;</span> + mono.block());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>WebClient.create(String baseUrl)</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testCreateBaseUrl</span><span class="params">()</span> &#123;</span><br><span class="line">    Mono&lt;String&gt; mono = WebClient</span><br><span class="line">            <span class="comment">//创建WenClient实例，指定基础url，所以下面uri请求的路径都是基于这个路径</span></span><br><span class="line">            .create(<span class="string">&quot;http://localhost:8080&quot;</span>)</span><br><span class="line">            <span class="comment">//方法调用，WebClient中提供了多种方法</span></span><br><span class="line">            .method(HttpMethod.GET)</span><br><span class="line">            <span class="comment">//请求url</span></span><br><span class="line">            .uri(<span class="string">&quot;/hello&quot;</span>)</span><br><span class="line">            <span class="comment">//获取响应结果</span></span><br><span class="line">            .retrieve()</span><br><span class="line">            <span class="comment">//将结果转换为指定类型</span></span><br><span class="line">            .bodyToMono(String.class);</span><br><span class="line">    <span class="comment">//block方法返回最终调用结果，block方法是阻塞的</span></span><br><span class="line">    System.out.println(<span class="string">&quot;响应结果：&quot;</span> + mono.block());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>WebClient.builder()：返回一个WebClient.Builder，该对象可以做链式调用，传递更多的参数。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> WebClient <span class="title function_">initClient</span><span class="params">()</span>&#123;</span><br><span class="line">       <span class="keyword">return</span> WebClient.builder().baseUrl(baseUrl).defaultHeader(X_API_KEY,accessToken).build();</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="支持的可选配置"><a href="#支持的可选配置" class="headerlink" title="支持的可选配置"></a>支持的可选配置</h2><ul>
+<li>uriBuilderFactory：自定义UriBuilderFactory灵活配置使用Url</li>
+<li>defaultHeader：为HTTP请求设置Headers请求头</li>
+<li>defaultCookie：为HTTP请求设置Cookies</li>
+<li>defaultRequest：自定义HttpRequest</li>
+<li>filter：为HTTP请求增加客户端过滤器</li>
+<li>exchangeStrategies：HTTP读写信息自定义</li>
+<li>clientConnector：HTTP客户端连接器设置</li>
+</ul>
+<h2 id="获取响应结果的方式"><a href="#获取响应结果的方式" class="headerlink" title="获取响应结果的方式"></a>获取响应结果的方式</h2><p>block()阻塞式获取响应结果</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">startContainers</span><span class="params">(String id)</span> &#123;</span><br><span class="line">     <span class="type">String</span> <span class="variable">localVarUrl</span> <span class="operator">=</span> DOCKER_CONTAINER_PATH+<span class="string">&quot;containers/&#123;id&#125;/start&quot;</span>;</span><br><span class="line">     webClient.post().uri(localVarUrl, id).retrieve().bodyToMono(String.class).block();</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>  List&lt;Container&gt; <span class="title function_">listContainers</span><span class="params">(Boolean all,Map&lt;String, Serializable&gt; filters)</span> &#123;</span><br><span class="line">     <span class="type">String</span> <span class="variable">listUrl</span> <span class="operator">=</span> DOCKER_CONTAINER_PATH+<span class="string">&quot;containers/json?all=&#123;all&#125;&amp;filters=&#123;filters&#125;&quot;</span>;</span><br><span class="line"></span><br><span class="line">     Flux&lt;Container&gt; bodyToFlux = webClient.get().uri(listUrl,all,filters).retrieve().bodyToFlux(Container.class);</span><br><span class="line">     List&lt;Container&gt; containerList = bodyToFlux.collectList().block();</span><br><span class="line">     log.info(<span class="string">&quot;List Containers:&#123;&#125;&quot;</span>, containerList);</span><br><span class="line">     <span class="keyword">return</span> containerList;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>使用Mono和Flux接收返回结果，一个Mono对象包含0个或1个元素，而一个Flux对象包含1个或多个元素。</p>
+<ul>
+<li>subscribe()非阻塞式获取响应结果</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">pullImages</span><span class="params">(String imageName)</span> &#123;</span><br><span class="line">       <span class="type">String</span> <span class="variable">localVarUrl</span> <span class="operator">=</span> DOCKER_CONTAINER_PATH+<span class="string">&quot;images/create?fromImage=&#123;imageName&#125;&quot;</span>;</span><br><span class="line">       Flux&lt;PullResponseItem&gt; responseItemFlux = webClient.post().uri(localVarUrl, imageName).accept(MediaType.APPLICATION_OCTET_STREAM).retrieve().bodyToFlux(PullResponseItem.class);</span><br><span class="line">       responseItemFlux.collectList().subscribe(<span class="built_in">this</span>::handleResp);</span><br><span class="line"></span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment">    *</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> responseItems</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">handleResp</span><span class="params">(List&lt;PullResponseItem&gt; responseItems)</span>&#123;</span><br><span class="line">       responseItems.forEach(a-&gt;log.info(a.toString()));</span><br><span class="line">   &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>exchange()获取HTTP响应完整内容</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testExchange</span><span class="params">()</span> &#123;</span><br><span class="line">    Mono&lt;ClientResponse&gt; clientResponseMono = WebClient</span><br><span class="line">            .create()</span><br><span class="line">            .method(HttpMethod.GET)</span><br><span class="line">            .uri(<span class="string">&quot;http://localhost:8080/hello&quot;</span>)</span><br><span class="line">            .exchange();</span><br><span class="line">    <span class="type">ClientResponse</span> <span class="variable">clientResponse</span> <span class="operator">=</span> clientResponseMono.block();</span><br><span class="line">    <span class="comment">//响应头</span></span><br><span class="line">    ClientResponse.<span class="type">Headers</span> <span class="variable">headers</span> <span class="operator">=</span> clientResponse.headers();</span><br><span class="line">    <span class="comment">//响应状态</span></span><br><span class="line">    <span class="type">HttpStatus</span> <span class="variable">httpStatus</span> <span class="operator">=</span> clientResponse.statusCode();</span><br><span class="line">    <span class="comment">//响应状态码</span></span><br><span class="line">    <span class="type">int</span> <span class="variable">rawStatusCode</span> <span class="operator">=</span> clientResponse.rawStatusCode();</span><br><span class="line">    <span class="comment">//响应体</span></span><br><span class="line">    Mono&lt;String&gt; mono = clientResponse.bodyToMono(String.class);</span><br><span class="line">    <span class="type">String</span> <span class="variable">body</span> <span class="operator">=</span> mono.block();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="占位符传参"><a href="#占位符传参" class="headerlink" title="占位符传参"></a>占位符传参</h2><ul>
+<li>数字占位符</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> List&lt;PortainerStack&gt; <span class="title function_">listStack</span><span class="params">(Map&lt;String, Serializable&gt; filters)</span> &#123;</span><br><span class="line">     <span class="type">String</span> <span class="variable">localVarUrl</span> <span class="operator">=</span> DOCKER_STACK_PATH+<span class="string">&quot;stacks?filters=&#123;1&#125;&quot;</span>;</span><br><span class="line">     filters.put(<span class="string">&quot;EndpointID&quot;</span>, endpointId);</span><br><span class="line">     Flux&lt;PortainerStack&gt; bodyToFlux = webClient.get().uri(localVarUrl, filters).retrieve().bodyToFlux(PortainerStack.class);<span class="comment">/**/</span></span><br><span class="line"><span class="comment">     return bodyToFlux.collectList().block();</span></span><br><span class="line"><span class="comment"> &#125;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>参数名占位符</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">updateStack</span><span class="params">(StacksUpdateSwarmStackDto payload)</span> &#123;</span><br><span class="line">      <span class="type">String</span> <span class="variable">localVarUrl</span> <span class="operator">=</span> DOCKER_STACK_PATH+<span class="string">&quot;stacks/&#123;id&#125;?endpointId=&#123;endpointId&#125;&amp;method=string&amp;type=2&quot;</span>;</span><br><span class="line">      Mono&lt;StacksUpdateSwarmStackDto&gt; payloadMono = Mono.just(payload);</span><br><span class="line">      Mono&lt;PortainerStack&gt; bodyToMono = webClient.put().uri(localVarUrl, payload.getId(), endpointId).contentType(MediaType.APPLICATION_JSON).body(payloadMono, StacksUpdateSwarmStackDto.class)</span><br><span class="line">              .retrieve().bodyToMono(PortainerStack.class);</span><br><span class="line">      log.info(<span class="string">&quot;stacks info:&#123;&#125;&quot;</span>,bodyToMono.block());</span><br><span class="line">  &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>map传参</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">    <span class="type">String</span> <span class="variable">url</span> <span class="operator">=</span> <span class="string">&quot;http://localhost:8080/user/&#123;id&#125;/&#123;name&#125;&quot;</span>;</span><br><span class="line">    Map&lt;String, String&gt; params = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">    params.put(<span class="string">&quot;id&quot;</span>, <span class="string">&quot;123&quot;</span>);</span><br><span class="line">    params.put(<span class="string">&quot;name&quot;</span>, <span class="string">&quot;Boss&quot;</span>);</span><br><span class="line">    Mono&lt;String&gt; mono = WebClient.create()</span><br><span class="line">            .method(HttpMethod.POST)</span><br><span class="line">            .uri(url, params)</span><br><span class="line">            .retrieve()</span><br><span class="line">            .bodyToMono(String.class);</span><br><span class="line">    <span class="type">String</span> <span class="variable">result</span> <span class="operator">=</span> mono.block();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="POST-JSON"><a href="#POST-JSON" class="headerlink" title="POST JSON"></a>POST JSON</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@PostMapping(&quot;createInfo&quot;)</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">createInfo</span><span class="params">(<span class="meta">@RequestBody</span> CreateInfoRequest createInfoRequest)</span> <span class="keyword">throws</span> JsonProcessingException &#123;</span><br><span class="line">      System.out.println(MapperEnum.INSTANCE.getObjectMapper().writeValueAsString(createInfoRequest));</span><br><span class="line">      String uri=<span class="string">&quot;/doc_compare/create_info&quot;</span>;</span><br><span class="line">      Mono&lt;CreateInfoResponse&gt; responseFlux = webClient.post().uri(uri).</span><br><span class="line">              contentType(MediaType.APPLICATION_JSON)</span><br><span class="line">              .bodyValue(createInfoRequest)</span><br><span class="line">              .retrieve().bodyToMono(CreateInfoResponse.class);</span><br><span class="line"></span><br><span class="line">      <span class="type">CreateInfoResponse</span> <span class="variable">response</span> <span class="operator">=</span> responseFlux.block();</span><br><span class="line">      System.out.println(MapperEnum.INSTANCE.getObjectMapper().writeValueAsString(response));</span><br><span class="line"></span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 文件上传</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> uploadFrom</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="meta">@SneakyThrows</span></span><br><span class="line">   <span class="meta">@PostMapping(&quot;upload&quot;)</span></span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">uploadFile</span><span class="params">(<span class="meta">@RequestBody</span> UploadFrom uploadFrom)</span>&#123;</span><br><span class="line">       String url=<span class="string">&quot;/file/upload?from=doc_compare&amp;filename=&#123;filename&#125;&amp;compare_id=&#123;compareId&#125;&amp;doc_index=&#123;docIndex&#125;&amp;remove_stamp=1&amp;remove_comments=0&amp;remove_headerfooter=0&amp;remove_footnote=0&amp;remove_symbol=1&quot;</span>;</span><br><span class="line">       <span class="type">FileSystemResource</span> <span class="variable">resource</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">FileSystemResource</span>(<span class="keyword">new</span> <span class="title class_">File</span>(<span class="string">&quot;/Users/cong/Downloads/a.pdf&quot;</span>));</span><br><span class="line">       uploadFrom.setFilename(resource.getFilename());</span><br><span class="line">       Mono&lt;String&gt; stringMono = webClient.post()</span><br><span class="line">               .uri(url,uploadFrom.getFilename(),uploadFrom.getCompareId(),uploadFrom.getDocIndex())</span><br><span class="line">               .contentType(MediaType.APPLICATION_FORM_URLENCODED)</span><br><span class="line">               .body(BodyInserters.fromMultipartData(<span class="string">&quot;file&quot;</span>,resource))</span><br><span class="line">               .retrieve().bodyToMono(String.class);</span><br><span class="line">       stringMono.block();</span><br><span class="line">       log.info(<span class="string">&quot;uploadFile &#123;&#125;&quot;</span>,resource.getFilename());</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="文件下载"><a href="#文件下载" class="headerlink" title="文件下载"></a>文件下载</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">testDownLoad</span><span class="params">()</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">   Mono&lt;ClientResponse&gt; mono = webClient</span><br><span class="line">               .get() <span class="comment">// GET 请求</span></span><br><span class="line">               .uri(<span class="string">&quot;/2020/08/22/0f0a353a-7033-4a13-832e-d043f6360514.png&quot;</span>)  <span class="comment">// 请求路径</span></span><br><span class="line">               .accept(MediaType.APPLICATION_OCTET_STREAM)</span><br><span class="line">               .exchange(); <span class="comment">// 获取响应体</span></span><br><span class="line"></span><br><span class="line">   <span class="type">ClientResponse</span> <span class="variable">response</span> <span class="operator">=</span> mono.block();</span><br><span class="line">   <span class="type">Resource</span> <span class="variable">resource</span> <span class="operator">=</span> response.bodyToMono(Resource.class).block();</span><br><span class="line"></span><br><span class="line">   <span class="keyword">assert</span> resource != <span class="literal">null</span>;</span><br><span class="line">   Files.copy(resource.getInputStream(),</span><br><span class="line">            Paths.get(<span class="string">&quot;D:\\data\\local\\splash-down.png&quot;</span> ));</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="subscribe-订阅（非阻塞式调用）"><a href="#subscribe-订阅（非阻塞式调用）" class="headerlink" title="subscribe 订阅（非阻塞式调用）"></a>subscribe 订阅（非阻塞式调用）</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HelloController</span> &#123;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">// 创建 WebClient 对象</span></span><br><span class="line">    <span class="keyword">private</span> <span class="type">WebClient</span> <span class="variable">webClient</span> <span class="operator">=</span> WebClient.builder()</span><br><span class="line">            .baseUrl(<span class="string">&quot;http://jsonplaceholder.typicode.com&quot;</span>)</span><br><span class="line">            .build();</span><br><span class="line"> </span><br><span class="line">    <span class="meta">@GetMapping(&quot;/test&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">test</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;--- begin ---&quot;</span>);</span><br><span class="line"> </span><br><span class="line">        Mono&lt;String&gt; mono = webClient</span><br><span class="line">                .get() <span class="comment">// GET 请求</span></span><br><span class="line">                .uri(<span class="string">&quot;/posts/1&quot;</span>)  <span class="comment">// 请求路径</span></span><br><span class="line">                .retrieve() <span class="comment">// 获取响应体</span></span><br><span class="line">                .bodyToMono(String.class); <span class="comment">//响应数据类型转换</span></span><br><span class="line"> </span><br><span class="line">        <span class="comment">// 订阅（异步处理结果）</span></span><br><span class="line">        mono.subscribe(result -&gt; &#123;</span><br><span class="line">            System.out.println(result);</span><br><span class="line">        &#125;);</span><br><span class="line"> </span><br><span class="line">        System.out.println(<span class="string">&quot;--- end ---&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/cc3a99614476">Spring5之WebClient简单使用</a></li>
+</ul>
+</div>
+        </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/webclient/" rel="tag">webclient</a>
+                </div>
+                <div class="pull-date">
+                    <time datetime="2025-11-21T06:36:31.557Z" itemprop="dateModified">最后编辑：2025-11-21</time>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" Git rebase变基" href="/2022/12/06/2022/12/062240/">&lt; 上一篇</a>
+            </div>
+            
+            
+            <div class="nav-next clearfix">
+                <a title=" Apache Commons Pool" href="/2022/12/10/2022/12/102226/">下一篇 &gt;</a>
+            </div>
+            
+        </nav>
+    
+    
+        <link rel="stylesheet" href="/vendors/gitalk@1.7.2/dist/gitalk.css"></script>
+<div id="gitalk-container" class="post-comments lazy-load" style="padding-left:2rem; padding-right:2rem;"></div>
+<script>
+    var load_comm = () => {
+        const init = () => {
+            console.log('Gitalk loading...');
+            const gitalk = new Gitalk(Object.assign({
+                id: '/2022/12/07/2022/12/071010/',
+                path: '/2022/12/07/2022/12/071010/'
+            }, JSON.parse('{"clientID":"56e6a743c63b9c4faa93","clientSecret":"888b7234051c5c2ed6ea7bdf18e8b5a2678775f1","repo":"gitalk-comments","owner":"qbmzc","admin":["qbmzc"]}')));
+
+            gitalk.render('gitalk-container');
+        }
+        if (typeof Gitalk === 'undefined') {
+            const src = '/vendors/gitalk@1.7.2/dist/gitalk.min.js';
+            $.getScript(src, init);
+        } else {
+            init();
+        }
+    };
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a></noscript>
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/avatar.webp" loading="lazy" decoding="auto" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center">流云与风，苍穹游牧</p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                499
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                8
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                229
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                    <aside id="krw-toc" class="widget widget-kratos-toc clearfix">
+    <div class="photo-background"></div>
+    <h4 class="widget-title no-after">
+        <i class="fa fa-compass"></i>
+        文章目录
+        <span class="toc-progress-bar" role="progressbar" aria-label="阅读进度："></span>
+    </h4>
+    <div class="textwidget">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#WebClient%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="toc-text">WebClient的优势</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#WebFlux%E4%BD%BF%E7%94%A8"><span class="toc-text">WebFlux使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#WebClient%E5%AE%9E%E4%BE%8B%E5%88%9B%E5%BB%BA"><span class="toc-text">WebClient实例创建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%94%AF%E6%8C%81%E7%9A%84%E5%8F%AF%E9%80%89%E9%85%8D%E7%BD%AE"><span class="toc-text">支持的可选配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E5%93%8D%E5%BA%94%E7%BB%93%E6%9E%9C%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="toc-text">获取响应结果的方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%A0%E4%BD%8D%E7%AC%A6%E4%BC%A0%E5%8F%82"><span class="toc-text">占位符传参</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#POST-JSON"><span class="toc-text">POST JSON</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0"><span class="toc-text">文件上传</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD"><span class="toc-text">文件下载</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#subscribe-%E8%AE%A2%E9%98%85%EF%BC%88%E9%9D%9E%E9%98%BB%E5%A1%9E%E5%BC%8F%E8%B0%83%E7%94%A8%EF%BC%89"><span class="toc-text">subscribe 订阅（非阻塞式调用）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-text">参考资料</span></a></li></ol>
+    </div>
+</aside>
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">137</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">151</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">29</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/congco/">congco</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/work/">work</a><span class="category-list-count">118</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wuw/">wuw</a><span class="category-list-count">48</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/">技术笔记</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/AES/" style="font-size: 0.6em;">AES</a> <a href="/tags/AI/" style="font-size: 0.7em;">AI</a> <a href="/tags/AWS/" style="font-size: 0.7em;">AWS</a> <a href="/tags/Arch/" style="font-size: 0.6em;">Arch</a> <a href="/tags/Arch-Linux/" style="font-size: 0.8em;">Arch Linux</a> <a href="/tags/ArchLinux/" style="font-size: 0.8em;">ArchLinux</a> <a href="/tags/CAS/" style="font-size: 0.6em;">CAS</a> <a href="/tags/CI-CD/" style="font-size: 0.6em;">CI/CD</a> <a href="/tags/Caffeine/" style="font-size: 0.6em;">Caffeine</a> <a href="/tags/CompletableFuture/" style="font-size: 0.7em;">CompletableFuture</a> <a href="/tags/DNS/" style="font-size: 0.8em;">DNS</a> <a href="/tags/Docker/" style="font-size: 0.6em;">Docker</a> <a href="/tags/Flask/" style="font-size: 0.6em;">Flask</a> <a href="/tags/Future/" style="font-size: 0.7em;">Future</a> <a href="/tags/GC/" style="font-size: 0.6em;">GC</a> <a href="/tags/GPT/" style="font-size: 0.6em;">GPT</a> <a href="/tags/GraalVM/" style="font-size: 0.8em;">GraalVM</a> <a href="/tags/HashMap/" style="font-size: 0.6em;">HashMap</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/14/2025/11/141727/"><i class="fa  fa-book"></i> karakeep</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111335/"><i class="fa  fa-book"></i> SonarQube 扫描支持多 JDK 版本的实践方案</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111045/"><i class="fa  fa-book"></i> 一次修复 PDF 中文乱码的排查记录</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/23/2025/10/221500/"><i class="fa  fa-book"></i> dig命令使用详解</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/13/2025/10/131645/"><i class="fa  fa-book"></i> DNS解析异常导致视频播放缓慢问题排查与解决</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  >
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        <li><a href="mailto:congco@foxmail.com"><i class="fa fa-envelope"></i></a></li>
+                        
+                        
+                        
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://github.com/qbmzc"><i class="fa fa-github"></i></a></li>
+                        <li><a target="_blank" rel="nofollow" href="/rss.xml"><i class="fa fa-rss"></i></a></li>
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2025 沐曦留曳 版权所有.</li>
+                            <li>本站已运行<span id="span_dt">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
+                            <li>Site built with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by cong.</li>
+                        </div>
+                        <div>
+                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
+                            <li>Hosted on <a href="https://github.io" target="_blank">Github Pages</a></li>
+                        </div>
+                        <div>
+                            
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="/vendors/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="/vendors/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+
+    <script defer src="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="/vendors/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>

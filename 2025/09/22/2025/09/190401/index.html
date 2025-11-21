@@ -1,0 +1,1560 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="/images/favicon.ico">
+  
+  <title>生成svg格式的图片 | 沐曦留曳</title>
+  <meta name="author" content="cong" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="svg" />
+  
+  <meta name="description" content="SVG（Scalable Vector Graphics）是一种基于XML的矢量图形格式，在现代Web开发中扮演着重要角色。与传统的位图格式（如PNG、JPEG）不同，SVG使用数学公式来描述图形，这使得它具有无限缩放而不失真的特性。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="生成svg格式的图片">
+<meta property="og:url" content="https://qbmzc.github.io/2025/09/22/2025/09/190401/index.html">
+<meta property="og:site_name" content="沐曦留曳">
+<meta property="og:description" content="SVG（Scalable Vector Graphics）是一种基于XML的矢量图形格式，在现代Web开发中扮演着重要角色。与传统的位图格式（如PNG、JPEG）不同，SVG使用数学公式来描述图形，这使得它具有无限缩放而不失真的特性。">
+<meta property="og:locale">
+<meta property="og:image" content="https://qbmzc.github.io/images/favicon.ico">
+<meta property="article:published_time" content="2025-09-22T06:06:09.000Z">
+<meta property="article:modified_time" content="2025-11-21T06:36:31.566Z">
+<meta property="article:author" content="cong">
+<meta property="article:tag" content="svg">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://qbmzc.github.io/images/favicon.ico">
+  <link rel="alternate" href="rss.xml" type="application/atom+xml">
+  <!-- 站点验证相关 -->
+  
+    
+      <meta name="google-site-verification" content="lV4cead5YlJ8KpODToP7dvzi-ihrxSqU0yYStYKj2ao" />
+    
+    
+      <meta name="baidu-site-verification" content="codeva-Zr6WlkDupK" />
+    
+    
+      <meta name="msvalidate.01" content="2D2197DEE362D193B3EC29AFD3306341" />
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" media="all"></script>
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-color-dark.min.css" media="(prefers-color-scheme: dark)"></script>
+    <script src="/js/kr-dark.min.js"></script>
+  
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" media="all"></script>
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="/vendors/font-awesome@4.7.0/css/font-awesome.min.css" media="all"></script>
+  <link rel="stylesheet" id="nprogress-css" href="/vendors/nprogress@0.2.0/nprogress.css" media="all"></script>
+  
+  
+  
+    <link rel="stylesheet" href="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css"></script>
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="/vendors/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/banner.webp');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">沐曦留曳</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>沐曦留曳</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article itemscope itemtype="https://schema.org/Article">
+    
+    <link itemprop="mainEntityOfPage" href="https://qbmzc.github.io/2025/09/22/2025/09/190401/">
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center" itemprop="name headline">生成svg格式的图片</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><time datetime="2025-09-22T06:06:09.000Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2025-09-22</time></li>
+                <li itemprop="author" itemscope itemtype="https://schema.org/Person">
+                    <i class="fa fa-user"></i> 作者 <span itemprop="name">cong</span>
+                </li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~5.67K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1763706991566"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+            
+                <div class="kratos-post-inner-toc">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFSVG%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">什么是SVG？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SVG%E7%9A%84%E4%B8%BB%E8%A6%81%E7%89%B9%E7%82%B9%EF%BC%9A"><span class="toc-number">1.1.</span> <span class="toc-text">SVG的主要特点：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SVG-vs-%E5%85%B6%E4%BB%96%E6%A0%BC%E5%BC%8F"><span class="toc-number">2.</span> <span class="toc-text">SVG vs 其他格式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SVG%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95"><span class="toc-number">3.</span> <span class="toc-text">SVG基本语法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84"><span class="toc-number">3.1.</span> <span class="toc-text">基本结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E5%85%83%E7%B4%A0"><span class="toc-number">3.2.</span> <span class="toc-text">常用元素</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E7%9F%A9%E5%BD%A2-rect"><span class="toc-number">3.2.1.</span> <span class="toc-text">1. 矩形 (rect)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%9C%86%E5%BD%A2-circle"><span class="toc-number">3.2.2.</span> <span class="toc-text">2. 圆形 (circle)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E6%A4%AD%E5%9C%86-ellipse"><span class="toc-number">3.2.3.</span> <span class="toc-text">3. 椭圆 (ellipse)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E7%BA%BF%E6%9D%A1-line"><span class="toc-number">3.2.4.</span> <span class="toc-text">4. 线条 (line)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-%E8%B7%AF%E5%BE%84-path"><span class="toc-number">3.2.5.</span> <span class="toc-text">5. 路径 (path)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-%E6%96%87%E6%9C%AC-text"><span class="toc-number">3.2.6.</span> <span class="toc-text">6. 文本 (text)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8%E7%A4%BA%E4%BE%8B"><span class="toc-number">4.</span> <span class="toc-text">实际应用示例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%88%9B%E5%BB%BA%E7%AE%80%E5%8D%95%E7%9A%84%E5%9B%BE%E6%A0%87"><span class="toc-number">4.1.</span> <span class="toc-text">1. 创建简单的图标</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%93%8D%E5%BA%94%E5%BC%8FSVG"><span class="toc-number">4.2.</span> <span class="toc-text">2. 响应式SVG</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%B8%A6CSS%E6%A0%B7%E5%BC%8F%E7%9A%84SVG"><span class="toc-number">4.3.</span> <span class="toc-text">3. 带CSS样式的SVG</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8Web%E5%BC%80%E5%8F%91%E4%B8%AD%E4%BD%BF%E7%94%A8SVG"><span class="toc-number">5.</span> <span class="toc-text">在Web开发中使用SVG</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%86%85%E8%81%94SVG"><span class="toc-number">5.1.</span> <span class="toc-text">1. 内联SVG</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E4%BD%9C%E4%B8%BA%E5%9B%BE%E7%89%87%E4%BD%BF%E7%94%A8"><span class="toc-number">5.2.</span> <span class="toc-text">2. 作为图片使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E4%BD%9C%E4%B8%BA%E8%83%8C%E6%99%AF%E5%9B%BE%E7%89%87"><span class="toc-number">5.3.</span> <span class="toc-text">3. 作为背景图片</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E4%BD%BF%E7%94%A8SVG-Sprite"><span class="toc-number">5.4.</span> <span class="toc-text">4. 使用SVG Sprite</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SVG%E5%8A%A8%E7%94%BB"><span class="toc-number">6.</span> <span class="toc-text">SVG动画</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-CSS%E5%8A%A8%E7%94%BB"><span class="toc-number">6.1.</span> <span class="toc-text">1. CSS动画</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-SMIL%E5%8A%A8%E7%94%BB"><span class="toc-number">6.2.</span> <span class="toc-text">2. SMIL动画</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%98%E5%8C%96%E6%8A%80%E5%B7%A7"><span class="toc-number">7.</span> <span class="toc-text">优化技巧</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%8E%8B%E7%BC%A9SVG"><span class="toc-number">7.1.</span> <span class="toc-text">1. 压缩SVG</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E7%A7%BB%E9%99%A4%E4%B8%8D%E5%BF%85%E8%A6%81%E7%9A%84%E5%B1%9E%E6%80%A7"><span class="toc-number">7.2.</span> <span class="toc-text">2. 移除不必要的属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E4%BD%BF%E7%94%A8%E8%B7%AF%E5%BE%84%E4%BC%98%E5%8C%96"><span class="toc-number">7.3.</span> <span class="toc-text">3. 使用路径优化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E6%94%AF%E6%8C%81"><span class="toc-number">8.</span> <span class="toc-text">浏览器支持</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5"><span class="toc-number">9.</span> <span class="toc-text">最佳实践</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">10.</span> <span class="toc-text">总结</span></a></li></ol>
+                </div>
+            
+            <hr />
+            <div itemprop="articleBody"><p>SVG（Scalable Vector Graphics）是一种基于XML的矢量图形格式，在现代Web开发中扮演着重要角色。与传统的位图格式（如PNG、JPEG）不同，SVG使用数学公式来描述图形，这使得它具有无限缩放而不失真的特性。</p>
+<span id="more"></span>
+
+<h2 id="什么是SVG？"><a href="#什么是SVG？" class="headerlink" title="什么是SVG？"></a>什么是SVG？</h2><p>SVG是一种用XML描述的二维矢量图形格式，由W3C制定标准。它允许我们使用文本编辑器创建和编辑图形，同时支持动画、交互性和样式化。</p>
+<h3 id="SVG的主要特点："><a href="#SVG的主要特点：" class="headerlink" title="SVG的主要特点："></a>SVG的主要特点：</h3><ul>
+<li><strong>矢量图形</strong>：基于数学公式，可无限缩放而不失真</li>
+<li><strong>文件小</strong>：相比位图格式，文件体积通常更小</li>
+<li><strong>可编辑</strong>：可以用文本编辑器直接编辑</li>
+<li><strong>可搜索</strong>：文本内容可以被搜索引擎索引</li>
+<li><strong>可样式化</strong>：支持CSS样式</li>
+<li><strong>可交互</strong>：支持JavaScript交互</li>
+<li><strong>可动画</strong>：支持CSS和SMIL动画</li>
+</ul>
+<h2 id="SVG-vs-其他格式"><a href="#SVG-vs-其他格式" class="headerlink" title="SVG vs 其他格式"></a>SVG vs 其他格式</h2><table>
+<thead>
+<tr>
+<th>特性</th>
+<th>SVG</th>
+<th>PNG</th>
+<th>JPEG</th>
+<th>GIF</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>类型</td>
+<td>矢量</td>
+<td>位图</td>
+<td>位图</td>
+<td>位图</td>
+</tr>
+<tr>
+<td>缩放</td>
+<td>无损</td>
+<td>有损</td>
+<td>有损</td>
+<td>有损</td>
+</tr>
+<tr>
+<td>文件大小</td>
+<td>小</td>
+<td>中等</td>
+<td>小</td>
+<td>小</td>
+</tr>
+<tr>
+<td>动画支持</td>
+<td>是</td>
+<td>否</td>
+<td>否</td>
+<td>是</td>
+</tr>
+<tr>
+<td>透明度</td>
+<td>是</td>
+<td>是</td>
+<td>否</td>
+<td>是</td>
+</tr>
+<tr>
+<td>交互性</td>
+<td>是</td>
+<td>否</td>
+<td>否</td>
+<td>否</td>
+</tr>
+</tbody></table>
+<h2 id="SVG基本语法"><a href="#SVG基本语法" class="headerlink" title="SVG基本语法"></a>SVG基本语法</h2><h3 id="基本结构"><a href="#基本结构" class="headerlink" title="基本结构"></a>基本结构</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">svg</span> <span class="attr">width</span>=<span class="string">&quot;200&quot;</span> <span class="attr">height</span>=<span class="string">&quot;200&quot;</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://www.w3.org/2000/svg&quot;</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- SVG内容 --&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">svg</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="常用元素"><a href="#常用元素" class="headerlink" title="常用元素"></a>常用元素</h3><h4 id="1-矩形-rect"><a href="#1-矩形-rect" class="headerlink" title="1. 矩形 (rect)"></a>1. 矩形 (rect)</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">rect</span> <span class="attr">x</span>=<span class="string">&quot;10&quot;</span> <span class="attr">y</span>=<span class="string">&quot;10&quot;</span> <span class="attr">width</span>=<span class="string">&quot;100&quot;</span> <span class="attr">height</span>=<span class="string">&quot;50&quot;</span> <span class="attr">fill</span>=<span class="string">&quot;blue&quot;</span> <span class="attr">stroke</span>=<span class="string">&quot;black&quot;</span> <span class="attr">stroke-width</span>=<span class="string">&quot;2&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="2-圆形-circle"><a href="#2-圆形-circle" class="headerlink" title="2. 圆形 (circle)"></a>2. 圆形 (circle)</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">circle</span> <span class="attr">cx</span>=<span class="string">&quot;50&quot;</span> <span class="attr">cy</span>=<span class="string">&quot;50&quot;</span> <span class="attr">r</span>=<span class="string">&quot;40&quot;</span> <span class="attr">fill</span>=<span class="string">&quot;red&quot;</span> <span class="attr">stroke</span>=<span class="string">&quot;black&quot;</span> <span class="attr">stroke-width</span>=<span class="string">&quot;2&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="3-椭圆-ellipse"><a href="#3-椭圆-ellipse" class="headerlink" title="3. 椭圆 (ellipse)"></a>3. 椭圆 (ellipse)</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ellipse</span> <span class="attr">cx</span>=<span class="string">&quot;50&quot;</span> <span class="attr">cy</span>=<span class="string">&quot;50&quot;</span> <span class="attr">rx</span>=<span class="string">&quot;40&quot;</span> <span class="attr">ry</span>=<span class="string">&quot;20&quot;</span> <span class="attr">fill</span>=<span class="string">&quot;green&quot;</span> <span class="attr">stroke</span>=<span class="string">&quot;black&quot;</span> <span class="attr">stroke-width</span>=<span class="string">&quot;2&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="4-线条-line"><a href="#4-线条-line" class="headerlink" title="4. 线条 (line)"></a>4. 线条 (line)</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">line</span> <span class="attr">x1</span>=<span class="string">&quot;0&quot;</span> <span class="attr">y1</span>=<span class="string">&quot;0&quot;</span> <span class="attr">x2</span>=<span class="string">&quot;100&quot;</span> <span class="attr">y2</span>=<span class="string">&quot;100&quot;</span> <span class="attr">stroke</span>=<span class="string">&quot;black&quot;</span> <span class="attr">stroke-width</span>=<span class="string">&quot;2&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="5-路径-path"><a href="#5-路径-path" class="headerlink" title="5. 路径 (path)"></a>5. 路径 (path)</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">path</span> <span class="attr">d</span>=<span class="string">&quot;M10 10 L50 50 L90 10&quot;</span> <span class="attr">stroke</span>=<span class="string">&quot;black&quot;</span> <span class="attr">stroke-width</span>=<span class="string">&quot;2&quot;</span> <span class="attr">fill</span>=<span class="string">&quot;none&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="6-文本-text"><a href="#6-文本-text" class="headerlink" title="6. 文本 (text)"></a>6. 文本 (text)</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">text</span> <span class="attr">x</span>=<span class="string">&quot;10&quot;</span> <span class="attr">y</span>=<span class="string">&quot;30&quot;</span> <span class="attr">font-family</span>=<span class="string">&quot;Arial&quot;</span> <span class="attr">font-size</span>=<span class="string">&quot;16&quot;</span> <span class="attr">fill</span>=<span class="string">&quot;black&quot;</span>&gt;</span>Hello SVG!<span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="实际应用示例"><a href="#实际应用示例" class="headerlink" title="实际应用示例"></a>实际应用示例</h2><h3 id="1-创建简单的图标"><a href="#1-创建简单的图标" class="headerlink" title="1. 创建简单的图标"></a>1. 创建简单的图标</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">svg</span> <span class="attr">width</span>=<span class="string">&quot;100&quot;</span> <span class="attr">height</span>=<span class="string">&quot;100&quot;</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://www.w3.org/2000/svg&quot;</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 心形图标 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">path</span> <span class="attr">d</span>=<span class="string">&quot;M50,85 C50,85 20,60 20,40 C20,25 30,15 45,15 C50,15 50,20 50,20 C50,20 50,15 55,15 C70,15 80,25 80,40 C80,60 50,85 50,85 Z&quot;</span> </span></span><br><span class="line"><span class="tag">        <span class="attr">fill</span>=<span class="string">&quot;red&quot;</span> <span class="attr">stroke</span>=<span class="string">&quot;darkred&quot;</span> <span class="attr">stroke-width</span>=<span class="string">&quot;2&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">svg</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-响应式SVG"><a href="#2-响应式SVG" class="headerlink" title="2. 响应式SVG"></a>2. 响应式SVG</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">svg</span> <span class="attr">viewBox</span>=<span class="string">&quot;0 0 100 100&quot;</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://www.w3.org/2000/svg&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">circle</span> <span class="attr">cx</span>=<span class="string">&quot;50&quot;</span> <span class="attr">cy</span>=<span class="string">&quot;50&quot;</span> <span class="attr">r</span>=<span class="string">&quot;40&quot;</span> <span class="attr">fill</span>=<span class="string">&quot;blue&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">svg</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-带CSS样式的SVG"><a href="#3-带CSS样式的SVG" class="headerlink" title="3. 带CSS样式的SVG"></a>3. 带CSS样式的SVG</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">svg</span> <span class="attr">width</span>=<span class="string">&quot;200&quot;</span> <span class="attr">height</span>=<span class="string">&quot;200&quot;</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://www.w3.org/2000/svg&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css">    <span class="selector-class">.my-circle</span> &#123; fill: red; stroke: black; stroke-<span class="attribute">width</span>: <span class="number">2</span>; &#125;</span></span><br><span class="line"><span class="language-css">    <span class="selector-class">.my-circle</span><span class="selector-pseudo">:hover</span> &#123; fill: blue; &#125;</span></span><br><span class="line"><span class="language-css">  </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">circle</span> <span class="attr">class</span>=<span class="string">&quot;my-circle&quot;</span> <span class="attr">cx</span>=<span class="string">&quot;100&quot;</span> <span class="attr">cy</span>=<span class="string">&quot;100&quot;</span> <span class="attr">r</span>=<span class="string">&quot;50&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">svg</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="在Web开发中使用SVG"><a href="#在Web开发中使用SVG" class="headerlink" title="在Web开发中使用SVG"></a>在Web开发中使用SVG</h2><h3 id="1-内联SVG"><a href="#1-内联SVG" class="headerlink" title="1. 内联SVG"></a>1. 内联SVG</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>内联SVG示例<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">svg</span> <span class="attr">width</span>=<span class="string">&quot;200&quot;</span> <span class="attr">height</span>=<span class="string">&quot;200&quot;</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://www.w3.org/2000/svg&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">circle</span> <span class="attr">cx</span>=<span class="string">&quot;100&quot;</span> <span class="attr">cy</span>=<span class="string">&quot;100&quot;</span> <span class="attr">r</span>=<span class="string">&quot;50&quot;</span> <span class="attr">fill</span>=<span class="string">&quot;blue&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">svg</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-作为图片使用"><a href="#2-作为图片使用" class="headerlink" title="2. 作为图片使用"></a>2. 作为图片使用</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;icon.svg&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;图标&quot;</span> <span class="attr">width</span>=<span class="string">&quot;50&quot;</span> <span class="attr">height</span>=<span class="string">&quot;50&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-作为背景图片"><a href="#3-作为背景图片" class="headerlink" title="3. 作为背景图片"></a>3. 作为背景图片</h3><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.icon</span> &#123;</span><br><span class="line">    <span class="attribute">background-image</span>: <span class="built_in">url</span>(<span class="string">&#x27;icon.svg&#x27;</span>);</span><br><span class="line">    <span class="attribute">background-size</span>: contain;</span><br><span class="line">    <span class="attribute">background-repeat</span>: no-repeat;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-使用SVG-Sprite"><a href="#4-使用SVG-Sprite" class="headerlink" title="4. 使用SVG Sprite"></a>4. 使用SVG Sprite</h3><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">svg</span> <span class="attr">style</span>=<span class="string">&quot;display: none;&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">defs</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">symbol</span> <span class="attr">id</span>=<span class="string">&quot;icon-home&quot;</span> <span class="attr">viewBox</span>=<span class="string">&quot;0 0 24 24&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">path</span> <span class="attr">d</span>=<span class="string">&quot;M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z&quot;</span>/&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">symbol</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">defs</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">svg</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">svg</span> <span class="attr">class</span>=<span class="string">&quot;icon&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">use</span> <span class="attr">href</span>=<span class="string">&quot;#icon-home&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">use</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">svg</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="SVG动画"><a href="#SVG动画" class="headerlink" title="SVG动画"></a>SVG动画</h2><h3 id="1-CSS动画"><a href="#1-CSS动画" class="headerlink" title="1. CSS动画"></a>1. CSS动画</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">svg</span> <span class="attr">width</span>=<span class="string">&quot;200&quot;</span> <span class="attr">height</span>=<span class="string">&quot;200&quot;</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://www.w3.org/2000/svg&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css">        <span class="selector-class">.rotating</span> &#123;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">animation</span>: rotate <span class="number">2s</span> linear infinite;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">transform-origin</span>: center;</span></span><br><span class="line"><span class="language-css">        &#125;</span></span><br><span class="line"><span class="language-css">        <span class="keyword">@keyframes</span> rotate &#123;</span></span><br><span class="line"><span class="language-css">            <span class="selector-tag">from</span> &#123; <span class="attribute">transform</span>: <span class="built_in">rotate</span>(<span class="number">0deg</span>); &#125;</span></span><br><span class="line"><span class="language-css">            <span class="selector-tag">to</span> &#123; <span class="attribute">transform</span>: <span class="built_in">rotate</span>(<span class="number">360deg</span>); &#125;</span></span><br><span class="line"><span class="language-css">        &#125;</span></span><br><span class="line"><span class="language-css">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">rect</span> <span class="attr">class</span>=<span class="string">&quot;rotating&quot;</span> <span class="attr">x</span>=<span class="string">&quot;75&quot;</span> <span class="attr">y</span>=<span class="string">&quot;75&quot;</span> <span class="attr">width</span>=<span class="string">&quot;50&quot;</span> <span class="attr">height</span>=<span class="string">&quot;50&quot;</span> <span class="attr">fill</span>=<span class="string">&quot;blue&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">svg</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-SMIL动画"><a href="#2-SMIL动画" class="headerlink" title="2. SMIL动画"></a>2. SMIL动画</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">svg</span> <span class="attr">width</span>=<span class="string">&quot;200&quot;</span> <span class="attr">height</span>=<span class="string">&quot;200&quot;</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://www.w3.org/2000/svg&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">circle</span> <span class="attr">cx</span>=<span class="string">&quot;100&quot;</span> <span class="attr">cy</span>=<span class="string">&quot;100&quot;</span> <span class="attr">r</span>=<span class="string">&quot;50&quot;</span> <span class="attr">fill</span>=<span class="string">&quot;red&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">animate</span> <span class="attr">attributeName</span>=<span class="string">&quot;r&quot;</span> <span class="attr">values</span>=<span class="string">&quot;50;80;50&quot;</span> <span class="attr">dur</span>=<span class="string">&quot;2s&quot;</span> <span class="attr">repeatCount</span>=<span class="string">&quot;indefinite&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">circle</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">svg</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="优化技巧"><a href="#优化技巧" class="headerlink" title="优化技巧"></a>优化技巧</h2><h3 id="1-压缩SVG"><a href="#1-压缩SVG" class="headerlink" title="1. 压缩SVG"></a>1. 压缩SVG</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用SVGO压缩</span></span><br><span class="line">npm install -g svgo</span><br><span class="line">svgo input.svg -o output.svg</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-移除不必要的属性"><a href="#2-移除不必要的属性" class="headerlink" title="2. 移除不必要的属性"></a>2. 移除不必要的属性</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 优化前 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">svg</span> <span class="attr">width</span>=<span class="string">&quot;100&quot;</span> <span class="attr">height</span>=<span class="string">&quot;100&quot;</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://www.w3.org/2000/svg&quot;</span> <span class="attr">version</span>=<span class="string">&quot;1.1&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">circle</span> <span class="attr">cx</span>=<span class="string">&quot;50&quot;</span> <span class="attr">cy</span>=<span class="string">&quot;50&quot;</span> <span class="attr">r</span>=<span class="string">&quot;40&quot;</span> <span class="attr">fill</span>=<span class="string">&quot;blue&quot;</span> <span class="attr">stroke</span>=<span class="string">&quot;black&quot;</span> <span class="attr">stroke-width</span>=<span class="string">&quot;2&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">svg</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 优化后 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">svg</span> <span class="attr">viewBox</span>=<span class="string">&quot;0 0 100 100&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">circle</span> <span class="attr">cx</span>=<span class="string">&quot;50&quot;</span> <span class="attr">cy</span>=<span class="string">&quot;50&quot;</span> <span class="attr">r</span>=<span class="string">&quot;40&quot;</span> <span class="attr">fill</span>=<span class="string">&quot;blue&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">svg</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-使用路径优化"><a href="#3-使用路径优化" class="headerlink" title="3. 使用路径优化"></a>3. 使用路径优化</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 使用更简洁的路径命令 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">path</span> <span class="attr">d</span>=<span class="string">&quot;M10 10h80v80h-80z&quot;</span> <span class="attr">fill</span>=<span class="string">&quot;blue&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="浏览器支持"><a href="#浏览器支持" class="headerlink" title="浏览器支持"></a>浏览器支持</h2><p>现代浏览器对SVG的支持已经非常完善：</p>
+<ul>
+<li>Chrome: 完全支持</li>
+<li>Firefox: 完全支持</li>
+<li>Safari: 完全支持</li>
+<li>Edge: 完全支持</li>
+<li>IE: 9+支持（部分功能）</li>
+</ul>
+<h2 id="最佳实践"><a href="#最佳实践" class="headerlink" title="最佳实践"></a>最佳实践</h2><ol>
+<li><strong>使用viewBox属性</strong>：确保SVG在不同尺寸下正确显示</li>
+<li><strong>优化文件大小</strong>：移除不必要的属性和空白</li>
+<li><strong>使用语义化的ID和类名</strong>：便于维护和样式化</li>
+<li><strong>考虑可访问性</strong>：添加适当的alt文本和ARIA属性</li>
+<li><strong>测试不同浏览器</strong>：确保兼容性</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>SVG作为一种强大的矢量图形格式，在现代Web开发中具有重要地位。它的可缩放性、小文件体积、丰富的交互性和动画支持，使其成为创建图标、图表、插图和复杂图形的理想选择。掌握SVG的使用技巧，能够显著提升Web应用的用户体验和性能。</p>
+<p>随着Web技术的不断发展，SVG的应用场景也在不断扩展，从简单的图标到复杂的数据可视化，SVG都展现出了其独特的优势。对于前端开发者来说，熟练掌握SVG的使用是必不可少的技能之一。</p>
+</div>
+        </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/svg/" rel="tag">svg</a>
+                </div>
+                <div class="pull-date">
+                    <time datetime="2025-11-21T06:36:31.566Z" itemprop="dateModified">最后编辑：2025-11-21</time>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" cursor使用mcp连接数据库" href="/2025/09/15/2025/09/151515/">&lt; 上一篇</a>
+            </div>
+            
+            
+            <div class="nav-next clearfix">
+                <a title=" word表格批量设置允许跨页断行" href="/2025/09/23/2025/09/231034/">下一篇 &gt;</a>
+            </div>
+            
+        </nav>
+    
+    
+        <link rel="stylesheet" href="/vendors/gitalk@1.7.2/dist/gitalk.css"></script>
+<div id="gitalk-container" class="post-comments lazy-load" style="padding-left:2rem; padding-right:2rem;"></div>
+<script>
+    var load_comm = () => {
+        const init = () => {
+            console.log('Gitalk loading...');
+            const gitalk = new Gitalk(Object.assign({
+                id: '/2025/09/22/2025/09/190401/',
+                path: '/2025/09/22/2025/09/190401/'
+            }, JSON.parse('{"clientID":"56e6a743c63b9c4faa93","clientSecret":"888b7234051c5c2ed6ea7bdf18e8b5a2678775f1","repo":"gitalk-comments","owner":"qbmzc","admin":["qbmzc"]}')));
+
+            gitalk.render('gitalk-container');
+        }
+        if (typeof Gitalk === 'undefined') {
+            const src = '/vendors/gitalk@1.7.2/dist/gitalk.min.js';
+            $.getScript(src, init);
+        } else {
+            init();
+        }
+    };
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a></noscript>
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/avatar.webp" loading="lazy" decoding="auto" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center">流云与风，苍穹游牧</p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                499
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                8
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                229
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                    <aside id="krw-toc" class="widget widget-kratos-toc clearfix">
+    <div class="photo-background"></div>
+    <h4 class="widget-title no-after">
+        <i class="fa fa-compass"></i>
+        文章目录
+        <span class="toc-progress-bar" role="progressbar" aria-label="阅读进度："></span>
+    </h4>
+    <div class="textwidget">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFSVG%EF%BC%9F"><span class="toc-text">什么是SVG？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SVG%E7%9A%84%E4%B8%BB%E8%A6%81%E7%89%B9%E7%82%B9%EF%BC%9A"><span class="toc-text">SVG的主要特点：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SVG-vs-%E5%85%B6%E4%BB%96%E6%A0%BC%E5%BC%8F"><span class="toc-text">SVG vs 其他格式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SVG%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95"><span class="toc-text">SVG基本语法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84"><span class="toc-text">基本结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E5%85%83%E7%B4%A0"><span class="toc-text">常用元素</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E7%9F%A9%E5%BD%A2-rect"><span class="toc-text">1. 矩形 (rect)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%9C%86%E5%BD%A2-circle"><span class="toc-text">2. 圆形 (circle)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E6%A4%AD%E5%9C%86-ellipse"><span class="toc-text">3. 椭圆 (ellipse)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E7%BA%BF%E6%9D%A1-line"><span class="toc-text">4. 线条 (line)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-%E8%B7%AF%E5%BE%84-path"><span class="toc-text">5. 路径 (path)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-%E6%96%87%E6%9C%AC-text"><span class="toc-text">6. 文本 (text)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8%E7%A4%BA%E4%BE%8B"><span class="toc-text">实际应用示例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%88%9B%E5%BB%BA%E7%AE%80%E5%8D%95%E7%9A%84%E5%9B%BE%E6%A0%87"><span class="toc-text">1. 创建简单的图标</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%93%8D%E5%BA%94%E5%BC%8FSVG"><span class="toc-text">2. 响应式SVG</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%B8%A6CSS%E6%A0%B7%E5%BC%8F%E7%9A%84SVG"><span class="toc-text">3. 带CSS样式的SVG</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8Web%E5%BC%80%E5%8F%91%E4%B8%AD%E4%BD%BF%E7%94%A8SVG"><span class="toc-text">在Web开发中使用SVG</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%86%85%E8%81%94SVG"><span class="toc-text">1. 内联SVG</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E4%BD%9C%E4%B8%BA%E5%9B%BE%E7%89%87%E4%BD%BF%E7%94%A8"><span class="toc-text">2. 作为图片使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E4%BD%9C%E4%B8%BA%E8%83%8C%E6%99%AF%E5%9B%BE%E7%89%87"><span class="toc-text">3. 作为背景图片</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E4%BD%BF%E7%94%A8SVG-Sprite"><span class="toc-text">4. 使用SVG Sprite</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SVG%E5%8A%A8%E7%94%BB"><span class="toc-text">SVG动画</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-CSS%E5%8A%A8%E7%94%BB"><span class="toc-text">1. CSS动画</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-SMIL%E5%8A%A8%E7%94%BB"><span class="toc-text">2. SMIL动画</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%98%E5%8C%96%E6%8A%80%E5%B7%A7"><span class="toc-text">优化技巧</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%8E%8B%E7%BC%A9SVG"><span class="toc-text">1. 压缩SVG</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E7%A7%BB%E9%99%A4%E4%B8%8D%E5%BF%85%E8%A6%81%E7%9A%84%E5%B1%9E%E6%80%A7"><span class="toc-text">2. 移除不必要的属性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E4%BD%BF%E7%94%A8%E8%B7%AF%E5%BE%84%E4%BC%98%E5%8C%96"><span class="toc-text">3. 使用路径优化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E6%94%AF%E6%8C%81"><span class="toc-text">浏览器支持</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5"><span class="toc-text">最佳实践</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol>
+    </div>
+</aside>
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">137</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">151</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">29</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/congco/">congco</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/work/">work</a><span class="category-list-count">118</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wuw/">wuw</a><span class="category-list-count">48</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/">技术笔记</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/AES/" style="font-size: 0.6em;">AES</a> <a href="/tags/AI/" style="font-size: 0.7em;">AI</a> <a href="/tags/AWS/" style="font-size: 0.7em;">AWS</a> <a href="/tags/Arch/" style="font-size: 0.6em;">Arch</a> <a href="/tags/Arch-Linux/" style="font-size: 0.8em;">Arch Linux</a> <a href="/tags/ArchLinux/" style="font-size: 0.8em;">ArchLinux</a> <a href="/tags/CAS/" style="font-size: 0.6em;">CAS</a> <a href="/tags/CI-CD/" style="font-size: 0.6em;">CI/CD</a> <a href="/tags/Caffeine/" style="font-size: 0.6em;">Caffeine</a> <a href="/tags/CompletableFuture/" style="font-size: 0.7em;">CompletableFuture</a> <a href="/tags/DNS/" style="font-size: 0.8em;">DNS</a> <a href="/tags/Docker/" style="font-size: 0.6em;">Docker</a> <a href="/tags/Flask/" style="font-size: 0.6em;">Flask</a> <a href="/tags/Future/" style="font-size: 0.7em;">Future</a> <a href="/tags/GC/" style="font-size: 0.6em;">GC</a> <a href="/tags/GPT/" style="font-size: 0.6em;">GPT</a> <a href="/tags/GraalVM/" style="font-size: 0.8em;">GraalVM</a> <a href="/tags/HashMap/" style="font-size: 0.6em;">HashMap</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/14/2025/11/141727/"><i class="fa  fa-book"></i> karakeep</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111335/"><i class="fa  fa-book"></i> SonarQube 扫描支持多 JDK 版本的实践方案</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111045/"><i class="fa  fa-book"></i> 一次修复 PDF 中文乱码的排查记录</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/23/2025/10/221500/"><i class="fa  fa-book"></i> dig命令使用详解</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/13/2025/10/131645/"><i class="fa  fa-book"></i> DNS解析异常导致视频播放缓慢问题排查与解决</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  >
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        <li><a href="mailto:congco@foxmail.com"><i class="fa fa-envelope"></i></a></li>
+                        
+                        
+                        
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://github.com/qbmzc"><i class="fa fa-github"></i></a></li>
+                        <li><a target="_blank" rel="nofollow" href="/rss.xml"><i class="fa fa-rss"></i></a></li>
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2025 沐曦留曳 版权所有.</li>
+                            <li>本站已运行<span id="span_dt">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
+                            <li>Site built with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by cong.</li>
+                        </div>
+                        <div>
+                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
+                            <li>Hosted on <a href="https://github.io" target="_blank">Github Pages</a></li>
+                        </div>
+                        <div>
+                            
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="/vendors/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="/vendors/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+
+    <script defer src="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="/vendors/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>

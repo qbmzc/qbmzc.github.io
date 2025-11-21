@@ -1,0 +1,1632 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="/images/favicon.ico">
+  
+  <title>使用 GraalVM 将 Java 代码编译为本地可执行文件 | 沐曦留曳</title>
+  <meta name="author" content="cong" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="GraalVM" />
+  
+  <meta name="description" content="使用 GraalVM 将 Java 代码编译为本地可执行文件（native executable）可以显著提高启动速度和降低内存消耗。以下是将您提供的从二维码中提取 secret 密钥的 Java 代码使用 GraalVM 编译为可执行命令的详细步骤。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 GraalVM 将 Java 代码编译为本地可执行文件">
+<meta property="og:url" content="https://qbmzc.github.io/2024/11/29/2024/11/301856/index.html">
+<meta property="og:site_name" content="沐曦留曳">
+<meta property="og:description" content="使用 GraalVM 将 Java 代码编译为本地可执行文件（native executable）可以显著提高启动速度和降低内存消耗。以下是将您提供的从二维码中提取 secret 密钥的 Java 代码使用 GraalVM 编译为可执行命令的详细步骤。">
+<meta property="og:locale">
+<meta property="og:image" content="https://qbmzc.github.io/images/favicon.ico">
+<meta property="article:published_time" content="2024-11-29T08:16:00.000Z">
+<meta property="article:modified_time" content="2025-11-21T06:36:31.563Z">
+<meta property="article:author" content="cong">
+<meta property="article:tag" content="GraalVM">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://qbmzc.github.io/images/favicon.ico">
+  <link rel="alternate" href="rss.xml" type="application/atom+xml">
+  <!-- 站点验证相关 -->
+  
+    
+      <meta name="google-site-verification" content="lV4cead5YlJ8KpODToP7dvzi-ihrxSqU0yYStYKj2ao" />
+    
+    
+      <meta name="baidu-site-verification" content="codeva-Zr6WlkDupK" />
+    
+    
+      <meta name="msvalidate.01" content="2D2197DEE362D193B3EC29AFD3306341" />
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" media="all"></script>
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-color-dark.min.css" media="(prefers-color-scheme: dark)"></script>
+    <script src="/js/kr-dark.min.js"></script>
+  
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" media="all"></script>
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="/vendors/font-awesome@4.7.0/css/font-awesome.min.css" media="all"></script>
+  <link rel="stylesheet" id="nprogress-css" href="/vendors/nprogress@0.2.0/nprogress.css" media="all"></script>
+  
+  
+  
+    <link rel="stylesheet" href="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css"></script>
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="/vendors/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/banner.webp');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">沐曦留曳</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>沐曦留曳</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article itemscope itemtype="https://schema.org/Article">
+    
+    <link itemprop="mainEntityOfPage" href="https://qbmzc.github.io/2024/11/29/2024/11/301856/">
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center" itemprop="name headline">使用 GraalVM 将 Java 代码编译为本地可执行文件</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><time datetime="2024-11-29T08:16:00.000Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2024-11-29</time></li>
+                <li itemprop="author" itemscope itemtype="https://schema.org/Person">
+                    <i class="fa fa-user"></i> 作者 <span itemprop="name">cong</span>
+                </li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~12.34K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1763706991563"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+            
+                <div class="kratos-post-inner-toc">
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E6%8F%90%E6%9D%A1%E4%BB%B6"><span class="toc-number">1.</span> <span class="toc-text">前提条件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E8%BF%90%E8%A1%8C%E6%9C%AC%E5%9C%B0%E5%8F%AF%E6%89%A7%E8%A1%8C%E6%96%87%E4%BB%B6"><span class="toc-number">1.1.</span> <span class="toc-text">4. 运行本地可执行文件</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%8C%E6%95%B4%E7%A4%BA%E4%BE%8B"><span class="toc-number">2.</span> <span class="toc-text">完整示例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AF%E8%83%BD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="toc-number">3.</span> <span class="toc-text">可能遇到的问题及解决方案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%9D%E5%A4%96%E4%BC%98%E5%8C%96%E5%BB%BA%E8%AE%AE"><span class="toc-number">4.</span> <span class="toc-text">额外优化建议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-number">5.</span> <span class="toc-text">参考资料</span></a></li></ol>
+                </div>
+            
+            <hr />
+            <div itemprop="articleBody"><p>使用 <strong>GraalVM</strong> 将 Java 代码编译为本地可执行文件（native executable）可以显著提高启动速度和降低内存消耗。以下是将您提供的从二维码中提取 secret 密钥的 Java 代码使用 GraalVM 编译为可执行命令的详细步骤。<br>  <span id="more"></span></p>
+<h3 id="前提条件"><a href="#前提条件" class="headerlink" title="前提条件"></a>前提条件</h3><ol>
+<li><p><strong>安装 GraalVM</strong>：  </p>
+<ul>
+<li><del>访问 <a target="_blank" rel="noopener" href="https://www.graalvm.org/downloads/">GraalVM 官方下载页面</a> 下载适用于您操作系统的 GraalVM 版本。</del>  </li>
+<li><a target="_blank" rel="noopener" href="https://bell-sw.com/pages/downloads/native-image-kit/#nik-23-(jdk-21)">DownloadLiberica Native Image Kit</a>  ( <a target="_blank" rel="noopener" href="https://github.com/oracle/graal/issues/4124">Mac：java.library.path 中没有 awt 的问题</a>)</li>
+<li>解压缩并设置环境变量 <code>GRAALVM_HOME</code> 指向 GraalVM 安装目录。  </li>
+<li>将 GraalVM 的 <code>bin</code> 目录添加到 <code>PATH</code> 环境变量中。</li>
+</ul>
+</li>
+<li><p><strong>安装 <code>native-image</code> 工具</strong>：  </p>
+<ul>
+<li>GraalVM 默认不包含 <code>native-image</code>，需要通过 <code>gu</code>（GraalVM 的组件管理器）进行安装。  </li>
+<li>执行以下命令安装 <code>native-image</code>：   <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br></pre></td><td class="code"><pre><span class="line">      gu install native-image      </span><br><span class="line">      ```  </span><br><span class="line">3. **确保 Maven 或 Gradle 环境**：  </span><br><span class="line">   - 本教程将使用 Maven 进行构建，因此请确保已安装 Maven 并正确配置环境变量。  </span><br><span class="line">  </span><br><span class="line"><span class="comment">### 步骤一：准备 Java 项目  </span></span><br><span class="line">  </span><br><span class="line">假设您已有一个 Maven 项目，以下是项目的结构和必要的配置。  </span><br><span class="line">  </span><br><span class="line"><span class="comment">#### 1. 创建 Maven 项目  </span></span><br><span class="line">  </span><br><span class="line">如果您还没有项目，可以使用 Maven 创建一个新的项目：  </span><br><span class="line">  </span><br><span class="line">```bash  </span><br><span class="line">mvn archetype:generate -DgroupId=com.cong -DartifactId=QRCodeSecretExtractor -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=<span class="literal">false</span></span><br><span class="line">```  </span><br><span class="line">  </span><br><span class="line"><span class="comment">#### 2. 添加依赖  </span></span><br><span class="line">  </span><br><span class="line">编辑 `pom.xml` 文件，添加 ZXing 库作为依赖：  </span><br><span class="line">  </span><br><span class="line">```xml  </span><br><span class="line"> &lt;!-- ZXing 库 --&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">      &lt;groupId&gt;com.google.zxing&lt;/groupId&gt;</span><br><span class="line">      &lt;artifactId&gt;core&lt;/artifactId&gt;</span><br><span class="line">      &lt;version&gt;3.4.1&lt;/version&gt;</span><br><span class="line">    &lt;/dependency&gt;</span><br><span class="line">    &lt;dependency&gt;</span><br><span class="line">      &lt;groupId&gt;com.google.zxing&lt;/groupId&gt;</span><br><span class="line">      &lt;artifactId&gt;javase&lt;/artifactId&gt;</span><br><span class="line">      &lt;version&gt;3.4.1&lt;/version&gt;</span><br><span class="line">    &lt;/dependency&gt;</span><br><span class="line">```  </span><br><span class="line">  </span><br><span class="line"><span class="comment">#### 3. 编写 Java 代码  </span></span><br><span class="line">  </span><br><span class="line">在 `src/main/java/com/example` 目录下创建 `QRCodeSecretKeyExtractor.java` 文件，并粘贴以下代码：  </span><br><span class="line">  </span><br><span class="line">```java  </span><br><span class="line">package com.cong;</span><br><span class="line"></span><br><span class="line">import com.google.zxing.*;</span><br><span class="line">import com.google.zxing.client.j2se.BufferedImageLuminanceSource;</span><br><span class="line">import com.google.zxing.common.HybridBinarizer;</span><br><span class="line"></span><br><span class="line">import javax.imageio.ImageIO;</span><br><span class="line">import java.awt.image.BufferedImage;</span><br><span class="line">import java.io.File;</span><br><span class="line">import java.io.IOException;</span><br><span class="line">import java.net.URI;</span><br><span class="line">import java.net.URISyntaxException;</span><br><span class="line">import java.util.HashMap;</span><br><span class="line">import java.util.Map;</span><br><span class="line"></span><br><span class="line">public class QRCodeSecretKeyExtractor &#123;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        <span class="keyword">if</span> (args.length != 1) &#123;</span><br><span class="line">            System.err.println(<span class="string">&quot; QRCodeSecretExtractor qrCodeimage&quot;</span>);</span><br><span class="line">            System.<span class="built_in">exit</span>(1);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        String qrCodePath = args[0]; // 从命令行参数获取二维码图片路径</span><br><span class="line"></span><br><span class="line">        try &#123;</span><br><span class="line">            String qrCodeData = decodeQRCode(new File(qrCodePath));</span><br><span class="line">            <span class="keyword">if</span> (qrCodeData == null) &#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;未能解码二维码&quot;</span>);</span><br><span class="line">                <span class="built_in">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(<span class="string">&quot;QR Code Data: &quot;</span> + qrCodeData);</span><br><span class="line"></span><br><span class="line">            // 根据数据格式解析 secret 密钥</span><br><span class="line">            String secretKey = extractSecretKey(qrCodeData);</span><br><span class="line">            <span class="keyword">if</span> (secretKey != null) &#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;Extracted Secret Key: &quot;</span> + secretKey);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;未能提取到 secret 密钥&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; catch (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 解码二维码</span><br><span class="line">    private static String decodeQRCode(File qrCodeimage) throws IOException, NotFoundException &#123;</span><br><span class="line">        BufferedImage bufferedImage = ImageIO.<span class="built_in">read</span>(qrCodeimage);</span><br><span class="line">        <span class="keyword">if</span> (bufferedImage == null) &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;bufferedImage is null&quot;</span>);</span><br><span class="line">            <span class="built_in">return</span> null;</span><br><span class="line">        &#125;</span><br><span class="line">        LuminanceSource <span class="built_in">source</span> = new BufferedImageLuminanceSource(bufferedImage);</span><br><span class="line">        BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(<span class="built_in">source</span>));</span><br><span class="line"></span><br><span class="line">        Result result = new MultiFormatReader().decode(bitmap);</span><br><span class="line">        <span class="built_in">return</span> result.getText();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 提取 secret 密钥</span><br><span class="line">    private static String extractSecretKey(String qrCodeData) throws URISyntaxException &#123;</span><br><span class="line">        <span class="keyword">if</span> (qrCodeData.startsWith(<span class="string">&quot;otpauth://&quot;</span>)) &#123;</span><br><span class="line">            // 解析 otpauth URI 格式</span><br><span class="line">            <span class="built_in">return</span> parseOTPAuthURI(qrCodeData).get(<span class="string">&quot;secret&quot;</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (qrCodeData.startsWith(<span class="string">&quot;https://&quot;</span>) || qrCodeData.startsWith(<span class="string">&quot;http://&quot;</span>)) &#123;</span><br><span class="line">            // 处理 URL 格式，可以根据需要实现 HTTP 请求获取 secret</span><br><span class="line">            // 示例中假设 secret 密钥是直接返回的</span><br><span class="line">            // 您可以调用之前提到的 fetchSecretKeyFromURL 方法</span><br><span class="line">            System.out.println(<span class="string">&quot;二维码包含 URL，需要进一步处理&quot;</span>);</span><br><span class="line">            <span class="built_in">return</span> null; // 实际实现中返回从 URL 获取的 secret</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            // 假设是纯文本格式</span><br><span class="line">            <span class="built_in">return</span> qrCodeData;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 解析 otpauth URI</span><br><span class="line">    private static Map&lt;String, String&gt; parseOTPAuthURI(String uriString) throws URISyntaxException &#123;</span><br><span class="line">        URI uri = new URI(uriString);</span><br><span class="line">        String query = uri.getQuery();</span><br><span class="line">        String[] pairs = query.split(<span class="string">&quot;&amp;&quot;</span>);</span><br><span class="line">        Map&lt;String, String&gt; queryParams = new HashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (String pair : pairs) &#123;</span><br><span class="line">            int idx = pair.indexOf(<span class="string">&#x27;=&#x27;</span>);</span><br><span class="line">            <span class="keyword">if</span> (idx &gt; 0 &amp;&amp; idx &lt; pair.length() - 1) &#123;</span><br><span class="line">                String key = pair.substring(0, idx);</span><br><span class="line">                String value = pair.substring(idx + 1);</span><br><span class="line">                queryParams.put(key, value);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">return</span> queryParams;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">```  </span><br><span class="line">  </span><br><span class="line"><span class="comment">### 步骤二：构建和测试 Java 应用  </span></span><br><span class="line">  </span><br><span class="line">在开始编译为本地可执行文件之前，先确保您的 Java 应用可以正常编译和运行。  </span><br><span class="line">  </span><br><span class="line">1. **编译项目**：  </span><br><span class="line">  </span><br><span class="line">   在项目根目录下执行：  </span><br><span class="line">   ```bash  </span><br><span class="line">   mvn clean package   </span><br><span class="line">   ```  </span><br><span class="line">   这将生成一个 `QRCodeSecretExtractor-1.0-SNAPSHOT.jar` 文件在 `target` 目录中。  </span><br><span class="line">  </span><br><span class="line">2. **运行测试**：  </span><br><span class="line">  </span><br><span class="line">   假设您有一个二维码图片 `qrcode.png`，可以使用以下命令测试：  </span><br><span class="line">  </span><br><span class="line">   ```bash  </span><br><span class="line">   java -jar target/QRCodeSecretExtractor-1.0-SNAPSHOT.jar path/to/qrcode.png   </span><br><span class="line">   ```  </span><br><span class="line">   确保输出正确解析了二维码数据并提取了 secret 密钥。  </span><br><span class="line">  </span><br><span class="line"><span class="comment">### 步骤三：使用 GraalVM 生成本地可执行文件  </span></span><br><span class="line">  </span><br><span class="line"><span class="comment">#### 1. 设置 GraalVM 作为 Maven 的 JDK  </span></span><br><span class="line">  </span><br><span class="line">确保 Maven 使用 GraalVM 的 JDK 来构建项目。可以通过设置 `JAVA_HOME` 环境变量来实现：  </span><br><span class="line">  </span><br><span class="line">```bash  </span><br><span class="line"><span class="built_in">export</span> JAVA_HOME=/path/to/graalvmexport PATH=<span class="variable">$JAVA_HOME</span>/bin:<span class="variable">$PATH</span></span><br><span class="line">```  </span><br><span class="line">  </span><br><span class="line"><span class="comment">#### 2. 构建可执行 JAR  </span></span><br><span class="line">  </span><br><span class="line">确保您的 `pom.xml` 中配置了 `maven-assembly-plugin` 或 `maven-shade-plugin` 来打包所有依赖到一个可执行的 JAR 文件。以下示例使用 `maven-shade-plugin`：  </span><br><span class="line">  </span><br><span class="line">在 `pom.xml` 中添加以下插件配置：  </span><br><span class="line">  </span><br><span class="line">```xml  </span><br><span class="line">&lt;build&gt;  </span><br><span class="line">    &lt;plugins&gt;        &lt;!-- 其他插件 --&gt;  </span><br><span class="line">        &lt;plugin&gt;            </span><br><span class="line">        &lt;groupId&gt;org.apache.maven.plugins&lt;groupId&gt;            &lt;artifactId&gt;maven-shade-plugin&lt;/artifactId&gt;            &lt;version&gt;3.2.4&lt;/version&gt;            &lt;executions&gt;                </span><br><span class="line">        &lt;execution&gt;                    </span><br><span class="line">        &lt;phase&gt;package&lt;/phase&gt;                    &lt;goals&gt;                        </span><br><span class="line">        &lt;goal&gt;shade&lt;/goal&gt;                    &lt;goals&gt;                    &lt;configuration&gt;                        &lt;transformers&gt;                            </span><br><span class="line">        &lt;transformer implementation=<span class="string">&quot;org.apache.maven.plugins.shade.resource.ManifestResourceTransformer&quot;</span>&gt;                                &lt;mainClass&gt;com.cong.QRCodeSecretKeyExtractor</span><br><span class="line">        &lt;/mainClass&gt;                            </span><br><span class="line">        &lt;/transformer&gt;                        </span><br><span class="line">        &lt;/transformers&gt;                    </span><br><span class="line">        &lt;/configuration&gt;                </span><br><span class="line">        &lt;/execution&gt;            </span><br><span class="line">        &lt;/executions&gt;        </span><br><span class="line">      &lt;/plugin&gt;    </span><br><span class="line">   &lt;/plugins&gt;</span><br><span class="line">&lt;/build&gt;  </span><br><span class="line">```  </span><br><span class="line">  </span><br><span class="line">重新打包项目：  </span><br><span class="line">  </span><br><span class="line">```bash  </span><br><span class="line">mvn clean package</span><br><span class="line">```  </span><br><span class="line">  </span><br><span class="line">这将生成一个包含所有依赖的可执行 JAR 文件，通常命名为 `QRCodeSecretExtractor-1.0-SNAPSHOT-shaded.jar`。  </span><br><span class="line">  </span><br><span class="line"><span class="comment">#### 3. 生成本地可执行文件  </span></span><br><span class="line">  </span><br><span class="line">使用 `native-image` 工具将可执行 JAR 转换为本地可执行文件。  </span><br><span class="line"></span><br><span class="line">```bash</span><br><span class="line">native-image -jar target/QRCodeSecretExtractor-1.0-SNAPSHOT-shaded.jar QRCodeSecretExtractor</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ol>
+<p><strong>说明</strong>：  </p>
+<ul>
+<li><code>-jar</code>：指定要转换的 JAR 文件。  </li>
+<li><code>QRCodeSecretExtractor</code>：指定生成的本地可执行文件的名称。</li>
+</ul>
+<p><strong>注意事项</strong>：  </p>
+<ul>
+<li><strong>静态初始化</strong>：GraalVM 的 <code>native-image</code> 对反射、动态类加载等有一些限制。确保您的代码不依赖于这些特性，或者为它们提供相应的配置。  </li>
+<li><strong>资源文件</strong>：如果您的应用使用了资源文件，可能需要在构建命令中指定资源目录。  </li>
+<li><strong>类路径</strong>：确保所有依赖库都包含在 JAR 文件中（通过 <code>maven-shade-plugin</code> 已处理）。</li>
+</ul>
+<h4 id="4-运行本地可执行文件"><a href="#4-运行本地可执行文件" class="headerlink" title="4. 运行本地可执行文件"></a>4. 运行本地可执行文件</h4><p>生成的可执行文件将在当前目录下，命名为 <code>QRCodeSecretExtractor</code>（在 Linux 和 macOS 上）或 <code>QRCodeSecretExtractor.exe</code>（在 Windows 上）。  </p>
+<pre><code class="language-bash">./QRCodeSecretExtractor path/to/qrcode.png
+</code></pre>
+<h3 id="完整示例"><a href="#完整示例" class="headerlink" title="完整示例"></a>完整示例</h3><p>以下是整个过程的总结：  </p>
+<ol>
+<li><strong>项目结构</strong>：</li>
+</ol>
+<pre><code>QRCodeSecretExtractor/  
+├── pom.xml  
+└── src/  
+    └── main/        
+      └── java/            
+         └── com/                
+            └── cong/                    
+               └── QRCodeSecretKeyExtractor.java
+</code></pre>
+<ol start="2">
+<li><strong><code>pom.xml</code> 配置</strong>：</li>
+</ol>
+<pre><code class="language-xml">&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+  xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd&quot;&gt;
+  &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+  &lt;groupId&gt;com.cong&lt;/groupId&gt;
+  &lt;artifactId&gt;QRCodeSecretExtractor&lt;/artifactId&gt;
+  &lt;packaging&gt;jar&lt;/packaging&gt;
+  &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+  &lt;name&gt;QRCodeSecretExtractor&lt;/name&gt;
+  &lt;url&gt;http://maven.apache.org&lt;/url&gt;
+
+  &lt;properties&gt;
+    &lt;maven.compiler.source&gt;21&lt;/maven.compiler.source&gt; &lt;!-- 使用 GraalVM 支持的 Java 版本 --&gt;
+    &lt;maven.compiler.target&gt;21&lt;/maven.compiler.target&gt;
+  &lt;/properties&gt;
+
+  &lt;dependencies&gt;
+    &lt;!-- ZXing 库 --&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;com.google.zxing&lt;/groupId&gt;
+      &lt;artifactId&gt;core&lt;/artifactId&gt;
+      &lt;version&gt;3.4.1&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+      &lt;groupId&gt;com.google.zxing&lt;/groupId&gt;
+      &lt;artifactId&gt;javase&lt;/artifactId&gt;
+      &lt;version&gt;3.4.1&lt;/version&gt;
+    &lt;/dependency&gt;
+  &lt;/dependencies&gt;
+
+  &lt;build&gt;
+    &lt;plugins&gt;
+      &lt;!-- 其他插件 --&gt;
+
+      &lt;plugin&gt;
+        &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+        &lt;artifactId&gt;maven-shade-plugin&lt;/artifactId&gt;
+        &lt;version&gt;3.2.4&lt;/version&gt;
+        &lt;executions&gt;
+          &lt;execution&gt;
+            &lt;phase&gt;package&lt;/phase&gt;
+            &lt;goals&gt;
+              &lt;goal&gt;shade&lt;/goal&gt;
+            &lt;/goals&gt;
+            &lt;configuration&gt;
+              &lt;transformers&gt;
+                &lt;transformer implementation=&quot;org.apache.maven.plugins.shade.resource.ManifestResourceTransformer&quot;&gt;
+                  &lt;mainClass&gt;com.cong.QRCodeSecretKeyExtractor&lt;/mainClass&gt;
+                &lt;/transformer&gt;
+              &lt;/transformers&gt;
+            &lt;/configuration&gt;
+          &lt;/execution&gt;
+        &lt;/executions&gt;
+      &lt;/plugin&gt;
+    &lt;/plugins&gt;
+  &lt;/build&gt;
+
+  &lt;profiles&gt;
+    &lt;profile&gt;
+      &lt;id&gt;native&lt;/id&gt;
+      &lt;build&gt;
+        &lt;plugins&gt;
+          &lt;plugin&gt;
+            &lt;groupId&gt;org.graalvm.buildtools&lt;/groupId&gt;
+            &lt;artifactId&gt;native-maven-plugin&lt;/artifactId&gt;
+            &lt;executions&gt;
+              &lt;execution&gt;
+                &lt;id&gt;build-native&lt;/id&gt;
+                &lt;goals&gt;
+                  &lt;goal&gt;compile-no-fork&lt;/goal&gt;
+                &lt;/goals&gt;
+                &lt;phase&gt;package&lt;/phase&gt;
+              &lt;/execution&gt;
+            &lt;/executions&gt;
+          &lt;/plugin&gt;
+        &lt;/plugins&gt;
+      &lt;/build&gt;
+    &lt;/profile&gt;
+  &lt;/profiles&gt;
+&lt;/project&gt;
+ 
+</code></pre>
+<ol start="3">
+<li><p><strong>编写 Java 代码</strong>：如上所述。  </p>
+</li>
+<li><p><strong>构建和生成本地可执行文件</strong>：</p>
+</li>
+</ol>
+<pre><code class="language-bash"># 设置 JAVA_HOME 指向 GraalVMexport JAVA_HOME=/path/to/graalvm  
+export PATH=$JAVA_HOME/bin:$PATH  
+  
+# 构建项目  
+mvn clean package  
+  
+# 生成本地可执行文件  
+native-image -jar target/QRCodeSecretExtractor-1.0-SNAPSHOT-shaded.jar QRCodeSecretExtractor  
+</code></pre>
+<ol start="5">
+<li><strong>运行可执行文件</strong>：</li>
+</ol>
+<pre><code class="language-bash">./QRCodeSecretExtractor path/to/qrcode.png
+</code></pre>
+<h3 id="可能遇到的问题及解决方案"><a href="#可能遇到的问题及解决方案" class="headerlink" title="可能遇到的问题及解决方案"></a>可能遇到的问题及解决方案</h3><ol>
+<li><p><strong>缺少依赖或资源</strong>：  </p>
+<ul>
+<li>确保所有依赖库已正确打包在可执行 JAR 中。使用 <code>maven-shade-plugin</code> 可以帮助解决这个问题。</li>
+</ul>
+</li>
+<li><p><strong>反射和动态加载问题</strong>：  </p>
+<ul>
+<li>如果您的应用使用了反射，可能需要为 <code>native-image</code> 提供配置文件。例如，使用 <code>--initialize-at-build-time</code> 选项或创建一个 <code>reflect-config.json</code> 文件。</li>
+</ul>
+</li>
+<li><p><strong>性能问题</strong>：  </p>
+<ul>
+<li>本地可执行文件在启动速度和运行性能上通常优于 JVM 运行，但编译时间较长。根据需要调整 <code>native-image</code> 的选项以优化性能。</li>
+</ul>
+</li>
+<li><p><strong>跨平台兼容性</strong>：  </p>
+<ul>
+<li>本地可执行文件是针对特定操作系统和架构生成的。确保在目标平台上生成和运行可执行文件。</li>
+</ul>
+</li>
+</ol>
+<h3 id="额外优化建议"><a href="#额外优化建议" class="headerlink" title="额外优化建议"></a>额外优化建议</h3><ul>
+<li><p><strong>减少镜像大小</strong>：  </p>
+<ul>
+<li>使用 <code>-H:IncludeResources</code> 和 <code>-H:ExcludeResources</code> 选项来控制包含在镜像中的资源。</li>
+</ul>
+</li>
+<li><p><strong>优化启动时间</strong>：  </p>
+<ul>
+<li>使用 <code>--no-fallback</code> 选项来移除 JVM 备份，以减少镜像大小和启动时间。</li>
+</ul>
+</li>
+<li><p><strong>配置日志和输出</strong>：  </p>
+<ul>
+<li>根据需要调整日志输出，避免在生产环境中输出敏感信息。</li>
+</ul>
+</li>
+</ul>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://www.graalvm.org/docs/">GraalVM 官方文档</a>  </li>
+<li><a target="_blank" rel="noopener" href="https://www.graalvm.org/docs/reference-manual/native-image/">GraalVM Native Image User Guide</a>  </li>
+<li><a target="_blank" rel="noopener" href="https://github.com/zxing/zxing">ZXing 项目主页</a></li>
+</ul>
+<p>通过以上步骤，您可以将 Java 代码使用 GraalVM 编译为高效的本地可执行文件，并在无需 JVM 环境的情况下运行该程序。</p>
+</div>
+        </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/GraalVM/" rel="tag">GraalVM</a>
+                </div>
+                <div class="pull-date">
+                    <time datetime="2025-11-21T06:36:31.563Z" itemprop="dateModified">最后编辑：2025-11-21</time>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" ffmpeg转换多种视频流" href="/2024/11/28/2024/11/281121/">&lt; 上一篇</a>
+            </div>
+            
+            
+            <div class="nav-next clearfix">
+                <a title=" Using GraalVM and Native Image on Windows" href="/2024/12/05/2024/12/051439/">下一篇 &gt;</a>
+            </div>
+            
+        </nav>
+    
+    
+        <link rel="stylesheet" href="/vendors/gitalk@1.7.2/dist/gitalk.css"></script>
+<div id="gitalk-container" class="post-comments lazy-load" style="padding-left:2rem; padding-right:2rem;"></div>
+<script>
+    var load_comm = () => {
+        const init = () => {
+            console.log('Gitalk loading...');
+            const gitalk = new Gitalk(Object.assign({
+                id: '/2024/11/29/2024/11/301856/',
+                path: '/2024/11/29/2024/11/301856/'
+            }, JSON.parse('{"clientID":"56e6a743c63b9c4faa93","clientSecret":"888b7234051c5c2ed6ea7bdf18e8b5a2678775f1","repo":"gitalk-comments","owner":"qbmzc","admin":["qbmzc"]}')));
+
+            gitalk.render('gitalk-container');
+        }
+        if (typeof Gitalk === 'undefined') {
+            const src = '/vendors/gitalk@1.7.2/dist/gitalk.min.js';
+            $.getScript(src, init);
+        } else {
+            init();
+        }
+    };
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a></noscript>
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/avatar.webp" loading="lazy" decoding="auto" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center">流云与风，苍穹游牧</p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                499
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                8
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                229
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                    <aside id="krw-toc" class="widget widget-kratos-toc clearfix">
+    <div class="photo-background"></div>
+    <h4 class="widget-title no-after">
+        <i class="fa fa-compass"></i>
+        文章目录
+        <span class="toc-progress-bar" role="progressbar" aria-label="阅读进度："></span>
+    </h4>
+    <div class="textwidget">
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E6%8F%90%E6%9D%A1%E4%BB%B6"><span class="toc-text">前提条件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E8%BF%90%E8%A1%8C%E6%9C%AC%E5%9C%B0%E5%8F%AF%E6%89%A7%E8%A1%8C%E6%96%87%E4%BB%B6"><span class="toc-text">4. 运行本地可执行文件</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%8C%E6%95%B4%E7%A4%BA%E4%BE%8B"><span class="toc-text">完整示例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AF%E8%83%BD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="toc-text">可能遇到的问题及解决方案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%9D%E5%A4%96%E4%BC%98%E5%8C%96%E5%BB%BA%E8%AE%AE"><span class="toc-text">额外优化建议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-text">参考资料</span></a></li></ol>
+    </div>
+</aside>
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">137</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">151</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">29</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/congco/">congco</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/work/">work</a><span class="category-list-count">118</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wuw/">wuw</a><span class="category-list-count">48</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/">技术笔记</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/AES/" style="font-size: 0.6em;">AES</a> <a href="/tags/AI/" style="font-size: 0.7em;">AI</a> <a href="/tags/AWS/" style="font-size: 0.7em;">AWS</a> <a href="/tags/Arch/" style="font-size: 0.6em;">Arch</a> <a href="/tags/Arch-Linux/" style="font-size: 0.8em;">Arch Linux</a> <a href="/tags/ArchLinux/" style="font-size: 0.8em;">ArchLinux</a> <a href="/tags/CAS/" style="font-size: 0.6em;">CAS</a> <a href="/tags/CI-CD/" style="font-size: 0.6em;">CI/CD</a> <a href="/tags/Caffeine/" style="font-size: 0.6em;">Caffeine</a> <a href="/tags/CompletableFuture/" style="font-size: 0.7em;">CompletableFuture</a> <a href="/tags/DNS/" style="font-size: 0.8em;">DNS</a> <a href="/tags/Docker/" style="font-size: 0.6em;">Docker</a> <a href="/tags/Flask/" style="font-size: 0.6em;">Flask</a> <a href="/tags/Future/" style="font-size: 0.7em;">Future</a> <a href="/tags/GC/" style="font-size: 0.6em;">GC</a> <a href="/tags/GPT/" style="font-size: 0.6em;">GPT</a> <a href="/tags/GraalVM/" style="font-size: 0.8em;">GraalVM</a> <a href="/tags/HashMap/" style="font-size: 0.6em;">HashMap</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/14/2025/11/141727/"><i class="fa  fa-book"></i> karakeep</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111335/"><i class="fa  fa-book"></i> SonarQube 扫描支持多 JDK 版本的实践方案</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111045/"><i class="fa  fa-book"></i> 一次修复 PDF 中文乱码的排查记录</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/23/2025/10/221500/"><i class="fa  fa-book"></i> dig命令使用详解</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/13/2025/10/131645/"><i class="fa  fa-book"></i> DNS解析异常导致视频播放缓慢问题排查与解决</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  >
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        <li><a href="mailto:congco@foxmail.com"><i class="fa fa-envelope"></i></a></li>
+                        
+                        
+                        
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://github.com/qbmzc"><i class="fa fa-github"></i></a></li>
+                        <li><a target="_blank" rel="nofollow" href="/rss.xml"><i class="fa fa-rss"></i></a></li>
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2025 沐曦留曳 版权所有.</li>
+                            <li>本站已运行<span id="span_dt">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
+                            <li>Site built with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by cong.</li>
+                        </div>
+                        <div>
+                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
+                            <li>Hosted on <a href="https://github.io" target="_blank">Github Pages</a></li>
+                        </div>
+                        <div>
+                            
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="/vendors/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="/vendors/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+
+    <script defer src="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="/vendors/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>

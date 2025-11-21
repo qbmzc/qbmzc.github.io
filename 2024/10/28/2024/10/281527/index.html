@@ -1,0 +1,1526 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="/images/favicon.ico">
+  
+  <title>Elasticsearch 7.9.3 和 Spring Boot 2.4.13 的索引别名管理 | 沐曦留曳</title>
+  <meta name="author" content="cong" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="elasticsearch" />
+  
+  <meta name="description" content="Elasticsearch 7.9.3 和 Spring Boot 2.4.13 的索引别名管理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Elasticsearch 7.9.3 和 Spring Boot 2.4.13 的索引别名管理">
+<meta property="og:url" content="https://qbmzc.github.io/2024/10/28/2024/10/281527/index.html">
+<meta property="og:site_name" content="沐曦留曳">
+<meta property="og:description" content="Elasticsearch 7.9.3 和 Spring Boot 2.4.13 的索引别名管理">
+<meta property="og:locale">
+<meta property="og:image" content="https://qbmzc.github.io/images/favicon.ico">
+<meta property="article:published_time" content="2024-10-27T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-11-21T06:36:31.563Z">
+<meta property="article:author" content="cong">
+<meta property="article:tag" content="elasticsearch">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://qbmzc.github.io/images/favicon.ico">
+  <link rel="alternate" href="rss.xml" type="application/atom+xml">
+  <!-- 站点验证相关 -->
+  
+    
+      <meta name="google-site-verification" content="lV4cead5YlJ8KpODToP7dvzi-ihrxSqU0yYStYKj2ao" />
+    
+    
+      <meta name="baidu-site-verification" content="codeva-Zr6WlkDupK" />
+    
+    
+      <meta name="msvalidate.01" content="2D2197DEE362D193B3EC29AFD3306341" />
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" media="all"></script>
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-color-dark.min.css" media="(prefers-color-scheme: dark)"></script>
+    <script src="/js/kr-dark.min.js"></script>
+  
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" media="all"></script>
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="/vendors/font-awesome@4.7.0/css/font-awesome.min.css" media="all"></script>
+  <link rel="stylesheet" id="nprogress-css" href="/vendors/nprogress@0.2.0/nprogress.css" media="all"></script>
+  
+  
+  
+    <link rel="stylesheet" href="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css"></script>
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="/vendors/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/banner.webp');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">沐曦留曳</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>沐曦留曳</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article itemscope itemtype="https://schema.org/Article">
+    
+    <link itemprop="mainEntityOfPage" href="https://qbmzc.github.io/2024/10/28/2024/10/281527/">
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center" itemprop="name headline">Elasticsearch 7.9.3 和 Spring Boot 2.4.13 的索引别名管理</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><time datetime="2024-10-27T16:00:00.000Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2024-10-28</time></li>
+                <li itemprop="author" itemscope itemtype="https://schema.org/Person">
+                    <i class="fa fa-user"></i> 作者 <span itemprop="name">cong</span>
+                </li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~21.43K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1763706991563"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+            
+                <div class="kratos-post-inner-toc">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E7%90%86%E8%A7%A3%E7%B4%A2%E5%BC%95%E5%88%AB%E5%90%8D"><span class="toc-number">1.</span> <span class="toc-text">1. 理解索引别名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E9%80%89%E6%8B%A9%E7%B4%A2%E5%BC%95%E5%88%AB%E5%90%8D%E7%AD%96%E7%95%A5"><span class="toc-number">2.</span> <span class="toc-text">2. 选择索引别名策略</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#a-%E6%97%B6%E9%97%B4%E5%88%86%E7%89%87%E7%B4%A2%E5%BC%95%EF%BC%88Time-Based-Indices%EF%BC%89"><span class="toc-number">2.1.</span> <span class="toc-text">a. 时间分片索引（Time-Based Indices）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#b-Rollover-%E7%B4%A2%E5%BC%95%EF%BC%88Rollover-Indices%EF%BC%89"><span class="toc-number">2.2.</span> <span class="toc-text">b. Rollover 索引（Rollover Indices）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%9C%A8-Spring-Boot-2-4-13-%E4%B8%AD%E9%9B%86%E6%88%90-Elasticsearch-7-9-3-%E5%B9%B6%E7%AE%A1%E7%90%86%E7%B4%A2%E5%BC%95%E5%88%AB%E5%90%8D"><span class="toc-number">3.</span> <span class="toc-text">3. 在 Spring Boot 2.4.13 中集成 Elasticsearch 7.9.3 并管理索引别名</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#a-%E6%B7%BB%E5%8A%A0%E4%BE%9D%E8%B5%96"><span class="toc-number">3.1.</span> <span class="toc-text">a. 添加依赖</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#b-%E9%85%8D%E7%BD%AE-Elasticsearch-%E8%BF%9E%E6%8E%A5"><span class="toc-number">3.2.</span> <span class="toc-text">b. 配置 Elasticsearch 连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#c-%E4%BD%BF%E7%94%A8-IndicesAliasesRequest-%E7%AE%A1%E7%90%86%E7%B4%A2%E5%BC%95%E5%88%AB%E5%90%8D"><span class="toc-number">3.3.</span> <span class="toc-text">c. 使用 IndicesAliasesRequest 管理索引别名</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81%EF%BC%9AElasticsearchAliasService"><span class="toc-number">3.3.1.</span> <span class="toc-text">示例代码：ElasticsearchAliasService</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#d-%E5%AE%9E%E7%8E%B0%E7%B4%A2%E5%BC%95%E5%88%AB%E5%90%8D%E7%AD%96%E7%95%A5"><span class="toc-number">3.4.</span> <span class="toc-text">d. 实现索引别名策略</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81%EF%BC%9AElasticsearchIndexService"><span class="toc-number">3.4.1.</span> <span class="toc-text">示例代码：ElasticsearchIndexService</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81%EF%BC%9AElasticsearchSetup"><span class="toc-number">3.4.2.</span> <span class="toc-text">示例代码：ElasticsearchSetup</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5%E5%92%8C%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">4.</span> <span class="toc-text">4. 最佳实践和注意事项</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E5%AE%8C%E6%95%B4%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81"><span class="toc-number">5.</span> <span class="toc-text">5. 完整示例代码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#a-pom-xml"><span class="toc-number">5.1.</span> <span class="toc-text">a. pom.xml</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#b-application-yml"><span class="toc-number">5.2.</span> <span class="toc-text">b. application.yml</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#c-ElasticsearchAliasService-java"><span class="toc-number">5.3.</span> <span class="toc-text">c. ElasticsearchAliasService.java</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#d-ElasticsearchIndexService-java"><span class="toc-number">5.4.</span> <span class="toc-text">d. ElasticsearchIndexService.java</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#e-ElasticsearchSetup-java"><span class="toc-number">5.5.</span> <span class="toc-text">e. ElasticsearchSetup.java</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#f-FileDocument-java"><span class="toc-number">5.6.</span> <span class="toc-text">f. FileDocument.java</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#g-FileRepository-java"><span class="toc-number">5.7.</span> <span class="toc-text">g. FileRepository.java</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#h-FileService-java"><span class="toc-number">5.8.</span> <span class="toc-text">h. FileService.java</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E6%80%BB%E7%BB%93"><span class="toc-number">6.</span> <span class="toc-text">6. 总结</span></a></li></ol>
+                </div>
+            
+            <hr />
+            <div itemprop="articleBody"><p> Elasticsearch 7.9.3 和 Spring Boot 2.4.13 的索引别名管理</p>
+<span id="more"></span>
+
+<h2 id="1-理解索引别名"><a href="#1-理解索引别名" class="headerlink" title="1. 理解索引别名"></a>1. 理解索引别名</h2><p><strong>索引别名（Alias）</strong> 是 Elasticsearch 提供的一种机制，允许你为一个或多个索引创建一个逻辑名称。通过别名，你可以在不影响应用程序的情况下管理底层索引。这对于以下场景尤为重要：</p>
+<ul>
+<li><strong>零停机部署</strong>：通过切换别名指向新索引，实现无缝迁移。</li>
+<li><strong>读写分离</strong>：将读操作和写操作指向不同的索引。</li>
+<li><strong>多租户支持</strong>：为不同租户创建独立索引，并通过别名进行访问。</li>
+</ul>
+<h2 id="2-选择索引别名策略"><a href="#2-选择索引别名策略" class="headerlink" title="2. 选择索引别名策略"></a>2. 选择索引别名策略</h2><p>鉴于你需要处理大量文件的索引，以下几种策略可能适用：</p>
+<h3 id="a-时间分片索引（Time-Based-Indices）"><a href="#a-时间分片索引（Time-Based-Indices）" class="headerlink" title="a. 时间分片索引（Time-Based Indices）"></a>a. 时间分片索引（Time-Based Indices）</h3><p>适用于时间敏感的数据，如日志、文件等。</p>
+<ul>
+<li><strong>按时间创建索引</strong>：例如，<code>file-index-2024-04</code>、<code>file-index-2024-05</code>。</li>
+<li><strong>使用别名进行读写操作</strong>：<ul>
+<li><strong>写入别名</strong>：指向当前活跃的索引，用于写入新数据。</li>
+<li><strong>读取别名</strong>：指向一个或多个索引，用于读操作。</li>
+</ul>
+</li>
+</ul>
+<h3 id="b-Rollover-索引（Rollover-Indices）"><a href="#b-Rollover-索引（Rollover-Indices）" class="headerlink" title="b. Rollover 索引（Rollover Indices）"></a>b. Rollover 索引（Rollover Indices）</h3><p><strong>Rollover API</strong> 允许根据条件（如文档数量、索引大小、时间）自动切换到新的索引。这对于动态增长的数据非常有用。</p>
+<ul>
+<li><strong>初始索引</strong>：命名为 <code>file-index-000001</code>，并设置别名。</li>
+<li><strong>条件触发 Rollover</strong>：如达到 30 天、100 万文档或 50GB 大小时，自动创建新索引并更新别名。</li>
+</ul>
+<h2 id="3-在-Spring-Boot-2-4-13-中集成-Elasticsearch-7-9-3-并管理索引别名"><a href="#3-在-Spring-Boot-2-4-13-中集成-Elasticsearch-7-9-3-并管理索引别名" class="headerlink" title="3. 在 Spring Boot 2.4.13 中集成 Elasticsearch 7.9.3 并管理索引别名"></a>3. 在 Spring Boot 2.4.13 中集成 Elasticsearch 7.9.3 并管理索引别名</h2><h3 id="a-添加依赖"><a href="#a-添加依赖" class="headerlink" title="a. 添加依赖"></a>a. 添加依赖</h3><p>确保你的 <code>pom.xml</code> 包含以下依赖，以集成 Elasticsearch 7.9.3：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- Spring Data Elasticsearch --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-data-elasticsearch<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">&lt;!-- Elasticsearch REST High-Level Client --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.elasticsearch.client<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>elasticsearch-rest-high-level-client<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>7.9.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">&lt;!-- 其他依赖 --&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>注意</strong>：<code>elasticsearch-rest-high-level-client</code> 是管理索引和别名的关键依赖。</p>
+<h3 id="b-配置-Elasticsearch-连接"><a href="#b-配置-Elasticsearch-连接" class="headerlink" title="b. 配置 Elasticsearch 连接"></a>b. 配置 Elasticsearch 连接</h3><p>在 <code>application.yml</code> 或 <code>application.properties</code> 中配置 Elasticsearch 连接信息：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">data:</span></span><br><span class="line">    <span class="attr">elasticsearch:</span></span><br><span class="line">      <span class="attr">rest:</span></span><br><span class="line">        <span class="attr">uris:</span> <span class="string">http://localhost:9200</span></span><br><span class="line">      <span class="attr">username:</span> <span class="string">your_username</span></span><br><span class="line">      <span class="attr">password:</span> <span class="string">your_password</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring.data.elasticsearch.rest.uris</span>=<span class="string">http://localhost:9200</span></span><br><span class="line"><span class="attr">spring.data.elasticsearch.rest.username</span>=<span class="string">your_username</span></span><br><span class="line"><span class="attr">spring.data.elasticsearch.rest.password</span>=<span class="string">your_password</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="c-使用-IndicesAliasesRequest-管理索引别名"><a href="#c-使用-IndicesAliasesRequest-管理索引别名" class="headerlink" title="c. 使用 IndicesAliasesRequest 管理索引别名"></a>c. 使用 <code>IndicesAliasesRequest</code> 管理索引别名</h3><p>由于 <code>PutAliasRequest</code> 在 Elasticsearch 7.9.3 中不可用，我们将使用 <code>IndicesAliasesRequest</code> 来添加、删除和切换别名。</p>
+<h4 id="示例代码：ElasticsearchAliasService"><a href="#示例代码：ElasticsearchAliasService" class="headerlink" title="示例代码：ElasticsearchAliasService"></a>示例代码：<code>ElasticsearchAliasService</code></h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.elasticsearch.action.admin.indices.alias.IndicesAliasesRequest;</span><br><span class="line"><span class="keyword">import</span> org.elasticsearch.action.admin.indices.alias.IndicesAliasesRequest.AliasActions;</span><br><span class="line"><span class="keyword">import</span> org.elasticsearch.client.RequestOptions;</span><br><span class="line"><span class="keyword">import</span> org.elasticsearch.client.RestHighLevelClient;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ElasticsearchAliasService</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> RestHighLevelClient client;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 添加别名</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> indexName 索引名称</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> aliasName 别名名称</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> isWrite   是否为写别名</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> IOException</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">addAlias</span><span class="params">(String indexName, String aliasName, <span class="type">boolean</span> isWrite)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">        <span class="type">IndicesAliasesRequest</span> <span class="variable">request</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">IndicesAliasesRequest</span>();</span><br><span class="line">        <span class="type">AliasActions</span> <span class="variable">addAction</span> <span class="operator">=</span> AliasActions.add()</span><br><span class="line">                .index(indexName)</span><br><span class="line">                .alias(aliasName)</span><br><span class="line">                .writeIndex(isWrite);</span><br><span class="line">        request.addAliasAction(addAction);</span><br><span class="line">        client.indices().updateAliases(request, RequestOptions.DEFAULT);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 删除别名</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> indexName 索引名称</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> aliasName 别名名称</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> IOException</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">removeAlias</span><span class="params">(String indexName, String aliasName)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">        <span class="type">IndicesAliasesRequest</span> <span class="variable">request</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">IndicesAliasesRequest</span>();</span><br><span class="line">        <span class="type">AliasActions</span> <span class="variable">removeAction</span> <span class="operator">=</span> AliasActions.remove()</span><br><span class="line">                .index(indexName)</span><br><span class="line">                .alias(aliasName);</span><br><span class="line">        request.addAliasAction(removeAction);</span><br><span class="line">        client.indices().updateAliases(request, RequestOptions.DEFAULT);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 切换写入别名到新索引</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> currentIndex 当前写入的索引</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> newIndex     新索引</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> aliasName    别名名称</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> IOException</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">switchWriteAlias</span><span class="params">(String currentIndex, String newIndex, String aliasName)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">        <span class="type">IndicesAliasesRequest</span> <span class="variable">request</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">IndicesAliasesRequest</span>();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 移除当前索引的写入别名</span></span><br><span class="line">        <span class="type">AliasActions</span> <span class="variable">removeAction</span> <span class="operator">=</span> AliasActions.remove()</span><br><span class="line">                .index(currentIndex)</span><br><span class="line">                .alias(aliasName)</span><br><span class="line">                .writeIndex(<span class="literal">true</span>);</span><br><span class="line">        request.addAliasAction(removeAction);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 添加新索引的写入别名</span></span><br><span class="line">        <span class="type">AliasActions</span> <span class="variable">addAction</span> <span class="operator">=</span> AliasActions.add()</span><br><span class="line">                .index(newIndex)</span><br><span class="line">                .alias(aliasName)</span><br><span class="line">                .writeIndex(<span class="literal">true</span>);</span><br><span class="line">        request.addAliasAction(addAction);</span><br><span class="line"></span><br><span class="line">        client.indices().updateAliases(request, RequestOptions.DEFAULT);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="d-实现索引别名策略"><a href="#d-实现索引别名策略" class="headerlink" title="d. 实现索引别名策略"></a>d. 实现索引别名策略</h3><p>基于上述服务，你可以实现时间分片或 Rollover 策略。以下是一个基于 Rollover 的示例。</p>
+<h4 id="示例代码：ElasticsearchIndexService"><a href="#示例代码：ElasticsearchIndexService" class="headerlink" title="示例代码：ElasticsearchIndexService"></a>示例代码：<code>ElasticsearchIndexService</code></h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.elasticsearch.action.admin.indices.rollover.RolloverRequest;</span><br><span class="line"><span class="keyword">import</span> org.elasticsearch.action.admin.indices.rollover.RolloverResponse;</span><br><span class="line"><span class="keyword">import</span> org.elasticsearch.client.RequestOptions;</span><br><span class="line"><span class="keyword">import</span> org.elasticsearch.client.RestHighLevelClient;</span><br><span class="line"><span class="keyword">import</span> org.elasticsearch.common.unit.ByteSizeUnit;</span><br><span class="line"><span class="keyword">import</span> org.elasticsearch.common.unit.ByteSizeValue;</span><br><span class="line"><span class="keyword">import</span> org.elasticsearch.common.unit.TimeValue;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ElasticsearchIndexService</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> RestHighLevelClient client;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 创建初始索引并设置别名</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> indexName  索引名称</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> aliasName  别名名称</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> IOException</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">createInitialIndex</span><span class="params">(String indexName, String aliasName)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">        <span class="comment">// 创建索引</span></span><br><span class="line">        <span class="type">CreateIndexRequest</span> <span class="variable">createIndexRequest</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">CreateIndexRequest</span>(indexName);</span><br><span class="line">        <span class="comment">// 在此处可以添加索引映射和设置</span></span><br><span class="line">        client.indices().create(createIndexRequest, RequestOptions.DEFAULT);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 设置别名</span></span><br><span class="line">        <span class="type">IndicesAliasesRequest</span> <span class="variable">aliasRequest</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">IndicesAliasesRequest</span>();</span><br><span class="line">        <span class="type">AliasActions</span> <span class="variable">addAction</span> <span class="operator">=</span> AliasActions.add()</span><br><span class="line">                .index(indexName)</span><br><span class="line">                .alias(aliasName)</span><br><span class="line">                .writeIndex(<span class="literal">true</span>);</span><br><span class="line">        aliasRequest.addAliasAction(addAction);</span><br><span class="line">        client.indices().updateAliases(aliasRequest, RequestOptions.DEFAULT);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 执行 Rollover 操作</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> aliasName     别名名称</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> newIndexName  新索引名称</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> IOException</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">performRollover</span><span class="params">(String aliasName, String newIndexName)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">        <span class="type">RolloverRequest</span> <span class="variable">rolloverRequest</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">RolloverRequest</span>(aliasName, newIndexName);</span><br><span class="line">        rolloverRequest.conditions(</span><br><span class="line">                RolloverRequest.Condition.newMaxAgeCondition(<span class="string">&quot;30d&quot;</span>),</span><br><span class="line">                RolloverRequest.Condition.newMaxDocsCondition(<span class="number">1000000</span>),</span><br><span class="line">                RolloverRequest.Condition.newMaxSizeCondition(<span class="keyword">new</span> <span class="title class_">ByteSizeValue</span>(<span class="number">50</span>, ByteSizeUnit.GB))</span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">        <span class="type">RolloverResponse</span> <span class="variable">rolloverResponse</span> <span class="operator">=</span> client.indices().rollover(rolloverRequest, RequestOptions.DEFAULT);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (rolloverResponse.isRolledOver()) &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;Rollover successful. New index: &quot;</span> + rolloverResponse.getNewIndex());</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;Rollover conditions not met.&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="示例代码：ElasticsearchSetup"><a href="#示例代码：ElasticsearchSetup" class="headerlink" title="示例代码：ElasticsearchSetup"></a>示例代码：<code>ElasticsearchSetup</code></h4><p>你可以在应用启动时或通过定时任务来初始化索引和执行 Rollover。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.annotation.PostConstruct;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ElasticsearchSetup</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> ElasticsearchAliasService aliasService;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> ElasticsearchIndexService indexService;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@PostConstruct</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setupIndices</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="type">String</span> <span class="variable">initialIndex</span> <span class="operator">=</span> <span class="string">&quot;file-index-000001&quot;</span>;</span><br><span class="line">            <span class="type">String</span> <span class="variable">writeAlias</span> <span class="operator">=</span> <span class="string">&quot;file-write&quot;</span>;</span><br><span class="line">            <span class="type">String</span> <span class="variable">readAlias</span> <span class="operator">=</span> <span class="string">&quot;file-read&quot;</span>;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 创建初始索引并设置别名</span></span><br><span class="line">            indexService.createInitialIndex(initialIndex, writeAlias);</span><br><span class="line">            aliasService.addAlias(initialIndex, readAlias, <span class="literal">false</span>);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 这里可以根据需要触发 Rollover</span></span><br><span class="line">            <span class="comment">// indexService.performRollover(writeAlias, &quot;file-index-000002&quot;);</span></span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-最佳实践和注意事项"><a href="#4-最佳实践和注意事项" class="headerlink" title="4. 最佳实践和注意事项"></a>4. 最佳实践和注意事项</h2><ol>
+<li><p><strong>监控索引状态</strong>：定期监控索引的健康状态和别名的指向，确保系统正常运行。可以使用 Elasticsearch 的 <code>_cat/aliases</code> 和 <code>_cat/indices</code> API 进行监控。</p>
+</li>
+<li><p><strong>自动化管理</strong>：使用定时任务或自动化工具（如 Spring Scheduler）管理索引的创建和别名的切换，减少手动操作的出错风险。</p>
+</li>
+<li><p><strong>映射和设置一致性</strong>：在创建新索引时，确保索引映射和设置的一致性，以避免查询和写入问题。可以使用索引模板（Index Templates）来预定义索引的映射和设置。</p>
+</li>
+<li><p><strong>清理旧索引</strong>：根据业务需求，定期删除不再需要的旧索引，节省存储空间。可以使用 Elasticsearch 的 <code>DeleteIndexRequest</code> 或通过定时任务实现自动清理。</p>
+</li>
+<li><p><strong>权限管理</strong>：确保应用程序具有足够的权限进行索引和别名的管理操作。配置 Elasticsearch 的安全性（如 X-Pack）时，注意为应用程序分配适当的角色和权限。</p>
+</li>
+<li><p><strong>错误处理</strong>：在实际操作中，确保捕获和处理可能的异常，保证系统的稳定性。例如，处理索引创建失败、别名更新失败等情况。</p>
+</li>
+<li><p><strong>版本兼容性</strong>：确保 Elasticsearch 客户端版本与 Elasticsearch 服务器版本兼容。Elasticsearch 7.9.3 的 REST High-Level Client 应与相同版本的 Elasticsearch 服务器配合使用。</p>
+</li>
+</ol>
+<h2 id="5-完整示例代码"><a href="#5-完整示例代码" class="headerlink" title="5. 完整示例代码"></a>5. 完整示例代码</h2><p>以下是一个完整的示例，展示如何在 Spring Boot 2.4.13 中使用 Elasticsearch 7.9.3 管理索引别名，并实现基于 Rollover 的索引管理。</p>
+<h3 id="a-pom-xml"><a href="#a-pom-xml" class="headerlink" title="a. pom.xml"></a>a. <code>pom.xml</code></h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://maven.apache.org/POM/4.0.0&quot;</span> <span class="attr">...</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.example<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>elasticsearch-alias-demo<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>0.0.1-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>Elasticsearch Alias Demo<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">description</span>&gt;</span>Demo project for managing Elasticsearch index aliases<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">parent</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-parent<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.4.13<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">relativePath</span>/&gt;</span> <span class="comment">&lt;!-- lookup parent from repository --&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">parent</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">java.version</span>&gt;</span>11<span class="tag">&lt;/<span class="name">java.version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">elasticsearch.version</span>&gt;</span>7.9.3<span class="tag">&lt;/<span class="name">elasticsearch.version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- Spring Boot Starter Data Elasticsearch --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-data-elasticsearch<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!-- Elasticsearch REST High-Level Client --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.elasticsearch.client<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>elasticsearch-rest-high-level-client<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>$&#123;elasticsearch.version&#125;<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!-- Jackson for JSON processing --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.fasterxml.jackson.core<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jackson-databind<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!-- Spring Boot Starter --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">&lt;!-- 其他依赖 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- Maven Compiler Plugin --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.maven.plugins<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-compiler-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.8.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">source</span>&gt;</span>$&#123;java.version&#125;<span class="tag">&lt;/<span class="name">source</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">target</span>&gt;</span>$&#123;java.version&#125;<span class="tag">&lt;/<span class="name">target</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">&lt;!-- Spring Boot Maven Plugin --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="b-application-yml"><a href="#b-application-yml" class="headerlink" title="b. application.yml"></a>b. <code>application.yml</code></h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">data:</span></span><br><span class="line">    <span class="attr">elasticsearch:</span></span><br><span class="line">      <span class="attr">rest:</span></span><br><span class="line">        <span class="attr">uris:</span> <span class="string">http://localhost:9200</span></span><br><span class="line">      <span class="attr">username:</span> <span class="string">your_username</span></span><br><span class="line">      <span class="attr">password:</span> <span class="string">your_password</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="c-ElasticsearchAliasService-java"><a href="#c-ElasticsearchAliasService-java" class="headerlink" title="c. ElasticsearchAliasService.java"></a>c. <code>ElasticsearchAliasService.java</code></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.elasticsearchaliasdemo.service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.elasticsearch.action.admin.indices.alias.IndicesAliasesRequest;</span><br><span class="line"><span class="keyword">import</span> org.elasticsearch.action.admin.indices.alias.IndicesAliasesRequest.AliasActions;</span><br><span class="line"><span class="keyword">import</span> org.elasticsearch.client.RequestOptions;</span><br><span class="line"><span class="keyword">import</span> org.elasticsearch.client.RestHighLevelClient;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ElasticsearchAliasService</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> RestHighLevelClient client;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 添加别名</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> indexName 索引名称</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> aliasName 别名名称</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> isWrite   是否为写别名</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> IOException</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">addAlias</span><span class="params">(String indexName, String aliasName, <span class="type">boolean</span> isWrite)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">        <span class="type">IndicesAliasesRequest</span> <span class="variable">request</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">IndicesAliasesRequest</span>();</span><br><span class="line">        <span class="type">AliasActions</span> <span class="variable">addAction</span> <span class="operator">=</span> AliasActions.add()</span><br><span class="line">                .index(indexName)</span><br><span class="line">                .alias(aliasName)</span><br><span class="line">                .writeIndex(isWrite);</span><br><span class="line">        request.addAliasAction(addAction);</span><br><span class="line">        client.indices().updateAliases(request, RequestOptions.DEFAULT);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 删除别名</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> indexName 索引名称</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> aliasName 别名名称</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> IOException</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">removeAlias</span><span class="params">(String indexName, String aliasName)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">        <span class="type">IndicesAliasesRequest</span> <span class="variable">request</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">IndicesAliasesRequest</span>();</span><br><span class="line">        <span class="type">AliasActions</span> <span class="variable">removeAction</span> <span class="operator">=</span> AliasActions.remove()</span><br><span class="line">                .index(indexName)</span><br><span class="line">                .alias(aliasName);</span><br><span class="line">        request.addAliasAction(removeAction);</span><br><span class="line">        client.indices().updateAliases(request, RequestOptions.DEFAULT);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 切换写入别名到新索引</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> currentIndex 当前写入的索引</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> newIndex     新索引</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> aliasName    别名名称</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> IOException</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">switchWriteAlias</span><span class="params">(String currentIndex, String newIndex, String aliasName)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">        <span class="type">IndicesAliasesRequest</span> <span class="variable">request</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">IndicesAliasesRequest</span>();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 移除当前索引的写入别名</span></span><br><span class="line">        <span class="type">AliasActions</span> <span class="variable">removeAction</span> <span class="operator">=</span> AliasActions.remove()</span><br><span class="line">                .index(currentIndex)</span><br><span class="line">                .alias(aliasName)</span><br><span class="line">                .writeIndex(<span class="literal">true</span>);</span><br><span class="line">        request.addAliasAction(removeAction);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 添加新索引的写入别名</span></span><br><span class="line">        <span class="type">AliasActions</span> <span class="variable">addAction</span> <span class="operator">=</span> AliasActions.add()</span><br><span class="line">                .index(newIndex)</span><br><span class="line">                .alias(aliasName)</span><br><span class="line">                .writeIndex(<span class="literal">true</span>);</span><br><span class="line">        request.addAliasAction(addAction);</span><br><span class="line"></span><br><span class="line">        client.indices().updateAliases(request, RequestOptions.DEFAULT);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="d-ElasticsearchIndexService-java"><a href="#d-ElasticsearchIndexService-java" class="headerlink" title="d. ElasticsearchIndexService.java"></a>d. <code>ElasticsearchIndexService.java</code></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.elasticsearchaliasdemo.service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.elasticsearch.action.admin.indices.create.CreateIndexRequest;</span><br><span class="line"><span class="keyword">import</span> org.elasticsearch.action.admin.indices.rollover.RolloverRequest;</span><br><span class="line"><span class="keyword">import</span> org.elasticsearch.action.admin.indices.rollover.RolloverResponse;</span><br><span class="line"><span class="keyword">import</span> org.elasticsearch.client.RequestOptions;</span><br><span class="line"><span class="keyword">import</span> org.elasticsearch.client.RestHighLevelClient;</span><br><span class="line"><span class="keyword">import</span> org.elasticsearch.common.unit.ByteSizeUnit;</span><br><span class="line"><span class="keyword">import</span> org.elasticsearch.common.unit.ByteSizeValue;</span><br><span class="line"><span class="keyword">import</span> org.elasticsearch.common.unit.TimeValue;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ElasticsearchIndexService</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> RestHighLevelClient client;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 创建初始索引并设置别名</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> indexName  索引名称</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> aliasName  别名名称</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> IOException</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">createInitialIndex</span><span class="params">(String indexName, String aliasName)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">        <span class="comment">// 创建索引</span></span><br><span class="line">        <span class="type">CreateIndexRequest</span> <span class="variable">createIndexRequest</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">CreateIndexRequest</span>(indexName);</span><br><span class="line">        <span class="comment">// 可以在此处添加索引的映射和设置</span></span><br><span class="line">        client.indices().create(createIndexRequest, RequestOptions.DEFAULT);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 设置别名</span></span><br><span class="line">        <span class="type">IndicesAliasesRequest</span> <span class="variable">aliasRequest</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">IndicesAliasesRequest</span>();</span><br><span class="line">        <span class="type">AliasActions</span> <span class="variable">addAction</span> <span class="operator">=</span> AliasActions.add()</span><br><span class="line">                .index(indexName)</span><br><span class="line">                .alias(aliasName)</span><br><span class="line">                .writeIndex(<span class="literal">true</span>);</span><br><span class="line">        aliasRequest.addAliasAction(addAction);</span><br><span class="line">        client.indices().updateAliases(aliasRequest, RequestOptions.DEFAULT);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 执行 Rollover 操作</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> aliasName     别名名称</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> newIndexName  新索引名称</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> IOException</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">performRollover</span><span class="params">(String aliasName, String newIndexName)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">        <span class="type">RolloverRequest</span> <span class="variable">rolloverRequest</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">RolloverRequest</span>(aliasName, newIndexName);</span><br><span class="line">        rolloverRequest.conditions(</span><br><span class="line">                RolloverRequest.Condition.newMaxAgeCondition(<span class="string">&quot;30d&quot;</span>),</span><br><span class="line">                RolloverRequest.Condition.newMaxDocsCondition(<span class="number">1000000</span>),</span><br><span class="line">                RolloverRequest.Condition.newMaxSizeCondition(<span class="keyword">new</span> <span class="title class_">ByteSizeValue</span>(<span class="number">50</span>, ByteSizeUnit.GB))</span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">        <span class="type">RolloverResponse</span> <span class="variable">rolloverResponse</span> <span class="operator">=</span> client.indices().rollover(rolloverRequest, RequestOptions.DEFAULT);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (rolloverResponse.isRolledOver()) &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;Rollover successful. New index: &quot;</span> + rolloverResponse.getNewIndex());</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;Rollover conditions not met.&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="e-ElasticsearchSetup-java"><a href="#e-ElasticsearchSetup-java" class="headerlink" title="e. ElasticsearchSetup.java"></a>e. <code>ElasticsearchSetup.java</code></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.elasticsearchaliasdemo.setup;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.example.elasticsearchaliasdemo.service.ElasticsearchAliasService;</span><br><span class="line"><span class="keyword">import</span> com.example.elasticsearchaliasdemo.service.ElasticsearchIndexService;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.annotation.PostConstruct;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ElasticsearchSetup</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> ElasticsearchAliasService aliasService;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> ElasticsearchIndexService indexService;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@PostConstruct</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setupIndices</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="type">String</span> <span class="variable">initialIndex</span> <span class="operator">=</span> <span class="string">&quot;file-index-000001&quot;</span>;</span><br><span class="line">            <span class="type">String</span> <span class="variable">writeAlias</span> <span class="operator">=</span> <span class="string">&quot;file-write&quot;</span>;</span><br><span class="line">            <span class="type">String</span> <span class="variable">readAlias</span> <span class="operator">=</span> <span class="string">&quot;file-read&quot;</span>;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 创建初始索引并设置写入别名</span></span><br><span class="line">            indexService.createInitialIndex(initialIndex, writeAlias);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 设置读取别名（可指向多个索引）</span></span><br><span class="line">            aliasService.addAlias(initialIndex, readAlias, <span class="literal">false</span>);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 示例：执行 Rollover（可以通过定时任务触发）</span></span><br><span class="line">            <span class="comment">// indexService.performRollover(writeAlias, &quot;file-index-000002&quot;);</span></span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="f-FileDocument-java"><a href="#f-FileDocument-java" class="headerlink" title="f. FileDocument.java"></a>f. <code>FileDocument.java</code></h3><p>定义一个实体类，映射到 Elasticsearch 的文档。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.elasticsearchaliasdemo.model;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.data.annotation.Id;</span><br><span class="line"><span class="keyword">import</span> org.springframework.data.elasticsearch.annotations.Document;</span><br><span class="line"><span class="keyword">import</span> org.springframework.data.elasticsearch.annotations.Field;</span><br><span class="line"><span class="keyword">import</span> org.springframework.data.elasticsearch.annotations.FieldType;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Document(indexName = &quot;file-write&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">FileDocument</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Id</span></span><br><span class="line">    <span class="keyword">private</span> String id;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Field(type = FieldType.Text)</span></span><br><span class="line">    <span class="keyword">private</span> String content;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 其他字段</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Getters and Setters</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="g-FileRepository-java"><a href="#g-FileRepository-java" class="headerlink" title="g. FileRepository.java"></a>g. <code>FileRepository.java</code></h3><p>定义一个 Repository 接口，使用别名进行操作。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.elasticsearchaliasdemo.repository;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.example.elasticsearchaliasdemo.model.FileDocument;</span><br><span class="line"><span class="keyword">import</span> org.springframework.data.elasticsearch.repository.ElasticsearchRepository;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Repository;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Repository</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">FileRepository</span> <span class="keyword">extends</span> <span class="title class_">ElasticsearchRepository</span>&lt;FileDocument, String&gt; &#123;</span><br><span class="line">    <span class="comment">// 自定义查询方法（如果需要）</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="h-FileService-java"><a href="#h-FileService-java" class="headerlink" title="h. FileService.java"></a>h. <code>FileService.java</code></h3><p>编写一个服务，用于处理文件的索引和查询。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.elasticsearchaliasdemo.service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.example.elasticsearchaliasdemo.model.FileDocument;</span><br><span class="line"><span class="keyword">import</span> com.example.elasticsearchaliasdemo.repository.FileRepository;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">FileService</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> FileRepository fileRepository;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 保存文件文档</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> fileDocument 文件文档</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 保存后的文档</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> FileDocument <span class="title function_">saveFile</span><span class="params">(FileDocument fileDocument)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> fileRepository.save(fileDocument);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 根据 ID 查找文件文档</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> id 文档 ID</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 文件文档</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> FileDocument <span class="title function_">findFileById</span><span class="params">(String id)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> fileRepository.findById(id).orElse(<span class="literal">null</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 其他业务逻辑</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-总结"><a href="#6-总结" class="headerlink" title="6. 总结"></a>6. 总结</h2><p>在 Spring Boot 2.4.13 中集成 Elasticsearch 7.9.3 并使用索引别名，可以通过以下步骤实现：</p>
+<ol>
+<li><strong>配置依赖和连接</strong>：确保项目中包含适用于 Elasticsearch 7.9.3 的 REST High-Level Client，并正确配置连接信息。</li>
+<li><strong>管理索引别名</strong>：使用 <code>IndicesAliasesRequest</code> 添加、删除和切换索引别名。</li>
+<li><strong>实现索引策略</strong>：根据业务需求选择时间分片或 Rollover 策略，确保索引的高效管理和扩展。</li>
+<li><strong>集成到 Spring Boot</strong>：通过服务层封装 Elasticsearch 操作，并在应用启动时或通过定时任务初始化和管理索引。</li>
+<li><strong>遵循最佳实践</strong>：监控索引状态、自动化管理、确保映射一致性、定期清理旧索引等，提升系统的稳定性和可维护性。</li>
+</ol>
+<p>通过以上步骤，你可以在 Spring Boot 应用中高效地集成 Elasticsearch，并利用索引别名策略管理大量文件的索引。如果在实施过程中遇到进一步的问题，欢迎提供更多细节，以便获得更具体的帮助。</p>
+</div>
+        </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/elasticsearch/" rel="tag">elasticsearch</a>
+                </div>
+                <div class="pull-date">
+                    <time datetime="2025-11-21T06:36:31.563Z" itemprop="dateModified">最后编辑：2025-11-21</time>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" 高德地图JS API 安全密钥使用" href="/2024/10/21/2024/10/211547/">&lt; 上一篇</a>
+            </div>
+            
+            
+            <div class="nav-next clearfix">
+                <a title=" 使用ffmpeg裁剪图片" href="/2024/10/31/2024/10/311755/">下一篇 &gt;</a>
+            </div>
+            
+        </nav>
+    
+    
+        <link rel="stylesheet" href="/vendors/gitalk@1.7.2/dist/gitalk.css"></script>
+<div id="gitalk-container" class="post-comments lazy-load" style="padding-left:2rem; padding-right:2rem;"></div>
+<script>
+    var load_comm = () => {
+        const init = () => {
+            console.log('Gitalk loading...');
+            const gitalk = new Gitalk(Object.assign({
+                id: '/2024/10/28/2024/10/281527/',
+                path: '/2024/10/28/2024/10/281527/'
+            }, JSON.parse('{"clientID":"56e6a743c63b9c4faa93","clientSecret":"888b7234051c5c2ed6ea7bdf18e8b5a2678775f1","repo":"gitalk-comments","owner":"qbmzc","admin":["qbmzc"]}')));
+
+            gitalk.render('gitalk-container');
+        }
+        if (typeof Gitalk === 'undefined') {
+            const src = '/vendors/gitalk@1.7.2/dist/gitalk.min.js';
+            $.getScript(src, init);
+        } else {
+            init();
+        }
+    };
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a></noscript>
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/avatar.webp" loading="lazy" decoding="auto" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center">流云与风，苍穹游牧</p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                499
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                8
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                229
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                    <aside id="krw-toc" class="widget widget-kratos-toc clearfix">
+    <div class="photo-background"></div>
+    <h4 class="widget-title no-after">
+        <i class="fa fa-compass"></i>
+        文章目录
+        <span class="toc-progress-bar" role="progressbar" aria-label="阅读进度："></span>
+    </h4>
+    <div class="textwidget">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E7%90%86%E8%A7%A3%E7%B4%A2%E5%BC%95%E5%88%AB%E5%90%8D"><span class="toc-text">1. 理解索引别名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E9%80%89%E6%8B%A9%E7%B4%A2%E5%BC%95%E5%88%AB%E5%90%8D%E7%AD%96%E7%95%A5"><span class="toc-text">2. 选择索引别名策略</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#a-%E6%97%B6%E9%97%B4%E5%88%86%E7%89%87%E7%B4%A2%E5%BC%95%EF%BC%88Time-Based-Indices%EF%BC%89"><span class="toc-text">a. 时间分片索引（Time-Based Indices）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#b-Rollover-%E7%B4%A2%E5%BC%95%EF%BC%88Rollover-Indices%EF%BC%89"><span class="toc-text">b. Rollover 索引（Rollover Indices）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%9C%A8-Spring-Boot-2-4-13-%E4%B8%AD%E9%9B%86%E6%88%90-Elasticsearch-7-9-3-%E5%B9%B6%E7%AE%A1%E7%90%86%E7%B4%A2%E5%BC%95%E5%88%AB%E5%90%8D"><span class="toc-text">3. 在 Spring Boot 2.4.13 中集成 Elasticsearch 7.9.3 并管理索引别名</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#a-%E6%B7%BB%E5%8A%A0%E4%BE%9D%E8%B5%96"><span class="toc-text">a. 添加依赖</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#b-%E9%85%8D%E7%BD%AE-Elasticsearch-%E8%BF%9E%E6%8E%A5"><span class="toc-text">b. 配置 Elasticsearch 连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#c-%E4%BD%BF%E7%94%A8-IndicesAliasesRequest-%E7%AE%A1%E7%90%86%E7%B4%A2%E5%BC%95%E5%88%AB%E5%90%8D"><span class="toc-text">c. 使用 IndicesAliasesRequest 管理索引别名</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81%EF%BC%9AElasticsearchAliasService"><span class="toc-text">示例代码：ElasticsearchAliasService</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#d-%E5%AE%9E%E7%8E%B0%E7%B4%A2%E5%BC%95%E5%88%AB%E5%90%8D%E7%AD%96%E7%95%A5"><span class="toc-text">d. 实现索引别名策略</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81%EF%BC%9AElasticsearchIndexService"><span class="toc-text">示例代码：ElasticsearchIndexService</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81%EF%BC%9AElasticsearchSetup"><span class="toc-text">示例代码：ElasticsearchSetup</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5%E5%92%8C%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-text">4. 最佳实践和注意事项</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E5%AE%8C%E6%95%B4%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81"><span class="toc-text">5. 完整示例代码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#a-pom-xml"><span class="toc-text">a. pom.xml</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#b-application-yml"><span class="toc-text">b. application.yml</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#c-ElasticsearchAliasService-java"><span class="toc-text">c. ElasticsearchAliasService.java</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#d-ElasticsearchIndexService-java"><span class="toc-text">d. ElasticsearchIndexService.java</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#e-ElasticsearchSetup-java"><span class="toc-text">e. ElasticsearchSetup.java</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#f-FileDocument-java"><span class="toc-text">f. FileDocument.java</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#g-FileRepository-java"><span class="toc-text">g. FileRepository.java</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#h-FileService-java"><span class="toc-text">h. FileService.java</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E6%80%BB%E7%BB%93"><span class="toc-text">6. 总结</span></a></li></ol>
+    </div>
+</aside>
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">137</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">151</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">29</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/congco/">congco</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/work/">work</a><span class="category-list-count">118</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wuw/">wuw</a><span class="category-list-count">48</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/">技术笔记</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/AES/" style="font-size: 0.6em;">AES</a> <a href="/tags/AI/" style="font-size: 0.7em;">AI</a> <a href="/tags/AWS/" style="font-size: 0.7em;">AWS</a> <a href="/tags/Arch/" style="font-size: 0.6em;">Arch</a> <a href="/tags/Arch-Linux/" style="font-size: 0.8em;">Arch Linux</a> <a href="/tags/ArchLinux/" style="font-size: 0.8em;">ArchLinux</a> <a href="/tags/CAS/" style="font-size: 0.6em;">CAS</a> <a href="/tags/CI-CD/" style="font-size: 0.6em;">CI/CD</a> <a href="/tags/Caffeine/" style="font-size: 0.6em;">Caffeine</a> <a href="/tags/CompletableFuture/" style="font-size: 0.7em;">CompletableFuture</a> <a href="/tags/DNS/" style="font-size: 0.8em;">DNS</a> <a href="/tags/Docker/" style="font-size: 0.6em;">Docker</a> <a href="/tags/Flask/" style="font-size: 0.6em;">Flask</a> <a href="/tags/Future/" style="font-size: 0.7em;">Future</a> <a href="/tags/GC/" style="font-size: 0.6em;">GC</a> <a href="/tags/GPT/" style="font-size: 0.6em;">GPT</a> <a href="/tags/GraalVM/" style="font-size: 0.8em;">GraalVM</a> <a href="/tags/HashMap/" style="font-size: 0.6em;">HashMap</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/14/2025/11/141727/"><i class="fa  fa-book"></i> karakeep</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111335/"><i class="fa  fa-book"></i> SonarQube 扫描支持多 JDK 版本的实践方案</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111045/"><i class="fa  fa-book"></i> 一次修复 PDF 中文乱码的排查记录</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/23/2025/10/221500/"><i class="fa  fa-book"></i> dig命令使用详解</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/13/2025/10/131645/"><i class="fa  fa-book"></i> DNS解析异常导致视频播放缓慢问题排查与解决</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  >
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        <li><a href="mailto:congco@foxmail.com"><i class="fa fa-envelope"></i></a></li>
+                        
+                        
+                        
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://github.com/qbmzc"><i class="fa fa-github"></i></a></li>
+                        <li><a target="_blank" rel="nofollow" href="/rss.xml"><i class="fa fa-rss"></i></a></li>
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2025 沐曦留曳 版权所有.</li>
+                            <li>本站已运行<span id="span_dt">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
+                            <li>Site built with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by cong.</li>
+                        </div>
+                        <div>
+                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
+                            <li>Hosted on <a href="https://github.io" target="_blank">Github Pages</a></li>
+                        </div>
+                        <div>
+                            
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="/vendors/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="/vendors/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+
+    <script defer src="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="/vendors/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>

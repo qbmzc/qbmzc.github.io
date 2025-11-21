@@ -1,0 +1,1506 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="/images/favicon.ico">
+  
+  <title>部署 AdGuard Home | 沐曦留曳</title>
+  <meta name="author" content="cong" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="DNS, linux" />
+  
+  <meta name="description" content="部署adguard以下是使用 Docker Compose 部署 AdGuard Home 并配置 HTTPS 的详细步骤： 1. 准备工作创建所需目录和文件，用于持久化配置和存储证书： 12mkdir -p ~&#x2F;adguard&#x2F;conf ~&#x2F;adguard&#x2F;workcd ~&#x2F;adguard   2. 生成 SSL 证书方案一：自签名证书（测试用）1openssl req -x509 -new">
+<meta property="og:type" content="article">
+<meta property="og:title" content="部署 AdGuard Home">
+<meta property="og:url" content="https://qbmzc.github.io/2025/03/12/2025/03/121442/index.html">
+<meta property="og:site_name" content="沐曦留曳">
+<meta property="og:description" content="部署adguard以下是使用 Docker Compose 部署 AdGuard Home 并配置 HTTPS 的详细步骤： 1. 准备工作创建所需目录和文件，用于持久化配置和存储证书： 12mkdir -p ~&#x2F;adguard&#x2F;conf ~&#x2F;adguard&#x2F;workcd ~&#x2F;adguard   2. 生成 SSL 证书方案一：自签名证书（测试用）1openssl req -x509 -new">
+<meta property="og:locale">
+<meta property="og:image" content="https://qbmzc.github.io/images/favicon.ico">
+<meta property="article:published_time" content="2025-03-11T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-11-21T06:36:31.565Z">
+<meta property="article:author" content="cong">
+<meta property="article:tag" content="DNS">
+<meta property="article:tag" content="linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://qbmzc.github.io/images/favicon.ico">
+  <link rel="alternate" href="rss.xml" type="application/atom+xml">
+  <!-- 站点验证相关 -->
+  
+    
+      <meta name="google-site-verification" content="lV4cead5YlJ8KpODToP7dvzi-ihrxSqU0yYStYKj2ao" />
+    
+    
+      <meta name="baidu-site-verification" content="codeva-Zr6WlkDupK" />
+    
+    
+      <meta name="msvalidate.01" content="2D2197DEE362D193B3EC29AFD3306341" />
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" media="all"></script>
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-color-dark.min.css" media="(prefers-color-scheme: dark)"></script>
+    <script src="/js/kr-dark.min.js"></script>
+  
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" media="all"></script>
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="/vendors/font-awesome@4.7.0/css/font-awesome.min.css" media="all"></script>
+  <link rel="stylesheet" id="nprogress-css" href="/vendors/nprogress@0.2.0/nprogress.css" media="all"></script>
+  
+  
+  
+    <link rel="stylesheet" href="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css"></script>
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="/vendors/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/banner.webp');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">沐曦留曳</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>沐曦留曳</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article itemscope itemtype="https://schema.org/Article">
+    
+    <link itemprop="mainEntityOfPage" href="https://qbmzc.github.io/2025/03/12/2025/03/121442/">
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center" itemprop="name headline">部署 AdGuard Home</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><time datetime="2025-03-11T16:00:00.000Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2025-03-12</time></li>
+                <li itemprop="author" itemscope itemtype="https://schema.org/Person">
+                    <i class="fa fa-user"></i> 作者 <span itemprop="name">cong</span>
+                </li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~3.80K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1763706991565"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+            
+                <div class="kratos-post-inner-toc">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%83%A8%E7%BD%B2adguard"><span class="toc-number">1.</span> <span class="toc-text">部署adguard</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="toc-number">1.1.</span> <span class="toc-text">1. 准备工作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E7%94%9F%E6%88%90-SSL-%E8%AF%81%E4%B9%A6"><span class="toc-number">1.2.</span> <span class="toc-text">2. 生成 SSL 证书</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B9%E6%A1%88%E4%B8%80%EF%BC%9A%E8%87%AA%E7%AD%BE%E5%90%8D%E8%AF%81%E4%B9%A6%EF%BC%88%E6%B5%8B%E8%AF%95%E7%94%A8%EF%BC%89"><span class="toc-number">1.2.1.</span> <span class="toc-text">方案一：自签名证书（测试用）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B9%E6%A1%88%E4%BA%8C%EF%BC%9ALet%E2%80%99s-Encrypt-%E8%AF%81%E4%B9%A6%EF%BC%88%E6%8E%A8%E8%8D%90%E6%9C%89%E5%9F%9F%E5%90%8D%EF%BC%89"><span class="toc-number">1.2.2.</span> <span class="toc-text">方案二：Let’s Encrypt 证书（推荐有域名）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E7%BC%96%E5%86%99-docker-compose-yml"><span class="toc-number">1.3.</span> <span class="toc-text">3. 编写 docker-compose.yml</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E5%8E%9F%E5%A7%8B-Docker-%E5%91%BD%E4%BB%A4%EF%BC%88%E5%B7%B2%E8%BD%AC%E6%8D%A2%E4%B8%BA-docker-compose%EF%BC%89"><span class="toc-number">1.4.</span> <span class="toc-text">3.1 原始 Docker 命令（已转换为 docker-compose）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%90%AF%E5%8A%A8-AdGuard-Home"><span class="toc-number">1.5.</span> <span class="toc-text">4. 启动 AdGuard Home</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E5%88%9D%E5%A7%8B%E5%8C%96%E9%85%8D%E7%BD%AE"><span class="toc-number">1.6.</span> <span class="toc-text">5. 初始化配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E9%85%8D%E7%BD%AE-HTTPS"><span class="toc-number">1.7.</span> <span class="toc-text">6. 配置 HTTPS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-%E9%AA%8C%E8%AF%81-HTTPS"><span class="toc-number">1.8.</span> <span class="toc-text">7. 验证 HTTPS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-%E5%8F%AF%E9%80%89%E4%BC%98%E5%8C%96"><span class="toc-number">1.9.</span> <span class="toc-text">8. 可选优化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#HTTP-%E9%87%8D%E5%AE%9A%E5%90%91%E5%88%B0-HTTPS"><span class="toc-number">1.9.1.</span> <span class="toc-text">HTTP 重定向到 HTTPS</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%98%B2%E7%81%AB%E5%A2%99%E5%BC%80%E6%94%BE%E7%AB%AF%E5%8F%A3"><span class="toc-number">1.9.2.</span> <span class="toc-text">防火墙开放端口</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">1.10.</span> <span class="toc-text">常见问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%8C%E6%95%B4%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="toc-number">1.11.</span> <span class="toc-text">完整目录结构</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E7%9B%B8%E5%85%B3"><span class="toc-number">2.</span> <span class="toc-text">其他相关</span></a></li></ol>
+                </div>
+            
+            <hr />
+            <div itemprop="articleBody"><span id="more"></span>
+
+<h2 id="部署adguard"><a href="#部署adguard" class="headerlink" title="部署adguard"></a>部署adguard</h2><p>以下是使用 Docker Compose 部署 AdGuard Home 并配置 HTTPS 的详细步骤：</p>
+<h3 id="1-准备工作"><a href="#1-准备工作" class="headerlink" title="1. 准备工作"></a><strong>1. 准备工作</strong></h3><p>创建所需目录和文件，用于持久化配置和存储证书：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p ~/adguard/conf ~/adguard/work</span><br><span class="line"><span class="built_in">cd</span> ~/adguard</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="2-生成-SSL-证书"><a href="#2-生成-SSL-证书" class="headerlink" title="2. 生成 SSL 证书"></a><strong>2. 生成 SSL 证书</strong></h3><h4 id="方案一：自签名证书（测试用）"><a href="#方案一：自签名证书（测试用）" class="headerlink" title="方案一：自签名证书（测试用）"></a><strong>方案一：自签名证书（测试用）</strong></h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl req -x509 -newkey rsa:4096 -nodes -out conf/adguard.crt -keyout conf/adguard.key -days 3650 -subj <span class="string">&quot;/CN=adguard.home&quot;</span></span><br></pre></td></tr></table></figure>
+<p>生成的证书 (<code>adguard.crt</code>) 和私钥 (<code>adguard.key</code>) 会保存在 <code>~/adguard/conf</code> 目录。</p>
+<h4 id="方案二：Let’s-Encrypt-证书（推荐有域名）"><a href="#方案二：Let’s-Encrypt-证书（推荐有域名）" class="headerlink" title="方案二：Let’s Encrypt 证书（推荐有域名）"></a><strong>方案二：Let’s Encrypt 证书（推荐有域名）</strong></h4><ol>
+<li>使用 Certbot 获取证书（需域名已解析到服务器）：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用 --standalone 模式时，certbot 会临时占用 80 端口，确保没有其他服务在使用该端口</span></span><br><span class="line">certbot certonly --standalone -d adguard.yourdomain.com</span><br><span class="line"><span class="comment"># 使用dns</span></span><br><span class="line">sudo certbot certonly --manual --preferred-challenges dns -d nas.zlingyun.asia</span><br><span class="line"><span class="comment"># 然后按照提示在DNS记录中添加TXT记录进行验证。</span></span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li>将证书复制到 AdGuard 目录：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cp</span> /etc/letsencrypt/live/adguard.yourdomain.com/fullchain.pem ~/adguard/conf/adguard.crt</span><br><span class="line"><span class="built_in">cp</span> /etc/letsencrypt/live/adguard.yourdomain.com/privkey.pem ~/adguard/conf/adguard.key</span><br></pre></td></tr></table></figure></li>
+</ol>
+<hr>
+<h3 id="3-编写-docker-compose-yml"><a href="#3-编写-docker-compose-yml" class="headerlink" title="3. 编写 docker-compose.yml"></a><strong>3. 编写 <code>docker-compose.yml</code></strong></h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">adguard:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">adguard/adguardhome:latest</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">adguardhome</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">unless-stopped</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="comment"># DNS 服务端口</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;53:53/tcp&quot;</span>         <span class="comment"># DNS over TCP</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;53:53/udp&quot;</span>         <span class="comment"># DNS over UDP</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;67:67/udp&quot;</span>         <span class="comment"># DHCP 服务器端口</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;68:68/udp&quot;</span>         <span class="comment"># DHCP 客户端端口</span></span><br><span class="line">      </span><br><span class="line">      <span class="comment"># Web 管理界面端口</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;80:80/tcp&quot;</span>         <span class="comment"># HTTP (可选，用于重定向到 HTTPS)</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;443:443/tcp&quot;</span>       <span class="comment"># HTTPS 管理界面</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;443:443/udp&quot;</span>       <span class="comment"># HTTPS over UDP</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;3000:3000/tcp&quot;</span>     <span class="comment"># 备用管理端口</span></span><br><span class="line">      </span><br><span class="line">      <span class="comment"># DNS over HTTPS/TLS 端口</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;853:853/tcp&quot;</span>       <span class="comment"># DNS over TLS (DoT)</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;853:853/udp&quot;</span>       <span class="comment"># DNS over QUIC</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;784:784/udp&quot;</span>       <span class="comment"># DNS over QUIC (备用)</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;8853:8853/udp&quot;</span>     <span class="comment"># DNS over QUIC (备用)</span></span><br><span class="line">      </span><br><span class="line">      <span class="comment"># 其他服务端口</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;5443:5443/tcp&quot;</span>     <span class="comment"># 其他 HTTPS 服务</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;5443:5443/udp&quot;</span>     <span class="comment"># 其他 UDP 服务</span></span><br><span class="line">      </span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./work:/opt/adguardhome/work</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./conf:/opt/adguardhome/conf</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">TZ=Asia/Shanghai</span>    <span class="comment"># 设置时区</span></span><br><span class="line">    <span class="attr">networks:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">adguard_network</span></span><br><span class="line"></span><br><span class="line"><span class="attr">networks:</span></span><br><span class="line">  <span class="attr">adguard_network:</span></span><br><span class="line">    <span class="attr">driver:</span> <span class="string">bridge</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-1-原始-Docker-命令（已转换为-docker-compose）"><a href="#3-1-原始-Docker-命令（已转换为-docker-compose）" class="headerlink" title="3.1 原始 Docker 命令（已转换为 docker-compose）"></a><strong>3.1 原始 Docker 命令（已转换为 docker-compose）</strong></h3><p> 以下为原始的 <code>docker run</code> 命令，现已完全转换为上述 <code>docker-compose.yml</code> 配置：</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 原始命令（仅供参考，建议使用 docker-compose）</span></span><br><span class="line">docker run --name adguardhome \</span><br><span class="line">    --restart unless-stopped \</span><br><span class="line">    -v /my/own/workdir:/opt/adguardhome/work \</span><br><span class="line">    -v /my/own/confdir:/opt/adguardhome/conf \</span><br><span class="line">    -p 53:53/tcp -p 53:53/udp \</span><br><span class="line">    -p 67:67/udp -p 68:68/udp \</span><br><span class="line">    -p 80:80/tcp -p 443:443/tcp -p 443:443/udp -p 3000:3000/tcp \</span><br><span class="line">   -p 853:853/tcp \</span><br><span class="line">    -p 784:784/udp -p 853:853/udp -p 8853:8853/udp \</span><br><span class="line">    -p 5443:5443/tcp -p 5443:5443/udp \</span><br><span class="line">    -d adguard/adguardhome</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="4-启动-AdGuard-Home"><a href="#4-启动-AdGuard-Home" class="headerlink" title="4. 启动 AdGuard Home"></a><strong>4. 启动 AdGuard Home</strong></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose up -d</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="5-初始化配置"><a href="#5-初始化配置" class="headerlink" title="5. 初始化配置"></a><strong>5. 初始化配置</strong></h3><ol>
+<li>访问 <code>https://your-server-ip:443</code>（自签名证书需忽略浏览器警告）。</li>
+<li>按照向导完成初始设置（管理员账号、DNS 上游等）。</li>
+</ol>
+<hr>
+<h3 id="6-配置-HTTPS"><a href="#6-配置-HTTPS" class="headerlink" title="6. 配置 HTTPS"></a><strong>6. 配置 HTTPS</strong></h3><ol>
+<li>进入 AdGuard 管理界面，转到 <strong>Settings → Encryption Settings</strong>。</li>
+<li>启用 HTTPS：<ul>
+<li><strong>Certificate chain</strong>: 选择证书文件 <code>/opt/adguardhome/conf/adguard.crt</code></li>
+<li><strong>Private key</strong>: 选择私钥文件 <code>/opt/adguardhome/conf/adguard.key</code></li>
+<li>保存配置，AdGuard 将重启服务。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="7-验证-HTTPS"><a href="#7-验证-HTTPS" class="headerlink" title="7. 验证 HTTPS"></a><strong>7. 验证 HTTPS</strong></h3><p>重新访问 <code>https://your-server-ip:443</code>，确认浏览器显示安全锁标志。</p>
+<hr>
+<h3 id="8-可选优化"><a href="#8-可选优化" class="headerlink" title="8. 可选优化"></a><strong>8. 可选优化</strong></h3><h4 id="HTTP-重定向到-HTTPS"><a href="#HTTP-重定向到-HTTPS" class="headerlink" title="HTTP 重定向到 HTTPS"></a><strong>HTTP 重定向到 HTTPS</strong></h4><p>在 AdGuard 的 Web 界面中：</p>
+<ol>
+<li>转到 <strong>Settings → Web UI Settings</strong>。</li>
+<li>启用 <strong>Redirect HTTP to HTTPS</strong>。</li>
+</ol>
+<h4 id="防火墙开放端口"><a href="#防火墙开放端口" class="headerlink" title="防火墙开放端口"></a><strong>防火墙开放端口</strong></h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ufw allow 53/tcp</span><br><span class="line">ufw allow 53/udp</span><br><span class="line">ufw allow 443/tcp</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a><strong>常见问题</strong></h3><ol>
+<li><p><strong>证书路径错误</strong><br>检查 <code>docker-compose.yml</code> 中的卷挂载路径，确保证书位于 <code>~/adguard/conf</code>。</p>
+</li>
+<li><p><strong>端口冲突</strong><br>确保宿主机端口（53、443）未被其他服务占用。可运行 <code>netstat -tuln | grep &lt;端口&gt;</code> 检查。</p>
+</li>
+<li><p><strong>自签名证书不受信任</strong><br>手动将 <code>adguard.crt</code> 导入操作系统或浏览器的受信任根证书颁发机构。</p>
+</li>
+<li><p><strong>Let’s Encrypt 证书续期</strong><br>添加定时任务自动续期（需调整路径）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0 3 * * * certbot renew --quiet &amp;&amp; <span class="built_in">cp</span> /etc/letsencrypt/live/adguard.yourdomain.com/* ~/adguard/conf/ &amp;&amp; docker restart adguard</span><br></pre></td></tr></table></figure></li>
+</ol>
+<hr>
+<h3 id="完整目录结构"><a href="#完整目录结构" class="headerlink" title="完整目录结构"></a><strong>完整目录结构</strong></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">~/adguard</span><br><span class="line">├── docker-compose.yml</span><br><span class="line">├── conf</span><br><span class="line">│   ├── adguard.crt</span><br><span class="line">│   └── adguard.key</span><br><span class="line">└── work</span><br><span class="line">    ├── data</span><br><span class="line">    └── conf</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="其他相关"><a href="#其他相关" class="headerlink" title="其他相关"></a>其他相关</h2><ul>
+<li><a href="https://qbmzc.github.io/2019/09/03/2019/09/031013/">Ubuntu18.04搭建docker的DNS解析服务</a></li>
+<li><a href="https://qbmzc.github.io/2021/10/09/2021/10/091725">常用服务的docker部署记录</a></li>
+</ul>
+</div>
+        </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/DNS/" rel="tag">DNS</a>, <a class="tag-none-link" href="/tags/linux/" rel="tag">linux</a>
+                </div>
+                <div class="pull-date">
+                    <time datetime="2025-11-21T06:36:31.565Z" itemprop="dateModified">最后编辑：2025-11-21</time>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" Linux 统计文件行数的方法" href="/2025/03/07/2025/03/071126/">&lt; 上一篇</a>
+            </div>
+            
+            
+            <div class="nav-next clearfix">
+                <a title=" Redis内存管理机制" href="/2025/03/12/2025/03/101432/">下一篇 &gt;</a>
+            </div>
+            
+        </nav>
+    
+    
+        <link rel="stylesheet" href="/vendors/gitalk@1.7.2/dist/gitalk.css"></script>
+<div id="gitalk-container" class="post-comments lazy-load" style="padding-left:2rem; padding-right:2rem;"></div>
+<script>
+    var load_comm = () => {
+        const init = () => {
+            console.log('Gitalk loading...');
+            const gitalk = new Gitalk(Object.assign({
+                id: '/2025/03/12/2025/03/121442/',
+                path: '/2025/03/12/2025/03/121442/'
+            }, JSON.parse('{"clientID":"56e6a743c63b9c4faa93","clientSecret":"888b7234051c5c2ed6ea7bdf18e8b5a2678775f1","repo":"gitalk-comments","owner":"qbmzc","admin":["qbmzc"]}')));
+
+            gitalk.render('gitalk-container');
+        }
+        if (typeof Gitalk === 'undefined') {
+            const src = '/vendors/gitalk@1.7.2/dist/gitalk.min.js';
+            $.getScript(src, init);
+        } else {
+            init();
+        }
+    };
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a></noscript>
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/avatar.webp" loading="lazy" decoding="auto" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center">流云与风，苍穹游牧</p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                499
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                8
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                229
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                    <aside id="krw-toc" class="widget widget-kratos-toc clearfix">
+    <div class="photo-background"></div>
+    <h4 class="widget-title no-after">
+        <i class="fa fa-compass"></i>
+        文章目录
+        <span class="toc-progress-bar" role="progressbar" aria-label="阅读进度："></span>
+    </h4>
+    <div class="textwidget">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%83%A8%E7%BD%B2adguard"><span class="toc-text">部署adguard</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="toc-text">1. 准备工作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E7%94%9F%E6%88%90-SSL-%E8%AF%81%E4%B9%A6"><span class="toc-text">2. 生成 SSL 证书</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B9%E6%A1%88%E4%B8%80%EF%BC%9A%E8%87%AA%E7%AD%BE%E5%90%8D%E8%AF%81%E4%B9%A6%EF%BC%88%E6%B5%8B%E8%AF%95%E7%94%A8%EF%BC%89"><span class="toc-text">方案一：自签名证书（测试用）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B9%E6%A1%88%E4%BA%8C%EF%BC%9ALet%E2%80%99s-Encrypt-%E8%AF%81%E4%B9%A6%EF%BC%88%E6%8E%A8%E8%8D%90%E6%9C%89%E5%9F%9F%E5%90%8D%EF%BC%89"><span class="toc-text">方案二：Let’s Encrypt 证书（推荐有域名）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E7%BC%96%E5%86%99-docker-compose-yml"><span class="toc-text">3. 编写 docker-compose.yml</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E5%8E%9F%E5%A7%8B-Docker-%E5%91%BD%E4%BB%A4%EF%BC%88%E5%B7%B2%E8%BD%AC%E6%8D%A2%E4%B8%BA-docker-compose%EF%BC%89"><span class="toc-text">3.1 原始 Docker 命令（已转换为 docker-compose）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%90%AF%E5%8A%A8-AdGuard-Home"><span class="toc-text">4. 启动 AdGuard Home</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E5%88%9D%E5%A7%8B%E5%8C%96%E9%85%8D%E7%BD%AE"><span class="toc-text">5. 初始化配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E9%85%8D%E7%BD%AE-HTTPS"><span class="toc-text">6. 配置 HTTPS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-%E9%AA%8C%E8%AF%81-HTTPS"><span class="toc-text">7. 验证 HTTPS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-%E5%8F%AF%E9%80%89%E4%BC%98%E5%8C%96"><span class="toc-text">8. 可选优化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#HTTP-%E9%87%8D%E5%AE%9A%E5%90%91%E5%88%B0-HTTPS"><span class="toc-text">HTTP 重定向到 HTTPS</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%98%B2%E7%81%AB%E5%A2%99%E5%BC%80%E6%94%BE%E7%AB%AF%E5%8F%A3"><span class="toc-text">防火墙开放端口</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-text">常见问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%8C%E6%95%B4%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="toc-text">完整目录结构</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E7%9B%B8%E5%85%B3"><span class="toc-text">其他相关</span></a></li></ol>
+    </div>
+</aside>
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">137</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">151</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">29</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/congco/">congco</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/work/">work</a><span class="category-list-count">118</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wuw/">wuw</a><span class="category-list-count">48</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/">技术笔记</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/AES/" style="font-size: 0.6em;">AES</a> <a href="/tags/AI/" style="font-size: 0.7em;">AI</a> <a href="/tags/AWS/" style="font-size: 0.7em;">AWS</a> <a href="/tags/Arch/" style="font-size: 0.6em;">Arch</a> <a href="/tags/Arch-Linux/" style="font-size: 0.8em;">Arch Linux</a> <a href="/tags/ArchLinux/" style="font-size: 0.8em;">ArchLinux</a> <a href="/tags/CAS/" style="font-size: 0.6em;">CAS</a> <a href="/tags/CI-CD/" style="font-size: 0.6em;">CI/CD</a> <a href="/tags/Caffeine/" style="font-size: 0.6em;">Caffeine</a> <a href="/tags/CompletableFuture/" style="font-size: 0.7em;">CompletableFuture</a> <a href="/tags/DNS/" style="font-size: 0.8em;">DNS</a> <a href="/tags/Docker/" style="font-size: 0.6em;">Docker</a> <a href="/tags/Flask/" style="font-size: 0.6em;">Flask</a> <a href="/tags/Future/" style="font-size: 0.7em;">Future</a> <a href="/tags/GC/" style="font-size: 0.6em;">GC</a> <a href="/tags/GPT/" style="font-size: 0.6em;">GPT</a> <a href="/tags/GraalVM/" style="font-size: 0.8em;">GraalVM</a> <a href="/tags/HashMap/" style="font-size: 0.6em;">HashMap</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/14/2025/11/141727/"><i class="fa  fa-book"></i> karakeep</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111335/"><i class="fa  fa-book"></i> SonarQube 扫描支持多 JDK 版本的实践方案</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111045/"><i class="fa  fa-book"></i> 一次修复 PDF 中文乱码的排查记录</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/23/2025/10/221500/"><i class="fa  fa-book"></i> dig命令使用详解</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/13/2025/10/131645/"><i class="fa  fa-book"></i> DNS解析异常导致视频播放缓慢问题排查与解决</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  >
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        <li><a href="mailto:congco@foxmail.com"><i class="fa fa-envelope"></i></a></li>
+                        
+                        
+                        
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://github.com/qbmzc"><i class="fa fa-github"></i></a></li>
+                        <li><a target="_blank" rel="nofollow" href="/rss.xml"><i class="fa fa-rss"></i></a></li>
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2025 沐曦留曳 版权所有.</li>
+                            <li>本站已运行<span id="span_dt">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
+                            <li>Site built with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by cong.</li>
+                        </div>
+                        <div>
+                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
+                            <li>Hosted on <a href="https://github.io" target="_blank">Github Pages</a></li>
+                        </div>
+                        <div>
+                            
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="/vendors/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="/vendors/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+
+    <script defer src="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="/vendors/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>

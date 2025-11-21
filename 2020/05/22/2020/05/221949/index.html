@@ -1,0 +1,1601 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="/images/favicon.ico">
+  
+  <title>MyBatis | 沐曦留曳</title>
+  <meta name="author" content="cong" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="mybatis" />
+  
+  <meta name="description" content="简介MyBatis 是一款优秀的持久层框架，它支持自定义 SQL、存储过程以及高级映射。MyBatis 免除了几乎所有的 JDBC 代码以及设置参数和获取结果集的工作。MyBatis 可以通过简单的 XML 或注解来配置和映射原始类型、接口和 Java POJO（Plain Old Java Objects，普通老式 Java 对象）为数据库中的记录。 字符串替换默认情况下，使用 #{} 参数语法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MyBatis">
+<meta property="og:url" content="https://qbmzc.github.io/2020/05/22/2020/05/221949/index.html">
+<meta property="og:site_name" content="沐曦留曳">
+<meta property="og:description" content="简介MyBatis 是一款优秀的持久层框架，它支持自定义 SQL、存储过程以及高级映射。MyBatis 免除了几乎所有的 JDBC 代码以及设置参数和获取结果集的工作。MyBatis 可以通过简单的 XML 或注解来配置和映射原始类型、接口和 Java POJO（Plain Old Java Objects，普通老式 Java 对象）为数据库中的记录。 字符串替换默认情况下，使用 #{} 参数语法">
+<meta property="og:locale">
+<meta property="og:image" content="https://qbmzc.github.io/images/favicon.ico">
+<meta property="article:published_time" content="2020-05-21T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-11-21T06:36:31.545Z">
+<meta property="article:author" content="cong">
+<meta property="article:tag" content="mybatis">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://qbmzc.github.io/images/favicon.ico">
+  <link rel="alternate" href="rss.xml" type="application/atom+xml">
+  <!-- 站点验证相关 -->
+  
+    
+      <meta name="google-site-verification" content="lV4cead5YlJ8KpODToP7dvzi-ihrxSqU0yYStYKj2ao" />
+    
+    
+      <meta name="baidu-site-verification" content="codeva-Zr6WlkDupK" />
+    
+    
+      <meta name="msvalidate.01" content="2D2197DEE362D193B3EC29AFD3306341" />
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" media="all"></script>
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-color-dark.min.css" media="(prefers-color-scheme: dark)"></script>
+    <script src="/js/kr-dark.min.js"></script>
+  
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" media="all"></script>
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="/vendors/font-awesome@4.7.0/css/font-awesome.min.css" media="all"></script>
+  <link rel="stylesheet" id="nprogress-css" href="/vendors/nprogress@0.2.0/nprogress.css" media="all"></script>
+  
+  
+  
+    <link rel="stylesheet" href="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css"></script>
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="/vendors/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/banner.webp');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">沐曦留曳</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>沐曦留曳</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article itemscope itemtype="https://schema.org/Article">
+    
+    <link itemprop="mainEntityOfPage" href="https://qbmzc.github.io/2020/05/22/2020/05/221949/">
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center" itemprop="name headline">MyBatis</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><time datetime="2020-05-21T16:00:00.000Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2020-05-22</time></li>
+                <li itemprop="author" itemscope itemtype="https://schema.org/Person">
+                    <i class="fa fa-user"></i> 作者 <span itemprop="name">cong</span>
+                </li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~11.99K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1763706991545"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+            
+            <hr />
+            <div itemprop="articleBody"><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>MyBatis 是一款优秀的持久层框架，它支持自定义 SQL、存储过程以及高级映射。MyBatis 免除了几乎所有的 JDBC 代码以及设置参数和获取结果集的工作。MyBatis 可以通过简单的 XML 或注解来配置和映射原始类型、接口和 Java POJO（Plain Old Java Objects，普通老式 Java 对象）为数据库中的记录。</p>
+<h2 id="字符串替换"><a href="#字符串替换" class="headerlink" title="字符串替换"></a>字符串替换</h2><p>默认情况下，使用 #{} 参数语法时，MyBatis 会创建 PreparedStatement 参数占位符，并通过占位符安全地设置参数（就像使用 ? 一样）。 这样做更安全，更迅速，通常也是首选做法，不过有时你就是想直接在 SQL 语句中直接插入一个不转义的字符串。 比如 ORDER BY 子句，这时候你可以：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ORDER BY $&#123;columnName&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这样，<code>MyBatis</code> 就不会修改或转义该字符串了。</p>
+<p>当 <code>SQL</code> 语句中的元数据（如表名或列名）是动态生成的时候，字符串替换将会非常有用。 举个例子，如果你想 <code>select</code> 一个表任意一列的数据时，不需要这样写：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Select(&quot;select * from user where id = #&#123;id&#125;&quot;)</span></span><br><span class="line">User <span class="title function_">findById</span><span class="params">(<span class="meta">@Param(&quot;id&quot;)</span> <span class="type">long</span> id)</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Select(&quot;select * from user where name = #&#123;name&#125;&quot;)</span></span><br><span class="line">User <span class="title function_">findByName</span><span class="params">(<span class="meta">@Param(&quot;name&quot;)</span> String name)</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Select(&quot;select * from user where email = #&#123;email&#125;&quot;)</span></span><br><span class="line">User <span class="title function_">findByEmail</span><span class="params">(<span class="meta">@Param(&quot;email&quot;)</span> String email)</span>;</span><br></pre></td></tr></table></figure>
+
+<p>&#x2F;&#x2F; 其它的 “findByXxx” 方法<br>而是可以只写这样一个方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Select(&quot;select * from user where $&#123;column&#125; = #&#123;value&#125;&quot;)</span></span><br><span class="line">User <span class="title function_">findByColumn</span><span class="params">(<span class="meta">@Param(&quot;column&quot;)</span> String column, <span class="meta">@Param(&quot;value&quot;)</span> String value)</span>;</span><br></pre></td></tr></table></figure>
+
+<p>其中 <code>$&#123;column&#125;</code> 会被直接替换，而 <code>#&#123;value&#125;</code> 会使用 ? 预处理。 这样，就能完成同样的任务：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">User</span> <span class="variable">userOfId1</span> <span class="operator">=</span> userMapper.findByColumn(<span class="string">&quot;id&quot;</span>, <span class="number">1L</span>);</span><br><span class="line"><span class="type">User</span> <span class="variable">userOfNameKid</span> <span class="operator">=</span> userMapper.findByColumn(<span class="string">&quot;name&quot;</span>, <span class="string">&quot;kid&quot;</span>);</span><br><span class="line"><span class="type">User</span> <span class="variable">userOfEmail</span> <span class="operator">=</span> userMapper.findByColumn(<span class="string">&quot;email&quot;</span>, <span class="string">&quot;noone@nowhere.com&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>这种方式也同样适用于替换表名的情况。</p>
+<p><code>提示</code> 用这种方式接受用户的输入，并用作语句参数是不安全的，会导致潜在的 SQL 注入攻击。因此，要么不允许用户输入这些字段，要么自行转义并检验这些参</p>
+<h2 id="结果映射"><a href="#结果映射" class="headerlink" title="结果映射"></a>结果映射</h2><p>resultMap 元素是 MyBatis 中最重要最强大的元素。它可以让你从 90% 的 JDBC ResultSets 数据提取代码中解放出来，并在一些情形下允许你进行一些 JDBC 不支持的操作。实际上，在为一些比如连接的复杂语句编写映射代码的时候，一份 resultMap 能够代替实现同等功能的数千行代码。ResultMap 的设计思想是，对简单的语句做到零配置，对于复杂一点的语句，只需要描述语句之间的关系就行了。</p>
+<p>之前你已经见过简单映射语句的示例，它们没有显式指定 resultMap。比如：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span>  <span class="attr">id</span>=<span class="string">&quot;selectUsers&quot;</span>  <span class="attr">resultType</span>=<span class="string">&quot;map&quot;</span>&gt;</span></span><br><span class="line">    select id, username, hashedPassword</span><br><span class="line">    from some_table</span><br><span class="line">    where id = #&#123;id&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>上述语句只是简单地将所有的列映射到 HashMap 的键上，这由 resultType 属性指定。虽然在大部分情况下都够用，但是 HashMap 并不是一个很好的领域模型。你的程序更可能会使用 JavaBean 或 POJO（Plain Old Java Objects，普通老式 Java 对象）作为领域模型。MyBatis 对两者都提供了支持。看看下面这个 JavaBean：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.someapp.model;  </span><br><span class="line"><span class="keyword">public</span>  <span class="keyword">class</span>  <span class="title class_">User</span>  &#123;</span><br><span class="line"><span class="keyword">private</span>  <span class="type">int</span> id;</span><br><span class="line"><span class="keyword">private</span>  String username;</span><br><span class="line"><span class="keyword">private</span>  String hashedPassword;</span><br><span class="line"><span class="keyword">public</span>  <span class="type">int</span> <span class="title function_">getId</span><span class="params">()</span>  &#123;  <span class="keyword">return</span> id;  &#125;  </span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>  <span class="keyword">void</span> <span class="title function_">setId</span><span class="params">(<span class="type">int</span> id)</span>  &#123;  <span class="built_in">this</span>.id = id;  &#125;</span><br><span class="line"><span class="keyword">public</span>  String <span class="title function_">getUsername</span><span class="params">()</span>  &#123;  <span class="keyword">return</span> username;  &#125;</span><br><span class="line"><span class="keyword">public</span>  <span class="keyword">void</span> <span class="title function_">setUsername</span><span class="params">(String username)</span>  &#123;  <span class="built_in">this</span>.username = username;  &#125;</span><br><span class="line"><span class="keyword">public</span>  String <span class="title function_">getHashedPassword</span><span class="params">()</span>  &#123;  <span class="keyword">return</span> hashedPassword;  &#125;</span><br><span class="line"><span class="keyword">public</span>  <span class="keyword">void</span> <span class="title function_">setHashedPassword</span><span class="params">(String hashedPassword)</span>  &#123;  <span class="built_in">this</span>.hashedPassword = hashedPassword;  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>基于 JavaBean 的规范，上面这个类有 3 个属性：id，username 和 hashedPassword。这些属性会对应到 select 语句中的列名。</p>
+<p>这样的一个 JavaBean 可以被映射到 ResultSet，就像映射到 HashMap 一样简单。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span>  <span class="attr">id</span>=<span class="string">&quot;selectUsers&quot;</span>  <span class="attr">resultType</span>=<span class="string">&quot;com.someapp.model.User&quot;</span>&gt;</span></span><br><span class="line">    select</span><br><span class="line">    id, username, hashedPassword</span><br><span class="line">    from some_table</span><br><span class="line">    where id = #&#123;id&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>类型别名是你的好帮手。使用它们，你就可以不用输入类的全限定名了。比如：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- mybatis-config.xml 中 --&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="name">typeAlias</span>  <span class="attr">type</span>=<span class="string">&quot;com.someapp.model.User&quot;</span>  <span class="attr">alias</span>=<span class="string">&quot;User&quot;</span>/&gt;</span></span><br><span class="line"> <span class="comment">&lt;!-- SQL 映射 XML 中 --&gt;</span>  </span><br><span class="line"><span class="tag">&lt;<span class="name">select</span>  <span class="attr">id</span>=<span class="string">&quot;selectUsers&quot;</span>  <span class="attr">resultType</span>=<span class="string">&quot;User&quot;</span>&gt;</span></span><br><span class="line">    select</span><br><span class="line">    id, username, hashedPassword</span><br><span class="line">    from some_table</span><br><span class="line">    where id = #&#123;id&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>在这些情况下，MyBatis 会在幕后自动创建一个 ResultMap，再根据属性名来映射列到 JavaBean 的属性上。如果列名和属性名不能匹配上，可以在 SELECT 语句中设置列别名（这是一个基本的 SQL 特性）来完成匹配。比如：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span>  <span class="attr">id</span>=<span class="string">&quot;selectUsers&quot;</span>  <span class="attr">resultType</span>=<span class="string">&quot;User&quot;</span>&gt;</span></span><br><span class="line">    select</span><br><span class="line">        user_id             as &quot;id&quot;,</span><br><span class="line">        user_name           as &quot;userName&quot;,</span><br><span class="line">        hashed_password     as &quot;hashedPassword&quot;</span><br><span class="line">    from some_table</span><br><span class="line">    where id = #&#123;id&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>在学习了上面的知识后，你会发现上面的例子没有一个需要显式配置 ResultMap，这就是 ResultMap 的优秀之处——你完全可以不用显式地配置它们。 虽然上面的例子不用显式配置 ResultMap。 但为了讲解，我们来看看如果在刚刚的示例中，显式使用外部的 resultMap 会怎样，这也是解决列名不匹配的另外一种方式。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">resultMap</span>  <span class="attr">id</span>=<span class="string">&quot;userResultMap&quot;</span>  <span class="attr">type</span>=<span class="string">&quot;User&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">id</span>  <span class="attr">property</span>=<span class="string">&quot;id&quot;</span>  <span class="attr">column</span>=<span class="string">&quot;user_id&quot;</span>  /&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">result</span>  <span class="attr">property</span>=<span class="string">&quot;username&quot;</span>  <span class="attr">column</span>=<span class="string">&quot;user_name&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">result</span>  <span class="attr">property</span>=<span class="string">&quot;password&quot;</span>  <span class="attr">column</span>=<span class="string">&quot;hashed_password&quot;</span>/&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>然后在引用它的语句中设置 resultMap 属性就行了（注意我们去掉了 resultType 属性）。比如:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span>  <span class="attr">id</span>=<span class="string">&quot;selectUsers&quot;</span>  <span class="attr">resultMap</span>=<span class="string">&quot;userResultMap&quot;</span>&gt;</span></span><br><span class="line">    select</span><br><span class="line">    user_id, user_name, hashed_password</span><br><span class="line">    from some_table</span><br><span class="line">    where id = #&#123;id&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果这个世界总是这么简单就好了。</p>
+<h2 id="映射器注解"><a href="#映射器注解" class="headerlink" title="映射器注解"></a>映射器注解</h2><p>设计初期的 MyBatis 是一个 XML 驱动的框架。配置信息是基于 XML 的，映射语句也是定义在 XML 中的。而在 MyBatis 3 中，我们提供了其它的配置方式。MyBatis 3 构建在全面且强大的基于 Java 语言的配置 API 之上。它是 XML 和注解配置的基础。注解提供了一种简单且低成本的方式来实现简单的映射语句。</p>
+<p><code>提示</code> 不幸的是，Java 注解的表达能力和灵活性十分有限。尽管我们花了很多时间在调查、设计和试验上，但最强大的 MyBatis 映射并不能用注解来构建——我们真没开玩笑。而 C# 属性就没有这些限制，因此 MyBatis.NET 的配置会比 XML 有更大的选择余地。虽说如此，基于 Java 注解的配置还是有它的好处的。</p>
+<table>
+<thead>
+<tr>
+<th>注解</th>
+<th>使用对象</th>
+<th>XML 等价形式</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>@CacheNamespace</td>
+<td>类</td>
+<td><code>&lt;cache&gt;</code></td>
+<td>为给定的命名空间（比如类）配置缓存。属性：implemetation、eviction、flushInterval、size、readWrite、blocking、properties。</td>
+</tr>
+<tr>
+<td>@Property</td>
+<td>N&#x2F;A</td>
+<td><code>&lt;property&gt;</code></td>
+<td>指定参数值或占位符（placeholder）（该占位符能被 mybatis-config.xml 内的配置属性替换）。属性：name、value。（仅在 MyBatis 3.4.2 以上可用）</td>
+</tr>
+<tr>
+<td>@CacheNamespaceRef</td>
+<td>类</td>
+<td><code>&lt;cacheRef&gt;</code></td>
+<td>引用另外一个命名空间的缓存以供使用。注意，即使共享相同的全限定类名，在 XML 映射文件中声明的缓存仍被识别为一个独立的命名空间。属性：value、name。如果你使用了这个注解，你应设置 value 或者 name 属性的其中一个。value 属性用于指定能够表示该命名空间的 Java 类型（命名空间名就是该 Java 类型的全限定类名），name 属性（这个属性仅在 MyBatis 3.4.2 以上可用）则直接指定了命名空间的名字。</td>
+</tr>
+<tr>
+<td>@ConstructorArgs</td>
+<td>方法</td>
+<td><code>&lt;constructor&gt;</code></td>
+<td>收集一组结果以传递给一个结果对象的构造方法。属性：value，它是一个 Arg 数组。</td>
+</tr>
+<tr>
+<td>@Arg</td>
+<td><code>N/A</code></td>
+<td>- <code>&lt;arg&gt;</code>  -<code>&lt;idArg&gt;</code></td>
+<td>ConstructorArgs 集合的一部分，代表一个构造方法参数。属性：id、column、javaType、jdbcType、typeHandler、select、resultMap。id 属性和 XML 元素 <code>&lt;idArg&gt;</code> 相似，它是一个布尔值，表示该属性是否用于唯一标识和比较对象。从版本 3.5.4 开始，该注解变为可重复注解。</td>
+</tr>
+<tr>
+<td>@TypeDiscriminator</td>
+<td>方法</td>
+<td><code>&lt;discriminator&gt;</code></td>
+<td>决定使用何种结果映射的一组取值（case）。属性：column、javaType、jdbcType、typeHandler、cases。cases 属性是一个 Case 的数组。</td>
+</tr>
+<tr>
+<td>@Case</td>
+<td>N&#x2F;A</td>
+<td><code>&lt;case&gt;</code></td>
+<td>表示某个值的一个取值以及该取值对应的映射。属性：value、type、results。results 属性是一个 Results 的数组，因此这个注解实际上和 ResultMap 很相似，由下面的 Results 注解指定。</td>
+</tr>
+<tr>
+<td>@Results</td>
+<td>方法</td>
+<td><code>&lt;resultMap&gt;</code></td>
+<td>一组结果映射，指定了对某个特定结果列，映射到某个属性或字段的方式。属性：value、id。value 属性是一个 Result 注解的数组。而 id 属性则是结果映射的名称。从版本 3.5.4 开始，该注解变为可重复注解。</td>
+</tr>
+<tr>
+<td>@Result</td>
+<td>N&#x2F;A</td>
+<td>- <code>&lt;result&gt;</code>- <code>&lt;id&gt;</code></td>
+<td>在列和属性或字段之间的单个结果映射。属性：id、column、javaType、jdbcType、typeHandler、one、many。id 属性和 XML 元素 <code>&lt;id&gt;</code> 相似，它是一个布尔值，表示该属性是否用于唯一标识和比较对象。one 属性是一个关联，和 <code>&lt;association&gt;</code> 类似，而 many 属性则是集合关联，和 <code>&lt;collection&gt;</code> 类似。这样命名是为了避免产生名称冲突。</td>
+</tr>
+<tr>
+<td>@One</td>
+<td>N&#x2F;A</td>
+<td><code>&lt;association&gt;</code></td>
+<td>复杂类型的单个属性映射。属性：select，指定可加载合适类型实例的映射语句（也就是映射器方法）全限定名；fetchType，指定在该映射中覆盖全局配置参数 lazyLoadingEnabled。<strong>提示</strong> 注解 API 不支持联合映射。这是由于 Java 注解不允许产生循环引用。</td>
+</tr>
+<tr>
+<td>@Many</td>
+<td>N&#x2F;A</td>
+<td><code>&lt;collection&gt;</code></td>
+<td>复杂类型的集合属性映射。属性：select，指定可加载合适类型实例集合的映射语句（也就是映射器方法）全限定名；fetchType，指定在该映射中覆盖全局配置参数 lazyLoadingEnabled。<strong>提示</strong> 注解 API 不支持联合映射。这是由于 Java 注解不允许产生循环引用。</td>
+</tr>
+<tr>
+<td>@MapKey</td>
+<td>方法</td>
+<td></td>
+<td>供返回值为 Map 的方法使用的注解。它使用对象的某个属性作为 key，将对象 List 转化为 Map。属性：value，指定作为 Map 的 key 值的对象属性名。</td>
+</tr>
+<tr>
+<td>@Options</td>
+<td>方法</td>
+<td>映射语句的属性</td>
+<td>该注解允许你指定大部分开关和配置选项，它们通常在映射语句上作为属性出现。与在注解上提供大量的属性相比，Options 注解提供了一致、清晰的方式来指定选项。属性：useCache&#x3D;true、flushCache&#x3D;FlushCachePolicy.DEFAULT、resultSetType&#x3D;DEFAULT、statementType&#x3D;PREPARED、fetchSize&#x3D;-1、timeout&#x3D;-1、useGeneratedKeys&#x3D;false、keyProperty&#x3D;””、keyColumn&#x3D;””、resultSets&#x3D;””。注意，Java 注解无法指定 null 值。因此，一旦你使用了 Options 注解，你的语句就会被上述属性的默认值所影响。要注意避免默认值带来的非预期行为。           注意：keyColumn 属性只在某些数据库中有效（如 Oracle、PostgreSQL 等）。要了解更多关于 keyColumn 和 keyProperty 可选值信息，请查看“insert, update 和 delete”一节。</td>
+</tr>
+<tr>
+<td>- @Insert- @Update- @Delete- @Select</td>
+<td>方法</td>
+<td><code>- &lt;insert&gt;- &lt;update&gt;- &lt;delete&gt;- &lt;select&gt;</code></td>
+<td>每个注解分别代表将会被执行的 SQL 语句。它们用字符串数组（或单个字符串）作为参数。如果传递的是字符串数组，字符串数组会被连接成单个完整的字符串，每个字符串之间加入一个空格。这有效地避免了用 Java 代码构建 SQL 语句时产生的“丢失空格”问题。当然，你也可以提前手动连接好字符串。属性：value，指定用来组成单个 SQL 语句的字符串数组。</td>
+</tr>
+<tr>
+<td>- @InsertProvider- @UpdateProvider- @DeleteProvider- @SelectProvider</td>
+<td>方法</td>
+<td><code>- &lt;insert&gt;- &lt;update&gt;- &lt;delete&gt;- &lt;select&gt;</code></td>
+<td>允许构建动态 SQL。这些备选的 SQL 注解允许你指定返回 SQL 语句的类和方法，以供运行时执行。（从 MyBatis 3.4.6 开始，可以使用 CharSequence 代替 String 来作为返回类型）。当执行映射语句时，MyBatis 会实例化注解指定的类，并调用注解指定的方法。你可以通过 ProviderContext 传递映射方法接收到的参数、”Mapper interface type” 和 “Mapper method”（仅在 MyBatis 3.4.5 以上支持）作为参数。（MyBatis 3.4 以上支持传入多个参数）属性：type、method。type 属性用于指定类名。method 用于指定该类的方法名（从版本 3.5.1 开始，可以省略 method 属性，MyBatis 将会使用 ProviderMethodResolver 接口解析方法的具体实现。如果解析失败，MyBatis 将会使用名为 provideSql 的降级实现）。<strong>提示</strong> 接下来的“SQL 语句构建器”一章将会讨论该话题，以帮助你以更清晰、更便于阅读的方式构建动态 SQL。</td>
+</tr>
+<tr>
+<td>@Param</td>
+<td>参数</td>
+<td>N&#x2F;A</td>
+<td>如果你的映射方法接受多个参数，就可以使用这个注解自定义每个参数的名字。否则在默认情况下，除 RowBounds 以外的参数会以 “param” 加参数位置被命名。例如 #{param1}, #{param2}。如果使用了 @Param(“person”)，参数就会被命名为 #{person}。</td>
+</tr>
+<tr>
+<td>@SelectKey</td>
+<td>方法</td>
+<td><code>&lt;selectKey&gt;</code></td>
+<td>这个注解的功能与 <code>&lt;selectKey&gt;</code> 标签完全一致。该注解只能在 @Insert 或 @InsertProvider 或 @Update 或 @UpdateProvider 标注的方法上使用，否则将会被忽略。如果标注了 @SelectKey 注解，MyBatis 将会忽略掉由 @Options 注解所设置的生成主键或设置（configuration）属性。属性：statement 以字符串数组形式指定将会被执行的 SQL 语句，keyProperty 指定作为参数传入的对象对应属性的名称，该属性将会更新成新的值，before 可以指定为 true 或 false 以指明 SQL 语句应被在插入语句的之前还是之后执行。resultType 则指定 keyProperty 的 Java 类型。statementType 则用于选择语句类型，可以选择 STATEMENT、PREPARED 或 CALLABLE 之一，它们分别对应于 Statement、PreparedStatement 和 CallableStatement。默认值是 PREPARED。</td>
+</tr>
+<tr>
+<td>@ResultMap</td>
+<td>方法</td>
+<td>N&#x2F;A</td>
+<td>这个注解为 @Select 或者 @SelectProvider 注解指定 XML 映射中 <code>&lt;resultMap&gt;</code> 元素的 id。这使得注解的 select 可以复用已在 XML 中定义的 ResultMap。如果标注的 select 注解中存在 @Results 或者 @ConstructorArgs 注解，这两个注解将被此注解覆盖。</td>
+</tr>
+<tr>
+<td>@ResultType</td>
+<td>方法</td>
+<td>N&#x2F;A</td>
+<td>在使用了结果处理器的情况下，需要使用此注解。由于此时的返回类型为 void，所以 Mybatis 需要有一种方法来判断每一行返回的对象类型。如果在 XML 有对应的结果映射，请使用 @ResultMap 注解。如果结果类型在 XML 的 <code>&lt;select&gt;</code> 元素中指定了，就不需要使用其它注解了。否则就需要使用此注解。比如，如果一个标注了 @Select 的方法想要使用结果处理器，那么它的返回类型必须是 void，并且必须使用这个注解（或者 @ResultMap）。这个注解仅在方法返回类型是 void 的情况下生效。</td>
+</tr>
+<tr>
+<td>@Flush</td>
+<td>方法</td>
+<td>N&#x2F;A</td>
+<td>如果使用了这个注解，定义在 Mapper 接口中的方法就能够调用 SqlSession#flushStatements() 方法。（Mybatis 3.3 以上可用）</td>
+</tr>
+</tbody></table>
+<h2 id="映射注解示例"><a href="#映射注解示例" class="headerlink" title="映射注解示例"></a>映射注解示例</h2><p>这个例子展示了如何使用 @SelectKey 注解来在插入前读取数据库序列的值：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Insert(&quot;insert into table3 (id, name) values(#&#123;nameId&#125;, #&#123;name&#125;)&quot;)</span></span><br><span class="line"><span class="meta">@SelectKey(statement=&quot;call next value for TestSequence&quot;, keyProperty=&quot;nameId&quot;, before=true, resultType=int.class)</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">insertTable3</span><span class="params">(Name name)</span>;</span><br><span class="line">这个例子展示了如何使用 <span class="meta">@SelectKey</span> 注解来在插入后读取数据库自增列的值：</span><br><span class="line"></span><br><span class="line"><span class="meta">@Insert(&quot;insert into table2 (name) values(#&#123;name&#125;)&quot;)</span></span><br><span class="line"><span class="meta">@SelectKey(statement=&quot;call identity()&quot;, keyProperty=&quot;nameId&quot;, before=false, resultType=int.class)</span></span><br><span class="line"><span class="type">int</span> <span class="title function_">insertTable2</span><span class="params">(Name name)</span>;</span><br></pre></td></tr></table></figure>
+
+<p>这个例子展示了如何使用 @Flush 注解来调用 SqlSession#flushStatements()：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Flush</span></span><br><span class="line">List&lt;BatchResult&gt; <span class="title function_">flush</span><span class="params">()</span>;</span><br><span class="line">这些例子展示了如何通过指定 <span class="meta">@Result</span> 的 id 属性来命名结果集：</span><br><span class="line"></span><br><span class="line"><span class="meta">@Results(id = &quot;userResult&quot;, value = &#123;</span></span><br><span class="line"><span class="meta">  @Result(property = &quot;id&quot;, column = &quot;uid&quot;, id = true),</span></span><br><span class="line"><span class="meta">  @Result(property = &quot;firstName&quot;, column = &quot;first_name&quot;),</span></span><br><span class="line"><span class="meta">  @Result(property = &quot;lastName&quot;, column = &quot;last_name&quot;)</span></span><br><span class="line"><span class="meta">&#125;)</span></span><br><span class="line"><span class="meta">@Select(&quot;select * from users where id = #&#123;id&#125;&quot;)</span></span><br><span class="line">User <span class="title function_">getUserById</span><span class="params">(Integer id)</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Results(id = &quot;companyResults&quot;)</span></span><br><span class="line"><span class="meta">@ConstructorArgs(&#123;</span></span><br><span class="line"><span class="meta">  @Arg(column = &quot;cid&quot;, javaType = Integer.class, id = true),</span></span><br><span class="line"><span class="meta">  @Arg(column = &quot;name&quot;, javaType = String.class)</span></span><br><span class="line"><span class="meta">&#125;)</span></span><br><span class="line"><span class="meta">@Select(&quot;select * from company where id = #&#123;id&#125;&quot;)</span></span><br><span class="line">Company <span class="title function_">getCompanyById</span><span class="params">(Integer id)</span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="增删改查"><a href="#增删改查" class="headerlink" title="增删改查"></a>增删改查</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">StudentMapper</span> &#123;</span><br><span class="line">    <span class="comment">// 增</span></span><br><span class="line">    <span class="meta">@Options(useGeneratedKeys = true,keyProperty = &quot;id&quot;)</span><span class="comment">//添加完返回对象中有id值不为null，id自增长</span></span><br><span class="line">    <span class="meta">@Insert(&quot;insert into student(sname)values(#&#123;sname&#125;)&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">insert</span><span class="params">(Student student)</span>;<span class="comment">//这个#&#123;sname&#125;要和pojo里面的属性对应</span></span><br><span class="line">    <span class="comment">// 删</span></span><br><span class="line">    <span class="meta">@Delete(&quot;delete from student where id=#&#123;id&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">delete</span><span class="params">(Integer id)</span>;</span><br><span class="line">    <span class="comment">// 改</span></span><br><span class="line">    <span class="meta">@Update(&quot;update student set sname=#&#123;sname&#125; where id=#&#123;id&#125;&quot;)</span><span class="comment">//这个#&#123;sname&#125;和#&#123;id&#125;要和pojo里面的属性对应</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">update</span><span class="params">(Student student)</span>;</span><br><span class="line">    <span class="comment">// 查</span></span><br><span class="line">    <span class="meta">@Select(&quot;select id,sname from student&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> List&lt;Student&gt; <span class="title function_">selectAll</span><span class="params">()</span>;</span><br><span class="line"> </span><br><span class="line">    <span class="meta">@Select(&quot;select id,sname from student where id=#&#123;id&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Student <span class="title function_">selectById</span><span class="params">(Integer id)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+        </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/mybatis/" rel="tag">mybatis</a>
+                </div>
+                <div class="pull-date">
+                    <time datetime="2025-11-21T06:36:31.545Z" itemprop="dateModified">最后编辑：2025-11-21</time>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" Manjaro gnome桌面美化" href="/2020/05/18/2020/05/182018/">&lt; 上一篇</a>
+            </div>
+            
+            
+            <div class="nav-next clearfix">
+                <a title=" Spring Aop&amp;IOC" href="/2020/05/23/2020/05/231107/">下一篇 &gt;</a>
+            </div>
+            
+        </nav>
+    
+    
+        <link rel="stylesheet" href="/vendors/gitalk@1.7.2/dist/gitalk.css"></script>
+<div id="gitalk-container" class="post-comments lazy-load" style="padding-left:2rem; padding-right:2rem;"></div>
+<script>
+    var load_comm = () => {
+        const init = () => {
+            console.log('Gitalk loading...');
+            const gitalk = new Gitalk(Object.assign({
+                id: '/2020/05/22/2020/05/221949/',
+                path: '/2020/05/22/2020/05/221949/'
+            }, JSON.parse('{"clientID":"56e6a743c63b9c4faa93","clientSecret":"888b7234051c5c2ed6ea7bdf18e8b5a2678775f1","repo":"gitalk-comments","owner":"qbmzc","admin":["qbmzc"]}')));
+
+            gitalk.render('gitalk-container');
+        }
+        if (typeof Gitalk === 'undefined') {
+            const src = '/vendors/gitalk@1.7.2/dist/gitalk.min.js';
+            $.getScript(src, init);
+        } else {
+            init();
+        }
+    };
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a></noscript>
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/avatar.webp" loading="lazy" decoding="auto" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center">流云与风，苍穹游牧</p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                499
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                8
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                229
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">137</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">151</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">29</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/congco/">congco</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/work/">work</a><span class="category-list-count">118</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wuw/">wuw</a><span class="category-list-count">48</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/">技术笔记</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/AES/" style="font-size: 0.6em;">AES</a> <a href="/tags/AI/" style="font-size: 0.7em;">AI</a> <a href="/tags/AWS/" style="font-size: 0.7em;">AWS</a> <a href="/tags/Arch/" style="font-size: 0.6em;">Arch</a> <a href="/tags/Arch-Linux/" style="font-size: 0.8em;">Arch Linux</a> <a href="/tags/ArchLinux/" style="font-size: 0.8em;">ArchLinux</a> <a href="/tags/CAS/" style="font-size: 0.6em;">CAS</a> <a href="/tags/CI-CD/" style="font-size: 0.6em;">CI/CD</a> <a href="/tags/Caffeine/" style="font-size: 0.6em;">Caffeine</a> <a href="/tags/CompletableFuture/" style="font-size: 0.7em;">CompletableFuture</a> <a href="/tags/DNS/" style="font-size: 0.8em;">DNS</a> <a href="/tags/Docker/" style="font-size: 0.6em;">Docker</a> <a href="/tags/Flask/" style="font-size: 0.6em;">Flask</a> <a href="/tags/Future/" style="font-size: 0.7em;">Future</a> <a href="/tags/GC/" style="font-size: 0.6em;">GC</a> <a href="/tags/GPT/" style="font-size: 0.6em;">GPT</a> <a href="/tags/GraalVM/" style="font-size: 0.8em;">GraalVM</a> <a href="/tags/HashMap/" style="font-size: 0.6em;">HashMap</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/14/2025/11/141727/"><i class="fa  fa-book"></i> karakeep</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111335/"><i class="fa  fa-book"></i> SonarQube 扫描支持多 JDK 版本的实践方案</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111045/"><i class="fa  fa-book"></i> 一次修复 PDF 中文乱码的排查记录</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/23/2025/10/221500/"><i class="fa  fa-book"></i> dig命令使用详解</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/13/2025/10/131645/"><i class="fa  fa-book"></i> DNS解析异常导致视频播放缓慢问题排查与解决</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  >
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        <li><a href="mailto:congco@foxmail.com"><i class="fa fa-envelope"></i></a></li>
+                        
+                        
+                        
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://github.com/qbmzc"><i class="fa fa-github"></i></a></li>
+                        <li><a target="_blank" rel="nofollow" href="/rss.xml"><i class="fa fa-rss"></i></a></li>
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2025 沐曦留曳 版权所有.</li>
+                            <li>本站已运行<span id="span_dt">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
+                            <li>Site built with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by cong.</li>
+                        </div>
+                        <div>
+                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
+                            <li>Hosted on <a href="https://github.io" target="_blank">Github Pages</a></li>
+                        </div>
+                        <div>
+                            
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="/vendors/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="/vendors/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+
+    <script defer src="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="/vendors/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>

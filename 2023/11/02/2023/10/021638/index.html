@@ -1,0 +1,1546 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="/images/favicon.ico">
+  
+  <title>数据建模 – 表继承 | 沐曦留曳</title>
+  <meta name="author" content="cong" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="hibernate" />
+  
+  <meta name="description" content="类型 MappedSuperclass 继承仅在域模型中实现，而不反映在数据库架构中。 SingleTable 域模型类层次结构具体化为单个表，该表包含属于不同类类型的实体。 Joined table 基类和所有子类都有自己的数据库表，获取子类实体也需要与父表联接。 Table per class 每个子类都有自己的表，其中包含子类和基类属性   MappedSuperclass继承仅在域">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据建模 – 表继承">
+<meta property="og:url" content="https://qbmzc.github.io/2023/11/02/2023/10/021638/index.html">
+<meta property="og:site_name" content="沐曦留曳">
+<meta property="og:description" content="类型 MappedSuperclass 继承仅在域模型中实现，而不反映在数据库架构中。 SingleTable 域模型类层次结构具体化为单个表，该表包含属于不同类类型的实体。 Joined table 基类和所有子类都有自己的数据库表，获取子类实体也需要与父表联接。 Table per class 每个子类都有自己的表，其中包含子类和基类属性   MappedSuperclass继承仅在域">
+<meta property="og:locale">
+<meta property="og:image" content="https://qbmzc.github.io/images/favicon.ico">
+<meta property="article:published_time" content="2023-11-01T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-11-21T06:36:31.559Z">
+<meta property="article:author" content="cong">
+<meta property="article:tag" content="hibernate">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://qbmzc.github.io/images/favicon.ico">
+  <link rel="alternate" href="rss.xml" type="application/atom+xml">
+  <!-- 站点验证相关 -->
+  
+    
+      <meta name="google-site-verification" content="lV4cead5YlJ8KpODToP7dvzi-ihrxSqU0yYStYKj2ao" />
+    
+    
+      <meta name="baidu-site-verification" content="codeva-Zr6WlkDupK" />
+    
+    
+      <meta name="msvalidate.01" content="2D2197DEE362D193B3EC29AFD3306341" />
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" media="all"></script>
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-color-dark.min.css" media="(prefers-color-scheme: dark)"></script>
+    <script src="/js/kr-dark.min.js"></script>
+  
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" media="all"></script>
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="/vendors/font-awesome@4.7.0/css/font-awesome.min.css" media="all"></script>
+  <link rel="stylesheet" id="nprogress-css" href="/vendors/nprogress@0.2.0/nprogress.css" media="all"></script>
+  
+  
+  
+    <link rel="stylesheet" href="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css"></script>
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="/vendors/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/banner.webp');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">沐曦留曳</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>沐曦留曳</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article itemscope itemtype="https://schema.org/Article">
+    
+    <link itemprop="mainEntityOfPage" href="https://qbmzc.github.io/2023/11/02/2023/10/021638/">
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center" itemprop="name headline">数据建模 – 表继承</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><time datetime="2023-11-01T16:00:00.000Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2023-11-02</time></li>
+                <li itemprop="author" itemscope itemtype="https://schema.org/Person">
+                    <i class="fa fa-user"></i> 作者 <span itemprop="name">cong</span>
+                </li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~13.09K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1763706991559"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+            
+                <div class="kratos-post-inner-toc">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.</span> <span class="toc-text">类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MappedSuperclass"><span class="toc-number">2.</span> <span class="toc-text">MappedSuperclass</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SingleTable"><span class="toc-number">3.</span> <span class="toc-text">SingleTable</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%89%B4%E5%88%AB%E5%99%A8"><span class="toc-number">3.1.</span> <span class="toc-text">鉴别器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Joined-table"><span class="toc-number">4.</span> <span class="toc-text">Joined table</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Table-per-class"><span class="toc-number">5.</span> <span class="toc-text">Table per class</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9A%90%E5%BC%8F%E5%92%8C%E6%98%BE%E5%BC%8F%E5%A4%9A%E6%80%81%E6%80%A7-%E5%B7%B2%E8%BF%87%E6%9C%9F"><span class="toc-number">6.</span> <span class="toc-text">隐式和显式多态性(已过期)</span></a></li></ol>
+                </div>
+            
+            <hr />
+            <div itemprop="articleBody"><span id="more"></span>
+
+
+
+<h2 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h2><ul>
+<li>MappedSuperclass 继承仅在域模型中实现，而不反映在数据库架构中。</li>
+<li>SingleTable 域模型类层次结构具体化为单个表，该表包含属于不同类类型的实体。</li>
+<li>Joined table 基类和所有子类都有自己的数据库表，获取子类实体也需要与父表联接。</li>
+<li>Table per class 每个子类都有自己的表，其中包含子类和基类属性</li>
+</ul>
+<p><img src="https://hehunfan-1300293535.cos.ap-shanghai.myqcloud.com/img/2022/202311021648188.png"><br><img src="https://hehunfan-1300293535.cos.ap-shanghai.myqcloud.com/img/2022/202311021648188.png"></p>
+<h2 id="MappedSuperclass"><a href="#MappedSuperclass" class="headerlink" title="MappedSuperclass"></a>MappedSuperclass</h2><p>继承仅在域模型中可见，并且每个数据库表都包含基类和子类属性。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@MappedSuperclass</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">Account</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Id</span></span><br><span class="line">	<span class="keyword">private</span> Long id;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> String owner;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> BigDecimal balance;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> BigDecimal interestRate;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//Getters and setters are omitted for brevity</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Entity(name = &quot;DebitAccount&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">DebitAccount</span> <span class="keyword">extends</span> <span class="title class_">Account</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> BigDecimal overdraftFee;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//Getters and setters are omitted for brevity</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Entity(name = &quot;CreditAccount&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">CreditAccount</span> <span class="keyword">extends</span> <span class="title class_">Account</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> BigDecimal creditLimit;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//Getters and setters are omitted for brevity</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>SQL</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> DebitAccount (</span><br><span class="line">    id <span class="type">BIGINT</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span> ,</span><br><span class="line">    balance <span class="type">NUMERIC</span>(<span class="number">19</span>, <span class="number">2</span>) ,</span><br><span class="line">    interestRate <span class="type">NUMERIC</span>(<span class="number">19</span>, <span class="number">2</span>) ,</span><br><span class="line">    owner <span class="type">VARCHAR</span>(<span class="number">255</span>) ,</span><br><span class="line">    overdraftFee <span class="type">NUMERIC</span>(<span class="number">19</span>, <span class="number">2</span>) ,</span><br><span class="line">    <span class="keyword">PRIMARY</span> KEY ( id )</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> CreditAccount (</span><br><span class="line">    id <span class="type">BIGINT</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span> ,</span><br><span class="line">    balance <span class="type">NUMERIC</span>(<span class="number">19</span>, <span class="number">2</span>) ,</span><br><span class="line">    interestRate <span class="type">NUMERIC</span>(<span class="number">19</span>, <span class="number">2</span>) ,</span><br><span class="line">    owner <span class="type">VARCHAR</span>(<span class="number">255</span>) ,</span><br><span class="line">    creditLimit <span class="type">NUMERIC</span>(<span class="number">19</span>, <span class="number">2</span>) ,</span><br><span class="line">    <span class="keyword">PRIMARY</span> KEY ( id )</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>由于继承模型未在数据库级别进行镜像， <code>@MappedSuperclass</code>在通过其基类获取持久性对象时，不能使用引用<code>@MappedSuperclass</code> 的多态查询。</p>
+<h2 id="SingleTable"><a href="#SingleTable" class="headerlink" title="SingleTable"></a>SingleTable</h2><p>单表继承策略将所有子类映射到一个数据库表。 每个子类都声明自己的持久属性。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Entity(name = &quot;Account&quot;)</span></span><br><span class="line"><span class="meta">@Inheritance(strategy = InheritanceType.SINGLE_TABLE)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">Account</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Id</span></span><br><span class="line">	<span class="keyword">private</span> Long id;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> String owner;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> BigDecimal balance;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> BigDecimal interestRate;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//Getters and setters are omitted for brevity</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Entity(name = &quot;DebitAccount&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">DebitAccount</span> <span class="keyword">extends</span> <span class="title class_">Account</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> BigDecimal overdraftFee;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//Getters and setters are omitted for brevity</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Entity(name = &quot;CreditAccount&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">CreditAccount</span> <span class="keyword">extends</span> <span class="title class_">Account</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> BigDecimal creditLimit;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//Getters and setters are omitted for brevity</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>SQL</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> Account (</span><br><span class="line">    DTYPE <span class="type">VARCHAR</span>(<span class="number">31</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span> ,</span><br><span class="line">    id <span class="type">BIGINT</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span> ,</span><br><span class="line">    balance <span class="type">NUMERIC</span>(<span class="number">19</span>, <span class="number">2</span>) ,</span><br><span class="line">    interestRate <span class="type">NUMERIC</span>(<span class="number">19</span>, <span class="number">2</span>) ,</span><br><span class="line">    owner <span class="type">VARCHAR</span>(<span class="number">255</span>) ,</span><br><span class="line">    overdraftFee <span class="type">NUMERIC</span>(<span class="number">19</span>, <span class="number">2</span>) ,</span><br><span class="line">    creditLimit <span class="type">NUMERIC</span>(<span class="number">19</span>, <span class="number">2</span>) ,</span><br><span class="line">    <span class="keyword">PRIMARY</span> KEY ( id )</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>层次结构中的每个子类都必须定义一个唯一的鉴别器值，该值用于区分属于不同子类类型的行。 如果未指定，则<code>DTYPE</code>该列将用作鉴别器，存储关联的子类名称。</p>
+<ul>
+<li>保存</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"> <span class="type">Account</span> <span class="variable">account</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Account</span>();</span><br><span class="line">            account.setOwner(UUID.randomUUID().toString());</span><br><span class="line">            account.setBalance(<span class="keyword">new</span> <span class="title class_">BigDecimal</span>(<span class="number">1</span>));</span><br><span class="line">            account.setInterestRate(<span class="keyword">new</span> <span class="title class_">BigDecimal</span>(<span class="number">2</span>));</span><br><span class="line">            account.setIsDeleted(Integer.valueOf(<span class="string">&quot;0&quot;</span>));</span><br><span class="line">            account.setCreateBy(UUID.randomUUID().toString());</span><br><span class="line">            account.setTenantId(<span class="string">&quot;default&quot;</span>);</span><br><span class="line">            account.setCreateTime(<span class="keyword">new</span> <span class="title class_">Date</span>());</span><br><span class="line"></span><br><span class="line">            <span class="type">CreditAccount</span> <span class="variable">creditAccount</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">CreditAccount</span>();</span><br><span class="line">            BeanUtils.copyProperties(account, creditAccount);</span><br><span class="line">            creditAccount.setCreditLimit(<span class="keyword">new</span> <span class="title class_">BigDecimal</span>(<span class="number">3</span>));</span><br><span class="line"></span><br><span class="line">            <span class="type">DebitAccount</span> <span class="variable">debitAccount</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">DebitAccount</span>();</span><br><span class="line">            BeanUtils.copyProperties(account, debitAccount);</span><br><span class="line">            debitAccount.setOverdraftFee(<span class="keyword">new</span> <span class="title class_">BigDecimal</span>(<span class="number">6</span>));</span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//            ThirdAccount thirdAccount = new ThirdAccount();</span></span><br><span class="line"><span class="comment">//            BeanUtils.copyProperties(creditAccount, thirdAccount);</span></span><br><span class="line"><span class="comment">//            thirdAccount.setThirdFee(new BigDecimal(11));</span></span><br><span class="line"><span class="comment">//            entityManager.persist(thirdAccount);</span></span><br><span class="line">            entityManager.persist(account);</span><br><span class="line">            entityManager.persist(creditAccount);</span><br><span class="line">            entityManager.persist(debitAccount);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>SQL</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> t_account (balance,create_by,create_time,interest_rate,is_deleted,last_modify_by,last_modify_time,owner,tenant_id,version,dtype,id) <span class="keyword">values</span> (<span class="number">1</span>,<span class="string">&#x27;5f72d2e4-fff7-421c-973a-e5517df541df&#x27;</span>,<span class="string">&#x27;2023-11-02T17:07:10.195+0800&#x27;</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="keyword">NULL</span>,<span class="keyword">NULL</span>,<span class="string">&#x27;3d395ab7-033e-4e89-9870-7c2277d4898f&#x27;</span>,<span class="string">&#x27;default&#x27;</span>,<span class="number">0</span>,<span class="string">&#x27;Account&#x27;</span>,<span class="number">252</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> t_account (balance,create_by,create_time,interest_rate,is_deleted,last_modify_by,last_modify_time,owner,tenant_id,version,credit_limit,dtype,id) <span class="keyword">values</span> (<span class="number">1</span>,<span class="string">&#x27;5f72d2e4-fff7-421c-973a-e5517df541df&#x27;</span>,<span class="string">&#x27;2023-11-02T17:07:10.206+0800&#x27;</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="keyword">NULL</span>,<span class="keyword">NULL</span>,<span class="string">&#x27;3d395ab7-033e-4e89-9870-7c2277d4898f&#x27;</span>,<span class="string">&#x27;default&#x27;</span>,<span class="number">0</span>,<span class="number">3</span>,<span class="string">&#x27;CreditAccount&#x27;</span>,<span class="number">253</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">insert</span> <span class="keyword">into</span> t_account (balance,create_by,create_time,interest_rate,is_deleted,last_modify_by,last_modify_time,owner,tenant_id,version,overdraft_fee,dtype,id) <span class="keyword">values</span> (<span class="number">1</span>,<span class="string">&#x27;5f72d2e4-fff7-421c-973a-e5517df541df&#x27;</span>,<span class="string">&#x27;2023-11-02T17:07:10.212+0800&#x27;</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="keyword">NULL</span>,<span class="keyword">NULL</span>,<span class="string">&#x27;3d395ab7-033e-4e89-9870-7c2277d4898f&#x27;</span>,<span class="string">&#x27;default&#x27;</span>,<span class="number">0</span>,<span class="number">6</span>,<span class="string">&#x27;DebitAccount&#x27;</span>,<span class="number">254</span>)</span><br></pre></td></tr></table></figure>
+
+<p>使用多态查询时，只需扫描单个表即可获取所有关联的子类实例。</p>
+<ul>
+<li>查询</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Account&gt; accounts = entityManager</span><br><span class="line">           .createQuery(<span class="string">&quot;select a from Account a&quot;</span>)</span><br><span class="line">           .getResultList();</span><br><span class="line">   System.out.println(accounts.size());</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> a1_0.id,a1_0.dtype,a1_0.balance,a1_0.create_by,a1_0.create_time,a1_0.interest_rate,a1_0.is_deleted,a1_0.last_modify_by,a1_0.last_modify_time,a1_0.owner,a1_0.tenant_id,a1_0.version,a1_0.credit_limit,a1_0.overdraft_fee <span class="keyword">from</span> t_account a1_0 <span class="keyword">where</span> (a1_0.is_deleted<span class="operator">=</span><span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="鉴别器"><a href="#鉴别器" class="headerlink" title="鉴别器"></a>鉴别器</h3><ul>
+<li>@DiscriminatorColumn</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target(&#123;TYPE&#125;)</span> </span><br><span class="line"><span class="meta">@Retention(RUNTIME)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> DiscriminatorColumn &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * (Optional) The name of column to be used for the discriminator.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    String <span class="title function_">name</span><span class="params">()</span> <span class="keyword">default</span> <span class="string">&quot;DTYPE&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * (Optional) The type of object/column to use as a class discriminator.</span></span><br><span class="line"><span class="comment">     * Defaults to &#123;<span class="doctag">@link</span> DiscriminatorType#STRING DiscriminatorType.STRING&#125;.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    DiscriminatorType <span class="title function_">discriminatorType</span><span class="params">()</span> <span class="keyword">default</span> STRING;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * (Optional) The SQL fragment that is used when generating the DDL </span></span><br><span class="line"><span class="comment">     * for the discriminator column.</span></span><br><span class="line"><span class="comment">     * &lt;p&gt; Defaults to the provider-generated SQL to create a column </span></span><br><span class="line"><span class="comment">     * of the specified discriminator type.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    String <span class="title function_">columnDefinition</span><span class="params">()</span> <span class="keyword">default</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/** </span></span><br><span class="line"><span class="comment">     * (Optional) The column length for String-based discriminator types. </span></span><br><span class="line"><span class="comment">     * Ignored for other discriminator types.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="type">int</span> <span class="title function_">length</span><span class="params">()</span> <span class="keyword">default</span> <span class="number">31</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Example</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Entity</span></span><br><span class="line">    <span class="meta">@Table(name=&quot;CUST&quot;)</span></span><br><span class="line">    <span class="meta">@Inheritance(strategy=SINGLE_TABLE)</span></span><br><span class="line">    <span class="meta">@DiscriminatorColumn(name=&quot;DISC&quot;, discriminatorType=STRING, length=20)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Customer</span> &#123; ... &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="meta">@Entity</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ValuedCustomer</span> <span class="keyword">extends</span> <span class="title class_">Customer</span> &#123; ... &#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>@DiscriminatorFormula</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target(TYPE)</span></span><br><span class="line"><span class="meta">@Retention(RUNTIME)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> DiscriminatorFormula &#123;</span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * The formula string.</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	String <span class="title function_">value</span><span class="params">()</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * The type of value returned by the formula.</span></span><br><span class="line"><span class="comment">	 * &lt;p&gt;</span></span><br><span class="line"><span class="comment">	 * This is required, unless the &#123;<span class="doctag">@linkplain</span> #value()</span></span><br><span class="line"><span class="comment">	 * expression&#125; is of type &#123;<span class="doctag">@code</span> varchar&#125; or similar.</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	DiscriminatorType <span class="title function_">discriminatorType</span><span class="params">()</span> <span class="keyword">default</span> STRING;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Example</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Entity</span></span><br><span class="line"> <span class="meta">@DiscriminatorFormula(discriminatorType = INTEGER,</span></span><br><span class="line"><span class="meta"> 		value = &quot;case when value1 is not null then 1 when value2 is not null then 2 end&quot;)</span></span><br><span class="line"> <span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">AbstractChild</span> &#123;</span><br><span class="line">     <span class="meta">@Id</span></span><br><span class="line">     <span class="meta">@GeneratedValue</span></span><br><span class="line">     Integer id;</span><br><span class="line">     <span class="comment">//...</span></span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line"></span><br><span class="line"> <span class="meta">@Entity</span></span><br><span class="line"> <span class="meta">@DiscriminatorValue(&quot;1&quot;)</span></span><br><span class="line"> <span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ConcreteChild1</span> <span class="keyword">extends</span> <span class="title class_">AbstractChild</span> &#123;</span><br><span class="line">     <span class="meta">@Basic(optional = false)</span></span><br><span class="line">     <span class="meta">@Column(name = &quot;VALUE1&quot;)</span></span><br><span class="line">     String value;</span><br><span class="line">     <span class="comment">//...</span></span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line"> <span class="meta">@Entity</span></span><br><span class="line"> <span class="meta">@DiscriminatorValue(&quot;2&quot;)</span></span><br><span class="line"> <span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ConcreteChild2</span> <span class="keyword">extends</span> <span class="title class_">AbstractChild</span> &#123;</span><br><span class="line">     <span class="meta">@Basic(optional = false)</span></span><br><span class="line">     <span class="meta">@Column(name = &quot;VALUE2&quot;)</span></span><br><span class="line">     String value;</span><br><span class="line">     <span class="comment">//...</span></span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>单表继承无法很好地扩展，因为：</p>
+<ul>
+<li>根据子实体的属性数量，将有许多字段。NULL</li>
+<li>添加一个新类会使其难以维护。</li>
+</ul>
+<h2 id="Joined-table"><a href="#Joined-table" class="headerlink" title="Joined table"></a>Joined table</h2><p>每个子类也可以映射到其自己的表。 这也称为每个子类的表映射策略。 通过与超类的表联接来检索继承的状态。</p>
+<p>此映射策略不需要鉴别器列。 但是，每个子类都必须声明一个包含对象标识符的表列。</p>
+<p>则假定主键&#x2F;外键列与超类的主表的主键列具有相同的名称。<code>@PrimaryKeyJoinColumn</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Entity(name = &quot;Account&quot;)</span></span><br><span class="line"><span class="meta">@Inheritance(strategy = InheritanceType.JOINED)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">Account</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Id</span></span><br><span class="line">	<span class="keyword">private</span> Long id;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> String owner;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> BigDecimal balance;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> BigDecimal interestRate;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//Getters and setters are omitted for brevity</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Entity(name = &quot;DebitAccount&quot;)</span></span><br><span class="line"><span class="meta">@PrimaryKeyJoinColumn(name = &quot;account_id&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">DebitAccount</span> <span class="keyword">extends</span> <span class="title class_">Account</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> BigDecimal overdraftFee;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//Getters and setters are omitted for brevity</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Entity(name = &quot;CreditAccount&quot;)</span></span><br><span class="line"><span class="meta">@PrimaryKeyJoinColumn(name = &quot;account_id&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">CreditAccount</span> <span class="keyword">extends</span> <span class="title class_">Account</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> BigDecimal creditLimit;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//Getters and setters are omitted for brevity</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>sql</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE <span class="title function_">CreditAccount</span> <span class="params">(</span></span><br><span class="line"><span class="params">    creditLimit NUMERIC(<span class="number">19</span>, <span class="number">2</span>)</span> ,</span><br><span class="line">    account_id BIGINT NOT NULL ,</span><br><span class="line">    PRIMARY <span class="title function_">KEY</span> <span class="params">( account_id )</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">CREATE TABLE <span class="title function_">DebitAccount</span> <span class="params">(</span></span><br><span class="line"><span class="params">    overdraftFee NUMERIC(<span class="number">19</span>, <span class="number">2</span>)</span> ,</span><br><span class="line">    account_id BIGINT NOT NULL ,</span><br><span class="line">    PRIMARY <span class="title function_">KEY</span> <span class="params">( account_id )</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">ALTER TABLE CreditAccount</span><br><span class="line">ADD CONSTRAINT FK8ulmk1wgs5x7igo370jt0q005</span><br><span class="line">FOREIGN <span class="title function_">KEY</span> <span class="params">(account_id)</span> REFERENCES Account</span><br><span class="line"></span><br><span class="line">ALTER TABLE DebitAccount</span><br><span class="line">ADD CONSTRAINT FK7wjufa570onoidv4omkkru06j</span><br><span class="line">FOREIGN <span class="title function_">KEY</span> <span class="params">(account_id)</span> REFERENCES Account</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>查询</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Account&gt; accounts = entityManager</span><br><span class="line">	.createQuery(<span class="string">&quot;select a from Account a&quot;</span>)</span><br><span class="line">	.getResultList();</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> jointablet0_.id <span class="keyword">AS</span> id1_0_ ,</span><br><span class="line">       jointablet0_.balance <span class="keyword">AS</span> balance2_0_ ,</span><br><span class="line">       jointablet0_.interestRate <span class="keyword">AS</span> interest3_0_ ,</span><br><span class="line">       jointablet0_.owner <span class="keyword">AS</span> owner4_0_ ,</span><br><span class="line">       jointablet0_1_.overdraftFee <span class="keyword">AS</span> overdraf1_2_ ,</span><br><span class="line">       jointablet0_2_.creditLimit <span class="keyword">AS</span> creditLi1_1_ ,</span><br><span class="line">       <span class="keyword">CASE</span> <span class="keyword">WHEN</span> jointablet0_1_.id <span class="keyword">IS</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">THEN</span> <span class="number">1</span></span><br><span class="line">            <span class="keyword">WHEN</span> jointablet0_2_.id <span class="keyword">IS</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">THEN</span> <span class="number">2</span></span><br><span class="line">            <span class="keyword">WHEN</span> jointablet0_.id <span class="keyword">IS</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span> <span class="keyword">THEN</span> <span class="number">0</span></span><br><span class="line">       <span class="keyword">END</span> <span class="keyword">AS</span> clazz_</span><br><span class="line"><span class="keyword">FROM</span>   Account jointablet0_</span><br><span class="line">       <span class="keyword">LEFT</span> <span class="keyword">OUTER</span> <span class="keyword">JOIN</span> DebitAccount jointablet0_1_ <span class="keyword">ON</span> jointablet0_.id <span class="operator">=</span> jointablet0_1_.id</span><br><span class="line">       <span class="keyword">LEFT</span> <span class="keyword">OUTER</span> <span class="keyword">JOIN</span> CreditAccount jointablet0_2_ <span class="keyword">ON</span> jointablet0_.id <span class="operator">=</span> jointablet0_2_.id</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>使用多态查询时，必须将基类表与所有子类表联接，才能提取每个关联的子类实例。</li>
+</ul>
+<p>联接表继承多态查询可以使用多个 JOIN，这可能会影响提取大量实体时的性能。</p>
+<h2 id="Table-per-class"><a href="#Table-per-class" class="headerlink" title="Table per class"></a>Table per class</h2><p>仅将继承层次结构的具体类映射到表。 这称为“每个具体类的表”策略。 每个表都定义类的所有持久状态，包括继承的状态。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Entity(name = &quot;Account&quot;)</span></span><br><span class="line"><span class="meta">@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">Account</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Id</span></span><br><span class="line">	<span class="keyword">private</span> Long id;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> String owner;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> BigDecimal balance;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> BigDecimal interestRate;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//Getters and setters are omitted for brevity</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Entity(name = &quot;DebitAccount&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">DebitAccount</span> <span class="keyword">extends</span> <span class="title class_">Account</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> BigDecimal overdraftFee;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//Getters and setters are omitted for brevity</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Entity(name = &quot;CreditAccount&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">CreditAccount</span> <span class="keyword">extends</span> <span class="title class_">Account</span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> BigDecimal creditLimit;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//Getters and setters are omitted for brevity</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>sql</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> Account (</span><br><span class="line">    id <span class="type">BIGINT</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span> ,</span><br><span class="line">    balance <span class="type">NUMERIC</span>(<span class="number">19</span>, <span class="number">2</span>) ,</span><br><span class="line">    interestRate <span class="type">NUMERIC</span>(<span class="number">19</span>, <span class="number">2</span>) ,</span><br><span class="line">    owner <span class="type">VARCHAR</span>(<span class="number">255</span>) ,</span><br><span class="line">    <span class="keyword">PRIMARY</span> KEY ( id )</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> CreditAccount (</span><br><span class="line">    id <span class="type">BIGINT</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span> ,</span><br><span class="line">    balance <span class="type">NUMERIC</span>(<span class="number">19</span>, <span class="number">2</span>) ,</span><br><span class="line">    interestRate <span class="type">NUMERIC</span>(<span class="number">19</span>, <span class="number">2</span>) ,</span><br><span class="line">    owner <span class="type">VARCHAR</span>(<span class="number">255</span>) ,</span><br><span class="line">    creditLimit <span class="type">NUMERIC</span>(<span class="number">19</span>, <span class="number">2</span>) ,</span><br><span class="line">    <span class="keyword">PRIMARY</span> KEY ( id )</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> DebitAccount (</span><br><span class="line">    id <span class="type">BIGINT</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span> ,</span><br><span class="line">    balance <span class="type">NUMERIC</span>(<span class="number">19</span>, <span class="number">2</span>) ,</span><br><span class="line">    interestRate <span class="type">NUMERIC</span>(<span class="number">19</span>, <span class="number">2</span>) ,</span><br><span class="line">    owner <span class="type">VARCHAR</span>(<span class="number">255</span>) ,</span><br><span class="line">    overdraftFee <span class="type">NUMERIC</span>(<span class="number">19</span>, <span class="number">2</span>) ,</span><br><span class="line">    <span class="keyword">PRIMARY</span> KEY ( id )</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> tablepercl0_.id <span class="keyword">AS</span> id1_0_ ,</span><br><span class="line">       tablepercl0_.balance <span class="keyword">AS</span> balance2_0_ ,</span><br><span class="line">       tablepercl0_.interestRate <span class="keyword">AS</span> interest3_0_ ,</span><br><span class="line">       tablepercl0_.owner <span class="keyword">AS</span> owner4_0_ ,</span><br><span class="line">       tablepercl0_.overdraftFee <span class="keyword">AS</span> overdraf1_2_ ,</span><br><span class="line">       tablepercl0_.creditLimit <span class="keyword">AS</span> creditLi1_1_ ,</span><br><span class="line">       tablepercl0_.clazz_ <span class="keyword">AS</span> clazz_</span><br><span class="line"><span class="keyword">FROM</span> (</span><br><span class="line">    <span class="keyword">SELECT</span>    id ,</span><br><span class="line">             balance ,</span><br><span class="line">             interestRate ,</span><br><span class="line">             owner ,</span><br><span class="line">             <span class="built_in">CAST</span>(<span class="keyword">NULL</span> <span class="keyword">AS</span> <span class="type">INT</span>) <span class="keyword">AS</span> overdraftFee ,</span><br><span class="line">             <span class="built_in">CAST</span>(<span class="keyword">NULL</span> <span class="keyword">AS</span> <span class="type">INT</span>) <span class="keyword">AS</span> creditLimit ,</span><br><span class="line">             <span class="number">0</span> <span class="keyword">AS</span> clazz_</span><br><span class="line">    <span class="keyword">FROM</span>     Account</span><br><span class="line">    <span class="keyword">UNION</span> <span class="keyword">ALL</span></span><br><span class="line">    <span class="keyword">SELECT</span>   id ,</span><br><span class="line">             balance ,</span><br><span class="line">             interestRate ,</span><br><span class="line">             owner ,</span><br><span class="line">             overdraftFee ,</span><br><span class="line">             <span class="built_in">CAST</span>(<span class="keyword">NULL</span> <span class="keyword">AS</span> <span class="type">INT</span>) <span class="keyword">AS</span> creditLimit ,</span><br><span class="line">             <span class="number">1</span> <span class="keyword">AS</span> clazz_</span><br><span class="line">    <span class="keyword">FROM</span>     DebitAccount</span><br><span class="line">    <span class="keyword">UNION</span> <span class="keyword">ALL</span></span><br><span class="line">    <span class="keyword">SELECT</span>   id ,</span><br><span class="line">             balance ,</span><br><span class="line">             interestRate ,</span><br><span class="line">             owner ,</span><br><span class="line">             <span class="built_in">CAST</span>(<span class="keyword">NULL</span> <span class="keyword">AS</span> <span class="type">INT</span>) <span class="keyword">AS</span> overdraftFee ,</span><br><span class="line">             creditLimit ,</span><br><span class="line">             <span class="number">2</span> <span class="keyword">AS</span> clazz_</span><br><span class="line">    <span class="keyword">FROM</span>     CreditAccount</span><br><span class="line">) tablepercl0_</span><br></pre></td></tr></table></figure>
+
+<p>优点</p>
+<ul>
+<li>子实体将具有单独的表，并且不会存储其他子实体的属性。</li>
+<li>子实体的必填字段将通过约束强制执行。NOT NULL</li>
+</ul>
+<p>缺点</p>
+<ul>
+<li>多态查询需要多个 UNION 查询，因此请注意大型类层次结构对性能的影响。</li>
+</ul>
+<h2 id="隐式和显式多态性-已过期"><a href="#隐式和显式多态性-已过期" class="headerlink" title="隐式和显式多态性(已过期)"></a><del>隐式和显式多态性(已过期)</del></h2><p>默认情况下，查询基类实体时， 多态查询将获取属于基类型的所有子类。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">List&lt;DomainModelEntity&gt; accounts = entityManager</span><br><span class="line">.createQuery(</span><br><span class="line">	<span class="string">&quot;select e &quot;</span> +</span><br><span class="line">	<span class="string">&quot;from org.hibernate.orm.test.inheritance.polymorphism.DomainModelEntity e&quot;</span>)</span><br><span class="line">.getResultList();</span><br></pre></td></tr></table></figure>
+
+<p>可以针对接口进行查询， Hibernate 将只获取那些被映射的实体，或者它们根本没有被注解的实体（暗示 IMPLICIT 行为）：DomainModelEntity@Polymorphism(type &#x3D; PolymorphismType.IMPLICIT)@Polymorphism</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Polymorphism(type = PolymorphismType.EXPLICIT)</span></span><br></pre></td></tr></table></figure>
+<p>实体被标记了注解，这指示 Hibernate 在对非映射基类执行多态查询时跳过它。</p>
+</div>
+        </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/hibernate/" rel="tag">hibernate</a>
+                </div>
+                <div class="pull-date">
+                    <time datetime="2025-11-21T06:36:31.559Z" itemprop="dateModified">最后编辑：2025-11-21</time>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" 使用python调用高德地图接口获取公交线路信息" href="/2023/10/30/2023/10/302245/">&lt; 上一篇</a>
+            </div>
+            
+            
+            <div class="nav-next clearfix">
+                <a title=" wsl2中安装MySQL8" href="/2023/11/03/2023/11/031825/">下一篇 &gt;</a>
+            </div>
+            
+        </nav>
+    
+    
+        <link rel="stylesheet" href="/vendors/gitalk@1.7.2/dist/gitalk.css"></script>
+<div id="gitalk-container" class="post-comments lazy-load" style="padding-left:2rem; padding-right:2rem;"></div>
+<script>
+    var load_comm = () => {
+        const init = () => {
+            console.log('Gitalk loading...');
+            const gitalk = new Gitalk(Object.assign({
+                id: '/2023/11/02/2023/10/021638/',
+                path: '/2023/11/02/2023/10/021638/'
+            }, JSON.parse('{"clientID":"56e6a743c63b9c4faa93","clientSecret":"888b7234051c5c2ed6ea7bdf18e8b5a2678775f1","repo":"gitalk-comments","owner":"qbmzc","admin":["qbmzc"]}')));
+
+            gitalk.render('gitalk-container');
+        }
+        if (typeof Gitalk === 'undefined') {
+            const src = '/vendors/gitalk@1.7.2/dist/gitalk.min.js';
+            $.getScript(src, init);
+        } else {
+            init();
+        }
+    };
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a></noscript>
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/avatar.webp" loading="lazy" decoding="auto" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center">流云与风，苍穹游牧</p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                499
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                8
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                229
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                    <aside id="krw-toc" class="widget widget-kratos-toc clearfix">
+    <div class="photo-background"></div>
+    <h4 class="widget-title no-after">
+        <i class="fa fa-compass"></i>
+        文章目录
+        <span class="toc-progress-bar" role="progressbar" aria-label="阅读进度："></span>
+    </h4>
+    <div class="textwidget">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B"><span class="toc-text">类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MappedSuperclass"><span class="toc-text">MappedSuperclass</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SingleTable"><span class="toc-text">SingleTable</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%89%B4%E5%88%AB%E5%99%A8"><span class="toc-text">鉴别器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Joined-table"><span class="toc-text">Joined table</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Table-per-class"><span class="toc-text">Table per class</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9A%90%E5%BC%8F%E5%92%8C%E6%98%BE%E5%BC%8F%E5%A4%9A%E6%80%81%E6%80%A7-%E5%B7%B2%E8%BF%87%E6%9C%9F"><span class="toc-text">隐式和显式多态性(已过期)</span></a></li></ol>
+    </div>
+</aside>
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">137</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">151</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">29</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/congco/">congco</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/work/">work</a><span class="category-list-count">118</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wuw/">wuw</a><span class="category-list-count">48</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/">技术笔记</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/AES/" style="font-size: 0.6em;">AES</a> <a href="/tags/AI/" style="font-size: 0.7em;">AI</a> <a href="/tags/AWS/" style="font-size: 0.7em;">AWS</a> <a href="/tags/Arch/" style="font-size: 0.6em;">Arch</a> <a href="/tags/Arch-Linux/" style="font-size: 0.8em;">Arch Linux</a> <a href="/tags/ArchLinux/" style="font-size: 0.8em;">ArchLinux</a> <a href="/tags/CAS/" style="font-size: 0.6em;">CAS</a> <a href="/tags/CI-CD/" style="font-size: 0.6em;">CI/CD</a> <a href="/tags/Caffeine/" style="font-size: 0.6em;">Caffeine</a> <a href="/tags/CompletableFuture/" style="font-size: 0.7em;">CompletableFuture</a> <a href="/tags/DNS/" style="font-size: 0.8em;">DNS</a> <a href="/tags/Docker/" style="font-size: 0.6em;">Docker</a> <a href="/tags/Flask/" style="font-size: 0.6em;">Flask</a> <a href="/tags/Future/" style="font-size: 0.7em;">Future</a> <a href="/tags/GC/" style="font-size: 0.6em;">GC</a> <a href="/tags/GPT/" style="font-size: 0.6em;">GPT</a> <a href="/tags/GraalVM/" style="font-size: 0.8em;">GraalVM</a> <a href="/tags/HashMap/" style="font-size: 0.6em;">HashMap</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/14/2025/11/141727/"><i class="fa  fa-book"></i> karakeep</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111335/"><i class="fa  fa-book"></i> SonarQube 扫描支持多 JDK 版本的实践方案</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111045/"><i class="fa  fa-book"></i> 一次修复 PDF 中文乱码的排查记录</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/23/2025/10/221500/"><i class="fa  fa-book"></i> dig命令使用详解</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/13/2025/10/131645/"><i class="fa  fa-book"></i> DNS解析异常导致视频播放缓慢问题排查与解决</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  >
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        <li><a href="mailto:congco@foxmail.com"><i class="fa fa-envelope"></i></a></li>
+                        
+                        
+                        
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://github.com/qbmzc"><i class="fa fa-github"></i></a></li>
+                        <li><a target="_blank" rel="nofollow" href="/rss.xml"><i class="fa fa-rss"></i></a></li>
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2025 沐曦留曳 版权所有.</li>
+                            <li>本站已运行<span id="span_dt">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
+                            <li>Site built with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by cong.</li>
+                        </div>
+                        <div>
+                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
+                            <li>Hosted on <a href="https://github.io" target="_blank">Github Pages</a></li>
+                        </div>
+                        <div>
+                            
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="/vendors/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="/vendors/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+
+    <script defer src="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="/vendors/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>

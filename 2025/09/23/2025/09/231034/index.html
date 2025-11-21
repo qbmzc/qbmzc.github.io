@@ -1,0 +1,1502 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="/images/favicon.ico">
+  
+  <title>word表格批量设置允许跨页断行 | 沐曦留曳</title>
+  <meta name="author" content="cong" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="openssl" />
+  
+  <meta name="description" content="在处理包含多个表格的Word文档时，批量设置“允许跨页断行”能有效避免表格在页面底部被生硬截断，提升文档美观度和阅读体验。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="word表格批量设置允许跨页断行">
+<meta property="og:url" content="https://qbmzc.github.io/2025/09/23/2025/09/231034/index.html">
+<meta property="og:site_name" content="沐曦留曳">
+<meta property="og:description" content="在处理包含多个表格的Word文档时，批量设置“允许跨页断行”能有效避免表格在页面底部被生硬截断，提升文档美观度和阅读体验。">
+<meta property="og:locale">
+<meta property="og:image" content="https://qbmzc.github.io/images/favicon.ico">
+<meta property="article:published_time" content="2025-09-23T05:36:09.000Z">
+<meta property="article:modified_time" content="2025-11-21T06:36:31.566Z">
+<meta property="article:author" content="cong">
+<meta property="article:tag" content="openssl">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://qbmzc.github.io/images/favicon.ico">
+  <link rel="alternate" href="rss.xml" type="application/atom+xml">
+  <!-- 站点验证相关 -->
+  
+    
+      <meta name="google-site-verification" content="lV4cead5YlJ8KpODToP7dvzi-ihrxSqU0yYStYKj2ao" />
+    
+    
+      <meta name="baidu-site-verification" content="codeva-Zr6WlkDupK" />
+    
+    
+      <meta name="msvalidate.01" content="2D2197DEE362D193B3EC29AFD3306341" />
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" media="all"></script>
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-color-dark.min.css" media="(prefers-color-scheme: dark)"></script>
+    <script src="/js/kr-dark.min.js"></script>
+  
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" media="all"></script>
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="/vendors/font-awesome@4.7.0/css/font-awesome.min.css" media="all"></script>
+  <link rel="stylesheet" id="nprogress-css" href="/vendors/nprogress@0.2.0/nprogress.css" media="all"></script>
+  
+  
+  
+    <link rel="stylesheet" href="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css"></script>
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="/vendors/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/banner.webp');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">沐曦留曳</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>沐曦留曳</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article itemscope itemtype="https://schema.org/Article">
+    
+    <link itemprop="mainEntityOfPage" href="https://qbmzc.github.io/2025/09/23/2025/09/231034/">
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center" itemprop="name headline">word表格批量设置允许跨页断行</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><time datetime="2025-09-23T05:36:09.000Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2025-09-23</time></li>
+                <li itemprop="author" itemscope itemtype="https://schema.org/Person">
+                    <i class="fa fa-user"></i> 作者 <span itemprop="name">cong</span>
+                </li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~2.60K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1763706991566"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+            
+                <div class="kratos-post-inner-toc">
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%A7%BE-%E8%B7%A8%E9%A1%B5%E6%96%AD%E8%A1%8C%E4%B8%8E%E7%9B%B8%E5%85%B3%E8%AE%BE%E7%BD%AE"><span class="toc-number">1.</span> <span class="toc-text">🧾 跨页断行与相关设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%94%A7-%E6%89%B9%E9%87%8F%E8%AE%BE%E7%BD%AE%E6%96%B9%E6%B3%95"><span class="toc-number">2.</span> <span class="toc-text">🔧 批量设置方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%B8%80%EF%BC%9A%E4%BD%BF%E7%94%A8-VBA-%E5%AE%8F%EF%BC%88%E6%8E%A8%E8%8D%90%E7%94%A8%E4%BA%8E%E5%A4%A7%E9%87%8F%E8%A1%A8%E6%A0%BC%EF%BC%89"><span class="toc-number">2.1.</span> <span class="toc-text">方法一：使用 VBA 宏（推荐用于大量表格）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%BA%8C%EF%BC%9A%E6%89%8B%E5%8A%A8%E6%89%B9%E9%87%8F%E8%AE%BE%E7%BD%AE%EF%BC%88%E8%A1%A8%E6%A0%BC%E6%95%B0%E9%87%8F%E8%BE%83%E5%B0%91%E6%97%B6%EF%BC%89"><span class="toc-number">2.2.</span> <span class="toc-text">方法二：手动批量设置（表格数量较少时）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9A%A0%EF%B8%8F-%E9%87%8D%E8%A6%81%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">3.</span> <span class="toc-text">⚠️ 重要注意事项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%92%8E-%E6%80%BB%E7%BB%93"><span class="toc-number">4.</span> <span class="toc-text">💎 总结</span></a></li></ol>
+                </div>
+            
+            <hr />
+            <div itemprop="articleBody"><p>在处理包含多个表格的Word文档时，批量设置“允许跨页断行”能有效避免表格在页面底部被生硬截断，提升文档美观度和阅读体验。</p>
+<span id="more"></span>
+
+<h3 id="🧾-跨页断行与相关设置"><a href="#🧾-跨页断行与相关设置" class="headerlink" title="🧾 跨页断行与相关设置"></a>🧾 跨页断行与相关设置</h3><p>Word表格的跨页行为，主要通过“<strong>允许跨页断行</strong>”这一选项控制。它决定了表格行是否可以在页面底部被切断，并将剩余部分显示在下一页。</p>
+<p>与之相关的另一个实用设置是“<strong>在各页顶端以标题行形式重复出现</strong>”（或称“重复标题行”）。<strong>建议优先设置此功能</strong>，它能确保跨页断行后的表格在每一新页的开头都显示指定的标题行，极大方便了阅读和数据处理。你可以在 <code>表格属性 &gt; 行</code> 选项卡中勾选此选项。</p>
+<h3 id="🔧-批量设置方法"><a href="#🔧-批量设置方法" class="headerlink" title="🔧 批量设置方法"></a>🔧 批量设置方法</h3><p>你可以通过以下流程图了解批量设置的两种主要方式及其选择参考：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">flowchart TD</span><br><span class="line">    A[开始: 批量设置表格跨页断行] --&gt; B&#123;选择设置方式&#125;;</span><br><span class="line">    </span><br><span class="line">    B -- 方法一 --&gt; C[使用宏VBA&lt;br&gt;高效处理大量表格];</span><br><span class="line">    B -- 方法二 --&gt; D[手动批量设置&lt;br&gt;适合表格数量较少];</span><br><span class="line"></span><br><span class="line">    subgraph C [VBA宏步骤]</span><br><span class="line">        C1[启用开发者选项卡];</span><br><span class="line">        C2[打开VBA编辑器&lt;br&gt;插入新模块];</span><br><span class="line">        C3[粘贴并运行宏代码];</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    subgraph D [手动批量步骤]</span><br><span class="line">        D1[全选文档&lt;br&gt;Ctrl+A];</span><br><span class="line">        D2[打开表格属性];</span><br><span class="line">        D3[勾选“允许跨页断行”];</span><br><span class="line">    end</span><br><span class="line"></span><br><span class="line">    C3 --&gt; E[完成设置];</span><br><span class="line">    D3 --&gt; E;</span><br><span class="line"></span><br><span class="line">    style A fill:#ebf4f7,stroke:#2079d5,stroke-width:2px</span><br><span class="line">    style E fill:#e1f5e1,stroke:#0a9c0a,stroke-width:2px</span><br></pre></td></tr></table></figure>
+
+<p>以下是每种方法的具体操作步骤。</p>
+<h4 id="方法一：使用-VBA-宏（推荐用于大量表格）"><a href="#方法一：使用-VBA-宏（推荐用于大量表格）" class="headerlink" title="方法一：使用 VBA 宏（推荐用于大量表格）"></a>方法一：使用 VBA 宏（推荐用于大量表格）</h4><p>此方法通过运行一段 Visual Basic for Applications (VBA) 代码来批量处理文档中的所有表格，效率最高。</p>
+<ol>
+<li><p><strong>启用“开发工具”选项卡</strong>（若尚未启用）：</p>
+<ul>
+<li>打开 Word 文档，点击 <code>文件</code> &gt; <code>选项</code> &gt; <code>自定义功能区</code>。</li>
+<li>在右侧的“主选项卡”列表中，找到并勾选 <code>开发工具</code>，然后点击“确定”。</li>
+</ul>
+</li>
+<li><p><strong>打开 VBA 编辑器并插入模块</strong>：</p>
+<ul>
+<li>在 <code>开发工具</code> 选项卡中，点击 <code>Visual Basic</code>（或按 <code>Alt + F11</code>）。</li>
+<li>在弹出的 VBA 编辑器窗口中，点击菜单栏的 <code>插入</code> &gt; <code>模块</code>。</li>
+</ul>
+</li>
+<li><p><strong>粘贴并运行代码</strong>：</p>
+<ul>
+<li>将以下 VBA 代码复制粘贴到新出现的代码窗口中：</li>
+</ul>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Sub</span> SetAllowBreakAcrossPagesForAllTables()</span><br><span class="line">    <span class="keyword">Dim</span> tbl <span class="keyword">As</span> Table</span><br><span class="line">    <span class="keyword">On</span> <span class="keyword">Error</span> <span class="keyword">Resume</span> <span class="keyword">Next</span> <span class="comment">&#x27;忽略可能遇到的错误，继续执行下一个表格</span></span><br><span class="line">    <span class="keyword">For</span> <span class="keyword">Each</span> tbl <span class="keyword">In</span> ActiveDocument.Tables</span><br><span class="line">        <span class="comment">&#x27;设置允许跨页断行</span></span><br><span class="line">        tbl.Rows.AllowBreakAcrossPages = <span class="literal">True</span></span><br><span class="line">        <span class="comment">&#x27;可选：设置重复标题行。假设标题行是第一行。</span></span><br><span class="line">        <span class="comment">&#x27;如果标题行有多行，或不确定，可删除或修改下一行代码。</span></span><br><span class="line">        <span class="comment">&#x27;tbl.Rows(1).HeadingFormat = True</span></span><br><span class="line">    <span class="keyword">Next</span> tbl</span><br><span class="line">    MsgBox <span class="string">&quot;处理完成！已批量设置所有表格的跨页断行属性。&quot;</span>, vbInformation</span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Sub</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>粘贴后，点击工具栏上的绿色“运行”三角按钮（或按 <code>F5</code>）执行宏。</li>
+</ul>
+</li>
+<li><p><strong>处理安全警告与保存</strong>：</p>
+<ul>
+<li>首次运行宏时，Word可能会提示“宏已被禁用”。点击 <code>启用内容</code> 或根据提示调整宏安全设置（<code>文件</code> &gt; <code>选项</code> &gt; <code>信任中心</code> &gt; <code>信任中心设置</code> &gt; <code>宏设置</code> &gt; 选择“启用所有宏”<strong>（请注意临时启用，使用后建议恢复设置）</strong>）。</li>
+<li>运行完成后会弹出提示框。<strong>请注意，包含宏的文件需要保存为 <code>.docm</code> 格式</strong>。</li>
+</ul>
+</li>
+</ol>
+<h4 id="方法二：手动批量设置（表格数量较少时）"><a href="#方法二：手动批量设置（表格数量较少时）" class="headerlink" title="方法二：手动批量设置（表格数量较少时）"></a>方法二：手动批量设置（表格数量较少时）</h4><p>如果文档中表格数量不多，或者对 VBA 感到陌生，可以尝试以下手动方法。</p>
+<ol>
+<li><p><strong>全选文档中的所有表格</strong>：</p>
+<ul>
+<li>按 <code>Ctrl + A</code> 全选文档中的所有内容。</li>
+</ul>
+</li>
+<li><p><strong>统一设置表格属性</strong>：</p>
+<ul>
+<li>在选中的内容上右键单击，选择 <code>表格属性</code>。</li>
+<li>在弹出的“表格属性”对话框中，切换到 <code>行</code> 选项卡。</li>
+<li><strong>勾选 <code>允许跨页断行</code></strong>。</li>
+<li>点击“确定”应用设置。</li>
+</ul>
+<p><em>⚠️ 注意</em>：此方法通过全选文本来间接选中所有表格并进行统一设置，<strong>在某些 Word 版本或文档格式复杂时可能不一定对所有表格生效</strong>。操作后最好检查一下关键表格的设置。</p>
+</li>
+</ol>
+<h3 id="⚠️-重要注意事项"><a href="#⚠️-重要注意事项" class="headerlink" title="⚠️ 重要注意事项"></a>⚠️ 重要注意事项</h3><ul>
+<li><strong>“允许跨页断行”与“不允许跨页断行”</strong>：勾选“允许跨页断行”，Word 会在页面底部断开表格；取消勾选，Word 会尽力将整行保持在同一页，如果当前页放不下，会将整行移到下一页。请根据你的排版需求决定。</li>
+<li><strong>标题行的重复</strong>：如前所述，<strong>强烈建议为跨页的表格设置“重复标题行”</strong>。你可以在 VBA 代码中设置（见上面代码注释），也可以手动在 <code>表格属性</code> &gt; <code>行</code> 选项卡中勾选 <code>在各页顶端以标题行形式重复出现</code>。<strong>此功能仅对表格首行或选中的连续首几行有效</strong>。</li>
+<li><strong>检查段落分页设置</strong>：如果表格单元格内文字很多，还需检查文字自身的段落设置。选中单元格内文字，右键进入 <code>段落</code> &gt; <code>换行和分页</code> 选项卡，确保没有勾选 <code>段中不分页</code>，否则会影响跨页。</li>
+<li><strong>版本差异</strong>：不同版本的 Word（如 Microsoft Word 365, 2021, 2019 或 WPS Office）操作界面可能略有不同，但核心选项名称基本一致。</li>
+</ul>
+<h3 id="💎-总结"><a href="#💎-总结" class="headerlink" title="💎 总结"></a>💎 总结</h3><p>批量处理Word文档中多个表格的跨页断行，<strong>推荐使用VBA宏的方法</strong>，它速度快且能确保所有表格都被统一处理。手动全选的方法可以作为表格数量较少时的备选方案。</p>
+</div>
+        </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/openssl/" rel="tag">openssl</a>
+                </div>
+                <div class="pull-date">
+                    <time datetime="2025-11-21T06:36:31.566Z" itemprop="dateModified">最后编辑：2025-11-21</time>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" 生成svg格式的图片" href="/2025/09/22/2025/09/190401/">&lt; 上一篇</a>
+            </div>
+            
+            
+            <div class="nav-next clearfix">
+                <a title=" 替换wps配置文件" href="/2025/09/26/2025/09/261010/">下一篇 &gt;</a>
+            </div>
+            
+        </nav>
+    
+    
+        <link rel="stylesheet" href="/vendors/gitalk@1.7.2/dist/gitalk.css"></script>
+<div id="gitalk-container" class="post-comments lazy-load" style="padding-left:2rem; padding-right:2rem;"></div>
+<script>
+    var load_comm = () => {
+        const init = () => {
+            console.log('Gitalk loading...');
+            const gitalk = new Gitalk(Object.assign({
+                id: '/2025/09/23/2025/09/231034/',
+                path: '/2025/09/23/2025/09/231034/'
+            }, JSON.parse('{"clientID":"56e6a743c63b9c4faa93","clientSecret":"888b7234051c5c2ed6ea7bdf18e8b5a2678775f1","repo":"gitalk-comments","owner":"qbmzc","admin":["qbmzc"]}')));
+
+            gitalk.render('gitalk-container');
+        }
+        if (typeof Gitalk === 'undefined') {
+            const src = '/vendors/gitalk@1.7.2/dist/gitalk.min.js';
+            $.getScript(src, init);
+        } else {
+            init();
+        }
+    };
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a></noscript>
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/avatar.webp" loading="lazy" decoding="auto" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center">流云与风，苍穹游牧</p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                499
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                8
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                229
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                    <aside id="krw-toc" class="widget widget-kratos-toc clearfix">
+    <div class="photo-background"></div>
+    <h4 class="widget-title no-after">
+        <i class="fa fa-compass"></i>
+        文章目录
+        <span class="toc-progress-bar" role="progressbar" aria-label="阅读进度："></span>
+    </h4>
+    <div class="textwidget">
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%A7%BE-%E8%B7%A8%E9%A1%B5%E6%96%AD%E8%A1%8C%E4%B8%8E%E7%9B%B8%E5%85%B3%E8%AE%BE%E7%BD%AE"><span class="toc-text">🧾 跨页断行与相关设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%94%A7-%E6%89%B9%E9%87%8F%E8%AE%BE%E7%BD%AE%E6%96%B9%E6%B3%95"><span class="toc-text">🔧 批量设置方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%B8%80%EF%BC%9A%E4%BD%BF%E7%94%A8-VBA-%E5%AE%8F%EF%BC%88%E6%8E%A8%E8%8D%90%E7%94%A8%E4%BA%8E%E5%A4%A7%E9%87%8F%E8%A1%A8%E6%A0%BC%EF%BC%89"><span class="toc-text">方法一：使用 VBA 宏（推荐用于大量表格）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%BA%8C%EF%BC%9A%E6%89%8B%E5%8A%A8%E6%89%B9%E9%87%8F%E8%AE%BE%E7%BD%AE%EF%BC%88%E8%A1%A8%E6%A0%BC%E6%95%B0%E9%87%8F%E8%BE%83%E5%B0%91%E6%97%B6%EF%BC%89"><span class="toc-text">方法二：手动批量设置（表格数量较少时）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9A%A0%EF%B8%8F-%E9%87%8D%E8%A6%81%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-text">⚠️ 重要注意事项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%92%8E-%E6%80%BB%E7%BB%93"><span class="toc-text">💎 总结</span></a></li></ol>
+    </div>
+</aside>
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">137</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">151</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">29</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/congco/">congco</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/work/">work</a><span class="category-list-count">118</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wuw/">wuw</a><span class="category-list-count">48</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/">技术笔记</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/AES/" style="font-size: 0.6em;">AES</a> <a href="/tags/AI/" style="font-size: 0.7em;">AI</a> <a href="/tags/AWS/" style="font-size: 0.7em;">AWS</a> <a href="/tags/Arch/" style="font-size: 0.6em;">Arch</a> <a href="/tags/Arch-Linux/" style="font-size: 0.8em;">Arch Linux</a> <a href="/tags/ArchLinux/" style="font-size: 0.8em;">ArchLinux</a> <a href="/tags/CAS/" style="font-size: 0.6em;">CAS</a> <a href="/tags/CI-CD/" style="font-size: 0.6em;">CI/CD</a> <a href="/tags/Caffeine/" style="font-size: 0.6em;">Caffeine</a> <a href="/tags/CompletableFuture/" style="font-size: 0.7em;">CompletableFuture</a> <a href="/tags/DNS/" style="font-size: 0.8em;">DNS</a> <a href="/tags/Docker/" style="font-size: 0.6em;">Docker</a> <a href="/tags/Flask/" style="font-size: 0.6em;">Flask</a> <a href="/tags/Future/" style="font-size: 0.7em;">Future</a> <a href="/tags/GC/" style="font-size: 0.6em;">GC</a> <a href="/tags/GPT/" style="font-size: 0.6em;">GPT</a> <a href="/tags/GraalVM/" style="font-size: 0.8em;">GraalVM</a> <a href="/tags/HashMap/" style="font-size: 0.6em;">HashMap</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/14/2025/11/141727/"><i class="fa  fa-book"></i> karakeep</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111335/"><i class="fa  fa-book"></i> SonarQube 扫描支持多 JDK 版本的实践方案</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111045/"><i class="fa  fa-book"></i> 一次修复 PDF 中文乱码的排查记录</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/23/2025/10/221500/"><i class="fa  fa-book"></i> dig命令使用详解</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/13/2025/10/131645/"><i class="fa  fa-book"></i> DNS解析异常导致视频播放缓慢问题排查与解决</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  >
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        <li><a href="mailto:congco@foxmail.com"><i class="fa fa-envelope"></i></a></li>
+                        
+                        
+                        
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://github.com/qbmzc"><i class="fa fa-github"></i></a></li>
+                        <li><a target="_blank" rel="nofollow" href="/rss.xml"><i class="fa fa-rss"></i></a></li>
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2025 沐曦留曳 版权所有.</li>
+                            <li>本站已运行<span id="span_dt">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
+                            <li>Site built with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by cong.</li>
+                        </div>
+                        <div>
+                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
+                            <li>Hosted on <a href="https://github.io" target="_blank">Github Pages</a></li>
+                        </div>
+                        <div>
+                            
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="/vendors/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="/vendors/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+
+    <script defer src="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="/vendors/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>

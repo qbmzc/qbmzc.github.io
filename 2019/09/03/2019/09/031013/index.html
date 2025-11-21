@@ -1,0 +1,1475 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="/images/favicon.ico">
+  
+  <title>Ubuntu18.04搭建docker的DNS解析服务 | 沐曦留曳</title>
+  <meta name="author" content="cong" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="DNS, Ubuntu, docker" />
+  
+  <meta name="description" content="更新 使用adguard home创建dns解析服务器  需求内部服务器使用docker，80多个项目分到不同的tomcat中，项目之间还有相互调用的需要，当然，如果有单独的注册中心，那肯定是没什么问题了。调用是基于内部的域名进行访问的，为每一个tomcat容器配置dns解析也不是不可以，那么多，就很烦躁了，link也无能为力，于是打起了DNS解析的主意。 环境镜像： 有两个，一个是命令行版，一个">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ubuntu18.04搭建docker的DNS解析服务">
+<meta property="og:url" content="https://qbmzc.github.io/2019/09/03/2019/09/031013/index.html">
+<meta property="og:site_name" content="沐曦留曳">
+<meta property="og:description" content="更新 使用adguard home创建dns解析服务器  需求内部服务器使用docker，80多个项目分到不同的tomcat中，项目之间还有相互调用的需要，当然，如果有单独的注册中心，那肯定是没什么问题了。调用是基于内部的域名进行访问的，为每一个tomcat容器配置dns解析也不是不可以，那么多，就很烦躁了，link也无能为力，于是打起了DNS解析的主意。 环境镜像： 有两个，一个是命令行版，一个">
+<meta property="og:locale">
+<meta property="og:image" content="https://qbmzc.github.io/images/favicon.ico">
+<meta property="article:published_time" content="2019-09-02T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-11-21T06:36:31.541Z">
+<meta property="article:author" content="cong">
+<meta property="article:tag" content="docker">
+<meta property="article:tag" content="DNS">
+<meta property="article:tag" content="Ubuntu">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://qbmzc.github.io/images/favicon.ico">
+  <link rel="alternate" href="rss.xml" type="application/atom+xml">
+  <!-- 站点验证相关 -->
+  
+    
+      <meta name="google-site-verification" content="lV4cead5YlJ8KpODToP7dvzi-ihrxSqU0yYStYKj2ao" />
+    
+    
+      <meta name="baidu-site-verification" content="codeva-Zr6WlkDupK" />
+    
+    
+      <meta name="msvalidate.01" content="2D2197DEE362D193B3EC29AFD3306341" />
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" media="all"></script>
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-color-dark.min.css" media="(prefers-color-scheme: dark)"></script>
+    <script src="/js/kr-dark.min.js"></script>
+  
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" media="all"></script>
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="/vendors/font-awesome@4.7.0/css/font-awesome.min.css" media="all"></script>
+  <link rel="stylesheet" id="nprogress-css" href="/vendors/nprogress@0.2.0/nprogress.css" media="all"></script>
+  
+  
+  
+    <link rel="stylesheet" href="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css"></script>
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="/vendors/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/banner.webp');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">沐曦留曳</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>沐曦留曳</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article itemscope itemtype="https://schema.org/Article">
+    
+    <link itemprop="mainEntityOfPage" href="https://qbmzc.github.io/2019/09/03/2019/09/031013/">
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center" itemprop="name headline">Ubuntu18.04搭建docker的DNS解析服务</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><time datetime="2019-09-02T16:00:00.000Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2019-09-03</time></li>
+                <li itemprop="author" itemscope itemtype="https://schema.org/Person">
+                    <i class="fa fa-user"></i> 作者 <span itemprop="name">cong</span>
+                </li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~7.03K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1763706991541"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+            
+            <hr />
+            <div itemprop="articleBody"><h2 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h2><ul>
+<li><a href="../../2025/03/121442">使用adguard home创建dns解析服务器</a></li>
+</ul>
+<h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>内部服务器使用<code>docker</code>，80多个项目分到不同的<code>tomcat</code>中，项目之间还有相互调用的需要，当然，如果有单独的注册中心，那肯定是没什么问题了。调用是基于内部的域名进行访问的，为每一个<code>tomcat</code>容器配置<code>dns</code>解析也不是不可以，那么多，就很烦躁了，<code>link</code>也无能为力，于是打起了<code>DNS</code>解析的主意。</p>
+<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>镜像：</p>
+<p>有两个，一个是命令行版，一个是带有<code>web</code>配置界面，看个人需求，这里选择第二种，毕竟不一定是我使用。<code>jpillora/dnsmasq</code></p>
+<p><img src="https://s2.ax1x.com/2019/09/03/nFng0S.png" alt="nFng0S.png"></p>
+<h2 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$sudo</span> vim /opt/dnsmasq.conf</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 解析日志</span></span><br><span class="line">log-queries</span><br><span class="line">no-resolv</span><br><span class="line"><span class="comment"># DNS解析服务器地址</span></span><br><span class="line">server=114.114.114.114 </span><br><span class="line">server=8.8.8.8</span><br><span class="line">server=8.8.4.4</span><br><span class="line"><span class="comment"># 定义自己的主机与ip映射</span></span><br><span class="line">address=/gitlab.congco.com/192.168.9.151</span><br><span class="line">address=/db.keeep.com/192.168.9.100</span><br><span class="line">address=/tbase.keeep.com/192.168.9.123</span><br><span class="line">address=/keeep.com/192.168.9.123 <span class="comment"># 解析*.keeep.com</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="运行容器"><a href="#运行容器" class="headerlink" title="运行容器"></a>运行容器</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">docker run \</span><br><span class="line">  --name dnsmasq \</span><br><span class="line">  -d \</span><br><span class="line">  -p 53:53/udp \</span><br><span class="line">  -p 5380:8080 \</span><br><span class="line">  -v /opt/dnsmasq.conf:/etc/dnsmasq.conf \</span><br><span class="line">  --log-opt <span class="string">&quot;max-size=100m&quot;</span> \</span><br><span class="line">  -e <span class="string">&quot;HTTP_USER=admin&quot;</span> \</span><br><span class="line">  -e <span class="string">&quot;HTTP_PASS=admin&quot;</span> \</span><br><span class="line">  --restart always \</span><br><span class="line">  jpillora/dnsmasq</span><br></pre></td></tr></table></figure>
+
+<p><strong><em>注意：这里可能会有<code>53</code>端口冲突，<code>Ubuntu</code>自有的<code>DNS</code>解析会占用</em></strong></p>
+<p>查看端口占用</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo netstat -anp | grep 53 <span class="comment">#会发现是systemd-resolved服务占用</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl <span class="built_in">disable</span> systemd-resolved.service</span><br><span class="line">sudo systemctl stop systemd-resolved</span><br></pre></td></tr></table></figure>
+
+<p>解决办法：<br><a target="_blank" rel="noopener" href="https://askubuntu.com/questions/907246/how-to-disable-systemd-resolved-in-ubuntu">How to disable systemd-resolved in Ubuntu?</a></p>
+<h2 id="DNS解析配置"><a href="#DNS解析配置" class="headerlink" title="DNS解析配置"></a><code>DNS</code>解析配置</h2><p>运行成功以后，查看<code>dns</code>解析所在的服务<code>ip</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo netstat -anp | grep 53</span><br><span class="line"></span><br><span class="line">udp        0      0 172.17.0.1:38874        172.17.0.7:53           ESTABLISHED 1025/docker-proxy   </span><br><span class="line">udp        0      0 172.17.0.1:37185        172.17.0.7:53           ESTABLISHED 1025/docker-proxy </span><br></pre></td></tr></table></figure>
+
+<p>编辑<code>/etc/resolv.conf</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/resolv.conf</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nameserver 127.0.0.1     <span class="comment">#必填</span></span><br><span class="line">nameserver 172.17.0.7   <span class="comment">#必填[本机主要网卡]</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="WEB界面"><a href="#WEB界面" class="headerlink" title="WEB界面"></a><code>WEB</code>界面</h2><p><code>服务器ip：5380</code>，<code>port</code>和上面的运行时参数设置的一致，如果出现占用请自行设置.</p>
+<p><a target="_blank" rel="noopener" href="http://192.168.0.151:5380/">dns:192.168.0.151:5380</a></p>
+<ul>
+<li>账号密码</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">admin</span><br><span class="line">admin</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://s2.ax1x.com/2019/09/03/nF3kAf.png" alt="nF3kAf.png"></p>
+<h2 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h2><p>修改<code>docker</code>的<code>DNS</code>解析</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/docker/daemon.json</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;dns&quot;</span><span class="punctuation">:</span><span class="punctuation">[</span><span class="string">&quot;dns服务所在的ip地址&quot;</span><span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>重启<code>docker</code>服务<br><code>Ubuntu</code>下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo service docker restart</span><br></pre></td></tr></table></figure>
+
+<p>进入容器内部</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -it [容器名称] bash</span><br><span class="line"></span><br><span class="line">root@tomcat01:/usr/local/tomcat<span class="comment"># ping staticmed.keeep.com</span></span><br></pre></td></tr></table></figure>
+
+<p>结果：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">zc@ns_02:~$ docker <span class="built_in">exec</span> -it docker_tomcat01_1 bash</span><br><span class="line">root@tomcat01:/usr/local/tomcat<span class="comment"># ping tbase.keeep.com</span></span><br><span class="line">PING tbase.keeep.com (192.168.9.123) 56(84) bytes of data.</span><br><span class="line">64 bytes from 192.168.9.123 (192.168.9.123): icmp_seq=1 ttl=64 time=0.047 ms</span><br><span class="line">64 bytes from 192.168.9.123 (192.168.9.123): icmp_seq=2 ttl=64 time=0.073 ms</span><br><span class="line">64 bytes from 192.168.9.123 (192.168.9.123): icmp_seq=3 ttl=64 time=0.056 ms</span><br><span class="line">64 bytes from 192.168.9.123 (192.168.9.123): icmp_seq=4 ttl=64 time=0.061 ms</span><br><span class="line">64 bytes from 192.168.9.123 (192.168.9.123): icmp_seq=5 ttl=64 time=0.083 ms</span><br><span class="line">64 bytes from 192.168.9.123 (192.168.9.123): icmp_seq=6 ttl=64 time=0.058 ms</span><br><span class="line">^C</span><br><span class="line">--- tbase.keeep.com ping statistics ---</span><br><span class="line">6 packets transmitted, 6 received, 0% packet loss, time 5097ms</span><br><span class="line">rtt min/avg/max/mdev = 0.047/0.063/0.083/0.011 ms</span><br></pre></td></tr></table></figure>
+
+<h2 id="配置文件说明"><a href="#配置文件说明" class="headerlink" title="配置文件说明"></a>配置文件说明</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">这个是很有用的东西，因为你要做自定义dns控制的话，最好单独独立一份</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">dns服务器地址清单，系统默认的/etc/resolv.conf是会变化的，尤其是新</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">版本的linux系统会跟随网卡配置变化或者其他网络管理套件变化，为了可</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">靠性，单独独立一份出来管理，所以需要打开这个配置</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">resolv-file=</span></span><br><span class="line">resolv-file=/etc/resolv.dnsmasq.conf</span><br><span class="line"> </span><br><span class="line"><span class="meta prompt_"> </span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">配置内网其他dns服务器的域名解析，一般来说用dnsmasq的环境不是复杂环</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">境，所以不需要那么多【不常用】</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">server=/localnet/192.168.0.1</span></span><br><span class="line">server=/testdns.com/172.16.0.1</span><br><span class="line"> </span><br><span class="line"><span class="meta prompt_"> </span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">这个是好家伙，强制解析，类似写host的效果，这样可以做域名绑定，避免被</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">dns污染，也支持泛解析*号，现在世界都很危险，还是要保留内心的一丝纯洁的</span></span><br><span class="line">address=/www.test.com/192.168.0.12</span><br><span class="line"> </span><br><span class="line"><span class="meta prompt_"> </span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">指定监听某个接口，例如某张网卡</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">interface=</span></span><br><span class="line">interface=p3p1</span><br><span class="line"> </span><br><span class="line"><span class="meta prompt_"> </span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">这个是重要选项，监听地址，要写上ip地址加上127.0.0.1，因为IP地址是给你</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">的client机用的，127.0.0.1是给dnsmasq用的，为什么呢，是因为你要做dns缓</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">存，要访问自己即是本机，格式就是ip,127.0.0.1</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">listen-address=</span></span><br><span class="line">listen-address=127.0.0.1,172.16.0.1</span><br><span class="line"> </span><br><span class="line"><span class="meta prompt_"> </span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">绑定了网卡之后会保证dnsmasq不去骚扰其他网卡，保证请求不乱发，一般跟</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">interface一起使用</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">bind-interfaces</span></span><br><span class="line">bind-interfaces</span><br><span class="line"> </span><br><span class="line"><span class="meta prompt_"> </span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">使用另外一个文件代替hosts，这样就可以不骚扰本机的host 从而保证服务器</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">固有host不被影响，也可以给dnsmasq使用特别的hosts</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">addn-hosts=/etc/banner_add_hosts</span></span><br><span class="line">addn-hosts=/etc/dnsmasq.host</span><br><span class="line"> </span><br><span class="line"><span class="meta prompt_"> </span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">这就是标准语法，分配c类网段，12h租约，支持多个subnet，多行写就行了，</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">不过需要注意的是多个网段是需要dhcp中继的，dhcp中继请自行百度，大概就是</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">独立一个网卡，监听dhcp的御用67 udp和tcp端口，连接主dhcp服务器</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">dhcp-range=192.168.0.50,192.168.0.150,255.255.255.0,12h</span></span><br><span class="line">dhcp-range=172.16.0.30,172.16.1.254,255.255.128.0,30m</span><br><span class="line"> </span><br><span class="line"><span class="meta prompt_"> </span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">这个是组合版，绑定某个mac对应fred名字，然后加上一个ip分配，并设置租约，</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">这个只能说是灵活配置的参考，没啥实际意义</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">dhcp-host=11:22:33:44:55:66,fred,192.168.0.60,45m</span></span><br><span class="line">dhcp-host=B8:EE:65:D2:F9:B4,fred,172.16.1.139</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">dhcp-option=3,172.16.0.1</span><br><span class="line">dhcp-option=19,0           # option ip-forwarding off IP转发关闭</span><br><span class="line">dhcp-option=44,0.0.0.0     # set netbios-over-TCP/IP nameserver(s) aka WINS server(s)</span><br><span class="line">dhcp-option=45,0.0.0.0     # netbios datagram distribution server</span><br><span class="line">dhcp-option=46,8           # netbios node type</span><br><span class="line"> </span><br><span class="line"><span class="meta prompt_"> </span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">根据配置的subnet来配置这个值，这个就是dhcp分配的ip池</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">dhcp-lease-max=150</span></span><br><span class="line">dhcp-lease-max=500</span><br><span class="line"> </span><br><span class="line"><span class="meta prompt_"> </span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">查看dhcp的<span class="built_in">log</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">dhcp-leasefile=/var/lib/misc/dnsmasq.leases</span></span><br><span class="line">dhcp-leasefile=/var/lib/dnsmasq/dnsmasq.leases</span><br><span class="line"> </span><br><span class="line"><span class="meta prompt_"> </span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">配置dns缓存池的大小，默认150，嘛设置个1000也无所谓</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">cache-size=150</span></span><br><span class="line">cache-size=1000</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">dhcp-option=252,&quot;\n&quot;</span><br><span class="line"></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"> </span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">本地解析文件</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">If you don<span class="string">&#x27;t want dnsmasq to read /etc/hosts, uncomment the following line.</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">no-hosts</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">or if you want it to read another file, as well as /etc/hosts, use this.</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">addn-hosts=/etc/banner_add_hosts</span></span></span><br><span class="line"><span class="meta prompt_"> </span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Set this (and domain: see below) if you want to have a domain</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">automatically added to simple names in a hosts-file.</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">例如，/etc/hosts中的os01将扩展成os01.debugo.com</span></span></span><br><span class="line">expand-hosts</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Add local-only domains here, queries in these domains are answered</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">from /etc/hosts or DHCP only.</span></span></span><br><span class="line">local=/debugo.com/</span><br><span class="line"><span class="meta prompt_"> </span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">强制使用完整的解析名</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Never forward plain names (without a dot or domain part)</span></span></span><br><span class="line">domain-needed</span><br><span class="line"><span class="meta prompt_"> </span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">添加额外的上级DNS主机（nameserver）配置文件</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Change this line if you want dns to get its upstream servers from</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">somewhere other that /etc/resolv.conf</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">resolv-file=</span></span></span><br><span class="line"><span class="meta prompt_"> </span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">不使用上级DNS主机配置文件(/etc/resolv.conf和resolv-file）</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">If you don&#x27;</span>t want dnsmasq to <span class="built_in">read</span> /etc/resolv.conf or any other</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">file, getting its servers from this file instead (see below), <span class="keyword">then</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">uncomment this.</span></span><br><span class="line">no-resolv</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">相应的，可以为特定的域名指定解析它的nameserver。一般是其他的内部DNS name server</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Add other name servers here, with domain specs <span class="keyword">if</span> they are <span class="keyword">for</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">non-public domains.</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">server=/myserver.com/192.168.0.1</span></span><br><span class="line"><span class="meta prompt_"> </span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置DNS缓存大小（单位：DNS解析条数）</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">Set the size of dnsmasq<span class="string">&#x27;s cache. The default is 150 names. Setting the cache size to zero disables caching.</span></span></span><br><span class="line">cache-size=500</span><br><span class="line"><span class="meta prompt_"> </span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">关于log的几个选项</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">For debugging purposes, log each DNS query as it passes through</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">dnsmasq.</span></span></span><br><span class="line">log-queries</span><br><span class="line"><span class="meta prompt_"> </span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Log lots of extra information about DHCP transactions.</span></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="string">log-dhcp</span></span></span><br><span class="line"><span class="meta prompt_"> </span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Log to this syslog facility or file. (defaults to DAEMON)</span></span></span><br><span class="line">log-facility=/var/log/dnsmasq.log</span><br><span class="line"><span class="meta prompt_"> </span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">异步log，缓解阻塞，提高性能。</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Enable asynchronous logging and optionally set the limit on the number of lines which will be queued by dnsmasq</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">when writing to the syslog is slow.</span></span> </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Dnsmasq can log asynchronously: this allows it to continue functioning without being blocked by syslog,</span></span> </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">and allows syslog to use dnsmasq for DNS queries without risking deadlock. If the queue of log-lines becomes</span></span> </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">full, dnsmasq will log the overflow, and the number of messages lost.</span></span> </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">The default queue length is 5, a sane value would be 5-25, and a maximum limit of 100 is imposed.</span></span></span><br><span class="line">log-async=20</span><br><span class="line"><span class="meta prompt_"> </span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">指定domain的IP地址</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">Add domains which you want to force to an IP address here.</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">The example below send any host in doubleclick.net to a local</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">webserver.</span></span></span><br><span class="line">address=/doubleclick.net/127.0.0.1</span><br><span class="line">address=/.phobos.apple.com/202.175.5.114</span><br></pre></td></tr></table></figure></div>
+        </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/DNS/" rel="tag">DNS</a>, <a class="tag-none-link" href="/tags/Ubuntu/" rel="tag">Ubuntu</a>, <a class="tag-none-link" href="/tags/docker/" rel="tag">docker</a>
+                </div>
+                <div class="pull-date">
+                    <time datetime="2025-11-21T06:36:31.541Z" itemprop="dateModified">最后编辑：2025-11-21</time>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" 月初小记" href="/2019/09/02/2019/09/012205/">&lt; 上一篇</a>
+            </div>
+            
+            
+            <div class="nav-next clearfix">
+                <a title=" 线程池" href="/2019/09/04/2019/09/041126/">下一篇 &gt;</a>
+            </div>
+            
+        </nav>
+    
+    
+        <link rel="stylesheet" href="/vendors/gitalk@1.7.2/dist/gitalk.css"></script>
+<div id="gitalk-container" class="post-comments lazy-load" style="padding-left:2rem; padding-right:2rem;"></div>
+<script>
+    var load_comm = () => {
+        const init = () => {
+            console.log('Gitalk loading...');
+            const gitalk = new Gitalk(Object.assign({
+                id: '/2019/09/03/2019/09/031013/',
+                path: '/2019/09/03/2019/09/031013/'
+            }, JSON.parse('{"clientID":"56e6a743c63b9c4faa93","clientSecret":"888b7234051c5c2ed6ea7bdf18e8b5a2678775f1","repo":"gitalk-comments","owner":"qbmzc","admin":["qbmzc"]}')));
+
+            gitalk.render('gitalk-container');
+        }
+        if (typeof Gitalk === 'undefined') {
+            const src = '/vendors/gitalk@1.7.2/dist/gitalk.min.js';
+            $.getScript(src, init);
+        } else {
+            init();
+        }
+    };
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a></noscript>
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/avatar.webp" loading="lazy" decoding="auto" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center">流云与风，苍穹游牧</p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                499
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                8
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                229
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">137</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">151</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">29</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/congco/">congco</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/work/">work</a><span class="category-list-count">118</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wuw/">wuw</a><span class="category-list-count">48</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/">技术笔记</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/AES/" style="font-size: 0.6em;">AES</a> <a href="/tags/AI/" style="font-size: 0.7em;">AI</a> <a href="/tags/AWS/" style="font-size: 0.7em;">AWS</a> <a href="/tags/Arch/" style="font-size: 0.6em;">Arch</a> <a href="/tags/Arch-Linux/" style="font-size: 0.8em;">Arch Linux</a> <a href="/tags/ArchLinux/" style="font-size: 0.8em;">ArchLinux</a> <a href="/tags/CAS/" style="font-size: 0.6em;">CAS</a> <a href="/tags/CI-CD/" style="font-size: 0.6em;">CI/CD</a> <a href="/tags/Caffeine/" style="font-size: 0.6em;">Caffeine</a> <a href="/tags/CompletableFuture/" style="font-size: 0.7em;">CompletableFuture</a> <a href="/tags/DNS/" style="font-size: 0.8em;">DNS</a> <a href="/tags/Docker/" style="font-size: 0.6em;">Docker</a> <a href="/tags/Flask/" style="font-size: 0.6em;">Flask</a> <a href="/tags/Future/" style="font-size: 0.7em;">Future</a> <a href="/tags/GC/" style="font-size: 0.6em;">GC</a> <a href="/tags/GPT/" style="font-size: 0.6em;">GPT</a> <a href="/tags/GraalVM/" style="font-size: 0.8em;">GraalVM</a> <a href="/tags/HashMap/" style="font-size: 0.6em;">HashMap</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/14/2025/11/141727/"><i class="fa  fa-book"></i> karakeep</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111335/"><i class="fa  fa-book"></i> SonarQube 扫描支持多 JDK 版本的实践方案</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111045/"><i class="fa  fa-book"></i> 一次修复 PDF 中文乱码的排查记录</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/23/2025/10/221500/"><i class="fa  fa-book"></i> dig命令使用详解</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/13/2025/10/131645/"><i class="fa  fa-book"></i> DNS解析异常导致视频播放缓慢问题排查与解决</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  >
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        <li><a href="mailto:congco@foxmail.com"><i class="fa fa-envelope"></i></a></li>
+                        
+                        
+                        
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://github.com/qbmzc"><i class="fa fa-github"></i></a></li>
+                        <li><a target="_blank" rel="nofollow" href="/rss.xml"><i class="fa fa-rss"></i></a></li>
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2025 沐曦留曳 版权所有.</li>
+                            <li>本站已运行<span id="span_dt">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
+                            <li>Site built with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by cong.</li>
+                        </div>
+                        <div>
+                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
+                            <li>Hosted on <a href="https://github.io" target="_blank">Github Pages</a></li>
+                        </div>
+                        <div>
+                            
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="/vendors/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="/vendors/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+
+    <script defer src="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="/vendors/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>

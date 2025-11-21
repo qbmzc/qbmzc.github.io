@@ -1,0 +1,1453 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="/images/favicon.ico">
+  
+  <title>合并多个PDF | 沐曦留曳</title>
+  <meta name="author" content="cong" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="gs" />
+  
+  <meta name="description" content="要使用Ghostscript合并多个PDF文件，可以按照以下步骤进行操作：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="合并多个PDF">
+<meta property="og:url" content="https://qbmzc.github.io/2023/06/29/2023/06/251108/index.html">
+<meta property="og:site_name" content="沐曦留曳">
+<meta property="og:description" content="要使用Ghostscript合并多个PDF文件，可以按照以下步骤进行操作：">
+<meta property="og:locale">
+<meta property="og:image" content="https://qbmzc.github.io/images/favicon.ico">
+<meta property="article:published_time" content="2023-06-28T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-11-21T06:36:31.559Z">
+<meta property="article:author" content="cong">
+<meta property="article:tag" content="gs">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://qbmzc.github.io/images/favicon.ico">
+  <link rel="alternate" href="rss.xml" type="application/atom+xml">
+  <!-- 站点验证相关 -->
+  
+    
+      <meta name="google-site-verification" content="lV4cead5YlJ8KpODToP7dvzi-ihrxSqU0yYStYKj2ao" />
+    
+    
+      <meta name="baidu-site-verification" content="codeva-Zr6WlkDupK" />
+    
+    
+      <meta name="msvalidate.01" content="2D2197DEE362D193B3EC29AFD3306341" />
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" media="all"></script>
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-color-dark.min.css" media="(prefers-color-scheme: dark)"></script>
+    <script src="/js/kr-dark.min.js"></script>
+  
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" media="all"></script>
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="/vendors/font-awesome@4.7.0/css/font-awesome.min.css" media="all"></script>
+  <link rel="stylesheet" id="nprogress-css" href="/vendors/nprogress@0.2.0/nprogress.css" media="all"></script>
+  
+  
+  
+    <link rel="stylesheet" href="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css"></script>
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="/vendors/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/banner.webp');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">沐曦留曳</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>沐曦留曳</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article itemscope itemtype="https://schema.org/Article">
+    
+    <link itemprop="mainEntityOfPage" href="https://qbmzc.github.io/2023/06/29/2023/06/251108/">
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center" itemprop="name headline">合并多个PDF</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><time datetime="2023-06-28T16:00:00.000Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2023-06-29</time></li>
+                <li itemprop="author" itemscope itemtype="https://schema.org/Person">
+                    <i class="fa fa-user"></i> 作者 <span itemprop="name">cong</span>
+                </li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~5.09K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1763706991559"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+            
+                <div class="kratos-post-inner-toc">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8Ghostscript"><span class="toc-number">1.</span> <span class="toc-text">使用Ghostscript</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%AE%89%E8%A3%85Ghostscript%EF%BC%9A%E9%A6%96%E5%85%88%EF%BC%8C%E7%A1%AE%E4%BF%9D%E5%B7%B2%E7%BB%8F%E5%AE%89%E8%A3%85%E4%BA%86Ghostscript%E3%80%82%E4%BD%A0%E5%8F%AF%E4%BB%A5%E4%BB%8EGhostscript%E5%AE%98%E6%96%B9%E7%BD%91%E7%AB%99%EF%BC%88https-www-ghostscript-com-%EF%BC%89%E4%B8%8B%E8%BD%BD%E5%B9%B6%E5%AE%89%E8%A3%85%E9%80%82%E7%94%A8%E4%BA%8E%E4%BD%A0%E7%9A%84%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%89%88%E6%9C%AC%E3%80%82"><span class="toc-number">2.</span> <span class="toc-text">1. 安装Ghostscript：首先，确保已经安装了Ghostscript。你可以从Ghostscript官方网站（https:&#x2F;&#x2F;www.ghostscript.com&#x2F;）下载并安装适用于你的操作系统的版本。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%89%93%E5%BC%80%E5%91%BD%E4%BB%A4%E6%8F%90%E7%A4%BA%E7%AC%A6%E6%88%96%E7%BB%88%E7%AB%AF%EF%BC%9A%E5%9C%A8%E7%94%B5%E8%84%91%E4%B8%8A%E6%89%93%E5%BC%80%E5%91%BD%E4%BB%A4%E6%8F%90%E7%A4%BA%E7%AC%A6%EF%BC%88Windows%EF%BC%89%E6%88%96%E7%BB%88%E7%AB%AF%EF%BC%88Mac%E5%92%8CLinux%EF%BC%89%E3%80%82"><span class="toc-number">3.</span> <span class="toc-text">2. 打开命令提示符或终端：在电脑上打开命令提示符（Windows）或终端（Mac和Linux）。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E4%BD%BF%E7%94%A8%E5%91%BD%E4%BB%A4%E5%90%88%E5%B9%B6PDF%E6%96%87%E4%BB%B6%EF%BC%9A%E5%9C%A8%E5%91%BD%E4%BB%A4%E6%8F%90%E7%A4%BA%E7%AC%A6%E6%88%96%E7%BB%88%E7%AB%AF%E4%B8%AD%EF%BC%8C%E4%BD%BF%E7%94%A8%E4%BB%A5%E4%B8%8B%E5%91%BD%E4%BB%A4%E5%B0%86%E5%A4%9A%E4%B8%AAPDF%E6%96%87%E4%BB%B6%E5%90%88%E5%B9%B6%E4%B8%BA%E4%B8%80%E4%B8%AA%EF%BC%9A"><span class="toc-number">4.</span> <span class="toc-text">3. 使用命令合并PDF文件：在命令提示符或终端中，使用以下命令将多个PDF文件合并为一个：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E8%BF%90%E8%A1%8C%E5%91%BD%E4%BB%A4%EF%BC%9A%E6%8C%89%E4%B8%8BEnter%E9%94%AE%E8%BF%90%E8%A1%8C%E5%91%BD%E4%BB%A4%E3%80%82Ghostscript%E5%B0%86%E6%A0%B9%E6%8D%AE%E6%8F%90%E4%BE%9B%E7%9A%84%E6%96%87%E4%BB%B6%E5%88%97%E8%A1%A8%E5%90%88%E5%B9%B6PDF%E6%96%87%E4%BB%B6%EF%BC%8C%E5%B9%B6%E7%94%9F%E6%88%90%E4%B8%80%E4%B8%AA%E6%96%B0%E7%9A%84%E5%90%88%E5%B9%B6%E5%90%8E%E7%9A%84%E6%96%87%E4%BB%B6merged-pdf%E3%80%82"><span class="toc-number">5.</span> <span class="toc-text">4. 运行命令：按下Enter键运行命令。Ghostscript将根据提供的文件列表合并PDF文件，并生成一个新的合并后的文件merged.pdf。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E7%AD%89%E5%BE%85%E5%90%88%E5%B9%B6%E5%AE%8C%E6%88%90%EF%BC%9A%E5%90%88%E5%B9%B6%E6%96%87%E4%BB%B6%E7%9A%84%E6%97%B6%E9%97%B4%E5%B0%86%E5%8F%96%E5%86%B3%E4%BA%8EPDF%E6%96%87%E4%BB%B6%E7%9A%84%E5%A4%A7%E5%B0%8F%E5%92%8C%E6%95%B0%E9%87%8F%E3%80%82%E5%AE%8C%E6%88%90%E5%90%8E%EF%BC%8C%E4%BD%A0%E5%B0%86%E5%9C%A8%E7%9B%B8%E5%90%8C%E7%9A%84%E7%9B%AE%E5%BD%95%E4%B8%AD%E6%89%BE%E5%88%B0%E7%94%9F%E6%88%90%E7%9A%84merged-pdf%E6%96%87%E4%BB%B6%E3%80%82"><span class="toc-number">6.</span> <span class="toc-text">5. 等待合并完成：合并文件的时间将取决于PDF文件的大小和数量。完成后，你将在相同的目录中找到生成的merged.pdf文件。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pdfbox"><span class="toc-number">7.</span> <span class="toc-text">pdfbox</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#itext%E6%88%96%E8%80%85openpdf"><span class="toc-number">8.</span> <span class="toc-text">itext或者openpdf</span></a></li></ol>
+                </div>
+            
+            <hr />
+            <div itemprop="articleBody"><p>要使用Ghostscript合并多个PDF文件，可以按照以下步骤进行操作：</p>
+<p><img src="https://cdn.ipfsscan.io/ipfs/QmbeNkAViK6uYkpqWV4WtBkW4DBKL2gdjnEQdbchS1Kaps?filename=bg2.png" alt="222"></p>
+<span id="more"></span>
+
+<h2 id="使用Ghostscript"><a href="#使用Ghostscript" class="headerlink" title="使用Ghostscript"></a>使用Ghostscript</h2><h2 id="1-安装Ghostscript：首先，确保已经安装了Ghostscript。你可以从Ghostscript官方网站（https-www-ghostscript-com-）下载并安装适用于你的操作系统的版本。"><a href="#1-安装Ghostscript：首先，确保已经安装了Ghostscript。你可以从Ghostscript官方网站（https-www-ghostscript-com-）下载并安装适用于你的操作系统的版本。" class="headerlink" title="1. 安装Ghostscript：首先，确保已经安装了Ghostscript。你可以从Ghostscript官方网站（https://www.ghostscript.com/）下载并安装适用于你的操作系统的版本。"></a>1. 安装Ghostscript：首先，确保已经安装了Ghostscript。你可以从Ghostscript官方网站（<a target="_blank" rel="noopener" href="https://www.ghostscript.com/%EF%BC%89%E4%B8%8B%E8%BD%BD%E5%B9%B6%E5%AE%89%E8%A3%85%E9%80%82%E7%94%A8%E4%BA%8E%E4%BD%A0%E7%9A%84%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%89%88%E6%9C%AC%E3%80%82">https://www.ghostscript.com/）下载并安装适用于你的操作系统的版本。</a></h2><h2 id="2-打开命令提示符或终端：在电脑上打开命令提示符（Windows）或终端（Mac和Linux）。"><a href="#2-打开命令提示符或终端：在电脑上打开命令提示符（Windows）或终端（Mac和Linux）。" class="headerlink" title="2. 打开命令提示符或终端：在电脑上打开命令提示符（Windows）或终端（Mac和Linux）。"></a>2. 打开命令提示符或终端：在电脑上打开命令提示符（Windows）或终端（Mac和Linux）。</h2><h2 id="3-使用命令合并PDF文件：在命令提示符或终端中，使用以下命令将多个PDF文件合并为一个："><a href="#3-使用命令合并PDF文件：在命令提示符或终端中，使用以下命令将多个PDF文件合并为一个：" class="headerlink" title="3. 使用命令合并PDF文件：在命令提示符或终端中，使用以下命令将多个PDF文件合并为一个："></a>3. 使用命令合并PDF文件：在命令提示符或终端中，使用以下命令将多个PDF文件合并为一个：</h2>   <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -sOutputFile=merged.pdf file1.pdf file2.pdf file3.pdf</span><br></pre></td></tr></table></figure>
+<p>这个命令使用Ghostscript的pdfwrite设备将文件file1.pdf、file2.pdf和file3.pdf合并为一个名为merged.pdf的文件。</p>
+<p><strong>注意：在命令中将file1.pdf、file2.pdf和file3.pdf替换为你要合并的实际文件名，可以包括路径信息。</strong></p>
+<h2 id="4-运行命令：按下Enter键运行命令。Ghostscript将根据提供的文件列表合并PDF文件，并生成一个新的合并后的文件merged-pdf。"><a href="#4-运行命令：按下Enter键运行命令。Ghostscript将根据提供的文件列表合并PDF文件，并生成一个新的合并后的文件merged-pdf。" class="headerlink" title="4. 运行命令：按下Enter键运行命令。Ghostscript将根据提供的文件列表合并PDF文件，并生成一个新的合并后的文件merged.pdf。"></a>4. 运行命令：按下Enter键运行命令。Ghostscript将根据提供的文件列表合并PDF文件，并生成一个新的合并后的文件merged.pdf。</h2><h2 id="5-等待合并完成：合并文件的时间将取决于PDF文件的大小和数量。完成后，你将在相同的目录中找到生成的merged-pdf文件。"><a href="#5-等待合并完成：合并文件的时间将取决于PDF文件的大小和数量。完成后，你将在相同的目录中找到生成的merged-pdf文件。" class="headerlink" title="5. 等待合并完成：合并文件的时间将取决于PDF文件的大小和数量。完成后，你将在相同的目录中找到生成的merged.pdf文件。"></a>5. 等待合并完成：合并文件的时间将取决于PDF文件的大小和数量。完成后，你将在相同的目录中找到生成的merged.pdf文件。</h2><p>请确保在执行此操作之前备份好你的PDF文件，以免意外丢失数据。此外，也可以在Ghostscript的文档中查找其他可用的选项和参数。</p>
+<h2 id="pdfbox"><a href="#pdfbox" class="headerlink" title="pdfbox"></a>pdfbox</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/org.apache.pdfbox/pdfbox --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.pdfbox<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>pdfbox<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.0.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/org.apache.pdfbox/pdfbox-tools --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.pdfbox<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>pdfbox-tools<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.0.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.taimeitech.middle.pdfservice;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.pdfbox.io.MemoryUsageSetting;</span><br><span class="line"><span class="keyword">import</span> org.apache.pdfbox.io.RandomAccessStreamCacheImpl;</span><br><span class="line"><span class="keyword">import</span> org.apache.pdfbox.io.ScratchFile;</span><br><span class="line"><span class="keyword">import</span> org.apache.pdfbox.multipdf.PDFMergerUtility;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.TimeUnit;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> cong</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 2024/1/19 14:31</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MergePdfTest</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException &#123;</span><br><span class="line">        <span class="type">long</span> <span class="variable">srt</span> <span class="operator">=</span> System.currentTimeMillis();</span><br><span class="line">        ArrayList&lt;File&gt; fileList = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">        <span class="type">File</span> <span class="variable">file</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">File</span>(<span class="string">&quot;/Users/cong/Downloads/啊.pdf&quot;</span>);</span><br><span class="line">        <span class="type">File</span> <span class="variable">file2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">File</span>(<span class="string">&quot;/Users/cong/Downloads/吧.pdf&quot;</span>);</span><br><span class="line">        fileList.add(file);</span><br><span class="line">        fileList.add(file2);</span><br><span class="line">        <span class="type">String</span> <span class="variable">destFile</span> <span class="operator">=</span> <span class="string">&quot;/Users/cong/Downloads/池.pdf&quot;</span>;</span><br><span class="line"></span><br><span class="line">        <span class="type">PDFMergerUtility</span> <span class="variable">mergerUtility</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">PDFMergerUtility</span>();</span><br><span class="line">        mergerUtility.setDestinationFileName(destFile);</span><br><span class="line">        <span class="type">MemoryUsageSetting</span> <span class="variable">memoryUsageSetting</span> <span class="operator">=</span> MemoryUsageSetting.setupMixed(<span class="number">20971520</span>);</span><br><span class="line">        <span class="keyword">try</span> (<span class="type">RandomAccessStreamCacheImpl</span> <span class="variable">cache</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">RandomAccessStreamCacheImpl</span>();</span><br><span class="line">             <span class="type">ScratchFile</span> <span class="variable">scratchFile</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ScratchFile</span>(memoryUsageSetting);) &#123;</span><br><span class="line">            <span class="keyword">for</span> (File s : fileList) &#123;</span><br><span class="line">                mergerUtility.addSource(s);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//        //开始合并文件，只使用临时文件，防止合并大文件内存溢出</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            mergerUtility.mergeDocuments(() -&gt; scratchFile);</span><br><span class="line">            System.out.println(destFile);</span><br><span class="line">            System.out.println(System.currentTimeMillis() - srt);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        TimeUnit.SECONDS.sleep(<span class="number">5</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="itext或者openpdf"><a href="#itext或者openpdf" class="headerlink" title="itext或者openpdf"></a>itext或者openpdf</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.itextpdf<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>itextpdf<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>5.5.13<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.itextpdf<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>itext-asian<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>5.2.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.taimeitech.middle.pdfservice;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.itextpdf.text.Document;</span><br><span class="line"><span class="keyword">import</span> com.itextpdf.text.pdf.PdfCopy;</span><br><span class="line"><span class="keyword">import</span> com.itextpdf.text.pdf.PdfReader;</span><br><span class="line"><span class="keyword">import</span> lombok.SneakyThrows;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.lang3.time.StopWatch;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"><span class="keyword">import</span> java.io.FileOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.nio.file.Files;</span><br><span class="line"><span class="keyword">import</span> java.nio.file.Paths;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.TimeUnit;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MergePdfExample</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@SneakyThrows</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">file</span> <span class="operator">=</span> <span class="string">&quot;/Users/cong/Downloads/啊.pdf&quot;</span>;</span><br><span class="line">        <span class="type">String</span> <span class="variable">file2</span> <span class="operator">=</span> <span class="string">&quot;/Users/cong/Downloads/池.pdf&quot;</span>;</span><br><span class="line">        <span class="type">String</span> <span class="variable">destFile</span> <span class="operator">=</span> <span class="string">&quot;/Users/cong/Downloads/的.pdf&quot;</span>;</span><br><span class="line">        <span class="type">StopWatch</span> <span class="variable">stopWatch</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StopWatch</span>();</span><br><span class="line">        stopWatch.start();</span><br><span class="line">        mergePdfFiles(destFile,file,file2);</span><br><span class="line">        stopWatch.stop();</span><br><span class="line">        System.out.println(stopWatch.getTime());</span><br><span class="line">        TimeUnit.SECONDS.sleep(<span class="number">5</span>);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">mergePdfFiles</span><span class="params">(String destFile, String... sourceFiles)</span> &#123;</span><br><span class="line">        <span class="type">Document</span> <span class="variable">document</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Document</span>();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="type">PdfCopy</span> <span class="variable">copy</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">PdfCopy</span>(document, Files.newOutputStream(Paths.get(destFile)));</span><br><span class="line">            document.open();</span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span> (String sourceFile : sourceFiles) &#123;</span><br><span class="line">                <span class="type">PdfReader</span> <span class="variable">reader</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">PdfReader</span>(sourceFile);</span><br><span class="line">                copy.addDocument(reader);</span><br><span class="line">                reader.close();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            document.close();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
+        </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/gs/" rel="tag">gs</a>
+                </div>
+                <div class="pull-date">
+                    <time datetime="2025-11-21T06:36:31.559Z" itemprop="dateModified">最后编辑：2025-11-21</time>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" debian换源异常" href="/2023/06/26/2023/06/141700/">&lt; 上一篇</a>
+            </div>
+            
+            
+            <div class="nav-next clearfix">
+                <a title=" spring boot 3.*升级" href="/2023/07/14/2023/12/281649/">下一篇 &gt;</a>
+            </div>
+            
+        </nav>
+    
+    
+        <link rel="stylesheet" href="/vendors/gitalk@1.7.2/dist/gitalk.css"></script>
+<div id="gitalk-container" class="post-comments lazy-load" style="padding-left:2rem; padding-right:2rem;"></div>
+<script>
+    var load_comm = () => {
+        const init = () => {
+            console.log('Gitalk loading...');
+            const gitalk = new Gitalk(Object.assign({
+                id: '/2023/06/29/2023/06/251108/',
+                path: '/2023/06/29/2023/06/251108/'
+            }, JSON.parse('{"clientID":"56e6a743c63b9c4faa93","clientSecret":"888b7234051c5c2ed6ea7bdf18e8b5a2678775f1","repo":"gitalk-comments","owner":"qbmzc","admin":["qbmzc"]}')));
+
+            gitalk.render('gitalk-container');
+        }
+        if (typeof Gitalk === 'undefined') {
+            const src = '/vendors/gitalk@1.7.2/dist/gitalk.min.js';
+            $.getScript(src, init);
+        } else {
+            init();
+        }
+    };
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a></noscript>
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/avatar.webp" loading="lazy" decoding="auto" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center">流云与风，苍穹游牧</p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                499
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                8
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                229
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                    <aside id="krw-toc" class="widget widget-kratos-toc clearfix">
+    <div class="photo-background"></div>
+    <h4 class="widget-title no-after">
+        <i class="fa fa-compass"></i>
+        文章目录
+        <span class="toc-progress-bar" role="progressbar" aria-label="阅读进度："></span>
+    </h4>
+    <div class="textwidget">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8Ghostscript"><span class="toc-text">使用Ghostscript</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%AE%89%E8%A3%85Ghostscript%EF%BC%9A%E9%A6%96%E5%85%88%EF%BC%8C%E7%A1%AE%E4%BF%9D%E5%B7%B2%E7%BB%8F%E5%AE%89%E8%A3%85%E4%BA%86Ghostscript%E3%80%82%E4%BD%A0%E5%8F%AF%E4%BB%A5%E4%BB%8EGhostscript%E5%AE%98%E6%96%B9%E7%BD%91%E7%AB%99%EF%BC%88https-www-ghostscript-com-%EF%BC%89%E4%B8%8B%E8%BD%BD%E5%B9%B6%E5%AE%89%E8%A3%85%E9%80%82%E7%94%A8%E4%BA%8E%E4%BD%A0%E7%9A%84%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%89%88%E6%9C%AC%E3%80%82"><span class="toc-text">1. 安装Ghostscript：首先，确保已经安装了Ghostscript。你可以从Ghostscript官方网站（https:&#x2F;&#x2F;www.ghostscript.com&#x2F;）下载并安装适用于你的操作系统的版本。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%89%93%E5%BC%80%E5%91%BD%E4%BB%A4%E6%8F%90%E7%A4%BA%E7%AC%A6%E6%88%96%E7%BB%88%E7%AB%AF%EF%BC%9A%E5%9C%A8%E7%94%B5%E8%84%91%E4%B8%8A%E6%89%93%E5%BC%80%E5%91%BD%E4%BB%A4%E6%8F%90%E7%A4%BA%E7%AC%A6%EF%BC%88Windows%EF%BC%89%E6%88%96%E7%BB%88%E7%AB%AF%EF%BC%88Mac%E5%92%8CLinux%EF%BC%89%E3%80%82"><span class="toc-text">2. 打开命令提示符或终端：在电脑上打开命令提示符（Windows）或终端（Mac和Linux）。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E4%BD%BF%E7%94%A8%E5%91%BD%E4%BB%A4%E5%90%88%E5%B9%B6PDF%E6%96%87%E4%BB%B6%EF%BC%9A%E5%9C%A8%E5%91%BD%E4%BB%A4%E6%8F%90%E7%A4%BA%E7%AC%A6%E6%88%96%E7%BB%88%E7%AB%AF%E4%B8%AD%EF%BC%8C%E4%BD%BF%E7%94%A8%E4%BB%A5%E4%B8%8B%E5%91%BD%E4%BB%A4%E5%B0%86%E5%A4%9A%E4%B8%AAPDF%E6%96%87%E4%BB%B6%E5%90%88%E5%B9%B6%E4%B8%BA%E4%B8%80%E4%B8%AA%EF%BC%9A"><span class="toc-text">3. 使用命令合并PDF文件：在命令提示符或终端中，使用以下命令将多个PDF文件合并为一个：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E8%BF%90%E8%A1%8C%E5%91%BD%E4%BB%A4%EF%BC%9A%E6%8C%89%E4%B8%8BEnter%E9%94%AE%E8%BF%90%E8%A1%8C%E5%91%BD%E4%BB%A4%E3%80%82Ghostscript%E5%B0%86%E6%A0%B9%E6%8D%AE%E6%8F%90%E4%BE%9B%E7%9A%84%E6%96%87%E4%BB%B6%E5%88%97%E8%A1%A8%E5%90%88%E5%B9%B6PDF%E6%96%87%E4%BB%B6%EF%BC%8C%E5%B9%B6%E7%94%9F%E6%88%90%E4%B8%80%E4%B8%AA%E6%96%B0%E7%9A%84%E5%90%88%E5%B9%B6%E5%90%8E%E7%9A%84%E6%96%87%E4%BB%B6merged-pdf%E3%80%82"><span class="toc-text">4. 运行命令：按下Enter键运行命令。Ghostscript将根据提供的文件列表合并PDF文件，并生成一个新的合并后的文件merged.pdf。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E7%AD%89%E5%BE%85%E5%90%88%E5%B9%B6%E5%AE%8C%E6%88%90%EF%BC%9A%E5%90%88%E5%B9%B6%E6%96%87%E4%BB%B6%E7%9A%84%E6%97%B6%E9%97%B4%E5%B0%86%E5%8F%96%E5%86%B3%E4%BA%8EPDF%E6%96%87%E4%BB%B6%E7%9A%84%E5%A4%A7%E5%B0%8F%E5%92%8C%E6%95%B0%E9%87%8F%E3%80%82%E5%AE%8C%E6%88%90%E5%90%8E%EF%BC%8C%E4%BD%A0%E5%B0%86%E5%9C%A8%E7%9B%B8%E5%90%8C%E7%9A%84%E7%9B%AE%E5%BD%95%E4%B8%AD%E6%89%BE%E5%88%B0%E7%94%9F%E6%88%90%E7%9A%84merged-pdf%E6%96%87%E4%BB%B6%E3%80%82"><span class="toc-text">5. 等待合并完成：合并文件的时间将取决于PDF文件的大小和数量。完成后，你将在相同的目录中找到生成的merged.pdf文件。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#pdfbox"><span class="toc-text">pdfbox</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#itext%E6%88%96%E8%80%85openpdf"><span class="toc-text">itext或者openpdf</span></a></li></ol>
+    </div>
+</aside>
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">137</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">151</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">29</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/congco/">congco</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/work/">work</a><span class="category-list-count">118</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wuw/">wuw</a><span class="category-list-count">48</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/">技术笔记</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/AES/" style="font-size: 0.6em;">AES</a> <a href="/tags/AI/" style="font-size: 0.7em;">AI</a> <a href="/tags/AWS/" style="font-size: 0.7em;">AWS</a> <a href="/tags/Arch/" style="font-size: 0.6em;">Arch</a> <a href="/tags/Arch-Linux/" style="font-size: 0.8em;">Arch Linux</a> <a href="/tags/ArchLinux/" style="font-size: 0.8em;">ArchLinux</a> <a href="/tags/CAS/" style="font-size: 0.6em;">CAS</a> <a href="/tags/CI-CD/" style="font-size: 0.6em;">CI/CD</a> <a href="/tags/Caffeine/" style="font-size: 0.6em;">Caffeine</a> <a href="/tags/CompletableFuture/" style="font-size: 0.7em;">CompletableFuture</a> <a href="/tags/DNS/" style="font-size: 0.8em;">DNS</a> <a href="/tags/Docker/" style="font-size: 0.6em;">Docker</a> <a href="/tags/Flask/" style="font-size: 0.6em;">Flask</a> <a href="/tags/Future/" style="font-size: 0.7em;">Future</a> <a href="/tags/GC/" style="font-size: 0.6em;">GC</a> <a href="/tags/GPT/" style="font-size: 0.6em;">GPT</a> <a href="/tags/GraalVM/" style="font-size: 0.8em;">GraalVM</a> <a href="/tags/HashMap/" style="font-size: 0.6em;">HashMap</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/14/2025/11/141727/"><i class="fa  fa-book"></i> karakeep</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111335/"><i class="fa  fa-book"></i> SonarQube 扫描支持多 JDK 版本的实践方案</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111045/"><i class="fa  fa-book"></i> 一次修复 PDF 中文乱码的排查记录</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/23/2025/10/221500/"><i class="fa  fa-book"></i> dig命令使用详解</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/13/2025/10/131645/"><i class="fa  fa-book"></i> DNS解析异常导致视频播放缓慢问题排查与解决</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  >
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        <li><a href="mailto:congco@foxmail.com"><i class="fa fa-envelope"></i></a></li>
+                        
+                        
+                        
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://github.com/qbmzc"><i class="fa fa-github"></i></a></li>
+                        <li><a target="_blank" rel="nofollow" href="/rss.xml"><i class="fa fa-rss"></i></a></li>
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2025 沐曦留曳 版权所有.</li>
+                            <li>本站已运行<span id="span_dt">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
+                            <li>Site built with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by cong.</li>
+                        </div>
+                        <div>
+                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
+                            <li>Hosted on <a href="https://github.io" target="_blank">Github Pages</a></li>
+                        </div>
+                        <div>
+                            
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="/vendors/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="/vendors/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+
+    <script defer src="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="/vendors/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>

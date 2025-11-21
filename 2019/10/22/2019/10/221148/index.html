@@ -1,0 +1,1623 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="/images/favicon.ico">
+  
+  <title>Java8新的日期和时间API | 沐曦留曳</title>
+  <meta name="author" content="cong" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="Time" />
+  
+  <meta name="description" content="LocalDate、LocalTime、Instant、Duration以及Periodjava.time包中的是类是不可变且线程安全的。新的时间及日期API位于java.time中，下面是一些关键类  Instant——它代表的是时间戳  LocalDate——不包含具体时间的日期，比如2014-01-14。它可以用来存储生日，周年纪念日，入职日期等。  LocalTime——它代表的是不含日期">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java8新的日期和时间API">
+<meta property="og:url" content="https://qbmzc.github.io/2019/10/22/2019/10/221148/index.html">
+<meta property="og:site_name" content="沐曦留曳">
+<meta property="og:description" content="LocalDate、LocalTime、Instant、Duration以及Periodjava.time包中的是类是不可变且线程安全的。新的时间及日期API位于java.time中，下面是一些关键类  Instant——它代表的是时间戳  LocalDate——不包含具体时间的日期，比如2014-01-14。它可以用来存储生日，周年纪念日，入职日期等。  LocalTime——它代表的是不含日期">
+<meta property="og:locale">
+<meta property="og:image" content="https://qbmzc.github.io/images/favicon.ico">
+<meta property="article:published_time" content="2019-10-21T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-11-21T06:36:31.542Z">
+<meta property="article:author" content="cong">
+<meta property="article:tag" content="Time">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://qbmzc.github.io/images/favicon.ico">
+  <link rel="alternate" href="rss.xml" type="application/atom+xml">
+  <!-- 站点验证相关 -->
+  
+    
+      <meta name="google-site-verification" content="lV4cead5YlJ8KpODToP7dvzi-ihrxSqU0yYStYKj2ao" />
+    
+    
+      <meta name="baidu-site-verification" content="codeva-Zr6WlkDupK" />
+    
+    
+      <meta name="msvalidate.01" content="2D2197DEE362D193B3EC29AFD3306341" />
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" media="all"></script>
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-color-dark.min.css" media="(prefers-color-scheme: dark)"></script>
+    <script src="/js/kr-dark.min.js"></script>
+  
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" media="all"></script>
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="/vendors/font-awesome@4.7.0/css/font-awesome.min.css" media="all"></script>
+  <link rel="stylesheet" id="nprogress-css" href="/vendors/nprogress@0.2.0/nprogress.css" media="all"></script>
+  
+  
+  
+    <link rel="stylesheet" href="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css"></script>
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="/vendors/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/banner.webp');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">沐曦留曳</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>沐曦留曳</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article itemscope itemtype="https://schema.org/Article">
+    
+    <link itemprop="mainEntityOfPage" href="https://qbmzc.github.io/2019/10/22/2019/10/221148/">
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center" itemprop="name headline">Java8新的日期和时间API</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><time datetime="2019-10-21T16:00:00.000Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2019-10-22</time></li>
+                <li itemprop="author" itemscope itemtype="https://schema.org/Person">
+                    <i class="fa fa-user"></i> 作者 <span itemprop="name">cong</span>
+                </li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~6.89K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1763706991542"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+            
+            <hr />
+            <div itemprop="articleBody"><h2 id="LocalDate、LocalTime、Instant、Duration以及Period"><a href="#LocalDate、LocalTime、Instant、Duration以及Period" class="headerlink" title="LocalDate、LocalTime、Instant、Duration以及Period"></a>LocalDate、LocalTime、Instant、Duration以及Period</h2><p>java.time包中的是类是不可变且线程安全的。新的时间及日期API位于java.time中，下面是一些关键类</p>
+<ul>
+<li><p>Instant——它代表的是时间戳</p>
+</li>
+<li><p>LocalDate——不包含具体时间的日期，比如2014-01-14。它可以用来存储生日，周年纪念日，入职日期等。</p>
+</li>
+<li><p>LocalTime——它代表的是不含日期的时间</p>
+</li>
+<li><p>LocalDateTime——它包含了日期及时间，不过还是没有偏移信息或者说时区。</p>
+</li>
+<li><p>ZonedDateTime——这是一个包含时区的完整的日期时间，偏移量是以UTC&#x2F;格林威治时间为基准的。</p>
+</li>
+</ul>
+<h2 id="java8是如何处理时间及日期的"><a href="#java8是如何处理时间及日期的" class="headerlink" title="java8是如何处理时间及日期的"></a>java8是如何处理时间及日期的</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">LocalDate</span> <span class="variable">today</span> <span class="operator">=</span> LocalDate.now();</span><br></pre></td></tr></table></figure>
+
+<p>创建一个LocalDate对象并读取其值</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">LocalDate</span> <span class="variable">date</span> <span class="operator">=</span> LocalDate.of(<span class="number">2014</span>, <span class="number">3</span>, <span class="number">18</span>);    ←─<span class="number">2014</span>-<span class="number">03</span>-<span class="number">18</span></span><br><span class="line"><span class="type">int</span> <span class="variable">year</span> <span class="operator">=</span> date.getYear();    ←─<span class="number">2014</span></span><br><span class="line"><span class="type">Month</span> <span class="variable">month</span> <span class="operator">=</span> date.getMonth();    ←─MARCH</span><br><span class="line"><span class="type">int</span> <span class="variable">day</span> <span class="operator">=</span> date.getDayOfMonth();    ←─<span class="number">18</span></span><br><span class="line"><span class="type">DayOfWeek</span> <span class="variable">dow</span> <span class="operator">=</span> date.getDayOfWeek();    ←─TUESDAY</span><br><span class="line"><span class="type">int</span> <span class="variable">len</span> <span class="operator">=</span> date.lengthOfMonth();    ←─<span class="number">31</span> (days in March)</span><br><span class="line"><span class="type">boolean</span> <span class="variable">leap</span> <span class="operator">=</span> date.isLeapYear();    ←─<span class="literal">false</span> (not a leap year)</span><br></pre></td></tr></table></figure>
+
+<p>使用TemporalField读取LocalDate的值</p>
+<p>TemporalField是一个接口，它定义了如何访问temporal对象某个字段的值。ChronoField枚举实现了这一接口，所以你可以很方便地使用get方法得到枚举元素的值，如下所示。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="variable">year</span> <span class="operator">=</span> date.get(ChronoField.YEAR);</span><br><span class="line"><span class="type">int</span> <span class="variable">month</span> <span class="operator">=</span> date.get(ChronoField.MONTH_OF_YEAR);</span><br><span class="line"><span class="type">int</span> <span class="variable">day</span> <span class="operator">=</span> date.get(ChronoField.DAY_OF_MONTH);</span><br></pre></td></tr></table></figure>
+
+<p>创建LocalTime并读取其值</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">LocalTime</span> <span class="variable">time</span> <span class="operator">=</span> LocalTime.of(<span class="number">13</span>, <span class="number">45</span>, <span class="number">20</span>);    ←─<span class="number">13</span>:<span class="number">45</span>:<span class="number">20</span></span><br><span class="line"><span class="type">int</span> <span class="variable">hour</span> <span class="operator">=</span> time.getHour();             ←─<span class="number">13</span></span><br><span class="line"><span class="type">int</span> <span class="variable">minute</span> <span class="operator">=</span> time.getMinute();    ←─<span class="number">45</span></span><br><span class="line"><span class="type">int</span> <span class="variable">second</span> <span class="operator">=</span> time.getSecond();    ←─<span class="number">20</span></span><br></pre></td></tr></table></figure>
+
+<p>LocalDate和LocalTime都可以通过解析代表它们的字符串创建。使用静态方法parse，你可以实现这一目的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">LocalDate</span> <span class="variable">date</span> <span class="operator">=</span> LocalDate.parse(<span class="string">&quot;2014-03-18&quot;</span>);</span><br><span class="line"><span class="type">LocalTime</span> <span class="variable">time</span> <span class="operator">=</span> LocalTime.parse(<span class="string">&quot;13:45:20&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>你可以向parse方法传递一个DateTimeFormatter。该类的实例定义了如何格式化一个日期或者时间对象。</p>
+<h2 id="合并日期和时间LocalDateTime"><a href="#合并日期和时间LocalDateTime" class="headerlink" title="合并日期和时间LocalDateTime"></a>合并日期和时间<strong>LocalDateTime</strong></h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 2014-03-18T13:45:20</span></span><br><span class="line"><span class="type">LocalDateTime</span> <span class="variable">dt1</span> <span class="operator">=</span> LocalDateTime.of(<span class="number">2014</span>, Month.MARCH, <span class="number">18</span>, <span class="number">13</span>, <span class="number">45</span>, <span class="number">20</span>);</span><br><span class="line"><span class="type">LocalDateTime</span> <span class="variable">dt2</span> <span class="operator">=</span> LocalDateTime.of(date, time);</span><br><span class="line"><span class="type">LocalDateTime</span> <span class="variable">dt3</span> <span class="operator">=</span> date.atTime(<span class="number">13</span>, <span class="number">45</span>, <span class="number">20</span>);</span><br><span class="line"><span class="type">LocalDateTime</span> <span class="variable">dt4</span> <span class="operator">=</span> date.atTime(time);</span><br><span class="line"><span class="type">LocalDateTime</span> <span class="variable">dt5</span> <span class="operator">=</span> time.atDate(date);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">LocalDate</span> <span class="variable">date1</span> <span class="operator">=</span> dt1.toLocalDate();    ←─<span class="number">2014</span>-<span class="number">03</span>-<span class="number">18</span></span><br><span class="line"><span class="type">LocalTime</span> <span class="variable">time1</span> <span class="operator">=</span> dt1.toLocalTime();    ←─<span class="number">13</span>:<span class="number">45</span>:<span class="number">20</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="java-time-Instant"><a href="#java-time-Instant" class="headerlink" title="java.time.Instant"></a>java.time.Instant</h2><p>Instant的设计初衷是为了便于机器使用。它包含的是由秒及纳秒所构成的数字。它包含的是由秒及纳秒所构成的数字。所以，它无法处理那些我们非常容易理解的时间单位。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Instant</span> <span class="variable">instant</span> <span class="operator">=</span> Instant.now();</span><br></pre></td></tr></table></figure>
+
+<h2 id="表示时间点的日期-时间类的通用方法"><a href="#表示时间点的日期-时间类的通用方法" class="headerlink" title="表示时间点的日期-时间类的通用方法"></a>表示时间点的日期-时间类的通用方法</h2><table>
+<thead>
+<tr>
+<th>方法名</th>
+<th>是否是静态方法</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>from</code></td>
+<td>是</td>
+<td>依据传入的<code>Temporal</code>对象创建对象实例</td>
+</tr>
+<tr>
+<td><code>now</code></td>
+<td>是</td>
+<td>依据系统时钟创建<code>Temporal</code>对象</td>
+</tr>
+<tr>
+<td><code>of</code></td>
+<td>是</td>
+<td>由<code>Temporal</code>对象的某个部分创建该对象的实例</td>
+</tr>
+<tr>
+<td><code>parse</code></td>
+<td>是</td>
+<td>由字符串创建<code>Temporal</code>对象的实例</td>
+</tr>
+<tr>
+<td><code>atOffset</code></td>
+<td>否</td>
+<td>将<code>Temporal</code>对象和某个时区偏移相结合</td>
+</tr>
+<tr>
+<td><code>atZone</code></td>
+<td>否</td>
+<td>将<code>Temporal</code>对象和某个时区相结合</td>
+</tr>
+<tr>
+<td><code>format</code></td>
+<td>否</td>
+<td>使用某个指定的格式器将<code>Temporal</code>对象转换为字符串（<code>Instant</code>类不提供该方法）</td>
+</tr>
+<tr>
+<td><code>get</code></td>
+<td>否</td>
+<td>读取<code>Temporal</code>对象的某一部分的值</td>
+</tr>
+<tr>
+<td><code>minus</code></td>
+<td>否</td>
+<td>创建<code>Temporal</code>对象的一个副本，通过将当前<code>Temporal</code>对象的值减去一定的时长创建该副本</td>
+</tr>
+<tr>
+<td><code>plus</code></td>
+<td>否</td>
+<td>创建<code>Temporal</code>对象的一个副本，通过将当前<code>Temporal</code>对象的值加上一定的时长创建该副本</td>
+</tr>
+<tr>
+<td><code>with</code></td>
+<td>否</td>
+<td>以该<code>Temporal</code>对象为模板，对某些状态进行修改创建该对象的副本</td>
+</tr>
+</tbody></table>
+<h2 id="TemporalAdjuster"><a href="#TemporalAdjuster" class="headerlink" title="TemporalAdjuster"></a>TemporalAdjuster</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> java.time.temporal.TemporalAdjusters.*;</span><br><span class="line"></span><br><span class="line"><span class="type">LocalDate</span> <span class="variable">date1</span> <span class="operator">=</span> LocalDate.of(<span class="number">2014</span>, <span class="number">3</span>, <span class="number">18</span>);    ←─<span class="number">2014</span>-<span class="number">03</span>-<span class="number">18</span></span><br><span class="line"><span class="type">LocalDate</span> <span class="variable">date2</span> <span class="operator">=</span> date1.with(nextOrSame(DayOfWeek.SUNDAY));    ←─<span class="number">2014</span>-<span class="number">03</span>-<span class="number">23</span></span><br><span class="line"><span class="type">LocalDate</span> <span class="variable">date3</span> <span class="operator">=</span> date2.with(lastDayOfMonth());    ←─<span class="number">2014</span>-<span class="number">03</span>-<span class="number">31</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>TemporalAdjuster</strong>类中的工厂方法</p>
+<table>
+<thead>
+<tr>
+<th>方法名</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>dayOfWeekInMonth</code></td>
+<td>创建一个新的日期，它的值为同一个月中每一周的第几天</td>
+</tr>
+<tr>
+<td><code>firstDayOfMonth</code></td>
+<td>创建一个新的日期，它的值为当月的第一天</td>
+</tr>
+<tr>
+<td><code>firstDayOfNextMonth</code></td>
+<td>创建一个新的日期，它的值为下月的第一天</td>
+</tr>
+<tr>
+<td><code>firstDayOfNextYear</code></td>
+<td>创建一个新的日期，它的值为明年的第一天</td>
+</tr>
+<tr>
+<td><code>firstDayOfYear</code></td>
+<td>创建一个新的日期，它的值为当年的第一天</td>
+</tr>
+<tr>
+<td><code>firstInMonth</code></td>
+<td>创建一个新的日期，它的值为同一个月中，第一个符合星期几要求的值</td>
+</tr>
+<tr>
+<td><code>lastDayOfMonth</code></td>
+<td>创建一个新的日期，它的值为下月的最后一天</td>
+</tr>
+<tr>
+<td><code>lastDayOfNextMonth</code></td>
+<td>创建一个新的日期，它的值为下月的最后一天</td>
+</tr>
+<tr>
+<td><code>lastDayOfNextYear</code></td>
+<td>创建一个新的日期，它的值为明年的最后一天</td>
+</tr>
+<tr>
+<td><code>lastDayOfYear</code></td>
+<td>创建一个新的日期，它的值为今年的最后一天</td>
+</tr>
+<tr>
+<td><code>lastInMonth</code></td>
+<td>创建一个新的日期，它的值为同一个月中，最后一个符合星期几要求的值</td>
+</tr>
+<tr>
+<td><code>next/previous</code></td>
+<td>创建一个新的日期，并将其值设定为日期调整后或者调整前，第一个符合指定星期几要求的日期</td>
+</tr>
+<tr>
+<td><code>nextOrSame/previousOrSame</code></td>
+<td>创建一个新的日期，并将其值设定为日期调整后或者调整前，第一个符合指定星期几要求的日期，如果该日期已经符合要求，直接返回该对象</td>
+</tr>
+</tbody></table>
+<h2 id="实现一个定制的TemporalAdjuster"><a href="#实现一个定制的TemporalAdjuster" class="headerlink" title="实现一个定制的TemporalAdjuster"></a>实现一个定制的TemporalAdjuster</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">date = date.with(<span class="keyword">new</span> <span class="title class_">NextWorkingDay</span>());</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">NextWorkingDay</span> <span class="keyword">implements</span> <span class="title class_">TemporalAdjuster</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Temporal <span class="title function_">adjustInto</span><span class="params">(Temporal temporal)</span> &#123;</span><br><span class="line">        <span class="type">DayOfWeek</span> <span class="variable">dow</span> <span class="operator">=</span></span><br><span class="line">                DayOfWeek.of(temporal.get(ChronoField.DAY_OF_WEEK));    ←─读取当前日期</span><br><span class="line">        <span class="type">int</span> <span class="variable">dayToAdd</span> <span class="operator">=</span> <span class="number">1</span>;    ←─正常情况，增加<span class="number">1</span>天</span><br><span class="line">        <span class="keyword">if</span> (dow == DayOfWeek.FRIDAY) dayToAdd = <span class="number">3</span>;    ←─如果当天是周五，增加<span class="number">3</span>天</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (dow == DayOfWeek.SATURDAY) dayToAdd = <span class="number">2</span>;    ←─如果当天是周六，增加<span class="number">2</span>天</span><br><span class="line">        <span class="keyword">return</span> temporal.plus(dayToAdd, ChronoUnit.DAYS);    ←─增加恰当的天数后，返回修改的日期</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">date = date.with(temporal -&gt; &#123;</span><br><span class="line">        <span class="type">DayOfWeek</span> <span class="variable">dow</span> <span class="operator">=</span></span><br><span class="line">                DayOfWeek.of(temporal.get(ChronoField.DAY_OF_WEEK));</span><br><span class="line">    <span class="type">int</span> <span class="variable">dayToAdd</span> <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span> (dow == DayOfWeek.FRIDAY) dayToAdd = <span class="number">3</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (dow == DayOfWeek.SATURDAY) dayToAdd = <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">return</span> temporal.plus(dayToAdd, ChronoUnit.DAYS);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>使用Lambda表达式定义<code>TemporalAdjuster</code>对象，推荐使用<code>TemporalAdjusters</code>类的静态工厂方法<code>ofDateAdjuster</code>，它接受一个<code>UnaryOperator&lt;LocalDate&gt;</code>类型的参数，代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">TemporalAdjuster</span> <span class="variable">nextWorkingDay</span> <span class="operator">=</span> TemporalAdjusters.ofDateAdjuster(</span><br><span class="line">    temporal -&gt; &#123;</span><br><span class="line">        <span class="type">DayOfWeek</span> <span class="variable">dow</span> <span class="operator">=</span></span><br><span class="line">            DayOfWeek.of(temporal.get(ChronoField.DAY_OF_WEEK));</span><br><span class="line">        <span class="type">int</span> <span class="variable">dayToAdd</span> <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span> (dow == DayOfWeek.FRIDAY) dayToAdd = <span class="number">3</span>;</span><br><span class="line">        <span class="keyword">if</span> (dow == DayOfWeek.SATURDAY) dayToAdd = <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">return</span> temporal.plus(dayToAdd, ChronoUnit.DAYS);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">date = date.with(nextWorkingDay);</span><br></pre></td></tr></table></figure>
+
+<h2 id="打印输出及解析日期-时间对象"><a href="#打印输出及解析日期-时间对象" class="headerlink" title="打印输出及解析日期-时间对象"></a>打印输出及解析日期-时间对象</h2><p><code>DateTimeFormatter</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">LocalDate</span> <span class="variable">date</span> <span class="operator">=</span> LocalDate.of(<span class="number">2014</span>, <span class="number">3</span>, <span class="number">18</span>);</span><br><span class="line"><span class="type">String</span> <span class="variable">s1</span> <span class="operator">=</span> date.format(DateTimeFormatter.BASIC_ISO_DATE);    ←─<span class="number">20140318</span></span><br><span class="line"><span class="type">String</span> <span class="variable">s2</span> <span class="operator">=</span> date.format(DateTimeFormatter.ISO_LOCAL_DATE);    ←─<span class="number">2014</span>-<span class="number">03</span>-<span class="number">18</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">LocalDate</span> <span class="variable">date1</span> <span class="operator">=</span> LocalDate.parse(<span class="string">&quot;20140318&quot;</span>,</span><br><span class="line">                                 DateTimeFormatter.BASIC_ISO_DATE);</span><br><span class="line"><span class="type">LocalDate</span> <span class="variable">date2</span> <span class="operator">=</span> LocalDate.parse(<span class="string">&quot;2014-03-18&quot;</span>,</span><br><span class="line">                                 DateTimeFormatter.ISO_LOCAL_DATE);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>和老的java.util.DateFormat相比较，所有的DateTimeFormatter实例都是线程安全的。所以，你能够以单例模式创建格式器实例，就像DateTimeFormatter所定义的那些常量，并能在多个线程间共享这些实例。DateTimeFormatter类还支持一个静态工厂方法，它可以按照某个特定的模式创建格式器，代码清单如下。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">DateTimeFormatter</span> <span class="variable">formatter</span> <span class="operator">=</span> DateTimeFormatter.ofPattern(<span class="string">&quot;dd/MM/yyyy&quot;</span>);</span><br><span class="line"><span class="type">LocalDate</span> <span class="variable">date1</span> <span class="operator">=</span> LocalDate.of(<span class="number">2014</span>, <span class="number">3</span>, <span class="number">18</span>);</span><br><span class="line"><span class="type">String</span> <span class="variable">formattedDate</span> <span class="operator">=</span> date1.format(formatter);</span><br><span class="line"><span class="type">LocalDate</span> <span class="variable">date2</span> <span class="operator">=</span> LocalDate.parse(formattedDate, formatter);</span><br></pre></td></tr></table></figure>
+
+<h2 id="处理不同的时区和历法"><a href="#处理不同的时区和历法" class="headerlink" title="处理不同的时区和历法"></a>处理不同的时区和历法</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">ZoneId</span> <span class="variable">romeZone</span> <span class="operator">=</span> ZoneId.of(<span class="string">&quot;Europe/Rome&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="type">ZoneId</span> <span class="variable">zoneId</span> <span class="operator">=</span> TimeZone.getDefault().toZoneId();</span><br><span class="line"></span><br><span class="line"><span class="type">LocalDate</span> <span class="variable">date</span> <span class="operator">=</span> LocalDate.of(<span class="number">2014</span>, Month.MARCH, <span class="number">18</span>);</span><br><span class="line"><span class="type">ZonedDateTime</span> <span class="variable">zdt1</span> <span class="operator">=</span> date.atStartOfDay(romeZone);</span><br><span class="line"></span><br><span class="line"><span class="type">LocalDateTime</span> <span class="variable">dateTime</span> <span class="operator">=</span> LocalDateTime.of(<span class="number">2014</span>, Month.MARCH, <span class="number">18</span>, <span class="number">13</span>, <span class="number">45</span>);</span><br><span class="line"><span class="type">ZonedDateTime</span> <span class="variable">zdt2</span> <span class="operator">=</span> dateTime.atZone(romeZone);</span><br><span class="line"></span><br><span class="line"><span class="type">Instant</span> <span class="variable">instant</span> <span class="operator">=</span> Instant.now();</span><br><span class="line"><span class="type">ZonedDateTime</span> <span class="variable">zdt3</span> <span class="operator">=</span> instant.atZone(romeZone);</span><br><span class="line"></span><br><span class="line"><span class="type">LocalDateTime</span> <span class="variable">dateTime</span> <span class="operator">=</span> LocalDateTime.of(<span class="number">2014</span>, Month.MARCH, <span class="number">18</span>, <span class="number">13</span>, <span class="number">45</span>);</span><br><span class="line"><span class="type">Instant</span> <span class="variable">instantFromDateTime</span> <span class="operator">=</span> dateTime.toInstant(romeZone);</span><br><span class="line"></span><br><span class="line"><span class="type">Instant</span> <span class="variable">instant</span> <span class="operator">=</span> Instant.now();</span><br><span class="line"><span class="type">LocalDateTime</span> <span class="variable">timeFromInstant</span> <span class="operator">=</span> LocalDateTime.ofInstant(instant, romeZone);</span><br></pre></td></tr></table></figure>
+
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><ul>
+<li><p>Java 8之前老版的java.util.Date类以及其他用于建模日期时间的类有很多不一致及设计上的缺陷，包括易变性以及糟糕的偏移值、默认值和命名。</p>
+</li>
+<li><p>新版的日期和时间API中，日期-时间对象是不可变的。</p>
+</li>
+<li><p>新的API提供了两种不同的时间表示方式，有效地区分了运行时人和机器的不同需求。</p>
+</li>
+<li><p>你可以用绝对或者相对的方式操纵日期和时间，操作的结果总是返回一个新的实例，老的日期时间对象不会发生变化。</p>
+</li>
+<li><p>TemporalAdjuster让你能够用更精细的方式操纵日期，不再局限于一次只能改变它的一个值，并且你还可按照需求定义自己的日期转换器。</p>
+</li>
+<li><p>你现在可以按照特定的格式需求，定义自己的格式器，打印输出或者解析日期-时间对象。这些格式器可以通过模板创建，也可以自己编程创建，并且它们都是线程安全的。</p>
+</li>
+<li><p>你可以用相对于某个地区&#x2F;位置的方式，或者以与UTC&#x2F;格林尼治时间的绝对偏差的方式表示时区，并将其应用到日期-时间对象上，对其进行本地化。</p>
+</li>
+<li><p>你现在可以使用不同于ISO-8601标准系统的其他日历系统了。分别是ThaiBuddhistDate、MinguoDate、JapaneseDate以及HijrahDate。</p>
+</li>
+</ul>
+</div>
+        </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/Time/" rel="tag">Time</a>
+                </div>
+                <div class="pull-date">
+                    <time datetime="2025-11-21T06:36:31.542Z" itemprop="dateModified">最后编辑：2025-11-21</time>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" 一个很巧合的日子" href="/2019/10/21/2019/10/211437/">&lt; 上一篇</a>
+            </div>
+            
+            
+            <div class="nav-next clearfix">
+                <a title=" nginx" href="/2019/10/24/2019/10/241138/">下一篇 &gt;</a>
+            </div>
+            
+        </nav>
+    
+    
+        <link rel="stylesheet" href="/vendors/gitalk@1.7.2/dist/gitalk.css"></script>
+<div id="gitalk-container" class="post-comments lazy-load" style="padding-left:2rem; padding-right:2rem;"></div>
+<script>
+    var load_comm = () => {
+        const init = () => {
+            console.log('Gitalk loading...');
+            const gitalk = new Gitalk(Object.assign({
+                id: '/2019/10/22/2019/10/221148/',
+                path: '/2019/10/22/2019/10/221148/'
+            }, JSON.parse('{"clientID":"56e6a743c63b9c4faa93","clientSecret":"888b7234051c5c2ed6ea7bdf18e8b5a2678775f1","repo":"gitalk-comments","owner":"qbmzc","admin":["qbmzc"]}')));
+
+            gitalk.render('gitalk-container');
+        }
+        if (typeof Gitalk === 'undefined') {
+            const src = '/vendors/gitalk@1.7.2/dist/gitalk.min.js';
+            $.getScript(src, init);
+        } else {
+            init();
+        }
+    };
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a></noscript>
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/avatar.webp" loading="lazy" decoding="auto" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center">流云与风，苍穹游牧</p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                499
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                8
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                229
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">137</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">151</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">29</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/congco/">congco</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/work/">work</a><span class="category-list-count">118</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wuw/">wuw</a><span class="category-list-count">48</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/">技术笔记</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/AES/" style="font-size: 0.6em;">AES</a> <a href="/tags/AI/" style="font-size: 0.7em;">AI</a> <a href="/tags/AWS/" style="font-size: 0.7em;">AWS</a> <a href="/tags/Arch/" style="font-size: 0.6em;">Arch</a> <a href="/tags/Arch-Linux/" style="font-size: 0.8em;">Arch Linux</a> <a href="/tags/ArchLinux/" style="font-size: 0.8em;">ArchLinux</a> <a href="/tags/CAS/" style="font-size: 0.6em;">CAS</a> <a href="/tags/CI-CD/" style="font-size: 0.6em;">CI/CD</a> <a href="/tags/Caffeine/" style="font-size: 0.6em;">Caffeine</a> <a href="/tags/CompletableFuture/" style="font-size: 0.7em;">CompletableFuture</a> <a href="/tags/DNS/" style="font-size: 0.8em;">DNS</a> <a href="/tags/Docker/" style="font-size: 0.6em;">Docker</a> <a href="/tags/Flask/" style="font-size: 0.6em;">Flask</a> <a href="/tags/Future/" style="font-size: 0.7em;">Future</a> <a href="/tags/GC/" style="font-size: 0.6em;">GC</a> <a href="/tags/GPT/" style="font-size: 0.6em;">GPT</a> <a href="/tags/GraalVM/" style="font-size: 0.8em;">GraalVM</a> <a href="/tags/HashMap/" style="font-size: 0.6em;">HashMap</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/14/2025/11/141727/"><i class="fa  fa-book"></i> karakeep</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111335/"><i class="fa  fa-book"></i> SonarQube 扫描支持多 JDK 版本的实践方案</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111045/"><i class="fa  fa-book"></i> 一次修复 PDF 中文乱码的排查记录</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/23/2025/10/221500/"><i class="fa  fa-book"></i> dig命令使用详解</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/13/2025/10/131645/"><i class="fa  fa-book"></i> DNS解析异常导致视频播放缓慢问题排查与解决</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  >
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        <li><a href="mailto:congco@foxmail.com"><i class="fa fa-envelope"></i></a></li>
+                        
+                        
+                        
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://github.com/qbmzc"><i class="fa fa-github"></i></a></li>
+                        <li><a target="_blank" rel="nofollow" href="/rss.xml"><i class="fa fa-rss"></i></a></li>
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2025 沐曦留曳 版权所有.</li>
+                            <li>本站已运行<span id="span_dt">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
+                            <li>Site built with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by cong.</li>
+                        </div>
+                        <div>
+                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
+                            <li>Hosted on <a href="https://github.io" target="_blank">Github Pages</a></li>
+                        </div>
+                        <div>
+                            
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="/vendors/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="/vendors/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+
+    <script defer src="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="/vendors/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>

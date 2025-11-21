@@ -1,0 +1,1487 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="/images/favicon.ico">
+  
+  <title>nginx | 沐曦留曳</title>
+  <meta name="author" content="cong" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="nginx, web" />
+  
+  <meta name="description" content="nginx优化简介在大多数情况下，一个常规安装的Nginx对网站来说已经能很好地工作了。然而如果想挤压出Nginx的性能，就需要了解哪些指令会影响Nginx性能，在本文中将解释Nginx的哪些设置可以微调。需要注意一点，这是一个简单的预览——那些可以通过微调来提高性能设置的概述，不同的环境可能情况不太一样。 对于Nginx的调优，可以大致从如下指令着手： 123456789101112131415">
+<meta property="og:type" content="article">
+<meta property="og:title" content="nginx">
+<meta property="og:url" content="https://qbmzc.github.io/2019/10/24/2019/10/241138/index.html">
+<meta property="og:site_name" content="沐曦留曳">
+<meta property="og:description" content="nginx优化简介在大多数情况下，一个常规安装的Nginx对网站来说已经能很好地工作了。然而如果想挤压出Nginx的性能，就需要了解哪些指令会影响Nginx性能，在本文中将解释Nginx的哪些设置可以微调。需要注意一点，这是一个简单的预览——那些可以通过微调来提高性能设置的概述，不同的环境可能情况不太一样。 对于Nginx的调优，可以大致从如下指令着手： 123456789101112131415">
+<meta property="og:locale">
+<meta property="og:image" content="https://qbmzc.github.io/images/favicon.ico">
+<meta property="article:published_time" content="2019-10-23T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-11-21T06:36:31.542Z">
+<meta property="article:author" content="cong">
+<meta property="article:tag" content="web">
+<meta property="article:tag" content="nginx">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://qbmzc.github.io/images/favicon.ico">
+  <link rel="alternate" href="rss.xml" type="application/atom+xml">
+  <!-- 站点验证相关 -->
+  
+    
+      <meta name="google-site-verification" content="lV4cead5YlJ8KpODToP7dvzi-ihrxSqU0yYStYKj2ao" />
+    
+    
+      <meta name="baidu-site-verification" content="codeva-Zr6WlkDupK" />
+    
+    
+      <meta name="msvalidate.01" content="2D2197DEE362D193B3EC29AFD3306341" />
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" media="all"></script>
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-color-dark.min.css" media="(prefers-color-scheme: dark)"></script>
+    <script src="/js/kr-dark.min.js"></script>
+  
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" media="all"></script>
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="/vendors/font-awesome@4.7.0/css/font-awesome.min.css" media="all"></script>
+  <link rel="stylesheet" id="nprogress-css" href="/vendors/nprogress@0.2.0/nprogress.css" media="all"></script>
+  
+  
+  
+    <link rel="stylesheet" href="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css"></script>
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="/vendors/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/banner.webp');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">沐曦留曳</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>沐曦留曳</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article itemscope itemtype="https://schema.org/Article">
+    
+    <link itemprop="mainEntityOfPage" href="https://qbmzc.github.io/2019/10/24/2019/10/241138/">
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center" itemprop="name headline">nginx</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><time datetime="2019-10-23T16:00:00.000Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2019-10-24</time></li>
+                <li itemprop="author" itemscope itemtype="https://schema.org/Person">
+                    <i class="fa fa-user"></i> 作者 <span itemprop="name">cong</span>
+                </li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~8.26K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1763706991542"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+            
+            <hr />
+            <div itemprop="articleBody"><h2 id="nginx优化"><a href="#nginx优化" class="headerlink" title="nginx优化"></a>nginx优化</h2><p><em>简介</em><br>在大多数情况下，一个常规安装的Nginx对网站来说已经能很好地工作了。然而如果想挤压出Nginx的性能，就需要了解哪些指令会影响Nginx性能，在本文中将解释Nginx的哪些设置可以微调。需要注意一点，这是一个简单的预览——那些可以通过微调来提高性能设置的概述，不同的环境可能情况不太一样。</p>
+<p>对于Nginx的调优，可以大致从如下指令着手：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">1. worker_processes</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">2. worker_connections</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">3. Buffers</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">4. Timeouts</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">5. Gzip Compression</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">6. Static File Caching</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">7. logging</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-worker-processes"><a href="#1-worker-processes" class="headerlink" title="1. worker_processes"></a>1. worker_processes</h2><p>worker_processes表示工作进程的数量，一般情况设置成CPU核的数量即可，一个cpu配置多于一个worker数，对Nginx而言没有任何益处，另外不要忘了设置worker_cpu_affinity，这个配置用于将worker process与指定cpu核绑定，降低由于多CPU核切换造成的寄存器等现场重建带来的性能损耗。 grep processor &#x2F;proc&#x2F;cpuinfo | wc -l这个命令会告诉你当前机器是多少核，输出为2即表示2核。</p>
+<h2 id="2-worker-connections"><a href="#2-worker-connections" class="headerlink" title="2. worker_connections"></a>2. worker_connections</h2><p>worker_connections配置表示每个工作进程的并发连接数，默认设置为1024。</p>
+<p>可以更新如下配置文件来修改该值： sudo vim &#x2F;etc&#x2F;nginx&#x2F;nginx.conf</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">worker_processes 1;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">worker_connections 1024;</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-Buffers"><a href="#3-Buffers" class="headerlink" title="3. Buffers"></a>3. Buffers</h2><p>Buffers：另一个很重要的参数为buffer，如果buffer太小，Nginx会不停的写一些临时文件，这样会导致磁盘不停的去读写，现在我们先了解设置buffer的一些相关参数： client_body_buffer_size:允许客户端请求的最大单个文件字节数 client_header_buffer_size:用于设置客户端请求的Header头缓冲区大小，大部分情况1KB大小足够 client_max_body_size:设置客户端能够上传的文件大小，默认为1m large_client_header_buffers:该指令用于设置客户端请求的Header头缓冲区大小</p>
+<p>具体可参考配置如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">client_body_buffer_size 10K;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">client_header_buffer_size 1k;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">client_max_body_size 8m;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">large_client_header_buffers 2 1k;</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-Timeouts"><a href="#4-Timeouts" class="headerlink" title="4. Timeouts"></a>4. Timeouts</h2><p>client_header_timeout和client_body_timeout设置请求头和请求体(各自)的超时时间，如果没有发送请求头和请求体，Nginx服务器会返回408错误或者request time out。 keepalive_timeout给客户端分配keep-alive链接超时时间。服务器将在这个超时时间过后关闭链接，我们将它设置低些可以让Nginx持续工作的时间更长。 send_timeout 指定客户端的响应超时时间。这个设置不会用于整个转发器，而是在两次客户端读取操作之间。如果在这段时间内，客户端没有读取任何数据，Nginx就会关闭连接。</p>
+<p>具体可参考配置如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">client_body_timeout 12;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">client_header_timeout 12;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">keepalive_timeout 15;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">send_timeout 10;</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-Gzip-Compression"><a href="#5-Gzip-Compression" class="headerlink" title="5. Gzip Compression"></a>5. Gzip Compression</h2><p>开启Gzip，gzip可以帮助Nginx减少大量的网络传输工作，另外要注意gzip_comp_level的设置，太高的话，Nginx服务会浪费CPU的执行周期。</p>
+<p>具体可参考配置如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">gzip             on;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">gzip_comp_level  2;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">gzip_min_length  1000;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">gzip_proxied     expired no-cache no-store private auth;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">gzip_types       text/plain application/x-javascript text/xml text/css application/xml;</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-Static-File-Caching"><a href="#6-Static-File-Caching" class="headerlink" title="6. Static File Caching"></a>6. Static File Caching</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">location ~* .(jpg|jpeg|png|gif|ico|css|js)$ &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    expires 365d;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>以上的文件类型可以根据Nginx服务器匹配增加或减少。</p>
+<h2 id="7-logging"><a href="#7-logging" class="headerlink" title="7. logging"></a>7. logging</h2><p>access_log设置Nginx是否将存储访问日志。关闭这个选项可以让读取磁盘IO操作更快。 可以修改配置文件将该功能关闭：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">access_log off;</span><br></pre></td></tr></table></figure>
+
+<p>然后重启Nginx服务：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo service nginx restart</span><br></pre></td></tr></table></figure>
+
+<h2 id="Ngnix使用hash表来协助完成请求的快速处理"><a href="#Ngnix使用hash表来协助完成请求的快速处理" class="headerlink" title="Ngnix使用hash表来协助完成请求的快速处理"></a>Ngnix使用hash表来协助完成请求的快速处理</h2><p>考虑到保存键及其值的hash表存储单元的大小不至于超出设定参数(<code>hash bucket size</code>)， 在启动和每次重新配置时，Nginx为hash表选择尽可能小的尺寸。</p>
+<p>直到hash表超过参数(<code>hash max size</code>)的大小才重新进行选择. 对于大多数hash表都有指令来修改这些参数。例如，保存服务器名字的hash表是由指令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">server_names_hash_max_size</span><br></pre></td></tr></table></figure>
+
+<p>和</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">server_names_hash_bucket_size</span><br></pre></td></tr></table></figure>
+
+<p>所控制的。参数<code>hash bucket size</code>总是等于hash表的大小，并且是一路处理器缓存大小的倍数。在减少了在内存中的存取次数后，使在处理器中加速查找hash表键值成为可能。如果<code>hash bucket size</code>等于一路处理器缓存的大小，那么在查找键的时候，最坏的情况下在内存中查找的次数为2。第一次是确定存储单元的地址，第二次是在存储单元中查找键值。因此，如果Nginx给出需要增大 <code>hash max size</code> 或 <code>hash bucket size</code>的提示，那么首要的是增大前一个参数的大小.</p>
+<h2 id="使用systemctl管理Nginx服务"><a href="#使用systemctl管理Nginx服务" class="headerlink" title="使用systemctl管理Nginx服务"></a>使用systemctl管理Nginx服务</h2><p>您可以像任何其他systemd单位一样管理Nginx服务。 要停止Nginx服务，请运行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$sudo</span> systemctl stop nginx</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>要再次启动，请键入：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$sudo</span> systemctl start nginx</span><br></pre></td></tr></table></figure>
+
+<p>重新启动Nginx服务：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$sudo</span> systemctl restart nginx</span><br></pre></td></tr></table></figure>
+
+<p>在进行一些配置更改后重新加载Nginx服务：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$sudo</span> systemctl reload nginx</span><br></pre></td></tr></table></figure>
+
+<p>如果你想禁用Nginx服务在启动时启动：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$sudo</span> systemctl <span class="built_in">disable</span> nginx</span><br></pre></td></tr></table></figure>
+
+<p>并重新启用它：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$sudo</span> systemctl <span class="built_in">enable</span> nginx</span><br></pre></td></tr></table></figure>
+
+<h2 id="配置文件详解"><a href="#配置文件详解" class="headerlink" title="配置文件详解"></a>配置文件详解</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#运行用户</span></span><br><span class="line">user www-data;</span><br><span class="line"><span class="comment">#启动进程,通常设置成和cpu的数量相等</span></span><br><span class="line">worker_processes  1;</span><br><span class="line"></span><br><span class="line"><span class="comment">#全局错误日志及PID文件</span></span><br><span class="line">error_log  /var/log/nginx/error.log;</span><br><span class="line">pid        /var/run/nginx.pid;</span><br><span class="line"></span><br><span class="line"><span class="comment">#工作模式及连接数上限</span></span><br><span class="line">events &#123;</span><br><span class="line">    use   epoll;             <span class="comment">#epoll是多路复用IO(I/O Multiplexing)中的一种方式,但是仅用于linux2.6以上内核,可以大大提高nginx的性能</span></span><br><span class="line">    worker_connections  1024;<span class="comment">#单个后台worker process进程的最大并发链接数</span></span><br><span class="line">    <span class="comment"># multi_accept on;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">#设定http服务器，利用它的反向代理功能提供负载均衡支持</span></span><br><span class="line">http &#123;</span><br><span class="line">     <span class="comment">#设定mime类型,类型由mime.type文件定义</span></span><br><span class="line">    include       /etc/nginx/mime.types;</span><br><span class="line">    default_type  application/octet-stream;</span><br><span class="line">    <span class="comment">#设定日志格式</span></span><br><span class="line">    access_log    /var/log/nginx/access.log;</span><br><span class="line"></span><br><span class="line">    <span class="comment">#sendfile 指令指定 nginx 是否调用 sendfile 函数（zero copy 方式）来输出文件，对于普通应用，</span></span><br><span class="line">    <span class="comment">#必须设为 on,如果用来进行下载等应用磁盘IO重负载应用，可设置为 off，以平衡磁盘与网络I/O处理速度，降低系统的uptime.</span></span><br><span class="line">    sendfile        on;</span><br><span class="line">    <span class="comment">#tcp_nopush     on;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">#连接超时时间</span></span><br><span class="line">    <span class="comment">#keepalive_timeout  0;</span></span><br><span class="line">    keepalive_timeout  65;</span><br><span class="line">    tcp_nodelay        on;</span><br><span class="line"></span><br><span class="line">    <span class="comment">#开启gzip压缩</span></span><br><span class="line">    gzip  on;</span><br><span class="line">    gzip_disable <span class="string">&quot;MSIE [1-6]\.(?!.*SV1)&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">#设定请求缓冲</span></span><br><span class="line">    client_header_buffer_size    1k;</span><br><span class="line">    large_client_header_buffers  4 4k;</span><br><span class="line"></span><br><span class="line">    include /etc/nginx/conf.d/*.conf;</span><br><span class="line">    include /etc/nginx/sites-enabled/*;</span><br><span class="line"></span><br><span class="line">    <span class="comment">#设定负载均衡的服务器列表</span></span><br><span class="line">     upstream mysvr &#123;</span><br><span class="line">    <span class="comment">#weigth参数表示权值，权值越高被分配到的几率越大</span></span><br><span class="line">    <span class="comment">#本机上的Squid开启3128端口</span></span><br><span class="line">    server 192.168.8.1:3128 weight=5;</span><br><span class="line">    server 192.168.8.2:80  weight=1;</span><br><span class="line">    server 192.168.8.3:80  weight=6;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">   server &#123;</span><br><span class="line">    <span class="comment">#侦听80端口</span></span><br><span class="line">        listen       80;</span><br><span class="line">        <span class="comment">#定义使用www.xx.com访问</span></span><br><span class="line">        server_name  www.xx.com;</span><br><span class="line"></span><br><span class="line">        <span class="comment">#设定本虚拟主机的访问日志</span></span><br><span class="line">        access_log  logs/www.xx.com.access.log  main;</span><br><span class="line"></span><br><span class="line">    <span class="comment">#默认请求</span></span><br><span class="line">    location / &#123;</span><br><span class="line">          root   /root;      <span class="comment">#定义服务器的默认网站根目录位置</span></span><br><span class="line">          index index.php index.html index.htm;   <span class="comment">#定义首页索引文件的名称</span></span><br><span class="line"></span><br><span class="line">          fastcgi_pass  www.xx.com;</span><br><span class="line">         fastcgi_param  SCRIPT_FILENAME  <span class="variable">$document_root</span>/<span class="variable">$fastcgi_script_name</span>;</span><br><span class="line">          include /etc/nginx/fastcgi_params;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 定义错误提示页面</span></span><br><span class="line">    error_page   500 502 503 504 /50x.html;  </span><br><span class="line">        location = /50x.html &#123;</span><br><span class="line">        root   /root;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">#静态文件，nginx自己处理</span></span><br><span class="line">    location ~ ^/(images|javascript|js|css|flash|media|static)/ &#123;</span><br><span class="line">        root /var/www/virtual/htdocs;</span><br><span class="line">        <span class="comment">#过期30天，静态文件不怎么更新，过期可以设大一点，如果频繁更新，则可以设置得小一点。</span></span><br><span class="line">        expires 30d;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">#PHP 脚本请求全部转发到 FastCGI处理. 使用FastCGI默认配置.</span></span><br><span class="line">    location ~ \.php$ &#123;</span><br><span class="line">        root /root;</span><br><span class="line">        fastcgi_pass 127.0.0.1:9000;</span><br><span class="line">        fastcgi_index index.php;</span><br><span class="line">        fastcgi_param SCRIPT_FILENAME /home/www/www<span class="variable">$fastcgi_script_name</span>;</span><br><span class="line">        include fastcgi_params;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">#设定查看Nginx状态的地址</span></span><br><span class="line">    location /NginxStatus &#123;</span><br><span class="line">        stub_status            on;</span><br><span class="line">        access_log              on;</span><br><span class="line">        auth_basic              <span class="string">&quot;NginxStatus&quot;</span>;</span><br><span class="line">        auth_basic_user_file  conf/htpasswd;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">#禁止访问 .htxxx 文件</span></span><br><span class="line">    location ~ /\.ht &#123;</span><br><span class="line">        deny all;</span><br><span class="line">    &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#设定http服务器，利用它的反向代理功能提供负载均衡支持</span></span><br><span class="line">http &#123;</span><br><span class="line">     <span class="comment">#设定mime类型,类型由mime.type文件定义</span></span><br><span class="line">    include       /etc/nginx/mime.types;</span><br><span class="line">    default_type  application/octet-stream;</span><br><span class="line">    <span class="comment">#设定日志格式</span></span><br><span class="line">    access_log    /var/log/nginx/access.log;</span><br><span class="line"></span><br><span class="line">    <span class="comment">#省略上文有的一些配置节点</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">#。。。。。。。。。。</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">#设定负载均衡的服务器列表</span></span><br><span class="line">     upstream mysvr &#123;</span><br><span class="line">    <span class="comment">#weigth参数表示权值，权值越高被分配到的几率越大</span></span><br><span class="line">    server 192.168.8.1x:3128 weight=5;<span class="comment">#本机上的Squid开启3128端口</span></span><br><span class="line">    server 192.168.8.2x:80  weight=1;</span><br><span class="line">    server 192.168.8.3x:80  weight=6;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">   upstream mysvr2 &#123;</span><br><span class="line">    <span class="comment">#weigth参数表示权值，权值越高被分配到的几率越大</span></span><br><span class="line"></span><br><span class="line">    server 192.168.8.x:80  weight=1;</span><br><span class="line">    server 192.168.8.x:80  weight=6;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">#第一个虚拟服务器</span></span><br><span class="line">   server &#123;</span><br><span class="line">    <span class="comment">#侦听192.168.8.x的80端口</span></span><br><span class="line">        listen       80;</span><br><span class="line">        server_name  192.168.8.x;</span><br><span class="line"></span><br><span class="line">      <span class="comment">#对aspx后缀的进行负载均衡请求</span></span><br><span class="line">    location ~ .*\.aspx$ &#123;</span><br><span class="line"></span><br><span class="line">         root   /root;      <span class="comment">#定义服务器的默认网站根目录位置</span></span><br><span class="line">          index index.php index.html index.htm;   <span class="comment">#定义首页索引文件的名称</span></span><br><span class="line"></span><br><span class="line">          proxy_pass  http://mysvr ;<span class="comment">#请求转向mysvr 定义的服务器列表</span></span><br><span class="line"></span><br><span class="line">          <span class="comment">#以下是一些反向代理的配置可删除.</span></span><br><span class="line"></span><br><span class="line">          proxy_redirect off;</span><br><span class="line"></span><br><span class="line">          <span class="comment">#后端的Web服务器可以通过X-Forwarded-For获取用户真实IP</span></span><br><span class="line">          proxy_set_header Host <span class="variable">$host</span>;</span><br><span class="line">          proxy_set_header X-Real-IP <span class="variable">$remote_addr</span>;</span><br><span class="line">          proxy_set_header X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</span><br><span class="line">          client_max_body_size 10m;    <span class="comment">#允许客户端请求的最大单文件字节数</span></span><br><span class="line">          client_body_buffer_size 128k;  <span class="comment">#缓冲区代理缓冲用户端请求的最大字节数，</span></span><br><span class="line">          proxy_connect_timeout 90;  <span class="comment">#nginx跟后端服务器连接超时时间(代理连接超时)</span></span><br><span class="line">          proxy_send_timeout 90;        <span class="comment">#后端服务器数据回传时间(代理发送超时)</span></span><br><span class="line">          proxy_read_timeout 90;         <span class="comment">#连接成功后，后端服务器响应时间(代理接收超时)</span></span><br><span class="line">          proxy_buffer_size 4k;             <span class="comment">#设置代理服务器（nginx）保存用户头信息的缓冲区大小</span></span><br><span class="line">          proxy_buffers 4 32k;               <span class="comment">#proxy_buffers缓冲区，网页平均在32k以下的话，这样设置</span></span><br><span class="line">          proxy_busy_buffers_size 64k;    <span class="comment">#高负荷下缓冲大小（proxy_buffers*2）</span></span><br><span class="line">          proxy_temp_file_write_size 64k;  <span class="comment">#设定缓存文件夹大小，大于这个值，将从upstream服务器传</span></span><br><span class="line"></span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="nginx-设置最大连接数"><a href="#nginx-设置最大连接数" class="headerlink" title="nginx 设置最大连接数"></a>nginx 设置最大连接数</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">进行增大并发连接数的处理 跟cpu保持一致 八核设置八个</span></span><br><span class="line"></span><br><span class="line">worker_processes  1;   </span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">一个进程允许处理的最大连接数</span></span><br><span class="line"></span><br><span class="line">worker_connections  1024;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">2.一个进程最大连接数怎么计算</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">查看系统级的最大限制和查看用户级的限制（一般是1024，向阿里云华为云这种云主机一般是65535）</span></span><br><span class="line"></span><br><span class="line">[root@localhost ~]# cat /proc/sys/fs/file-max</span><br><span class="line">6506388</span><br><span class="line">[root@localhost ~]# ulimit -n</span><br><span class="line">65536</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">3.总连接数</span></span><br><span class="line">worker_processes  * worker_connections （一般是65536） </span><br></pre></td></tr></table></figure>
+
+<h2 id="资料扩展"><a href="#资料扩展" class="headerlink" title="资料扩展"></a>资料扩展</h2><p><a target="_blank" rel="noopener" href="http://www.nginx.cn/doc/">nginx中文文档：http://www.nginx.cn/doc/</a></p>
+</div>
+        </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/nginx/" rel="tag">nginx</a>, <a class="tag-none-link" href="/tags/web/" rel="tag">web</a>
+                </div>
+                <div class="pull-date">
+                    <time datetime="2025-11-21T06:36:31.542Z" itemprop="dateModified">最后编辑：2025-11-21</time>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" Java8新的日期和时间API" href="/2019/10/22/2019/10/221148/">&lt; 上一篇</a>
+            </div>
+            
+            
+            <div class="nav-next clearfix">
+                <a title=" SSL&amp;nginx配置" href="/2019/10/25/2019/10/251858/">下一篇 &gt;</a>
+            </div>
+            
+        </nav>
+    
+    
+        <link rel="stylesheet" href="/vendors/gitalk@1.7.2/dist/gitalk.css"></script>
+<div id="gitalk-container" class="post-comments lazy-load" style="padding-left:2rem; padding-right:2rem;"></div>
+<script>
+    var load_comm = () => {
+        const init = () => {
+            console.log('Gitalk loading...');
+            const gitalk = new Gitalk(Object.assign({
+                id: '/2019/10/24/2019/10/241138/',
+                path: '/2019/10/24/2019/10/241138/'
+            }, JSON.parse('{"clientID":"56e6a743c63b9c4faa93","clientSecret":"888b7234051c5c2ed6ea7bdf18e8b5a2678775f1","repo":"gitalk-comments","owner":"qbmzc","admin":["qbmzc"]}')));
+
+            gitalk.render('gitalk-container');
+        }
+        if (typeof Gitalk === 'undefined') {
+            const src = '/vendors/gitalk@1.7.2/dist/gitalk.min.js';
+            $.getScript(src, init);
+        } else {
+            init();
+        }
+    };
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a></noscript>
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/avatar.webp" loading="lazy" decoding="auto" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center">流云与风，苍穹游牧</p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                499
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                8
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                229
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">137</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">151</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">29</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/congco/">congco</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/work/">work</a><span class="category-list-count">118</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wuw/">wuw</a><span class="category-list-count">48</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/">技术笔记</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/AES/" style="font-size: 0.6em;">AES</a> <a href="/tags/AI/" style="font-size: 0.7em;">AI</a> <a href="/tags/AWS/" style="font-size: 0.7em;">AWS</a> <a href="/tags/Arch/" style="font-size: 0.6em;">Arch</a> <a href="/tags/Arch-Linux/" style="font-size: 0.8em;">Arch Linux</a> <a href="/tags/ArchLinux/" style="font-size: 0.8em;">ArchLinux</a> <a href="/tags/CAS/" style="font-size: 0.6em;">CAS</a> <a href="/tags/CI-CD/" style="font-size: 0.6em;">CI/CD</a> <a href="/tags/Caffeine/" style="font-size: 0.6em;">Caffeine</a> <a href="/tags/CompletableFuture/" style="font-size: 0.7em;">CompletableFuture</a> <a href="/tags/DNS/" style="font-size: 0.8em;">DNS</a> <a href="/tags/Docker/" style="font-size: 0.6em;">Docker</a> <a href="/tags/Flask/" style="font-size: 0.6em;">Flask</a> <a href="/tags/Future/" style="font-size: 0.7em;">Future</a> <a href="/tags/GC/" style="font-size: 0.6em;">GC</a> <a href="/tags/GPT/" style="font-size: 0.6em;">GPT</a> <a href="/tags/GraalVM/" style="font-size: 0.8em;">GraalVM</a> <a href="/tags/HashMap/" style="font-size: 0.6em;">HashMap</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/14/2025/11/141727/"><i class="fa  fa-book"></i> karakeep</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111335/"><i class="fa  fa-book"></i> SonarQube 扫描支持多 JDK 版本的实践方案</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111045/"><i class="fa  fa-book"></i> 一次修复 PDF 中文乱码的排查记录</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/23/2025/10/221500/"><i class="fa  fa-book"></i> dig命令使用详解</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/13/2025/10/131645/"><i class="fa  fa-book"></i> DNS解析异常导致视频播放缓慢问题排查与解决</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  >
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        <li><a href="mailto:congco@foxmail.com"><i class="fa fa-envelope"></i></a></li>
+                        
+                        
+                        
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://github.com/qbmzc"><i class="fa fa-github"></i></a></li>
+                        <li><a target="_blank" rel="nofollow" href="/rss.xml"><i class="fa fa-rss"></i></a></li>
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2025 沐曦留曳 版权所有.</li>
+                            <li>本站已运行<span id="span_dt">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
+                            <li>Site built with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by cong.</li>
+                        </div>
+                        <div>
+                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
+                            <li>Hosted on <a href="https://github.io" target="_blank">Github Pages</a></li>
+                        </div>
+                        <div>
+                            
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="/vendors/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="/vendors/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+
+    <script defer src="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="/vendors/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>

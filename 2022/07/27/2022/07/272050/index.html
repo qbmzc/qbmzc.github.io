@@ -1,0 +1,1820 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="/images/favicon.ico">
+  
+  <title>使用Linux开发是一种什么体验 | 沐曦留曳</title>
+  <meta name="author" content="cong" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="daily" />
+  
+  <meta property="og:type" content="article">
+<meta property="og:title" content="使用Linux开发是一种什么体验">
+<meta property="og:url" content="https://qbmzc.github.io/2022/07/27/2022/07/272050/index.html">
+<meta property="og:site_name" content="沐曦留曳">
+<meta property="og:locale">
+<meta property="og:image" content="https://qbmzc.github.io/images/favicon.ico">
+<meta property="article:published_time" content="2022-07-26T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-11-21T06:36:31.556Z">
+<meta property="article:author" content="cong">
+<meta property="article:tag" content="daily">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://qbmzc.github.io/images/favicon.ico">
+  <link rel="alternate" href="rss.xml" type="application/atom+xml">
+  <!-- 站点验证相关 -->
+  
+    
+      <meta name="google-site-verification" content="lV4cead5YlJ8KpODToP7dvzi-ihrxSqU0yYStYKj2ao" />
+    
+    
+      <meta name="baidu-site-verification" content="codeva-Zr6WlkDupK" />
+    
+    
+      <meta name="msvalidate.01" content="2D2197DEE362D193B3EC29AFD3306341" />
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" media="all"></script>
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-color-dark.min.css" media="(prefers-color-scheme: dark)"></script>
+    <script src="/js/kr-dark.min.js"></script>
+  
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" media="all"></script>
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="/vendors/font-awesome@4.7.0/css/font-awesome.min.css" media="all"></script>
+  <link rel="stylesheet" id="nprogress-css" href="/vendors/nprogress@0.2.0/nprogress.css" media="all"></script>
+  
+  
+  
+    <link rel="stylesheet" href="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css"></script>
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="/vendors/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/banner.webp');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">沐曦留曳</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>沐曦留曳</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article itemscope itemtype="https://schema.org/Article">
+    
+    <link itemprop="mainEntityOfPage" href="https://qbmzc.github.io/2022/07/27/2022/07/272050/">
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center" itemprop="name headline">使用Linux开发是一种什么体验</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><time datetime="2022-07-26T16:00:00.000Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2022-07-27</time></li>
+                <li itemprop="author" itemscope itemtype="https://schema.org/Person">
+                    <i class="fa fa-user"></i> 作者 <span itemprop="name">cong</span>
+                </li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~7.34K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1763706991556"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+            
+            <hr />
+            <div itemprop="articleBody"><p><img src="https://fastly.jsdelivr.net/gh/qbmzc/images/2022/202208032108886.jpg" alt="202208032108886"></p>
+<span id="more"></span>
+
+<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><ol>
+<li>文件路径问题</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.cong.filetest.fs;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> cong</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 2022/8/10 16:15</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">FileTest</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        String TMPDIR= System.getProperty(<span class="string">&quot;java.io.tmpdir&quot;</span>);</span><br><span class="line">        System.out.println(TMPDIR);</span><br><span class="line">        <span class="type">String</span> <span class="variable">path</span> <span class="operator">=</span> TMPDIR + <span class="string">&quot;iTemp&quot;</span>;</span><br><span class="line">        <span class="type">File</span> <span class="variable">tempFile</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">File</span>(path + File.separator + System.currentTimeMillis() + <span class="string">&quot;a.txt&quot;</span>);</span><br><span class="line">        <span class="keyword">if</span> (!tempFile.getParentFile().exists()) &#123;</span><br><span class="line">            <span class="type">boolean</span> <span class="variable">mkdirs</span> <span class="operator">=</span> tempFile.getParentFile().mkdirs();</span><br><span class="line">            <span class="keyword">if</span> (!mkdirs) &#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>( <span class="string">&quot;保存临时文件失败&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>Linux使用正斜线（&#x2F;）而不是反斜线（\）在文件路径中划分目录。在Linux中，反斜线用来标识转义字符</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Win</span></span><br><span class="line">C:\\Users\\cong\\Downloads\\</span><br><span class="line"><span class="comment"># Linux</span></span><br><span class="line">/home/cong/Downloads/a.txt</span><br></pre></td></tr></table></figure>
+<p>这表明文件a.txt位于Downloads目录，Downloads又位于cong目录中，cong则在home目录中。要注意的是，路径本身并没有提供任何有关文件究竟存放在哪个物理磁盘上的信息。</p>
+<h2 id="Linux介绍"><a href="#Linux介绍" class="headerlink" title="Linux介绍"></a>Linux介绍</h2><p>Linux可划分为以下四部分：</p>
+<ul>
+<li><p>Linux内核</p>
+</li>
+<li><p>GNU工具</p>
+</li>
+<li><p>图形化桌面环境</p>
+</li>
+<li><p>应用软件</p>
+</li>
+</ul>
+<h3 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h3><ol>
+<li>大量的可用软件及免费软件</li>
+</ol>
+<p>Linux 系统上有着大量的可用软件，且绝大多数是免费的，比如声名赫赫的 Apache、Samba、PHP、MySQL 等，构建成本低廉，是 Linux 被众多企业青睐的原因之一。当然，这和 Linux 出色的性能是分不开的，否则，节约成本就没有任何意义。</p>
+<p>配置环境容易，自由度高，安装软件也方便</p>
+<ol start="2">
+<li>良好的可移植性及灵活性</li>
+</ol>
+<p>Linux 系统有良好的可移植性，它几乎支持所有的 CPU 平台，这使得它便于裁剪和定制。我们可以把 Linux 放在 U 盘、光盘等存储介质中，也可以在嵌入式领域广泛应用。</p>
+<p>对系统的熟悉会决定开发效率。</p>
+<ol start="3">
+<li>优良的稳定性和安全性</li>
+</ol>
+<p>著名的黑客埃里克•雷蒙德（EricS.Raymond）有一句名言：“足够多的眼睛，就可让所有问题浮现”。</p>
+<p>Linux 开放源代码，将所有代码放在网上，全世界的程序员都看得到，有什么缺陷和漏洞，很快就会被发现，从而成就了它的稳定性和安全性。</p>
+<h2 id="常见Linux目录名称"><a href="#常见Linux目录名称" class="headerlink" title="常见Linux目录名称"></a>常见Linux目录名称</h2><table>
+<thead>
+<tr>
+<th>目录</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&#x2F;</td>
+<td>虚拟目录的根目录。通常不会在这里存储文件</td>
+</tr>
+<tr>
+<td>&#x2F;bin</td>
+<td>二进制目录，存放许多用户级的GNU工具</td>
+</tr>
+<tr>
+<td>&#x2F;boot</td>
+<td>启动目录，存放启动文件</td>
+</tr>
+<tr>
+<td>&#x2F;dev</td>
+<td>设备目录，Linux在这里创建设备节点</td>
+</tr>
+<tr>
+<td>&#x2F;etc</td>
+<td>系统配置文件目录</td>
+</tr>
+<tr>
+<td>&#x2F;home</td>
+<td>主目录，Linux在这里创建用户目录</td>
+</tr>
+<tr>
+<td>&#x2F;lib</td>
+<td>库目录，存放系统和应用程序的库文件</td>
+</tr>
+<tr>
+<td>&#x2F;media</td>
+<td>媒体目录，可移动媒体设备的常用挂载点</td>
+</tr>
+<tr>
+<td>&#x2F;mnt</td>
+<td>挂载目录，另一个可移动媒体设备的常用挂载点</td>
+</tr>
+<tr>
+<td>&#x2F;opt</td>
+<td>可选目录，常用于存放第三方软件包和数据文件</td>
+</tr>
+<tr>
+<td>&#x2F;proc</td>
+<td>进程目录，存放现有硬件及当前进程的相关信息</td>
+</tr>
+<tr>
+<td>&#x2F;root</td>
+<td>root用户的主目录</td>
+</tr>
+<tr>
+<td>&#x2F;sbin</td>
+<td>系统二进制目录，存放许多GNU管理员级工具</td>
+</tr>
+<tr>
+<td>&#x2F;run</td>
+<td>运行目录，存放系统运作时的运行时数据</td>
+</tr>
+<tr>
+<td>&#x2F;srv</td>
+<td>服务目录，存放本地服务的相关文件</td>
+</tr>
+<tr>
+<td>&#x2F;sys</td>
+<td>系统目录，存放系统硬件信息的相关文件</td>
+</tr>
+<tr>
+<td>&#x2F;tmp</td>
+<td>临时目录，可以在该目录中创建和删除临时工作文件</td>
+</tr>
+<tr>
+<td>&#x2F;usr</td>
+<td>用户二进制目录，大量用户级的GNU工具和数据文件都存储在这里</td>
+</tr>
+<tr>
+<td>&#x2F;var</td>
+<td>可变目录，用以存放经常变化的文件，比如日志文件</td>
+</tr>
+</tbody></table>
+<h2 id="发行版"><a href="#发行版" class="headerlink" title="发行版"></a>发行版</h2><ul>
+<li>Gentoo:基于源码的发行版，滚动升级，需要从源代码编译软件包</li>
+<li>Debian: 上游最大的发行版，提供较多的软件二进制包</li>
+<li>Ubuntu: 是一个非常流行的基于Debian的发行版，由 Canonical 公司提供商业支持</li>
+<li>Kali:Kali Linux是基于Debian的Linux发行版， 设计用于数字取证操作系统。预装了许多渗透测试软件</li>
+<li>Deepin:基于 DEB 包管理的一个独立操作系统</li>
+<li>RedHat:Red Hat Enterprise Linux 是 Red Hat 公司的 Linux 发行版，面向商业市场，包括大型机。</li>
+<li>Centos: 来自于Red Hat Enterprise Linux依照开放源代码规定发布的源代码所编译而成.</li>
+<li>Fedora: 由社区开发，并有红帽提供公司级支持。它是红帽版的技术前导版，对新技术的采用非常激进。Fedora 的软件包和项目会被引入 RHEL 中，并最终被其他发行版采用。采用 RPM 包，用 DNF 包管理器并且提供图形化的包管理工具.</li>
+<li>openSUSE:以 RPM 格式软件包为中心。提供了优秀的 YaST2 图形配置工具。</li>
+<li>Linux Mint:一个 Ubuntu 的衍生版本</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://distrowatch.com/">distrowatch</a></p>
+<h3 id="ArchLinux"><a href="#ArchLinux" class="headerlink" title="ArchLinux"></a>ArchLinux</h3><p><img src="https://fastly.jsdelivr.net/gh/qbmzc/images/2022/202208092308912.png" alt="202208092308912"></p>
+<blockquote>
+<p>Arch Linux 是通用 x86-64 GNU&#x2F;Linux 发行版。Arch采用滚动升级模式，尽全力提供最新的稳定版软件。初始安装的Arch只是一个基本系统，随后用户可以根据自己的喜好安装需要的软件并配置成符合自己理想的系统。</p>
+</blockquote>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/Arch_compared_to_other_distributions_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)">ArchWiki</a></li>
+<li></li>
+</ul>
+<h2 id="安装程序"><a href="#安装程序" class="headerlink" title="安装程序"></a>安装程序</h2><p>包管理器package manager”（或“软件包管理器”）是一种工具，它允许用户在操作系统上安装、删除、升级、配置和管理软件包。软件包管理器可以是像“软件中心”这样的图形化应用，也可以是像 apt-get 或 pacman 这样的命令行工具。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Debian/Ubuntu</span></span><br><span class="line">sudo apt update&amp;&amp; sudo apt install package-name</span><br><span class="line"><span class="comment"># RedHat</span></span><br><span class="line">yum install package</span><br><span class="line"><span class="comment"># fedora</span></span><br><span class="line">dnf install package</span><br><span class="line"><span class="comment"># Arch</span></span><br><span class="line">sudo pacman -S package</span><br></pre></td></tr></table></figure>
+
+<h2 id="配置环境变量"><a href="#配置环境变量" class="headerlink" title="配置环境变量"></a>配置环境变量</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 系统环境变量</span></span><br><span class="line">/etc/profile</span><br><span class="line"><span class="comment"># 用户环境变量</span></span><br><span class="line"><span class="comment">#bash</span></span><br><span class="line">~/.bashrc</span><br><span class="line"><span class="comment">#zsh</span></span><br><span class="line">~/.zshrc</span><br><span class="line"><span class="comment"># 使环境变量生效</span></span><br><span class="line"><span class="built_in">source</span> /etc/profile</span><br></pre></td></tr></table></figure>
+
+<h2 id="开发工具"><a href="#开发工具" class="headerlink" title="开发工具"></a>开发工具</h2><ul>
+<li>idea</li>
+<li>eclipse</li>
+<li>vscode</li>
+<li>pycharm</li>
+<li>datagrip</li>
+<li>navicat</li>
+</ul>
+<p><img src="https://fastly.jsdelivr.net/gh/qbmzc/images/2022/202208052247856.png" alt="1"></p>
+<p><img src="https://fastly.jsdelivr.net/gh/qbmzc/images/2022/202208052248860.png" alt="2"></p>
+<h3 id="vscode"><a href="#vscode" class="headerlink" title="vscode"></a>vscode</h3><p>换背景</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">sudo chmod o+w /opt/visual-studio-code/resources/app/out/vs/workbench/workbench.desktop.main.css</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">编辑添加下面内容</span></span><br><span class="line">body&#123;</span><br><span class="line">  background-size:cover;</span><br><span class="line">  background-repeat: no-repeat;</span><br><span class="line">  opacity:0.85;</span><br><span class="line">  background-image:url(&#x27;/home/cong/Pictures/a.jpg&#x27;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="openvpn"><a href="#openvpn" class="headerlink" title="openvpn"></a>openvpn</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yay -S openvpn networkmanager-openvpn</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://fastly.jsdelivr.net/gh/qbmzc/images/2022/202208071524522.png" alt="202208071524522"></p>
+<p><img src="https://fastly.jsdelivr.net/gh/qbmzc/images/2022/202208071521584.png" alt="202208071521584"></p>
+<h2 id="vim"><a href="#vim" class="headerlink" title="vim"></a>vim</h2><p><img src="https://fastly.jsdelivr.net/gh/qbmzc/images/md/vi-vim-cheat-sheet-sch.gif" alt="vim命令"></p>
+<h2 id="下载工具"><a href="#下载工具" class="headerlink" title="下载工具"></a>下载工具</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://aria2.github.io/">aria2</a></li>
+<li><a href="">motrix</a></li>
+<li><a target="_blank" rel="noopener" href="https://you-get.org/">you-get</a></li>
+<li><a target="_blank" rel="noopener" href="https://ugetdm.com/">uGet</a></li>
+<li><a target="_blank" rel="noopener" href="https://curl.haxx.se/">cURL</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.gnu.org/software/wget/">Wget</a></li>
+<li>百度网盘</li>
+<li>NextCloud</li>
+<li>Seafile</li>
+</ul>
+<p><img src="https://fastly.jsdelivr.net/gh/qbmzc/images/2022/202208052249441.png" alt="motrix"></p>
+<h2 id="FTP"><a href="#FTP" class="headerlink" title="FTP"></a>FTP</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://filezilla-project.org/">FileZilla</a></li>
+<li><a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/GNOME_Files">GNOME Files</a></li>
+</ul>
+<p><img src="https://fastly.jsdelivr.net/gh/qbmzc/images/2022/202208092257323.jpg" alt="202208092257323"></p>
+<p><img src="https://fastly.jsdelivr.net/gh/qbmzc/images/2022/202208092252778.png" alt="202208092252778"></p>
+<h2 id="系统工具"><a href="#系统工具" class="headerlink" title="系统工具"></a>系统工具</h2><h3 id="Htop"><a href="#Htop" class="headerlink" title="Htop"></a>Htop</h3><p><img src="https://fastly.jsdelivr.net/gh/qbmzc/images/2022/202208092257206.png" alt="202208092257206"></p>
+<h3 id="SwitchHosts"><a href="#SwitchHosts" class="headerlink" title="SwitchHosts!"></a>SwitchHosts!</h3><p><img src="https://fastly.jsdelivr.net/gh/qbmzc/images/2022/202208092255971.jpg" alt="202208092255971"></p>
+<h2 id="即时通讯"><a href="#即时通讯" class="headerlink" title="即时通讯"></a>即时通讯</h2><ul>
+<li>钉钉</li>
+<li>腾讯会议</li>
+<li>微信</li>
+</ul>
+<h2 id="录屏"><a href="#录屏" class="headerlink" title="录屏"></a>录屏</h2><ul>
+<li>OBS</li>
+</ul>
+<p><img src="https://fastly.jsdelivr.net/gh/qbmzc/images/2022/202208071649339.png" alt="obs"></p>
+<h2 id="文档"><a href="#文档" class="headerlink" title="文档"></a>文档</h2><ul>
+<li>wps</li>
+<li>OnlyOffice</li>
+<li>LibreOffice</li>
+</ul>
+<p><img src="https://fastly.jsdelivr.net/gh/qbmzc/images/2022/202208052253294.png" alt="wps"></p>
+<h2 id="输入法"><a href="#输入法" class="headerlink" title="输入法"></a>输入法</h2><ul>
+<li>fcitx5</li>
+<li>ibus</li>
+<li>google-pinyin</li>
+<li>rime</li>
+<li>搜狗</li>
+<li>百度</li>
+</ul>
+<p><img src="https://fastly.jsdelivr.net/gh/qbmzc/images/2022/202208071535056.png" alt="202208071535056"></p>
+<p><img src="https://fastly.jsdelivr.net/gh/qbmzc/images/2022/202208092259926.jpg" alt="202208092259926"></p>
+<h2 id="远程桌面"><a href="#远程桌面" class="headerlink" title="远程桌面"></a>远程桌面</h2><ul>
+<li>remmina</li>
+</ul>
+<p><img src="https://fastly.jsdelivr.net/gh/qbmzc/images/2022/202208052251504.png" alt="remmina"></p>
+<h2 id="终端"><a href="#终端" class="headerlink" title="终端"></a>终端</h2><ul>
+<li>gnoem-terminal</li>
+<li>xfce4-terminal</li>
+<li>sakura</li>
+<li>tabby</li>
+<li>konsole</li>
+</ul>
+<h3 id="远程登陆ssh"><a href="#远程登陆ssh" class="headerlink" title="远程登陆ssh"></a>远程登陆ssh</h3><ol>
+<li>新建配置文件</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim ~/.ssh/config</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>写入以下内容</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Host tm</span><br><span class="line">    HostkeyAlgorithms +ssh-rsa</span><br><span class="line">    PubkeyAcceptedAlgorithms +ssh-rsa</span><br><span class="line">    HostName 10.10.7.75</span><br><span class="line">    Port 60022</span><br><span class="line">    User cong.zheng</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>登陆</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh tm</span><br></pre></td></tr></table></figure>
+
+<h2 id="浏览器"><a href="#浏览器" class="headerlink" title="浏览器"></a>浏览器</h2><ul>
+<li><p>chrome</p>
+</li>
+<li><p>firefox</p>
+</li>
+<li><p>edge</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://devdocs.io/">dev-doc</a></p>
+</li>
+</ul>
+<p><img src="https://fastly.jsdelivr.net/gh/qbmzc/images/2022/202208052315391.png" alt="202208052315391"></p>
+<h2 id="虚拟化"><a href="#虚拟化" class="headerlink" title="虚拟化"></a>虚拟化</h2><ul>
+<li>docker</li>
+</ul>
+<h3 id="docker"><a href="#docker" class="headerlink" title="docker"></a>docker</h3><p>系统内核版本不低于 3.10 ，并且是 64 位系统,BIOS 上启用了 VT（虚拟化技术）<br>在终端上运行以下命令验证内核以及架构详细信息：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">uname -a</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">输出</span></span><br><span class="line">Linux arch 5.18.16-arch1-1 #1 SMP PREEMPT_DYNAMIC Wed, 03 Aug 2022 11:25:04 +0000 x86_64 GNU/Linux</span><br></pre></td></tr></table></figure>
+
+<h4 id="什么是Dockerfile"><a href="#什么是Dockerfile" class="headerlink" title="什么是Dockerfile"></a>什么是Dockerfile</h4><p>Dockerfile 是附有构建 Docker 镜像说明的易于理解的文本文件。它囊括了用户在创建镜像时可以调用的所有命令。</p>
+<p>我们可以使用 Dockerfile 创建自定义的镜像。可以通过 Docker Hub 分享的自定义 Docker 镜像。</p>
+<p><a target="_blank" rel="noopener" href="https://hub.docker.com/">docker hub</a></p>
+<ul>
+<li>拉取镜像</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo docker pull nginx</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>运行</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo docker run -it -d -p 8080:8080 nginx</span><br></pre></td></tr></table></figure>
+
+<h4 id="Dockerfile格式"><a href="#Dockerfile格式" class="headerlink" title="Dockerfile格式"></a>Dockerfile格式</h4><ol>
+<li>FROM  —设置容器基础镜像</li>
+</ol>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 22.04 指明版本号，如果没有则会设置为最新版本（latest）</span></span><br><span class="line"><span class="keyword">FROM</span> ubuntu:<span class="number">22.04</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>LABEL —明确镜像的元数据信息的键值对</li>
+</ol>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">LABEL</span><span class="language-bash"> ENV=<span class="string">&quot;DEV&quot;</span></span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>RUN —在基础镜像中执行指令并创建一个新层</li>
+</ol>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">RUN</span><span class="language-bash"> apt-get update</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> apt-get install git</span></span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>CMD —容器启动后先执行的命令</li>
+</ol>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CMD</span><span class="language-bash"> [<span class="string">&quot;java&quot;</span>,<span class="string">&quot;-jar&quot;</span>,<span class="string">&quot;app.jar&quot;</span>]</span></span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>EXPOSE —设置访问容器的端口,容器将会监听端口</li>
+</ol>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">EXPOSE</span> <span class="number">8080</span></span><br></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>MAINTAINER —显示镜像创建作者的信息</li>
+</ol>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">MAINTAINER</span> cong.zheng</span><br></pre></td></tr></table></figure>
+
+<ol start="7">
+<li>ENV —— 用来设置环境变量的键值对。这些变量在镜像创建的时候设置，并在容器创建好后可以使用。</li>
+</ol>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ENV</span> DB_NAME=<span class="string">&quot;MySQL&quot;</span></span><br><span class="line"><span class="keyword">ENV</span> PASSWORD=<span class="string">&quot;zc123456&quot;</span></span><br></pre></td></tr></table></figure>
+
+<ol start="8">
+<li>COPY —— 用来拷贝本地文件至容器中。</li>
+</ol>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">COPY</span><span class="language-bash"> target/app.jar app.jar</span></span><br></pre></td></tr></table></figure>
+
+<ol start="9">
+<li>ADD —— 具有与拷贝相同的功能，不过更进一步还可以提取本地的 tar 文件或者从 URL 拷贝文件。</li>
+</ol>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ADD</span><span class="language-bash"> devops.tar.xz / .</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">ADD</span><span class="language-bash"> http://example.com/abc.git /usr/local/devops/</span></span><br></pre></td></tr></table></figure>
+
+<ol start="10">
+<li>ENTRYPOINT —— 用来设置镜像的主要命令。与 CMD 指令功能相同。不同的是 ENTRYPOINT 中的指令不会被重写。</li>
+</ol>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ENTRYPOINT</span><span class="language-bash"> [<span class="string">&quot;java&quot;</span>, <span class="string">&quot;-jar&quot;</span>, <span class="string">&quot;app.jar&quot;</span>]</span></span><br></pre></td></tr></table></figure>
+
+<ol start="11">
+<li>VOLUME —— 该指令用来创建指定位置的挂载点。</li>
+</ol>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">VOLUME</span><span class="language-bash"> /app/devops</span></span><br></pre></td></tr></table></figure>
+
+<ol start="12">
+<li>USER —— 将设置运行镜像并使用的用户名称以及用户组。</li>
+</ol>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">USER</span> cong</span><br><span class="line"><span class="keyword">USER</span> root</span><br></pre></td></tr></table></figure>
+
+<ol start="13">
+<li>WORKDIR —— 这会设置工作目录。如果目录不存在，则会创建。</li>
+</ol>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /var/lib/</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="Demo"><a href="#Demo" class="headerlink" title="Demo"></a>Demo</h4><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> images.taimei.com/middle/wps-office:v1.<span class="number">3.4</span></span><br><span class="line"><span class="keyword">MAINTAINER</span>  cong.zheng </span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> <span class="built_in">mkdir</span> -p /k8sapps</span></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /k8sapps</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> *.py  /opt/</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> target/new-doc-convert-0.0.1-SNAPSHOT.jar  /k8sapps/</span></span><br><span class="line"><span class="comment">#RUN echo &quot;java -jar /k8sapps/new-doc-convert-0.0.1-SNAPSHOT.jar&quot; &gt;&gt; /root/.bashrc</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> ./new.desktop /etc/xdg/autostart/</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> <span class="built_in">echo</span> <span class="string">&quot;Exec=xfce4-terminal -e=&#x27;java -Xms1g -Xmx1g -Dspring.cloud.nacos.config.server-addr=config.taimei.com:8848 -Dspring.profiles.active=test -Dspring.cloud.nacos.config.namespace=TEST  -Dqueue=doc_convert_test  -Duser.timezone=GMT+08 -XX:+UseG1GC -XX:MaxGCPauseMillis=200 -jar /k8sapps/new-doc-convert-0.0.1-SNAPSHOT.jar &#x27;&quot;</span> &gt;&gt; /etc/xdg/autostart/new.desktop</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="使用-Dockerfile-创建-Docker-镜像"><a href="#使用-Dockerfile-创建-Docker-镜像" class="headerlink" title="使用 Dockerfile 创建 Docker 镜像"></a>使用 Dockerfile 创建 Docker 镜像</h4><ol>
+<li>创建一个<code>dockerfile</code>文件</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim dockerfile</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>写入以下内容</li>
+</ol>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> alpine</span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> apk update</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> apk add vim</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> apk add curl</span></span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li><code>:wq</code>保存并退出</li>
+<li>构建</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">请注意最后有一个 点（.）。</span></span><br><span class="line">docker build   -t alpine .</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">可以使用 -f 来指定dockerfile文件位置</span></span><br></pre></td></tr></table></figure>
+
+
+<ul>
+<li>可视化管理容器-portainer</li>
+</ul>
+<h2 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yay openjdk8</span><br></pre></td></tr></table></figure>
+<p><img src="https://fastly.jsdelivr.net/gh/qbmzc/images/2022/202208052245044.png" alt="202208052245044"></p>
+<h2 id="python"><a href="#python" class="headerlink" title="python"></a>python</h2><ul>
+<li>anaconda3&#x2F;miniconda3</li>
+</ul>
+<p><img src="https://fastly.jsdelivr.net/gh/qbmzc/images/2022/202208092303418.jpg" alt="202208092303418"></p>
+<ul>
+<li>文件分享</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m http.server</span><br></pre></td></tr></table></figure>
+
+<h2 id="CLI"><a href="#CLI" class="headerlink" title="CLI"></a>CLI</h2><h3 id="查看天气"><a href="#查看天气" class="headerlink" title="查看天气"></a>查看天气</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl wttr.in</span><br></pre></td></tr></table></figure>
+
+<h3 id="tcpdump分析DNS查询"><a href="#tcpdump分析DNS查询" class="headerlink" title="tcpdump分析DNS查询"></a>tcpdump分析DNS查询</h3><ul>
+<li>安装tcpdump</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ubuntu</span></span><br><span class="line">sudo apt update</span><br><span class="line">sudo apt install tcpdump</span><br><span class="line"></span><br><span class="line"><span class="comment"># Arch</span></span><br><span class="line"></span><br><span class="line">yay tcpdump</span><br><span class="line"></span><br><span class="line"><span class="comment"># sudo pacman -S tcpdump</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><ol>
+<li>查看网卡信息</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ifconfig</span></span><br><span class="line"><span class="comment"># ip</span></span><br><span class="line">wlan0</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>监听网络请求</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo tcpdump -i wlan0 -nt -s 500 port domain</span><br><span class="line"><span class="comment"># port domain 表示只抓取域名服务的数据包，即dns查询和应答</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="lrzsz文件传输"><a href="#lrzsz文件传输" class="headerlink" title="lrzsz文件传输"></a>lrzsz文件传输</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#安装</span></span><br><span class="line">yay -S lrzsz</span><br><span class="line"></span><br><span class="line"><span class="comment">#上传文件</span></span><br><span class="line">rz</span><br><span class="line"><span class="comment"># 下载文件</span></span><br><span class="line">sz file</span><br></pre></td></tr></table></figure>
+
+<h3 id="在命令行中使用代理工具"><a href="#在命令行中使用代理工具" class="headerlink" title="在命令行中使用代理工具"></a>在命令行中使用代理工具</h3><p>在<code>~/.zshrc</code>的文件后面添加两个命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 启动代理</span></span><br><span class="line"><span class="function"><span class="title">goproxy</span></span> () &#123;</span><br><span class="line">  <span class="built_in">export</span> https_proxy=http://127.0.0.1:1801 http_proxy=http://127.0.0.1:1801 all_proxy=socks5://127.0.0.1:1802</span><br><span class="line">  <span class="built_in">echo</span> <span class="string">&quot;HTTP Proxy on&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 关闭代理</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="title">disproxy</span></span> () &#123;</span><br><span class="line">  <span class="built_in">unset</span> http_proxy</span><br><span class="line">  <span class="built_in">unset</span> https_proxy</span><br><span class="line">  <span class="built_in">unset</span> all_proxy</span><br><span class="line">  <span class="built_in">echo</span> <span class="string">&quot;HTTP Proxy off&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>配置结束后在命令行中执行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source ~/.zshrc</span><br></pre></td></tr></table></figure>
+<h4 id="打开代理"><a href="#打开代理" class="headerlink" title="打开代理"></a>打开代理</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">goproxy </span><br></pre></td></tr></table></figure>
+
+<h4 id="关闭代理"><a href="#关闭代理" class="headerlink" title="关闭代理"></a>关闭代理</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">disproxy</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="ffmpeg多媒体处理"><a href="#ffmpeg多媒体处理" class="headerlink" title="ffmpeg多媒体处理"></a>ffmpeg多媒体处理</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 修改文件尺寸</span></span><br><span class="line">ffmpeg -i WechatIMG315.jpeg -vf scale=1920:-1 -y b.jpg</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/windows/wsl/install">Wsl</a></li>
+<li><a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/List_of_applications_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)">软件列表</a></li>
+<li><a target="_blank" rel="noopener" href="https://linux.cn/share/distro/">Linux发行版</a></li>
+</ul>
+</div>
+        </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/daily/" rel="tag">daily</a>
+                </div>
+                <div class="pull-date">
+                    <time datetime="2025-11-21T06:36:31.556Z" itemprop="dateModified">最后编辑：2025-11-21</time>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" Docker|oci runtime error" href="/2022/07/23/2022/07/232234/">&lt; 上一篇</a>
+            </div>
+            
+            
+            <div class="nav-next clearfix">
+                <a title=" Navicat安装教程" href="/2022/07/30/2022/07/302154/">下一篇 &gt;</a>
+            </div>
+            
+        </nav>
+    
+    
+        <link rel="stylesheet" href="/vendors/gitalk@1.7.2/dist/gitalk.css"></script>
+<div id="gitalk-container" class="post-comments lazy-load" style="padding-left:2rem; padding-right:2rem;"></div>
+<script>
+    var load_comm = () => {
+        const init = () => {
+            console.log('Gitalk loading...');
+            const gitalk = new Gitalk(Object.assign({
+                id: '/2022/07/27/2022/07/272050/',
+                path: '/2022/07/27/2022/07/272050/'
+            }, JSON.parse('{"clientID":"56e6a743c63b9c4faa93","clientSecret":"888b7234051c5c2ed6ea7bdf18e8b5a2678775f1","repo":"gitalk-comments","owner":"qbmzc","admin":["qbmzc"]}')));
+
+            gitalk.render('gitalk-container');
+        }
+        if (typeof Gitalk === 'undefined') {
+            const src = '/vendors/gitalk@1.7.2/dist/gitalk.min.js';
+            $.getScript(src, init);
+        } else {
+            init();
+        }
+    };
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a></noscript>
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/avatar.webp" loading="lazy" decoding="auto" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center">流云与风，苍穹游牧</p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                499
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                8
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                229
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">137</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">151</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">29</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/congco/">congco</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/work/">work</a><span class="category-list-count">118</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wuw/">wuw</a><span class="category-list-count">48</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/">技术笔记</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/AES/" style="font-size: 0.6em;">AES</a> <a href="/tags/AI/" style="font-size: 0.7em;">AI</a> <a href="/tags/AWS/" style="font-size: 0.7em;">AWS</a> <a href="/tags/Arch/" style="font-size: 0.6em;">Arch</a> <a href="/tags/Arch-Linux/" style="font-size: 0.8em;">Arch Linux</a> <a href="/tags/ArchLinux/" style="font-size: 0.8em;">ArchLinux</a> <a href="/tags/CAS/" style="font-size: 0.6em;">CAS</a> <a href="/tags/CI-CD/" style="font-size: 0.6em;">CI/CD</a> <a href="/tags/Caffeine/" style="font-size: 0.6em;">Caffeine</a> <a href="/tags/CompletableFuture/" style="font-size: 0.7em;">CompletableFuture</a> <a href="/tags/DNS/" style="font-size: 0.8em;">DNS</a> <a href="/tags/Docker/" style="font-size: 0.6em;">Docker</a> <a href="/tags/Flask/" style="font-size: 0.6em;">Flask</a> <a href="/tags/Future/" style="font-size: 0.7em;">Future</a> <a href="/tags/GC/" style="font-size: 0.6em;">GC</a> <a href="/tags/GPT/" style="font-size: 0.6em;">GPT</a> <a href="/tags/GraalVM/" style="font-size: 0.8em;">GraalVM</a> <a href="/tags/HashMap/" style="font-size: 0.6em;">HashMap</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/14/2025/11/141727/"><i class="fa  fa-book"></i> karakeep</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111335/"><i class="fa  fa-book"></i> SonarQube 扫描支持多 JDK 版本的实践方案</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111045/"><i class="fa  fa-book"></i> 一次修复 PDF 中文乱码的排查记录</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/23/2025/10/221500/"><i class="fa  fa-book"></i> dig命令使用详解</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/13/2025/10/131645/"><i class="fa  fa-book"></i> DNS解析异常导致视频播放缓慢问题排查与解决</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  >
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        <li><a href="mailto:congco@foxmail.com"><i class="fa fa-envelope"></i></a></li>
+                        
+                        
+                        
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://github.com/qbmzc"><i class="fa fa-github"></i></a></li>
+                        <li><a target="_blank" rel="nofollow" href="/rss.xml"><i class="fa fa-rss"></i></a></li>
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2025 沐曦留曳 版权所有.</li>
+                            <li>本站已运行<span id="span_dt">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
+                            <li>Site built with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by cong.</li>
+                        </div>
+                        <div>
+                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
+                            <li>Hosted on <a href="https://github.io" target="_blank">Github Pages</a></li>
+                        </div>
+                        <div>
+                            
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="/vendors/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="/vendors/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+
+    <script defer src="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="/vendors/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>

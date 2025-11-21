@@ -1,0 +1,1505 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="/images/favicon.ico">
+  
+  <title>AdGuard生成自签名证书 | 沐曦留曳</title>
+  <meta name="author" content="cong" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="adguard, openssl" />
+  
+  <meta name="description" content="为AdGuard设置自签名证书加密可有效保护局域网DNS通信安全，避免流量被窃听或篡改。以下是详细操作指南，涵盖证书生成、AdGuard配置及客户端信任设置：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AdGuard生成自签名证书">
+<meta property="og:url" content="https://qbmzc.github.io/2025/07/22/2025/07/221740/index.html">
+<meta property="og:site_name" content="沐曦留曳">
+<meta property="og:description" content="为AdGuard设置自签名证书加密可有效保护局域网DNS通信安全，避免流量被窃听或篡改。以下是详细操作指南，涵盖证书生成、AdGuard配置及客户端信任设置：">
+<meta property="og:locale">
+<meta property="og:image" content="https://qbmzc.github.io/images/favicon.ico">
+<meta property="article:published_time" content="2025-07-22T09:06:09.000Z">
+<meta property="article:modified_time" content="2025-11-21T06:36:31.566Z">
+<meta property="article:author" content="cong">
+<meta property="article:tag" content="openssl">
+<meta property="article:tag" content="adguard">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://qbmzc.github.io/images/favicon.ico">
+  <link rel="alternate" href="rss.xml" type="application/atom+xml">
+  <!-- 站点验证相关 -->
+  
+    
+      <meta name="google-site-verification" content="lV4cead5YlJ8KpODToP7dvzi-ihrxSqU0yYStYKj2ao" />
+    
+    
+      <meta name="baidu-site-verification" content="codeva-Zr6WlkDupK" />
+    
+    
+      <meta name="msvalidate.01" content="2D2197DEE362D193B3EC29AFD3306341" />
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" media="all"></script>
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-color-dark.min.css" media="(prefers-color-scheme: dark)"></script>
+    <script src="/js/kr-dark.min.js"></script>
+  
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" media="all"></script>
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="/vendors/font-awesome@4.7.0/css/font-awesome.min.css" media="all"></script>
+  <link rel="stylesheet" id="nprogress-css" href="/vendors/nprogress@0.2.0/nprogress.css" media="all"></script>
+  
+  
+  
+    <link rel="stylesheet" href="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css"></script>
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="/vendors/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/banner.webp');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">沐曦留曳</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>沐曦留曳</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article itemscope itemtype="https://schema.org/Article">
+    
+    <link itemprop="mainEntityOfPage" href="https://qbmzc.github.io/2025/07/22/2025/07/221740/">
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center" itemprop="name headline">AdGuard生成自签名证书</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><time datetime="2025-07-22T09:06:09.000Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2025-07-22</time></li>
+                <li itemprop="author" itemscope itemtype="https://schema.org/Person">
+                    <i class="fa fa-user"></i> 作者 <span itemprop="name">cong</span>
+                </li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~2.54K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1763706991566"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+            
+                <div class="kratos-post-inner-toc">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%90-%E4%B8%80%E3%80%81%E7%94%9F%E6%88%90%E8%87%AA%E7%AD%BE%E5%90%8D%E8%AF%81%E4%B9%A6%EF%BC%88%E4%BB%A5OpenSSL%E4%B8%BA%E4%BE%8B%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">🔐 一、生成自签名证书（以OpenSSL为例）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E2%9A%99%EF%B8%8F-%E4%BA%8C%E3%80%81AdGuard-Home%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%85%8D%E7%BD%AE"><span class="toc-number">2.</span> <span class="toc-text">⚙️ 二、AdGuard Home服务端配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%93%B1-%E4%B8%89%E3%80%81%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%AE%BE%E5%A4%87%E4%BF%A1%E4%BB%BB%E8%AF%81%E4%B9%A6"><span class="toc-number">3.</span> <span class="toc-text">📱 三、客户端设备信任证书</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E2%9A%A0%EF%B8%8F-%E5%9B%9B%E3%80%81%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3"><span class="toc-number">4.</span> <span class="toc-text">⚠️ 四、常见问题解决</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%92%8E-%E4%BA%94%E3%80%81%E8%BF%9B%E9%98%B6%E5%BB%BA%E8%AE%AE"><span class="toc-number">5.</span> <span class="toc-text">💎 五、进阶建议</span></a></li></ol>
+                </div>
+            
+            <hr />
+            <div itemprop="articleBody"><p>为AdGuard设置自签名证书加密可有效保护局域网DNS通信安全，避免流量被窃听或篡改。以下是详细操作指南，涵盖证书生成、AdGuard配置及客户端信任设置：</p>
+<span id="more"></span>
+
+
+<h2 id="🔐-一、生成自签名证书（以OpenSSL为例）"><a href="#🔐-一、生成自签名证书（以OpenSSL为例）" class="headerlink" title="🔐 一、生成自签名证书（以OpenSSL为例）"></a>🔐 一、生成自签名证书（以OpenSSL为例）</h2><ol>
+<li><p>安装OpenSSL<br>sudo apt update &amp;&amp; sudo apt install openssl  # Debian&#x2F;Ubuntu系统</p>
+</li>
+<li><p>生成证书和私钥<br>sudo openssl req -new -newkey rsa:2048 -sha256 -days 3650 -nodes -x509 <br>  -subj “&#x2F;C&#x3D;US&#x2F;ST&#x3D;State&#x2F;L&#x3D;City&#x2F;O&#x3D;Organization&#x2F;CN&#x3D;adguardhome.com” <br>  -out &#x2F;etc&#x2F;ssl&#x2F;certs&#x2F;adguardhome.crt <br>  -keyout &#x2F;etc&#x2F;ssl&#x2F;private&#x2F;adguardhome.key <br>  -extensions SAN <br>  -config &lt;(cat &#x2F;etc&#x2F;ssl&#x2F;openssl.cnf &lt;(printf “[SAN]\nsubjectAltName&#x3D;IP:192.168.50.200”))</p>
+<p>关键参数说明：<br>• subjectAltName&#x3D;IP:192.168.50.200：替换为AdGuard Home服务器的实际IP。</p>
+<p>• 证书路径：&#x2F;etc&#x2F;ssl&#x2F;certs&#x2F;adguardhome.crt（证书）和 &#x2F;etc&#x2F;ssl&#x2F;private&#x2F;adguardhome.key（私钥）。</p>
+</li>
+<li><p>验证证书<br>openssl x509 -in &#x2F;etc&#x2F;ssl&#x2F;certs&#x2F;adguardhome.crt -text -noout</p>
+<p>检查输出中是否包含IP地址（如 X509v3 Subject Alternative Name: IP:192.168.50.200）。</p>
+</li>
+</ol>
+<h2 id="⚙️-二、AdGuard-Home服务端配置"><a href="#⚙️-二、AdGuard-Home服务端配置" class="headerlink" title="⚙️ 二、AdGuard Home服务端配置"></a>⚙️ 二、AdGuard Home服务端配置</h2><ol>
+<li><p>启用加密设置<br>• 登录AdGuard Home管理界面（http:&#x2F;&#x2F;<IP>:3000）。</p>
+<p>• 进入 Settings → Encryption Settings。</p>
+<p>• 勾选 Enable encryption。</p>
+<p>• 填写证书路径：</p>
+<p>  ◦ Certificate chain: &#x2F;etc&#x2F;ssl&#x2F;certs&#x2F;adguardhome.crt</p>
+<p>  ◦ Private key: &#x2F;etc&#x2F;ssl&#x2F;private&#x2F;adguardhome.key 。</p>
+</li>
+<li><p>重启服务<br>sudo systemctl restart AdGuardHome</p>
+<p>完成后，管理界面将变为 https:&#x2F;&#x2F;<IP>:3000，浏览器会提示证书不安全（需后续信任操作）。</p>
+</li>
+</ol>
+<h2 id="📱-三、客户端设备信任证书"><a href="#📱-三、客户端设备信任证书" class="headerlink" title="📱 三、客户端设备信任证书"></a>📱 三、客户端设备信任证书</h2><p>Windows&#x2F;macOS&#x2F;Linux：</p>
+<ol>
+<li><p>将证书文件 adguardhome.crt 复制到客户端。</p>
+</li>
+<li><p>导入证书：<br>• Windows：双击证书 → 选择“安装证书” → 存储位置选“本地计算机” → 选择“受信任的根证书颁发机构”。</p>
+<p>• macOS：双击证书 → 钥匙串访问 → 拖入“系统”钥匙串 → 右键选择“始终信任”。</p>
+<p>• Linux：复制到 &#x2F;usr&#x2F;local&#x2F;share&#x2F;ca-certificates&#x2F; → 执行 sudo update-ca-certificates。</p>
+</li>
+</ol>
+<p>Android：</p>
+<ol>
+<li>将证书文件发送到手机。</li>
+<li>进入 设置 → 安全 → 加密与凭据 → 安装证书 → 选择文件并确认安装。</li>
+<li>在AdGuard App中启用 HTTPS过滤（需在设置中单独安装CA证书）。</li>
+</ol>
+<p>iOS：</p>
+<ol>
+<li>通过邮件或网页下载证书文件。</li>
+<li>进入 设置 → 通用 → VPN与设备管理 → 点击证书文件 → 选择“安装”。</li>
+</ol>
+<h2 id="⚠️-四、常见问题解决"><a href="#⚠️-四、常见问题解决" class="headerlink" title="⚠️ 四、常见问题解决"></a>⚠️ 四、常见问题解决</h2><ol>
+<li><p>浏览器提示“不安全连接”<br>• 原因：证书未导入客户端受信任存储区。  </p>
+<p>• 解决：重新检查证书导入步骤，确保导入到 “受信任的根证书颁发机构” ,重启浏览器。</p>
+</li>
+<li><p>AdGuard报“证书链无效”<br>• 原因：生成证书时未正确配置SAN扩展。  </p>
+<p>• 解决：重新生成证书，确保包含 subjectAltName&#x3D;IP:&lt;服务器IP&gt;。</p>
+</li>
+<li><p>移动端无法过滤HTTPS流量<br>• 原因：未在AdGuard App中启用HTTPS过滤。  </p>
+<p>• 解决：进入AdGuard移动端设置 → 过滤 → HTTPS过滤 → 安装CA证书。</p>
+</li>
+<li><p>OpenWrt&#x2F;LXC容器环境问题<br>• 需将证书追加到系统的CA信任链：<br>  sudo cat &#x2F;etc&#x2F;ssl&#x2F;certs&#x2F;adguardhome.crt &gt;&gt; &#x2F;etc&#x2F;ssl&#x2F;certs&#x2F;ca-certificates.crt<br>  。</p>
+</li>
+</ol>
+<h2 id="💎-五、进阶建议"><a href="#💎-五、进阶建议" class="headerlink" title="💎 五、进阶建议"></a>💎 五、进阶建议</h2><p>• 替代方案（生产环境）：  </p>
+<p>  使用Let’s Encrypt免费证书（支持域名验证），避免自签名证书的信任警告。<br>• 证书自动续期：  </p>
+<p>  通过certbot配置自动续期脚本（需绑定域名）。<br>• 安全性强化：  </p>
+<p>  在路由器设置中强制DNS流量指向AdGuard Home的加密端口（如853&#x2F;TLS），避免设备绕过。</p>
+<p>提示：自签名证书适用于内网环境，若需公网访问或更高安全性，建议使用受信任CA签发的证书。操作前备份原配置文件，避免服务中断。</p>
+</div>
+        </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/adguard/" rel="tag">adguard</a>, <a class="tag-none-link" href="/tags/openssl/" rel="tag">openssl</a>
+                </div>
+                <div class="pull-date">
+                    <time datetime="2025-11-21T06:36:31.566Z" itemprop="dateModified">最后编辑：2025-11-21</time>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" crates.io-index阿里云镜像" href="/2025/07/18/2025/07/181548/">&lt; 上一篇</a>
+            </div>
+            
+            
+            <div class="nav-next clearfix">
+                <a title=" onlyoffice字体加载慢的解决方案" href="/2025/07/25/2025/07/251808/">下一篇 &gt;</a>
+            </div>
+            
+        </nav>
+    
+    
+        <link rel="stylesheet" href="/vendors/gitalk@1.7.2/dist/gitalk.css"></script>
+<div id="gitalk-container" class="post-comments lazy-load" style="padding-left:2rem; padding-right:2rem;"></div>
+<script>
+    var load_comm = () => {
+        const init = () => {
+            console.log('Gitalk loading...');
+            const gitalk = new Gitalk(Object.assign({
+                id: '/2025/07/22/2025/07/221740/',
+                path: '/2025/07/22/2025/07/221740/'
+            }, JSON.parse('{"clientID":"56e6a743c63b9c4faa93","clientSecret":"888b7234051c5c2ed6ea7bdf18e8b5a2678775f1","repo":"gitalk-comments","owner":"qbmzc","admin":["qbmzc"]}')));
+
+            gitalk.render('gitalk-container');
+        }
+        if (typeof Gitalk === 'undefined') {
+            const src = '/vendors/gitalk@1.7.2/dist/gitalk.min.js';
+            $.getScript(src, init);
+        } else {
+            init();
+        }
+    };
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a></noscript>
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/avatar.webp" loading="lazy" decoding="auto" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center">流云与风，苍穹游牧</p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                499
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                8
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                229
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                    <aside id="krw-toc" class="widget widget-kratos-toc clearfix">
+    <div class="photo-background"></div>
+    <h4 class="widget-title no-after">
+        <i class="fa fa-compass"></i>
+        文章目录
+        <span class="toc-progress-bar" role="progressbar" aria-label="阅读进度："></span>
+    </h4>
+    <div class="textwidget">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%90-%E4%B8%80%E3%80%81%E7%94%9F%E6%88%90%E8%87%AA%E7%AD%BE%E5%90%8D%E8%AF%81%E4%B9%A6%EF%BC%88%E4%BB%A5OpenSSL%E4%B8%BA%E4%BE%8B%EF%BC%89"><span class="toc-text">🔐 一、生成自签名证书（以OpenSSL为例）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E2%9A%99%EF%B8%8F-%E4%BA%8C%E3%80%81AdGuard-Home%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%85%8D%E7%BD%AE"><span class="toc-text">⚙️ 二、AdGuard Home服务端配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%93%B1-%E4%B8%89%E3%80%81%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%AE%BE%E5%A4%87%E4%BF%A1%E4%BB%BB%E8%AF%81%E4%B9%A6"><span class="toc-text">📱 三、客户端设备信任证书</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E2%9A%A0%EF%B8%8F-%E5%9B%9B%E3%80%81%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3"><span class="toc-text">⚠️ 四、常见问题解决</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%92%8E-%E4%BA%94%E3%80%81%E8%BF%9B%E9%98%B6%E5%BB%BA%E8%AE%AE"><span class="toc-text">💎 五、进阶建议</span></a></li></ol>
+    </div>
+</aside>
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">137</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">151</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">29</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/congco/">congco</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/work/">work</a><span class="category-list-count">118</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wuw/">wuw</a><span class="category-list-count">48</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/">技术笔记</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/AES/" style="font-size: 0.6em;">AES</a> <a href="/tags/AI/" style="font-size: 0.7em;">AI</a> <a href="/tags/AWS/" style="font-size: 0.7em;">AWS</a> <a href="/tags/Arch/" style="font-size: 0.6em;">Arch</a> <a href="/tags/Arch-Linux/" style="font-size: 0.8em;">Arch Linux</a> <a href="/tags/ArchLinux/" style="font-size: 0.8em;">ArchLinux</a> <a href="/tags/CAS/" style="font-size: 0.6em;">CAS</a> <a href="/tags/CI-CD/" style="font-size: 0.6em;">CI/CD</a> <a href="/tags/Caffeine/" style="font-size: 0.6em;">Caffeine</a> <a href="/tags/CompletableFuture/" style="font-size: 0.7em;">CompletableFuture</a> <a href="/tags/DNS/" style="font-size: 0.8em;">DNS</a> <a href="/tags/Docker/" style="font-size: 0.6em;">Docker</a> <a href="/tags/Flask/" style="font-size: 0.6em;">Flask</a> <a href="/tags/Future/" style="font-size: 0.7em;">Future</a> <a href="/tags/GC/" style="font-size: 0.6em;">GC</a> <a href="/tags/GPT/" style="font-size: 0.6em;">GPT</a> <a href="/tags/GraalVM/" style="font-size: 0.8em;">GraalVM</a> <a href="/tags/HashMap/" style="font-size: 0.6em;">HashMap</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/14/2025/11/141727/"><i class="fa  fa-book"></i> karakeep</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111335/"><i class="fa  fa-book"></i> SonarQube 扫描支持多 JDK 版本的实践方案</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111045/"><i class="fa  fa-book"></i> 一次修复 PDF 中文乱码的排查记录</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/23/2025/10/221500/"><i class="fa  fa-book"></i> dig命令使用详解</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/13/2025/10/131645/"><i class="fa  fa-book"></i> DNS解析异常导致视频播放缓慢问题排查与解决</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  >
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        <li><a href="mailto:congco@foxmail.com"><i class="fa fa-envelope"></i></a></li>
+                        
+                        
+                        
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://github.com/qbmzc"><i class="fa fa-github"></i></a></li>
+                        <li><a target="_blank" rel="nofollow" href="/rss.xml"><i class="fa fa-rss"></i></a></li>
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2025 沐曦留曳 版权所有.</li>
+                            <li>本站已运行<span id="span_dt">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
+                            <li>Site built with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by cong.</li>
+                        </div>
+                        <div>
+                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
+                            <li>Hosted on <a href="https://github.io" target="_blank">Github Pages</a></li>
+                        </div>
+                        <div>
+                            
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="/vendors/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="/vendors/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+
+    <script defer src="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="/vendors/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>

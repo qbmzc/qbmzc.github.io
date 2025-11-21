@@ -1,0 +1,1570 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="/images/favicon.ico">
+  
+  <title>容器中使用wps转pdf | 沐曦留曳</title>
+  <meta name="author" content="cong" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="docker, wps" />
+  
+  <meta property="og:type" content="article">
+<meta property="og:title" content="容器中使用wps转pdf">
+<meta property="og:url" content="https://qbmzc.github.io/2022/05/06/2022/05/061908/index.html">
+<meta property="og:site_name" content="沐曦留曳">
+<meta property="og:locale">
+<meta property="og:image" content="https://qbmzc.github.io/images/favicon.ico">
+<meta property="article:published_time" content="2022-05-05T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-11-21T06:36:31.555Z">
+<meta property="article:author" content="cong">
+<meta property="article:tag" content="docker">
+<meta property="article:tag" content="wps">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://qbmzc.github.io/images/favicon.ico">
+  <link rel="alternate" href="rss.xml" type="application/atom+xml">
+  <!-- 站点验证相关 -->
+  
+    
+      <meta name="google-site-verification" content="lV4cead5YlJ8KpODToP7dvzi-ihrxSqU0yYStYKj2ao" />
+    
+    
+      <meta name="baidu-site-verification" content="codeva-Zr6WlkDupK" />
+    
+    
+      <meta name="msvalidate.01" content="2D2197DEE362D193B3EC29AFD3306341" />
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" media="all"></script>
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-color-dark.min.css" media="(prefers-color-scheme: dark)"></script>
+    <script src="/js/kr-dark.min.js"></script>
+  
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" media="all"></script>
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="/vendors/font-awesome@4.7.0/css/font-awesome.min.css" media="all"></script>
+  <link rel="stylesheet" id="nprogress-css" href="/vendors/nprogress@0.2.0/nprogress.css" media="all"></script>
+  
+  
+  
+    <link rel="stylesheet" href="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css"></script>
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="/vendors/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/banner.webp');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">沐曦留曳</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>沐曦留曳</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article itemscope itemtype="https://schema.org/Article">
+    
+    <link itemprop="mainEntityOfPage" href="https://qbmzc.github.io/2022/05/06/2022/05/061908/">
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center" itemprop="name headline">容器中使用wps转pdf</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><time datetime="2022-05-05T16:00:00.000Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2022-05-06</time></li>
+                <li itemprop="author" itemscope itemtype="https://schema.org/Person">
+                    <i class="fa fa-user"></i> 作者 <span itemprop="name">cong</span>
+                </li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~19.25K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1763706991555"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+            
+                <div class="kratos-post-inner-toc">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9C%80%E6%B1%82"><span class="toc-number">1.</span> <span class="toc-text">需求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E9%95%9C%E5%83%8F"><span class="toc-number">2.</span> <span class="toc-text">基础镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85wps"><span class="toc-number">3.</span> <span class="toc-text">安装wps</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E5%AD%97%E4%BD%93"><span class="toc-number">4.</span> <span class="toc-text">安装字体</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85python%E7%8E%AF%E5%A2%83"><span class="toc-number">5.</span> <span class="toc-text">安装python环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BD%AC%E6%8D%A2%E8%84%9A%E6%9C%ACdoc-pdf"><span class="toc-number">6.</span> <span class="toc-text">转换脚本doc-&gt;pdf</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#excel-pdf"><span class="toc-number">7.</span> <span class="toc-text">excel-&gt;pdf</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ppt-pdf"><span class="toc-number">8.</span> <span class="toc-text">ppt-&gt;pdf</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BD%AC%E6%8D%A2pdf"><span class="toc-number">9.</span> <span class="toc-text">转换pdf</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%97%AE%E9%A2%98"><span class="toc-number">10.</span> <span class="toc-text">问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#openjdk8"><span class="toc-number">11.</span> <span class="toc-text">openjdk8</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#docker%E6%89%93%E5%8C%85"><span class="toc-number">12.</span> <span class="toc-text">docker打包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Dockerfile"><span class="toc-number">13.</span> <span class="toc-text">Dockerfile</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#new-desktop"><span class="toc-number">14.</span> <span class="toc-text">new.desktop</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#docker-compose"><span class="toc-number">15.</span> <span class="toc-text">docker-compose</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-number">16.</span> <span class="toc-text">参考资料</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#RUN-ON-SERVER"><span class="toc-number"></span> <span class="toc-text">RUN ON SERVER</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%95%9C%E5%83%8F%E5%9C%B0%E5%9D%80"><span class="toc-number">1.</span> <span class="toc-text">镜像地址</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%B6%E4%BD%9C%E9%95%9C%E5%83%8F"><span class="toc-number">2.</span> <span class="toc-text">制作镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9B%B4%E6%8D%A2%E5%9B%BD%E5%86%85%E6%BA%90"><span class="toc-number">3.</span> <span class="toc-text">更换国内源</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%B6%E4%BD%9C%E9%95%9C%E5%83%8F-1"><span class="toc-number">4.</span> <span class="toc-text">制作镜像</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E6%A1%A3%E4%BA%92%E8%BD%AC"><span class="toc-number">4.1.</span> <span class="toc-text">文档互转</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Run-On-Server"><span class="toc-number">5.</span> <span class="toc-text">Run On Server</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#EULA"><span class="toc-number">6.</span> <span class="toc-text">EULA</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BD%AC%E6%8D%A2pdf-1"><span class="toc-number">7.</span> <span class="toc-text">转换pdf</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%97%AE%E9%A2%98-1"><span class="toc-number">8.</span> <span class="toc-text">问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E7%A4%BA%E4%BE%8B"><span class="toc-number">9.</span> <span class="toc-text">使用示例</span></a></li></ol>
+                </div>
+            
+            <hr />
+            <div itemprop="articleBody"><p><img src="https://fastly.jsdelivr.net/gh/qbmzc/images/2022/202205062006618.png" alt="202205062006618"></p>
+<span id="more"></span>
+
+<h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>容器中使用wps转换pdf的功能</p>
+<h2 id="基础镜像"><a href="#基础镜像" class="headerlink" title="基础镜像"></a>基础镜像</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">启动镜像并设置登陆密码</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">该镜像存在一些问题,导致自定义的服务无法开机自启动</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">docker run -it --<span class="built_in">rm</span> -p 6080:80 -p 5900:5900 -e VNC_PASSWORD=mypassword dorowu/ubuntu-desktop-lxde-vnc</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">新基础镜像</span></span><br><span class="line">docker run -d -p 5901:5901 -e VNCPASS=&#x27;vncpass&#x27; fullaxx/ubuntu-desktop</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://fastly.jsdelivr.net/gh/qbmzc/images/2022/202205061922065.png" alt="202205061922065"></p>
+<p><img src="https://fastly.jsdelivr.net/gh/qbmzc/images/2022/202205061923231.png" alt="202205061923231"></p>
+<h2 id="安装wps"><a href="#安装wps" class="headerlink" title="安装wps"></a>安装wps</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">下载wps</span></span><br><span class="line">wget -c https://wps-linux-personal.wpscdn.cn/wps/download/ep/Linux2019/10976/wps-office_11.1.0.10976_amd64.deb?t=1742895472&amp;k=abf8e47591107d53b7f91f2d46905dca</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">https://wps-linux-personal.wpscdn.cn/wps/download/ep/Linux2023/17900/wps-office_12.1.0.17900_amd64.deb?t=1742895472&amp;k=abf8e47591107d53b7f91f2d46905dca</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">依赖</span></span><br><span class="line">apt update</span><br><span class="line">apt install  libglu1-mesa bsdmainutils qt5-default xdg-utils</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装</span></span><br><span class="line">dpkg -i wps-office_11.1.0.10976_amd64.deb</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="安装字体"><a href="#安装字体" class="headerlink" title="安装字体"></a>安装字体</h2><p>建议复制Windows下的所有字体,否则转换之后会因为字体缺失导致转换后的pdf和win下预览的不一致.</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/qbmzc/wps-font-symbols">wps-font-symbols</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">拷贝字体到 usr/share/fonts</span></span><br><span class="line">cp -r ./wps-font-symbols /usr/share/fonts/</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">生成字体缓存信息</span></span><br><span class="line">cd /usr/share/fonts/wps-font-symbols</span><br><span class="line"></span><br><span class="line">mkfontdir</span><br><span class="line"></span><br><span class="line">mkfontscale</span><br><span class="line"></span><br><span class="line">fc-cache</span><br></pre></td></tr></table></figure>
+
+<h2 id="安装python环境"><a href="#安装python环境" class="headerlink" title="安装python环境"></a>安装python环境</h2><ul>
+<li>缺少python3-lxml会报错:libxslt.so.1: cannot open shared object file</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">apt update</span><br><span class="line">apt install python3 python3-pip python3-lxml</span><br><span class="line"><span class="comment"># 安装pywpsrpc</span></span><br><span class="line">pip install pywpsrpc -i https://pypi.tuna.tsinghua.edu.cn/simple</span><br></pre></td></tr></table></figure>
+
+<h2 id="转换脚本doc-pdf"><a href="#转换脚本doc-pdf" class="headerlink" title="转换脚本doc-&gt;pdf"></a>转换脚本doc-&gt;pdf</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python3</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#**</span></span><br><span class="line"><span class="comment"># * Copyright (c) 2020 Weitian Leung</span></span><br><span class="line"><span class="comment"># *</span></span><br><span class="line"><span class="comment"># * This file is part of pywpsrpc.</span></span><br><span class="line"><span class="comment"># *</span></span><br><span class="line"><span class="comment"># * This file is distributed under the MIT License.</span></span><br><span class="line"><span class="comment"># * See the LICENSE file for details.</span></span><br><span class="line"><span class="comment"># *</span></span><br><span class="line"><span class="comment">#*</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> pywpsrpc.rpcwpsapi <span class="keyword">import</span> (createWpsRpcInstance, wpsapi)</span><br><span class="line"><span class="keyword">from</span> pywpsrpc.common <span class="keyword">import</span> (S_OK, QtApp)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">formats = &#123;</span><br><span class="line">    <span class="string">&quot;doc&quot;</span>: wpsapi.wdFormatDocument,</span><br><span class="line">    <span class="string">&quot;docx&quot;</span>: wpsapi.wdFormatXMLDocument,</span><br><span class="line">    <span class="string">&quot;rtf&quot;</span>: wpsapi.wdFormatRTF,</span><br><span class="line">    <span class="string">&quot;html&quot;</span>: wpsapi.wdFormatHTML,</span><br><span class="line">    <span class="string">&quot;pdf&quot;</span>: wpsapi.wdFormatPDF,</span><br><span class="line">    <span class="string">&quot;xml&quot;</span>: wpsapi.wdFormatXML,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ConvertException</span>(<span class="title class_ inherited__">Exception</span>):</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, text, hr</span>):</span><br><span class="line">        self.text = text</span><br><span class="line">        self.hr = hr</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__str__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;&quot;&quot;Convert failed:</span></span><br><span class="line"><span class="string">Details: &#123;&#125;</span></span><br><span class="line"><span class="string">ErrCode: &#123;&#125;</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span>.<span class="built_in">format</span>(self.text, <span class="built_in">hex</span>(self.hr &amp; <span class="number">0xFFFFFFFF</span>))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">convert_to</span>(<span class="params">paths, <span class="built_in">format</span>, abort_on_fails=<span class="literal">False</span></span>):</span><br><span class="line">    hr, rpc = createWpsRpcInstance()</span><br><span class="line">    <span class="keyword">if</span> hr != S_OK:</span><br><span class="line">        <span class="keyword">raise</span> ConvertException(<span class="string">&quot;Can&#x27;t create the rpc instance&quot;</span>, hr)</span><br><span class="line"></span><br><span class="line">    hr, app = rpc.getWpsApplication()</span><br><span class="line">    <span class="keyword">if</span> hr != S_OK:</span><br><span class="line">        <span class="keyword">raise</span> ConvertException(<span class="string">&quot;Can&#x27;t get the application&quot;</span>, hr)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># we don&#x27;t need the gui</span></span><br><span class="line">    app.Visible = <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">    docs = app.Documents</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">_handle_result</span>(<span class="params">hr</span>):</span><br><span class="line">        <span class="keyword">if</span> abort_on_fails <span class="keyword">and</span> hr != S_OK:</span><br><span class="line">            <span class="keyword">raise</span> ConvertException(<span class="string">&quot;convert_file failed&quot;</span>, hr)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> path <span class="keyword">in</span> paths:</span><br><span class="line">        abs_path = os.path.realpath(path)</span><br><span class="line">        <span class="keyword">if</span> os.path.isdir(abs_path):</span><br><span class="line">            files = [(os.path.join(abs_path, f)) <span class="keyword">for</span> f <span class="keyword">in</span> os.listdir(abs_path)]</span><br><span class="line">            <span class="keyword">for</span> file <span class="keyword">in</span> files:</span><br><span class="line">                hr = convert_file(file, docs, <span class="built_in">format</span>)</span><br><span class="line">                _handle_result(hr)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            hr = convert_file(abs_path, docs, <span class="built_in">format</span>)</span><br><span class="line">            _handle_result(hr)</span><br><span class="line"></span><br><span class="line">    app.Quit()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">convert_file</span>(<span class="params">file, docs, <span class="built_in">format</span></span>):</span><br><span class="line">    hr, doc = docs.Open(file, ReadOnly=<span class="literal">True</span>)</span><br><span class="line">    <span class="keyword">if</span> hr != S_OK:</span><br><span class="line">        <span class="keyword">return</span> hr</span><br><span class="line"></span><br><span class="line">    out_dir = os.path.dirname(os.path.realpath(file)) + <span class="string">&quot;/out&quot;</span></span><br><span class="line">    os.makedirs(out_dir, exist_ok=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># you have to handle if the new_file already exists</span></span><br><span class="line">    new_file = out_dir + <span class="string">&quot;/&quot;</span> + os.path.splitext(os.path.basename(file))[<span class="number">0</span>] + <span class="string">&quot;.&quot;</span> + <span class="built_in">format</span></span><br><span class="line">    ret = doc.SaveAs2(new_file, FileFormat=formats[<span class="built_in">format</span>])</span><br><span class="line"></span><br><span class="line">    <span class="comment"># always close the doc</span></span><br><span class="line">    doc.Close(wpsapi.wdDoNotSaveChanges)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> ret</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    parser = argparse.ArgumentParser()</span><br><span class="line">    parser.add_argument(<span class="string">&quot;--format&quot;</span>, <span class="string">&quot;-f&quot;</span>,</span><br><span class="line">                        required=<span class="literal">True</span>,</span><br><span class="line">                        metavar=<span class="string">&quot;&lt;DOC_TYPE&gt;&quot;</span>,</span><br><span class="line">                        choices=[<span class="string">&quot;doc&quot;</span>, <span class="string">&quot;docx&quot;</span>, <span class="string">&quot;rtf&quot;</span>, <span class="string">&quot;html&quot;</span>, <span class="string">&quot;pdf&quot;</span>, <span class="string">&quot;xml&quot;</span>],</span><br><span class="line">                        <span class="built_in">help</span>=<span class="string">&quot;convert to &lt;DOC_TYPE&gt;,&quot;</span>)</span><br><span class="line"></span><br><span class="line">    parser.add_argument(<span class="string">&quot;--abort&quot;</span>, <span class="string">&quot;-a&quot;</span>,</span><br><span class="line">                        action=<span class="string">&quot;store_true&quot;</span>,</span><br><span class="line">                        <span class="built_in">help</span>=<span class="string">&quot;abort if one convert fails&quot;</span>)</span><br><span class="line"></span><br><span class="line">    parser.add_argument(<span class="string">&quot;path&quot;</span>,</span><br><span class="line">                        metavar=<span class="string">&quot;&lt;path&gt;&quot;</span>,</span><br><span class="line">                        nargs=<span class="string">&#x27;+&#x27;</span>,</span><br><span class="line">                        <span class="built_in">help</span>=<span class="string">&quot;the &lt;path&gt; can be one or more file or folder&quot;</span>)</span><br><span class="line"></span><br><span class="line">    args = parser.parse_args()</span><br><span class="line"></span><br><span class="line">    qApp = QtApp(sys.argv)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        convert_to(args.path, args.<span class="built_in">format</span>, args.abort)</span><br><span class="line">    <span class="keyword">except</span> ConvertException <span class="keyword">as</span> e:</span><br><span class="line">        <span class="built_in">print</span>(e)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+
+<h2 id="excel-pdf"><a href="#excel-pdf" class="headerlink" title="excel-&gt;pdf"></a>excel-&gt;pdf</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python3</span></span><br><span class="line"><span class="comment"># -- coding: utf-8 -</span></span><br><span class="line"><span class="comment"># **</span></span><br><span class="line"><span class="comment"># * Copyright (c) 2020 cong.zheng</span></span><br><span class="line"><span class="comment"># *</span></span><br><span class="line"><span class="comment"># * This file is part of pywpsrpc.</span></span><br><span class="line"><span class="comment"># *</span></span><br><span class="line"><span class="comment"># * This file is distributed under the MIT License.</span></span><br><span class="line"><span class="comment"># * See the LICENSE file for details.</span></span><br><span class="line"><span class="comment"># *</span></span><br><span class="line"><span class="comment"># *</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> pywpsrpc.rpcetapi <span class="keyword">import</span> (createEtRpcInstance, etapi)</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> pywpsrpc.common <span class="keyword">import</span> (S_OK, QtApp)</span><br><span class="line"></span><br><span class="line">formats = &#123;</span><br><span class="line">    <span class="string">&quot;pdf&quot;</span>: etapi.XlFixedFormatType.xlTypePDF,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ConvertException</span>(<span class="title class_ inherited__">Exception</span>):</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, text, hr</span>):</span><br><span class="line">        self.text = text</span><br><span class="line">        self.hr = hr</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__str__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;&quot;&quot;Convert failed:</span></span><br><span class="line"><span class="string">Details: &#123;&#125;</span></span><br><span class="line"><span class="string">ErrCode: &#123;&#125;</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span>.<span class="built_in">format</span>(self.text, <span class="built_in">hex</span>(self.hr &amp; <span class="number">0xFFFFFFFF</span>))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">convert_to</span>(<span class="params">paths, <span class="built_in">format</span>, abort_on_fails=<span class="literal">False</span></span>):</span><br><span class="line">    hr, rpc = createEtRpcInstance()</span><br><span class="line">    <span class="keyword">if</span> hr != S_OK:</span><br><span class="line">        <span class="keyword">raise</span> ConvertException(<span class="string">&quot;Can&#x27;t create the rpc instance&quot;</span>, hr)</span><br><span class="line"></span><br><span class="line">    hr, app = rpc.getEtApplication()</span><br><span class="line">    <span class="keyword">if</span> hr != S_OK:</span><br><span class="line">        <span class="keyword">raise</span> ConvertException(<span class="string">&quot;Can&#x27;t get the application&quot;</span>, hr)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># we don&#x27;t need the gui</span></span><br><span class="line">    app.Visible = <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">#docs = app.Workbooks</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">_handle_result</span>(<span class="params">hr</span>):</span><br><span class="line">        <span class="keyword">if</span> abort_on_fails <span class="keyword">and</span> hr != S_OK:</span><br><span class="line">            <span class="keyword">raise</span> ConvertException(<span class="string">&quot;convert_file failed&quot;</span>, hr)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> path <span class="keyword">in</span> paths:</span><br><span class="line">        abs_path = os.path.realpath(path)</span><br><span class="line">        <span class="keyword">if</span> os.path.isdir(abs_path):</span><br><span class="line">            files = [(os.path.join(abs_path, f)) <span class="keyword">for</span> f <span class="keyword">in</span> os.listdir(abs_path)]</span><br><span class="line">            <span class="keyword">for</span> file <span class="keyword">in</span> files:</span><br><span class="line">                hr = convert_file(file, app, <span class="built_in">format</span>)</span><br><span class="line">                _handle_result(hr)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            hr = convert_file(abs_path, app, <span class="built_in">format</span>)</span><br><span class="line">            _handle_result(hr)</span><br><span class="line"></span><br><span class="line">    app.Quit()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">convert_file</span>(<span class="params">file, app, <span class="built_in">format</span></span>):</span><br><span class="line">    hr, doc = app.Workbooks.Open(file, Password=<span class="string">&#x27;xxx&#x27;</span>, ReadOnly=<span class="literal">True</span>)</span><br><span class="line">    <span class="keyword">if</span> hr != S_OK:</span><br><span class="line">        <span class="keyword">return</span> hr</span><br><span class="line">    <span class="comment"># 设置横向打印,不需要可以注释掉</span></span><br><span class="line">    app.Worksheets(<span class="number">0</span>).PageSetup.Orientation = etapi.xlLandscape   </span><br><span class="line"></span><br><span class="line">    out_dir = os.path.dirname(os.path.realpath(file)) + <span class="string">&quot;/out&quot;</span></span><br><span class="line">    os.makedirs(out_dir, exist_ok=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># you have to handle if the new_file already exists</span></span><br><span class="line">    new_file = out_dir + <span class="string">&quot;/&quot;</span> + os.path.splitext(os.path.basename(file))[<span class="number">0</span>] + <span class="string">&quot;.&quot;</span> + <span class="built_in">format</span></span><br><span class="line">    ret = doc.ExportAsFixedFormat(formats[<span class="built_in">format</span>], new_file)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># always close the doc</span></span><br><span class="line">    doc.Close()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> ret</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    parser = argparse.ArgumentParser()</span><br><span class="line">    parser.add_argument(<span class="string">&quot;--format&quot;</span>, <span class="string">&quot;-f&quot;</span>,</span><br><span class="line">                        required=<span class="literal">True</span>,</span><br><span class="line">                        metavar=<span class="string">&quot;&lt;DOC_TYPE&gt;&quot;</span>,</span><br><span class="line">                        choices=[<span class="string">&quot;pdf&quot;</span>],</span><br><span class="line">                        <span class="built_in">help</span>=<span class="string">&quot;convert to &lt;DOC_TYPE&gt;,&quot;</span>)</span><br><span class="line"></span><br><span class="line">    parser.add_argument(<span class="string">&quot;--abort&quot;</span>, <span class="string">&quot;-a&quot;</span>,</span><br><span class="line">                        action=<span class="string">&quot;store_true&quot;</span>,</span><br><span class="line">                        <span class="built_in">help</span>=<span class="string">&quot;abort if one convert fails&quot;</span>)</span><br><span class="line"></span><br><span class="line">    parser.add_argument(<span class="string">&quot;path&quot;</span>,</span><br><span class="line">                        metavar=<span class="string">&quot;&lt;path&gt;&quot;</span>,</span><br><span class="line">                        nargs=<span class="string">&#x27;+&#x27;</span>,</span><br><span class="line">                        <span class="built_in">help</span>=<span class="string">&quot;the &lt;path&gt; can be one or more file or folder&quot;</span>)</span><br><span class="line"></span><br><span class="line">    args = parser.parse_args()</span><br><span class="line"></span><br><span class="line">    qApp = QtApp(sys.argv)</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        convert_to(args.path, args.<span class="built_in">format</span>, args.abort)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;covert over&quot;</span>)</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        <span class="built_in">print</span>(e)</span><br><span class="line">    <span class="keyword">finally</span>:</span><br><span class="line">        <span class="comment"># ubuntu</span></span><br><span class="line">        <span class="comment"># apt install psmisc</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;kill all et&quot;</span>)</span><br><span class="line">        subprocess.call(<span class="string">&quot;killall -9 et&quot;</span>, shell=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    main()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="ppt-pdf"><a href="#ppt-pdf" class="headerlink" title="ppt-&gt;pdf"></a>ppt-&gt;pdf</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python3</span></span><br><span class="line"><span class="comment"># -- coding: utf-8 -</span></span><br><span class="line"><span class="comment"># **</span></span><br><span class="line"><span class="comment"># * Copyright (c) 2020 cong.zheng</span></span><br><span class="line"><span class="comment"># *</span></span><br><span class="line"><span class="comment"># * This file is part of pywpsrpc.</span></span><br><span class="line"><span class="comment"># *</span></span><br><span class="line"><span class="comment"># * This file is distributed under the MIT License.</span></span><br><span class="line"><span class="comment"># * See the LICENSE file for details.</span></span><br><span class="line"><span class="comment"># *</span></span><br><span class="line"><span class="comment"># *</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> argparse</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> pywpsrpc.rpcwppapi <span class="keyword">import</span> (createWppRpcInstance, wppapi)</span><br><span class="line"><span class="keyword">from</span> pywpsrpc.common <span class="keyword">import</span> (S_OK, QtApp)</span><br><span class="line"></span><br><span class="line">formats = &#123;</span><br><span class="line">    <span class="string">&quot;pdf&quot;</span>: wppapi.PpSaveAsFileType.ppSaveAsPDF,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ConvertException</span>(<span class="title class_ inherited__">Exception</span>):</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, text, hr</span>):</span><br><span class="line">        self.text = text</span><br><span class="line">        self.hr = hr</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__str__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;&quot;&quot;Convert failed:</span></span><br><span class="line"><span class="string">Details: &#123;&#125;</span></span><br><span class="line"><span class="string">ErrCode: &#123;&#125;</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span>.<span class="built_in">format</span>(self.text, <span class="built_in">hex</span>(self.hr &amp; <span class="number">0xFFFFFFFF</span>))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">convert_to</span>(<span class="params">paths, <span class="built_in">format</span>, abort_on_fails=<span class="literal">False</span></span>):</span><br><span class="line">    hr, rpc = createWppRpcInstance()</span><br><span class="line">    <span class="keyword">if</span> hr != S_OK:</span><br><span class="line">        <span class="keyword">raise</span> ConvertException(<span class="string">&quot;Can&#x27;t create the rpc instance&quot;</span>, hr)</span><br><span class="line"></span><br><span class="line">    hr, app = rpc.getWppApplication()</span><br><span class="line">    <span class="keyword">if</span> hr != S_OK:</span><br><span class="line">        <span class="keyword">raise</span> ConvertException(<span class="string">&quot;Can&#x27;t get the application&quot;</span>, hr)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># we don&#x27;t need the gui</span></span><br><span class="line">    <span class="comment"># Call &#x27;put_Visible()&#x27; failed with 0x80010105</span></span><br><span class="line">    <span class="comment"># app.Visible = wppapi.MsoTriState.msoFalse</span></span><br><span class="line"></span><br><span class="line">    docs = app.Presentations</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">_handle_result</span>(<span class="params">hr</span>):</span><br><span class="line">        <span class="keyword">if</span> abort_on_fails <span class="keyword">and</span> hr != S_OK:</span><br><span class="line">            <span class="keyword">raise</span> ConvertException(<span class="string">&quot;convert_file failed&quot;</span>, hr)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> path <span class="keyword">in</span> paths:</span><br><span class="line">        abs_path = os.path.realpath(path)</span><br><span class="line">        <span class="keyword">if</span> os.path.isdir(abs_path):</span><br><span class="line">            files = [(os.path.join(abs_path, f)) <span class="keyword">for</span> f <span class="keyword">in</span> os.listdir(abs_path)]</span><br><span class="line">            <span class="keyword">for</span> file <span class="keyword">in</span> files:</span><br><span class="line">                hr = convert_file(file, docs, <span class="built_in">format</span>)</span><br><span class="line">                _handle_result(hr)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            hr = convert_file(abs_path, docs, <span class="built_in">format</span>)</span><br><span class="line">            _handle_result(hr)</span><br><span class="line"></span><br><span class="line">    app.Quit()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">convert_file</span>(<span class="params">file, docs, <span class="built_in">format</span></span>):</span><br><span class="line">    hr, doc = docs.Open(file, ReadOnly=<span class="literal">True</span>)</span><br><span class="line">    <span class="keyword">if</span> hr != S_OK:</span><br><span class="line">        <span class="keyword">return</span> hr</span><br><span class="line"></span><br><span class="line">    out_dir = os.path.dirname(os.path.realpath(file)) + <span class="string">&quot;/out&quot;</span></span><br><span class="line">    os.makedirs(out_dir, exist_ok=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># you have to handle if the new_file already exists</span></span><br><span class="line">    new_file = out_dir + <span class="string">&quot;/&quot;</span> + os.path.splitext(os.path.basename(file))[<span class="number">0</span>] + <span class="string">&quot;.&quot;</span> + <span class="built_in">format</span></span><br><span class="line">    ret = doc.SaveAs(new_file, formats[<span class="built_in">format</span>])</span><br><span class="line"></span><br><span class="line">    <span class="comment"># always close the doc</span></span><br><span class="line">    doc.Close()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> ret</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    parser = argparse.ArgumentParser()</span><br><span class="line">    parser.add_argument(<span class="string">&quot;--format&quot;</span>, <span class="string">&quot;-f&quot;</span>,</span><br><span class="line">                        required=<span class="literal">True</span>,</span><br><span class="line">                        metavar=<span class="string">&quot;&lt;DOC_TYPE&gt;&quot;</span>,</span><br><span class="line">                        choices=[<span class="string">&quot;pdf&quot;</span>],</span><br><span class="line">                        <span class="built_in">help</span>=<span class="string">&quot;convert to &lt;DOC_TYPE&gt;,&quot;</span>)</span><br><span class="line"></span><br><span class="line">    parser.add_argument(<span class="string">&quot;--abort&quot;</span>, <span class="string">&quot;-a&quot;</span>,</span><br><span class="line">                        action=<span class="string">&quot;store_true&quot;</span>,</span><br><span class="line">                        <span class="built_in">help</span>=<span class="string">&quot;abort if one convert fails&quot;</span>)</span><br><span class="line"></span><br><span class="line">    parser.add_argument(<span class="string">&quot;path&quot;</span>,</span><br><span class="line">                        metavar=<span class="string">&quot;&lt;path&gt;&quot;</span>,</span><br><span class="line">                        nargs=<span class="string">&#x27;+&#x27;</span>,</span><br><span class="line">                        <span class="built_in">help</span>=<span class="string">&quot;the &lt;path&gt; can be one or more file or folder&quot;</span>)</span><br><span class="line"></span><br><span class="line">    args = parser.parse_args()</span><br><span class="line"></span><br><span class="line">    qApp = QtApp(sys.argv)</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        convert_to(args.path, args.<span class="built_in">format</span>, args.abort)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;covert over&quot;</span>)</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        <span class="built_in">print</span>(e)</span><br><span class="line">    <span class="keyword">finally</span>:</span><br><span class="line">        <span class="comment"># ubuntu</span></span><br><span class="line">        <span class="comment"># apt install psmisc</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;kill all wpp&quot;</span>)</span><br><span class="line">        subprocess.call(<span class="string">&quot;killall -9 wpp&quot;</span>, shell=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+
+<h2 id="转换pdf"><a href="#转换pdf" class="headerlink" title="转换pdf"></a>转换pdf</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python convert.py -f pdf input.docx</span><br></pre></td></tr></table></figure>
+
+<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><ul>
+<li>libQt5Core.so.5: cannot open shared object file</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apt-get install libqt5core5a</span><br><span class="line">strip --remove-section=.note.ABI-tag /lib/x86_64-linux-gnu/libQt5Core.so.5</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>ImportError: &#x2F;usr&#x2F;lib&#x2F;office6&#x2F;libstdc++.so.6: version &#96;GLIBCXX_3.4.29’ not found (required by &#x2F;usr&#x2F;lib&#x2F;libQt5Core.so.5)</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo rm /usr/lib/office6/libstdc++.so.6 </span><br><span class="line">sudo ln -s /usr/lib64/libstdc++.so.6 /usr/lib/office6/libstdc++.so.6</span><br></pre></td></tr></table></figure>
+
+<h2 id="openjdk8"><a href="#openjdk8" class="headerlink" title="openjdk8"></a>openjdk8</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apt-get update</span><br><span class="line">apt-get install openjdk-8-jdk</span><br></pre></td></tr></table></figure>
+
+<h2 id="docker打包"><a href="#docker打包" class="headerlink" title="docker打包"></a>docker打包</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker commit -a &quot;cong.zheng&quot; -m &quot;wps&quot; b1f0d35fa596 wps-office:v1</span><br></pre></td></tr></table></figure>
+
+<h2 id="Dockerfile"><a href="#Dockerfile" class="headerlink" title="Dockerfile"></a>Dockerfile</h2><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> congco/wps-office:v1.<span class="number">3.2</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> <span class="built_in">mkdir</span> -p /apps</span></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /apps</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> target/*.jar  /apps/</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> ./new.desktop /etc/xdg/autostart/</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="new-desktop"><a href="#new-desktop" class="headerlink" title="new.desktop"></a>new.desktop</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[Desktop Entry]</span><br><span class="line">Version=1.0.0</span><br><span class="line">Name=new-doc</span><br><span class="line">Exec=xfce4-terminal -e=&quot;java -jar /apps/*.jar&quot; # 使用terminal启动java服务</span><br><span class="line">Type=Application</span><br></pre></td></tr></table></figure>
+
+<h2 id="docker-compose"><a href="#docker-compose" class="headerlink" title="docker-compose"></a>docker-compose</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&quot;3&quot;</span></span><br><span class="line"> </span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">new-doc01:</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">new-doc-ccp01</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">images.taimei.com/middle/new-doc-ccp:v1.0.0</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/data/01/webapps:/data/webapps</span></span><br><span class="line">      <span class="comment">## 禁止wps在无网络环境下请求DNS解析联网</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/data/resolv.conf:/etc/resolv.conf:ro</span> </span><br><span class="line"></span><br><span class="line"> </span><br><span class="line">  <span class="attr">new-doc02:</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">new-doc-ccp02</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">congco/new-doc-ccp:v1.0.0</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/data/012webapps:/data/webapps</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/data/resolv.conf:/etc/resolv.conf:ro</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/fcwu/docker-ubuntu-vnc-desktop">docker-ubuntu-vnc-desktop</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.runoob.com/docker/docker-commit-command.html">docker commit</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/arag2009/article/details/78465214">用docker创建ubuntu VNC桌面</a></li>
+<li><a target="_blank" rel="noopener" href="https://open.wps.cn/docs/client/wpsLoad">wps</a></li>
+</ul>
+<h1 id="RUN-ON-SERVER"><a href="#RUN-ON-SERVER" class="headerlink" title="RUN ON SERVER"></a>RUN ON SERVER</h1><hr>
+<h2 id="镜像地址"><a href="#镜像地址" class="headerlink" title="镜像地址"></a><a target="_blank" rel="noopener" href="https://hub.docker.com/repository/docker/congco/wps-office">镜像地址</a></h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker push congco/wps-office:tagname</span><br></pre></td></tr></table></figure>
+
+<h2 id="制作镜像"><a href="#制作镜像" class="headerlink" title="制作镜像"></a>制作镜像</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">基础镜像为Ubuntu18.04LTS</span></span><br><span class="line">docker run --rm -it --name ubuntu-1804 ubuntu:18.04 bash</span><br></pre></td></tr></table></figure>
+
+<h2 id="更换国内源"><a href="#更换国内源" class="headerlink" title="更换国内源"></a>更换国内源</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释</span></span><br><span class="line">deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic main restricted universe multiverse</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic main restricted universe multiverse</span></span><br><span class="line">deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-updates main restricted universe multiverse</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-updates main restricted universe multiverse</span></span><br><span class="line">deb http://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-backports main restricted universe multiverse</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-backports main restricted universe multiverse</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-security main restricted universe multiverse</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="comment"># deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-security main restricted universe multiverse</span></span></span><br><span class="line"></span><br><span class="line">deb http://security.ubuntu.com/ubuntu/ bionic-security main restricted universe multiverse</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">deb-src http://security.ubuntu.com/ubuntu/ bionic-security main restricted universe multiverse</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">预发布软件源，不建议启用</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-proposed main restricted universe multiverse</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="comment"># deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-proposed main restricted universe multiverse</span></span></span><br></pre></td></tr></table></figure>
+
+<h2 id="制作镜像-1"><a href="#制作镜像-1" class="headerlink" title="制作镜像"></a>制作镜像</h2><ul>
+<li>安装wps</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">下载wps,可以自行替换版本</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">https://wps-linux-personal.wpscdn.cn/wps/download/ep/Linux2019/11698/wps-office_11.1.0.11698_amd64.deb</span></span><br><span class="line">wget -c https://wps-linux-personal.wpscdn.cn/wps/download/ep/Linux2019/10976/wps-office_11.1.0.10976_amd64.deb</span><br><span class="line"><span class="meta prompt_"> </span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">依赖</span></span><br><span class="line">apt update</span><br><span class="line">apt install libglu1-mesa bsdmainutils qt5-default xdg-utils</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装</span></span><br><span class="line">dpkg -i wps-office_11.1.0.10976_amd64.deb</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>安装字体</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://github.com/qbmzc/wps-font-symbols">https://github.com/qbmzc/wps-font-symbols</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/qbmzc/wps-font-symbols/archive/refs/heads/master.zip</span><br><span class="line">apt install unzip</span><br><span class="line">unzip master.zip</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">拷贝字体到 usr/share/fonts</span></span><br><span class="line">cp -r ./wps-font-symbols /usr/share/fonts/</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">fc-cache -vf</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>安装python环境</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">apt update</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">python3-lxml libxslt.so.1</span></span><br><span class="line">apt install python3 python3-pip python3-lxml</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装pywpsrpc</span></span><br><span class="line">pip3 install pywpsrpc -i https://pypi.tuna.tsinghua.edu.cn/simple</span><br></pre></td></tr></table></figure>
+
+<h3 id="文档互转"><a href="#文档互转" class="headerlink" title="文档互转"></a>文档互转</h3><ul>
+<li><a href="examples/rpcwpsapi/convertto">WPS文字</a></li>
+<li><a href="examples/rpcwppapi/wpp_convert.py">WPS演示</a></li>
+<li><a href="examples/rpcetapi/et_convert.py">WPS表格</a></li>
+</ul>
+<h2 id="Run-On-Server"><a href="#Run-On-Server" class="headerlink" title="Run On Server"></a>Run On Server</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">模拟x环境</span></span><br><span class="line">apt install xserver-xorg-video-dummy</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>dummy.conf</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">Section &quot;Monitor&quot;</span><br><span class="line">        Identifier &quot;dummy_monitor&quot;</span><br><span class="line">        HorizSync 28.0-80.0</span><br><span class="line">        VertRefresh 48.0-75.0</span><br><span class="line">        Modeline &quot;1920x1080&quot; 172.80 1920 2040 2248 2576 1080 1081 1084 1118</span><br><span class="line">EndSection</span><br><span class="line"></span><br><span class="line">Section &quot;Device&quot;</span><br><span class="line">        Identifier &quot;dummy_card&quot;</span><br><span class="line">        VideoRam 256000</span><br><span class="line">        Driver &quot;dummy&quot;</span><br><span class="line">EndSection</span><br><span class="line"></span><br><span class="line">Section &quot;Screen&quot;</span><br><span class="line">        Identifier &quot;dummy_screen&quot;</span><br><span class="line">        Device &quot;dummy_card&quot;</span><br><span class="line">        Monitor &quot;dummy_monitor&quot;</span><br><span class="line">        SubSection &quot;Display&quot;</span><br><span class="line">        EndSubSection</span><br><span class="line">EndSection</span><br></pre></td></tr></table></figure>
+
+<p>Now start the Xorg (with root):</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">启动x服务</span></span><br><span class="line">X :0 -config dummy.conf</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置环境变量</span></span><br><span class="line">export DISPLAY=:0</span><br></pre></td></tr></table></figure>
+
+<h2 id="EULA"><a href="#EULA" class="headerlink" title="EULA"></a>EULA</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> vim /root/.config/Kingsoft/Office.conf</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">末尾添加</span></span><br><span class="line">common\AcceptedEULA=true</span><br></pre></td></tr></table></figure>
+
+<h2 id="转换pdf-1"><a href="#转换pdf-1" class="headerlink" title="转换pdf"></a>转换pdf</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python convert.py -f pdf input.docx</span><br></pre></td></tr></table></figure>
+
+<h2 id="问题-1"><a href="#问题-1" class="headerlink" title="问题"></a>问题</h2><ol>
+<li>转换卡顿问题或超时</li>
+</ol>
+<p>本地部署一般为局域网访问，不开通外网，wps有外网连接请求，在没网的环境下会导致转换过慢，甚至会导致转换超时失败。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">可使用tcpdump抓包分析</span></span><br><span class="line"></span><br><span class="line">tcpdump -i eth0 -nt -s 500 port domain</span><br></pre></td></tr></table></figure>
+
+<p>解决方案</p>
+<ul>
+<li>将resolv.conf中的DNS解析服务器设置为空</li>
+<li>docker中可以挂载一个空文件映射到&#x2F;etc&#x2F;resolv.conf</li>
+<li>&#x2F;etc&#x2F;hosts 添加以下内容(由于有些部署方式会替换容器host，这里没有在容器内修改，可以在配置中添加主机别名)</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1 s1.vip.wpscdn.cn</span><br><span class="line">127.0.0.1 dw-online.ksosoft.com</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>libQt5Core.so.5: cannot open shared object file</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apt-get install libqt5core5a</span><br><span class="line">strip --remove-section=.note.ABI-tag /usr/lib/x86_64-linux-gnu/libQt5Core.so.5</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>ImportError: &#x2F;usr&#x2F;lib&#x2F;office6&#x2F;libstdc++.so.6: version &#96;GLIBCXX_3.4.29’ not found (required by<br>&#x2F;usr&#x2F;lib&#x2F;libQt5Core.so.5)</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo rm /usr/lib/office6/libstdc++.so.6 </span><br><span class="line">sudo ln -s /usr/lib64/libstdc++.so.6 /usr/lib/office6/libstdc++.so.6</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>et转换失败 error: libltdl.so.7: cannot open shared object file: No such file or directory</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">dlopen /opt/kingsoft/wps-office/office6/libetmain.so failed , error: libltdl.so.7: cannot open shared object file: No such file or directory</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Convert failed:</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Details: Can<span class="string">&#x27;t get the application</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="string">ErrCode: 0x80000008</span></span></span><br><span class="line">apt install libltdl7</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用示例"><a href="#使用示例" class="headerlink" title="使用示例"></a>使用示例</h2><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> images.taimei.com/middle/wps-office:v2.<span class="number">0.4</span></span><br><span class="line"><span class="keyword">MAINTAINER</span> congco</span><br><span class="line"><span class="keyword">ARG</span> QUEUE=doc_convert_test</span><br><span class="line"><span class="keyword">ENV</span> QUEUE $QUEUE</span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /k8sapps</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> *.py  /opt/</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> target/new-doc-convert-0.0.1-SNAPSHOT.jar  /k8sapps/</span></span><br><span class="line"><span class="comment">#RUN echo &quot;java -jar /k8sapps/new-doc-convert-0.0.1-SNAPSHOT.jar&quot; &gt;&gt; /root/.bashrc</span></span><br><span class="line"><span class="comment">#COPY ./new.desktop /etc/xdg/autostart/</span></span><br><span class="line"><span class="comment">#RUN echo &quot;Exec=xfce4-terminal -e=&#x27;java -Dspring.profiles.active=$&#123;PROFILES_ACTIVE&#125; -Dqueue=$&#123;QUEUE&#125; -jar /k8sapps/new-doc-convert-0.0.1-SNAPSHOT.jar &#x27;&quot; &gt;&gt; /etc/xdg/autostart/new.desktop</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> start.sh /opt/start.sh</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> <span class="built_in">chmod</span> +x /opt/start.sh</span></span><br><span class="line"><span class="keyword">ENV</span> DISPLAY :<span class="number">0</span></span><br><span class="line"><span class="keyword">ENTRYPOINT</span><span class="language-bash"> [<span class="string">&quot;/opt/start.sh&quot;</span>]</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>start.sh</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">! /bin/bash</span></span><br><span class="line"></span><br><span class="line">echo &quot;start X server&quot;</span><br><span class="line"></span><br><span class="line">nohup X :0 -config /etc/dummy.conf &gt; /dev/null 2&gt;&amp;1 &amp;</span><br><span class="line">echo &quot;X server start successful!&quot;</span><br><span class="line">echo &quot;start java server&quot;</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash">python3 /opt/convert.py a.md -f pdf</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">CMD [<span class="string">&quot;sh&quot;</span>, <span class="string">&quot;-c&quot;</span>, <span class="string">&quot;java <span class="variable">$&#123;APM_SRV_AGENT_OPTIONS&#125;</span> <span class="variable">$&#123;JAVA_OPTS&#125;</span> -jar /k8sapps/hls-1.0.0-SNAPSHOT.jar&quot;</span>]</span></span><br><span class="line">java $&#123;APM_SRV_AGENT_OPTIONS&#125; $&#123;JAVA_OPTS&#125; -Dqueue=$&#123;QUEUE&#125; -jar /k8sapps/new-doc-convert-0.0.1-SNAPSHOT.jar</span><br></pre></td></tr></table></figure></div>
+        </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/docker/" rel="tag">docker</a>, <a class="tag-none-link" href="/tags/wps/" rel="tag">wps</a>
+                </div>
+                <div class="pull-date">
+                    <time datetime="2025-11-21T06:36:31.555Z" itemprop="dateModified">最后编辑：2025-11-21</time>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" django静态资源" href="/2022/04/28/2022/04/281449/">&lt; 上一篇</a>
+            </div>
+            
+            
+            <div class="nav-next clearfix">
+                <a title=" docker提交本地镜像" href="/2022/05/10/2022/05/101700/">下一篇 &gt;</a>
+            </div>
+            
+        </nav>
+    
+    
+        <link rel="stylesheet" href="/vendors/gitalk@1.7.2/dist/gitalk.css"></script>
+<div id="gitalk-container" class="post-comments lazy-load" style="padding-left:2rem; padding-right:2rem;"></div>
+<script>
+    var load_comm = () => {
+        const init = () => {
+            console.log('Gitalk loading...');
+            const gitalk = new Gitalk(Object.assign({
+                id: '/2022/05/06/2022/05/061908/',
+                path: '/2022/05/06/2022/05/061908/'
+            }, JSON.parse('{"clientID":"56e6a743c63b9c4faa93","clientSecret":"888b7234051c5c2ed6ea7bdf18e8b5a2678775f1","repo":"gitalk-comments","owner":"qbmzc","admin":["qbmzc"]}')));
+
+            gitalk.render('gitalk-container');
+        }
+        if (typeof Gitalk === 'undefined') {
+            const src = '/vendors/gitalk@1.7.2/dist/gitalk.min.js';
+            $.getScript(src, init);
+        } else {
+            init();
+        }
+    };
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a></noscript>
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/avatar.webp" loading="lazy" decoding="auto" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center">流云与风，苍穹游牧</p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                499
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                8
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                229
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                    <aside id="krw-toc" class="widget widget-kratos-toc clearfix">
+    <div class="photo-background"></div>
+    <h4 class="widget-title no-after">
+        <i class="fa fa-compass"></i>
+        文章目录
+        <span class="toc-progress-bar" role="progressbar" aria-label="阅读进度："></span>
+    </h4>
+    <div class="textwidget">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9C%80%E6%B1%82"><span class="toc-text">需求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E9%95%9C%E5%83%8F"><span class="toc-text">基础镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85wps"><span class="toc-text">安装wps</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E5%AD%97%E4%BD%93"><span class="toc-text">安装字体</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85python%E7%8E%AF%E5%A2%83"><span class="toc-text">安装python环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BD%AC%E6%8D%A2%E8%84%9A%E6%9C%ACdoc-pdf"><span class="toc-text">转换脚本doc-&gt;pdf</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#excel-pdf"><span class="toc-text">excel-&gt;pdf</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ppt-pdf"><span class="toc-text">ppt-&gt;pdf</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BD%AC%E6%8D%A2pdf"><span class="toc-text">转换pdf</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%97%AE%E9%A2%98"><span class="toc-text">问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#openjdk8"><span class="toc-text">openjdk8</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#docker%E6%89%93%E5%8C%85"><span class="toc-text">docker打包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Dockerfile"><span class="toc-text">Dockerfile</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#new-desktop"><span class="toc-text">new.desktop</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#docker-compose"><span class="toc-text">docker-compose</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-text">参考资料</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#RUN-ON-SERVER"><span class="toc-text">RUN ON SERVER</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%95%9C%E5%83%8F%E5%9C%B0%E5%9D%80"><span class="toc-text">镜像地址</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%B6%E4%BD%9C%E9%95%9C%E5%83%8F"><span class="toc-text">制作镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9B%B4%E6%8D%A2%E5%9B%BD%E5%86%85%E6%BA%90"><span class="toc-text">更换国内源</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%B6%E4%BD%9C%E9%95%9C%E5%83%8F-1"><span class="toc-text">制作镜像</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E6%A1%A3%E4%BA%92%E8%BD%AC"><span class="toc-text">文档互转</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Run-On-Server"><span class="toc-text">Run On Server</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#EULA"><span class="toc-text">EULA</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BD%AC%E6%8D%A2pdf-1"><span class="toc-text">转换pdf</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%97%AE%E9%A2%98-1"><span class="toc-text">问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E7%A4%BA%E4%BE%8B"><span class="toc-text">使用示例</span></a></li></ol>
+    </div>
+</aside>
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">137</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">151</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">29</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/congco/">congco</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/work/">work</a><span class="category-list-count">118</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wuw/">wuw</a><span class="category-list-count">48</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/">技术笔记</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/AES/" style="font-size: 0.6em;">AES</a> <a href="/tags/AI/" style="font-size: 0.7em;">AI</a> <a href="/tags/AWS/" style="font-size: 0.7em;">AWS</a> <a href="/tags/Arch/" style="font-size: 0.6em;">Arch</a> <a href="/tags/Arch-Linux/" style="font-size: 0.8em;">Arch Linux</a> <a href="/tags/ArchLinux/" style="font-size: 0.8em;">ArchLinux</a> <a href="/tags/CAS/" style="font-size: 0.6em;">CAS</a> <a href="/tags/CI-CD/" style="font-size: 0.6em;">CI/CD</a> <a href="/tags/Caffeine/" style="font-size: 0.6em;">Caffeine</a> <a href="/tags/CompletableFuture/" style="font-size: 0.7em;">CompletableFuture</a> <a href="/tags/DNS/" style="font-size: 0.8em;">DNS</a> <a href="/tags/Docker/" style="font-size: 0.6em;">Docker</a> <a href="/tags/Flask/" style="font-size: 0.6em;">Flask</a> <a href="/tags/Future/" style="font-size: 0.7em;">Future</a> <a href="/tags/GC/" style="font-size: 0.6em;">GC</a> <a href="/tags/GPT/" style="font-size: 0.6em;">GPT</a> <a href="/tags/GraalVM/" style="font-size: 0.8em;">GraalVM</a> <a href="/tags/HashMap/" style="font-size: 0.6em;">HashMap</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/14/2025/11/141727/"><i class="fa  fa-book"></i> karakeep</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111335/"><i class="fa  fa-book"></i> SonarQube 扫描支持多 JDK 版本的实践方案</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111045/"><i class="fa  fa-book"></i> 一次修复 PDF 中文乱码的排查记录</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/23/2025/10/221500/"><i class="fa  fa-book"></i> dig命令使用详解</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/13/2025/10/131645/"><i class="fa  fa-book"></i> DNS解析异常导致视频播放缓慢问题排查与解决</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  >
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        <li><a href="mailto:congco@foxmail.com"><i class="fa fa-envelope"></i></a></li>
+                        
+                        
+                        
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://github.com/qbmzc"><i class="fa fa-github"></i></a></li>
+                        <li><a target="_blank" rel="nofollow" href="/rss.xml"><i class="fa fa-rss"></i></a></li>
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2025 沐曦留曳 版权所有.</li>
+                            <li>本站已运行<span id="span_dt">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
+                            <li>Site built with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by cong.</li>
+                        </div>
+                        <div>
+                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
+                            <li>Hosted on <a href="https://github.io" target="_blank">Github Pages</a></li>
+                        </div>
+                        <div>
+                            
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="/vendors/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="/vendors/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+
+    <script defer src="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="/vendors/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>

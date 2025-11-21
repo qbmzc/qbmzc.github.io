@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="/images/favicon.ico">
+  
+  <title>搜索 | 沐曦留曳</title>
+  <meta name="author" content="cong" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="" />
+  
+  <meta name="description" content="流云与风，苍穹游牧">
+<meta property="og:type" content="website">
+<meta property="og:title" content="搜索">
+<meta property="og:url" content="https://qbmzc.github.io/search/index.html">
+<meta property="og:site_name" content="沐曦留曳">
+<meta property="og:description" content="流云与风，苍穹游牧">
+<meta property="og:locale">
+<meta property="og:image" content="https://qbmzc.github.io/images/favicon.ico">
+<meta property="article:author" content="cong">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://qbmzc.github.io/images/favicon.ico">
+  <link rel="alternate" href="rss.xml" type="application/atom+xml">
+  <!-- 站点验证相关 -->
+  
+    
+      <meta name="google-site-verification" content="lV4cead5YlJ8KpODToP7dvzi-ihrxSqU0yYStYKj2ao" />
+    
+    
+      <meta name="baidu-site-verification" content="codeva-Zr6WlkDupK" />
+    
+    
+      <meta name="msvalidate.01" content="2D2197DEE362D193B3EC29AFD3306341" />
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" media="all"></script>
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-color-dark.min.css" media="(prefers-color-scheme: dark)"></script>
+    <script src="/js/kr-dark.min.js"></script>
+  
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" media="all"></script>
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="/vendors/font-awesome@4.7.0/css/font-awesome.min.css" media="all"></script>
+  <link rel="stylesheet" id="nprogress-css" href="/vendors/nprogress@0.2.0/nprogress.css" media="all"></script>
+  
+  
+  
+    <link rel="stylesheet" href="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css"></script>
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="/vendors/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/banner.webp');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">沐曦留曳</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>沐曦留曳</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <div class="kratos-hentry kratos-post-inner clearfix">
+    <div class="kratos-post-content">
+        <h2 class="title-h2 text-center">搜索</h2>
+        <form class="input-group" onsubmit="return inpSearch();">
+            <input class="form-input input-lg" id="search-input" maxlength="80" name="s" placeholder="有什么想找找看的呢o(*￣▽￣*)ブ" required type="search">
+            <button class="btn btn-primary" type="submit">找一找~</button>
+        </form>
+    </div>
+</div>
+
+<div class="alert alert-info" id="kr-search-notice">
+    这里是 沐曦留曳 的搜索引擎~
+</div>
+
+<div id="result-posts">
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <div class="kratos-post-content">
+            <p>搜索多个关键词时请用空格分割，例如「cook daily person」这样；</p>
+            <p>您也可以使用这些标签碰碰运气哦~</p>
+            <p class="search-demo-tags">
+                <a href="/tags/cook/" style="font-size: 18px; color: #b2b7be">cook</a> <a href="/tags/daily/" style="font-size: 24px; color: #6c7588">daily</a> <a href="/tags/person/" style="font-size: 18.8px; color: #a9aeb7">person</a> <a href="/tags/music/" style="font-size: 18.8px; color: #a9aeb7">music</a> <a href="/tags/soft/" style="font-size: 18px; color: #b2b7be">soft</a> <a href="/tags/flask/" style="font-size: 18.8px; color: #a9aeb7">flask</a> <a href="/tags/python/" style="font-size: 20.8px; color: #9198a5">python</a> <a href="/tags/manjaro/" style="font-size: 19.6px; color: #9fa5b0">manjaro</a> <a href="/tags/wallpaper/" style="font-size: 18.8px; color: #a9aeb7">wallpaper</a> <a href="/tags/vscode/" style="font-size: 18.8px; color: #a9aeb7">vscode</a> <a href="/tags/anaconda/" style="font-size: 18.8px; color: #a9aeb7">anaconda</a> <a href="/tags/vuepress/" style="font-size: 18px; color: #b2b7be">vuepress</a> <a href="/tags/JMM/" style="font-size: 18px; color: #b2b7be">JMM</a> <a href="/tags/tomcat/" style="font-size: 18.4px; color: #adb3ba">tomcat</a> <a href="/tags/docker/" style="font-size: 23.6px; color: #71798c">docker</a> <a href="/tags/web/" style="font-size: 18.8px; color: #a9aeb7">web</a> <a href="/tags/MySQL/" style="font-size: 22.4px; color: #7f8796">MySQL</a> <a href="/tags/JVM/" style="font-size: 20.4px; color: #969da8">JVM</a> <a href="/tags/thread/" style="font-size: 18px; color: #b2b7be">thread</a> <a href="/tags/GC/" style="font-size: 18px; color: #b2b7be">GC</a> <a href="/tags/netease/" style="font-size: 18px; color: #b2b7be">netease</a> <a href="/tags/HashMap/" style="font-size: 18px; color: #b2b7be">HashMap</a> <a href="/tags/Java/" style="font-size: 21.2px; color: #8d94a1">Java</a> <a href="/tags/Stream/" style="font-size: 18px; color: #b2b7be">Stream</a> <a href="/tags/skype/" style="font-size: 18px; color: #b2b7be">skype</a> <a href="/tags/Linux/" style="font-size: 20px; color: #9ba1ac">Linux</a> <a href="/tags/spring/" style="font-size: 22px; color: #838b9a">spring</a> <a href="/tags/game/" style="font-size: 18.4px; color: #adb3ba">game</a> <a href="/tags/Python/" style="font-size: 18px; color: #b2b7be">Python</a> <a href="/tags/Jupyter/" style="font-size: 18px; color: #b2b7be">Jupyter</a> <a href="/tags/Spring-test/" style="font-size: 18px; color: #b2b7be">Spring test</a> <a href="/tags/Singleton/" style="font-size: 18px; color: #b2b7be">Singleton</a> <a href="/tags/DNS/" style="font-size: 18.8px; color: #a9aeb7">DNS</a> <a href="/tags/Ubuntu/" style="font-size: 19.6px; color: #9fa5b0">Ubuntu</a> <a href="/tags/Future/" style="font-size: 18.4px; color: #adb3ba">Future</a> <a href="/tags/Thread/" style="font-size: 18.8px; color: #a9aeb7">Thread</a> <a href="/tags/NIO/" style="font-size: 18px; color: #b2b7be">NIO</a> <a href="/tags/ThreadLocal/" style="font-size: 18px; color: #b2b7be">ThreadLocal</a> <a href="/tags/Lock/" style="font-size: 18.4px; color: #adb3ba">Lock</a> <a href="/tags/CAS/" style="font-size: 18px; color: #b2b7be">CAS</a> <a href="/tags/ReentrantLock/" style="font-size: 18px; color: #b2b7be">ReentrantLock</a> <a href="/tags/Time/" style="font-size: 18px; color: #b2b7be">Time</a> <a href="/tags/nginx/" style="font-size: 20.8px; color: #9198a5">nginx</a> <a href="/tags/swagger/" style="font-size: 18px; color: #b2b7be">swagger</a> <a href="/tags/SSL/" style="font-size: 18px; color: #b2b7be">SSL</a> <a href="/tags/pandas/" style="font-size: 18.4px; color: #adb3ba">pandas</a> <a href="/tags/tkinter/" style="font-size: 18px; color: #b2b7be">tkinter</a> <a href="/tags/keras/" style="font-size: 18px; color: #b2b7be">keras</a> <a href="/tags/tensorflow/" style="font-size: 18px; color: #b2b7be">tensorflow</a> <a href="/tags/mysql/" style="font-size: 18.8px; color: #a9aeb7">mysql</a> <a href="/tags/nextcloud/" style="font-size: 18px; color: #b2b7be">nextcloud</a> <a href="/tags/linux/" style="font-size: 22px; color: #838b9a">linux</a> <a href="/tags/future/" style="font-size: 18px; color: #b2b7be">future</a> <a href="/tags/js/" style="font-size: 23.2px; color: #757e8f">js</a> <a href="/tags/pytorch/" style="font-size: 18.4px; color: #adb3ba">pytorch</a> <a href="/tags/PyTorch/" style="font-size: 18.4px; color: #adb3ba">PyTorch</a> <a href="/tags/Flask/" style="font-size: 18px; color: #b2b7be">Flask</a> <a href="/tags/Vue/" style="font-size: 18px; color: #b2b7be">Vue</a> <a href="/tags/elenmentUI/" style="font-size: 18px; color: #b2b7be">elenmentUI</a> <a href="/tags/WEB/" style="font-size: 18px; color: #b2b7be">WEB</a> <a href="/tags/ewomail/" style="font-size: 18px; color: #b2b7be">ewomail</a> <a href="/tags/reflect/" style="font-size: 18px; color: #b2b7be">reflect</a> <a href="/tags/Arch-Linux/" style="font-size: 18.8px; color: #a9aeb7">Arch Linux</a> <a href="/tags/Manjaro/" style="font-size: 18px; color: #b2b7be">Manjaro</a> <a href="/tags/grub/" style="font-size: 18px; color: #b2b7be">grub</a> <a href="/tags/gitlab/" style="font-size: 18px; color: #b2b7be">gitlab</a> <a href="/tags/calibre/" style="font-size: 18.4px; color: #adb3ba">calibre</a> <a href="/tags/mybatis/" style="font-size: 18.4px; color: #adb3ba">mybatis</a> <a href="/tags/Spring/" style="font-size: 20px; color: #9ba1ac">Spring</a> <a href="/tags/git/" style="font-size: 19.2px; color: #a4aab3">git</a> <a href="/tags/windows-terminal/" style="font-size: 18px; color: #b2b7be">windows terminal</a> <a href="/tags/redis/" style="font-size: 19.2px; color: #a4aab3">redis</a> <a href="/tags/Wallpaper/" style="font-size: 18px; color: #b2b7be">Wallpaper</a> <a href="/tags/java/" style="font-size: 22.8px; color: #7a8293">java</a> <a href="/tags/fcitx5/" style="font-size: 18px; color: #b2b7be">fcitx5</a> <a href="/tags/elasticsearch/" style="font-size: 19.2px; color: #a4aab3">elasticsearch</a> <a href="/tags/kibana/" style="font-size: 18.4px; color: #adb3ba">kibana</a> <a href="/tags/volatile/" style="font-size: 18px; color: #b2b7be">volatile</a> <a href="/tags/TensorFlow/" style="font-size: 18px; color: #b2b7be">TensorFlow</a> <a href="/tags/minio/" style="font-size: 18px; color: #b2b7be">minio</a> <a href="/tags/excel/" style="font-size: 19.2px; color: #a4aab3">excel</a> <a href="/tags/SQL/" style="font-size: 18.4px; color: #adb3ba">SQL</a> <a href="/tags/vim/" style="font-size: 18px; color: #b2b7be">vim</a> <a href="/tags/Redis/" style="font-size: 18px; color: #b2b7be">Redis</a> <a href="/tags/tcp-ip/" style="font-size: 18px; color: #b2b7be">tcp/ip</a> <a href="/tags/SpringMVC/" style="font-size: 18px; color: #b2b7be">SpringMVC</a> <a href="/tags/cap/" style="font-size: 18px; color: #b2b7be">cap</a> <a href="/tags/sql/" style="font-size: 18.4px; color: #adb3ba">sql</a> <a href="/tags/re/" style="font-size: 18px; color: #b2b7be">re</a> <a href="/tags/CompletableFuture/" style="font-size: 18.4px; color: #adb3ba">CompletableFuture</a> <a href="/tags/io/" style="font-size: 18.8px; color: #a9aeb7">io</a> <a href="/tags/shell/" style="font-size: 20px; color: #9ba1ac">shell</a> <a href="/tags/AES/" style="font-size: 18px; color: #b2b7be">AES</a> <a href="/tags/RSA/" style="font-size: 18px; color: #b2b7be">RSA</a> <a href="/tags/hls/" style="font-size: 18.4px; color: #adb3ba">hls</a> <a href="/tags/MQ/" style="font-size: 18.4px; color: #adb3ba">MQ</a> <a href="/tags/ffmpeg/" style="font-size: 21.6px; color: #888f9e">ffmpeg</a> <a href="/tags/wsl/" style="font-size: 18.4px; color: #adb3ba">wsl</a> <a href="/tags/file/" style="font-size: 21.2px; color: #8d94a1">file</a> <a href="/tags/log/" style="font-size: 18px; color: #b2b7be">log</a> <a href="/tags/libreoffice/" style="font-size: 18px; color: #b2b7be">libreoffice</a> <a href="/tags/mac/" style="font-size: 18px; color: #b2b7be">mac</a> <a href="/tags/zip/" style="font-size: 18.8px; color: #a9aeb7">zip</a> <a href="/tags/encode/" style="font-size: 18.4px; color: #adb3ba">encode</a> <a href="/tags/font/" style="font-size: 19.6px; color: #9fa5b0">font</a> <a href="/tags/hdd/" style="font-size: 18px; color: #b2b7be">hdd</a> <a href="/tags/tiki/" style="font-size: 18px; color: #b2b7be">tiki</a> <a href="/tags/map/" style="font-size: 18.4px; color: #adb3ba">map</a> <a href="/tags/onlyoffice/" style="font-size: 18.8px; color: #a9aeb7">onlyoffice</a> <a href="/tags/ssh/" style="font-size: 18px; color: #b2b7be">ssh</a> <a href="/tags/guava/" style="font-size: 18px; color: #b2b7be">guava</a> <a href="/tags/aws-s3/" style="font-size: 18px; color: #b2b7be">aws-s3</a> <a href="/tags/WorkDocs/" style="font-size: 18px; color: #b2b7be">WorkDocs</a> <a href="/tags/gz/" style="font-size: 18px; color: #b2b7be">gz</a> <a href="/tags/M1/" style="font-size: 18.4px; color: #adb3ba">M1</a> <a href="/tags/JDK/" style="font-size: 18.4px; color: #adb3ba">JDK</a> <a href="/tags/maven/" style="font-size: 19.6px; color: #9fa5b0">maven</a> <a href="/tags/css/" style="font-size: 18.4px; color: #adb3ba">css</a> <a href="/tags/tool/" style="font-size: 19.6px; color: #9fa5b0">tool</a> <a href="/tags/Spring-Boot/" style="font-size: 18.4px; color: #adb3ba">Spring Boot</a> <a href="/tags/csv/" style="font-size: 18px; color: #b2b7be">csv</a> <a href="/tags/cuvid/" style="font-size: 18px; color: #b2b7be">cuvid</a> <a href="/tags/nvidia/" style="font-size: 18.4px; color: #adb3ba">nvidia</a> <a href="/tags/ntp/" style="font-size: 18px; color: #b2b7be">ntp</a> <a href="/tags/http/" style="font-size: 18px; color: #b2b7be">http</a> <a href="/tags/jvm/" style="font-size: 18.4px; color: #adb3ba">jvm</a> <a href="/tags/m1/" style="font-size: 18.4px; color: #adb3ba">m1</a> <a href="/tags/md5/" style="font-size: 18px; color: #b2b7be">md5</a> <a href="/tags/office/" style="font-size: 18px; color: #b2b7be">office</a> <a href="/tags/pdf/" style="font-size: 21.2px; color: #8d94a1">pdf</a> <a href="/tags/zuul/" style="font-size: 18px; color: #b2b7be">zuul</a> <a href="/tags/Arch/" style="font-size: 18px; color: #b2b7be">Arch</a> <a href="/tags/dingtalk/" style="font-size: 18px; color: #b2b7be">dingtalk</a> <a href="/tags/gs/" style="font-size: 18.4px; color: #adb3ba">gs</a> <a href="/tags/django/" style="font-size: 18.4px; color: #adb3ba">django</a> <a href="/tags/nacos/" style="font-size: 18px; color: #b2b7be">nacos</a> <a href="/tags/ubuntu/" style="font-size: 18.4px; color: #adb3ba">ubuntu</a> <a href="/tags/wps/" style="font-size: 19.2px; color: #a4aab3">wps</a> <a href="/tags/fastapi/" style="font-size: 18px; color: #b2b7be">fastapi</a> <a href="/tags/requests/" style="font-size: 18px; color: #b2b7be">requests</a> <a href="/tags/grep/" style="font-size: 18px; color: #b2b7be">grep</a> <a href="/tags/nexus/" style="font-size: 18px; color: #b2b7be">nexus</a> <a href="/tags/tcp/" style="font-size: 18px; color: #b2b7be">tcp</a> <a href="/tags/k8s/" style="font-size: 20px; color: #9ba1ac">k8s</a> <a href="/tags/navicat/" style="font-size: 18px; color: #b2b7be">navicat</a> <a href="/tags/brew/" style="font-size: 18px; color: #b2b7be">brew</a> <a href="/tags/image/" style="font-size: 19.2px; color: #a4aab3">image</a> <a href="/tags/InputStream/" style="font-size: 18px; color: #b2b7be">InputStream</a> <a href="/tags/fs/" style="font-size: 18px; color: #b2b7be">fs</a> <a href="/tags/watermark/" style="font-size: 18.4px; color: #adb3ba">watermark</a> <a href="/tags/rabbitmq/" style="font-size: 18px; color: #b2b7be">rabbitmq</a> <a href="/tags/zsh/" style="font-size: 18px; color: #b2b7be">zsh</a> <a href="/tags/macos/" style="font-size: 18px; color: #b2b7be">macos</a> <a href="/tags/troubleshooting/" style="font-size: 18px; color: #b2b7be">troubleshooting</a> <a href="/tags/jdk/" style="font-size: 18.4px; color: #adb3ba">jdk</a> <a href="/tags/openssl/" style="font-size: 22.8px; color: #7a8293">openssl</a> <a href="/tags/portainer/" style="font-size: 18px; color: #b2b7be">portainer</a> <a href="/tags/webclient/" style="font-size: 18px; color: #b2b7be">webclient</a> <a href="/tags/util/" style="font-size: 18px; color: #b2b7be">util</a> <a href="/tags/command/" style="font-size: 18px; color: #b2b7be">command</a> <a href="/tags/xfce4/" style="font-size: 18px; color: #b2b7be">xfce4</a> <a href="/tags/xarchiver/" style="font-size: 18px; color: #b2b7be">xarchiver</a> <a href="/tags/mongodb/" style="font-size: 18.4px; color: #adb3ba">mongodb</a> <a href="/tags/Mac/" style="font-size: 18.4px; color: #adb3ba">Mac</a> <a href="/tags/AWS/" style="font-size: 18.4px; color: #adb3ba">AWS</a> <a href="/tags/nodejs/" style="font-size: 18px; color: #b2b7be">nodejs</a> <a href="/tags/json/" style="font-size: 18px; color: #b2b7be">json</a> <a href="/tags/motrix/" style="font-size: 18px; color: #b2b7be">motrix</a> <a href="/tags/AI/" style="font-size: 18.4px; color: #adb3ba">AI</a> <a href="/tags/idea/" style="font-size: 18.4px; color: #adb3ba">idea</a> <a href="/tags/websocket/" style="font-size: 18px; color: #b2b7be">websocket</a> <a href="/tags/curl/" style="font-size: 18px; color: #b2b7be">curl</a> <a href="/tags/gnome/" style="font-size: 18px; color: #b2b7be">gnome</a> <a href="/tags/Neo4j/" style="font-size: 18px; color: #b2b7be">Neo4j</a> <a href="/tags/spring-boot/" style="font-size: 18px; color: #b2b7be">spring boot</a> <a href="/tags/pip/" style="font-size: 18.4px; color: #adb3ba">pip</a> <a href="/tags/conda/" style="font-size: 18.8px; color: #a9aeb7">conda</a> <a href="/tags/audio/" style="font-size: 18px; color: #b2b7be">audio</a> <a href="/tags/iso/" style="font-size: 18px; color: #b2b7be">iso</a> <a href="/tags/aria2/" style="font-size: 18px; color: #b2b7be">aria2</a> <a href="/tags/hibernate/" style="font-size: 18.4px; color: #adb3ba">hibernate</a> <a href="/tags/GPT/" style="font-size: 18px; color: #b2b7be">GPT</a> <a href="/tags/tar/" style="font-size: 18px; color: #b2b7be">tar</a> <a href="/tags/termanal/" style="font-size: 18px; color: #b2b7be">termanal</a> <a href="/tags/dns/" style="font-size: 18.4px; color: #adb3ba">dns</a> <a href="/tags/amapm/" style="font-size: 18px; color: #b2b7be">amapm</a> <a href="/tags/openpdf/" style="font-size: 18px; color: #b2b7be">openpdf</a> <a href="/tags/email/" style="font-size: 18px; color: #b2b7be">email</a> <a href="/tags/word/" style="font-size: 18.4px; color: #adb3ba">word</a> <a href="/tags/job/" style="font-size: 18px; color: #b2b7be">job</a> <a href="/tags/miniconda/" style="font-size: 18px; color: #b2b7be">miniconda</a> <a href="/tags/miniforge/" style="font-size: 18px; color: #b2b7be">miniforge</a> <a href="/tags/gpg/" style="font-size: 18px; color: #b2b7be">gpg</a> <a href="/tags/rar/" style="font-size: 18px; color: #b2b7be">rar</a> <a href="/tags/tika/" style="font-size: 18.4px; color: #adb3ba">tika</a> <a href="/tags/docx/" style="font-size: 18.4px; color: #adb3ba">docx</a> <a href="/tags/s3/" style="font-size: 18.8px; color: #a9aeb7">s3</a> <a href="/tags/ArchLinux/" style="font-size: 18.8px; color: #a9aeb7">ArchLinux</a> <a href="/tags/unzip/" style="font-size: 18px; color: #b2b7be">unzip</a> <a href="/tags/GraalVM/" style="font-size: 18.8px; color: #a9aeb7">GraalVM</a> <a href="/tags/springboot/" style="font-size: 18px; color: #b2b7be">springboot</a> <a href="/tags/nano/" style="font-size: 18px; color: #b2b7be">nano</a> <a href="/tags/powershell/" style="font-size: 18px; color: #b2b7be">powershell</a> <a href="/tags/clashx/" style="font-size: 18px; color: #b2b7be">clashx</a> <a href="/tags/PowerShell/" style="font-size: 18px; color: #b2b7be">PowerShell</a> <a href="/tags/deepoove/" style="font-size: 18px; color: #b2b7be">deepoove</a> <a href="/tags/poi/" style="font-size: 18.8px; color: #a9aeb7">poi</a> <a href="/tags/kindle/" style="font-size: 18px; color: #b2b7be">kindle</a> <a href="/tags/podman/" style="font-size: 18px; color: #b2b7be">podman</a> <a href="/tags/Caffeine/" style="font-size: 18px; color: #b2b7be">Caffeine</a> <a href="/tags/autoindex/" style="font-size: 18px; color: #b2b7be">autoindex</a> <a href="/tags/windows/" style="font-size: 18.8px; color: #a9aeb7">windows</a> <a href="/tags/musix/" style="font-size: 18px; color: #b2b7be">musix</a> <a href="/tags/Navigation/" style="font-size: 18px; color: #b2b7be">Navigation</a> <a href="/tags/kubernetes/" style="font-size: 18px; color: #b2b7be">kubernetes</a> <a href="/tags/istio/" style="font-size: 18px; color: #b2b7be">istio</a> <a href="/tags/Rust/" style="font-size: 18px; color: #b2b7be">Rust</a> <a href="/tags/adguard/" style="font-size: 18px; color: #b2b7be">adguard</a> <a href="/tags/pptx/" style="font-size: 18px; color: #b2b7be">pptx</a> <a href="/tags/mcp/" style="font-size: 18px; color: #b2b7be">mcp</a> <a href="/tags/svg/" style="font-size: 18px; color: #b2b7be">svg</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E6%8E%92%E6%9F%A5/" style="font-size: 18px; color: #b2b7be">网络排查</a> <a href="/tags/%E8%A7%86%E9%A2%91%E6%92%AD%E6%94%BE/" style="font-size: 18px; color: #b2b7be">视频播放</a> <a href="/tags/PDF/" style="font-size: 18px; color: #b2b7be">PDF</a> <a href="/tags/%E7%BC%96%E7%A0%81%E9%97%AE%E9%A2%98/" style="font-size: 18px; color: #b2b7be">编码问题</a> <a href="/tags/%E6%95%85%E9%9A%9C%E6%8E%92%E6%9F%A5/" style="font-size: 18px; color: #b2b7be">故障排查</a> <a href="/tags/SonarQube/" style="font-size: 18px; color: #b2b7be">SonarQube</a> <a href="/tags/CI-CD/" style="font-size: 18px; color: #b2b7be">CI/CD</a> <a href="/tags/Docker/" style="font-size: 18px; color: #b2b7be">Docker</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+<script>var searchDataFile = "/search.json";</script>
+<script defer src="/js/local-search.min.js"></script>
+
+        
+
+            </section>
+
+        
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+        <div class="sticky-area">
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/avatar.webp" loading="lazy" decoding="auto" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center">流云与风，苍穹游牧</p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                499
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                8
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                229
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">137</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">151</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">29</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/congco/">congco</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/work/">work</a><span class="category-list-count">118</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wuw/">wuw</a><span class="category-list-count">48</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/">技术笔记</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/AES/" style="font-size: 0.6em;">AES</a> <a href="/tags/AI/" style="font-size: 0.7em;">AI</a> <a href="/tags/AWS/" style="font-size: 0.7em;">AWS</a> <a href="/tags/Arch/" style="font-size: 0.6em;">Arch</a> <a href="/tags/Arch-Linux/" style="font-size: 0.8em;">Arch Linux</a> <a href="/tags/ArchLinux/" style="font-size: 0.8em;">ArchLinux</a> <a href="/tags/CAS/" style="font-size: 0.6em;">CAS</a> <a href="/tags/CI-CD/" style="font-size: 0.6em;">CI/CD</a> <a href="/tags/Caffeine/" style="font-size: 0.6em;">Caffeine</a> <a href="/tags/CompletableFuture/" style="font-size: 0.7em;">CompletableFuture</a> <a href="/tags/DNS/" style="font-size: 0.8em;">DNS</a> <a href="/tags/Docker/" style="font-size: 0.6em;">Docker</a> <a href="/tags/Flask/" style="font-size: 0.6em;">Flask</a> <a href="/tags/Future/" style="font-size: 0.7em;">Future</a> <a href="/tags/GC/" style="font-size: 0.6em;">GC</a> <a href="/tags/GPT/" style="font-size: 0.6em;">GPT</a> <a href="/tags/GraalVM/" style="font-size: 0.8em;">GraalVM</a> <a href="/tags/HashMap/" style="font-size: 0.6em;">HashMap</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/14/2025/11/141727/"><i class="fa  fa-book"></i> karakeep</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111335/"><i class="fa  fa-book"></i> SonarQube 扫描支持多 JDK 版本的实践方案</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111045/"><i class="fa  fa-book"></i> 一次修复 PDF 中文乱码的排查记录</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/23/2025/10/221500/"><i class="fa  fa-book"></i> dig命令使用详解</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/13/2025/10/131645/"><i class="fa  fa-book"></i> DNS解析异常导致视频播放缓慢问题排查与解决</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  >
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        <li><a href="mailto:congco@foxmail.com"><i class="fa fa-envelope"></i></a></li>
+                        
+                        
+                        
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://github.com/qbmzc"><i class="fa fa-github"></i></a></li>
+                        <li><a target="_blank" rel="nofollow" href="/rss.xml"><i class="fa fa-rss"></i></a></li>
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2025 沐曦留曳 版权所有.</li>
+                            <li>本站已运行<span id="span_dt">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
+                            <li>Site built with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by cong.</li>
+                        </div>
+                        <div>
+                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
+                            <li>Hosted on <a href="https://github.io" target="_blank">Github Pages</a></li>
+                        </div>
+                        <div>
+                            
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="/vendors/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="/vendors/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+
+    <script defer src="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="/vendors/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>

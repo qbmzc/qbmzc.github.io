@@ -1,0 +1,1652 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="/images/favicon.ico">
+  
+  <title>uv包管理器 | 沐曦留曳</title>
+  <meta name="author" content="cong" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="anaconda, pip, python" />
+  
+  <meta name="description" content="uv 是 Astral 公司开发的一款革命性的 Python 包管理工具，被誉为 Python 包管理的未来。它以其极致的性能和现代化的设计理念，正在改变 Python 开发者的工作流程。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="uv包管理器">
+<meta property="og:url" content="https://qbmzc.github.io/2025/03/28/2025/03/281515/index.html">
+<meta property="og:site_name" content="沐曦留曳">
+<meta property="og:description" content="uv 是 Astral 公司开发的一款革命性的 Python 包管理工具，被誉为 Python 包管理的未来。它以其极致的性能和现代化的设计理念，正在改变 Python 开发者的工作流程。">
+<meta property="og:locale">
+<meta property="og:image" content="https://qbmzc.github.io/images/favicon.ico">
+<meta property="article:published_time" content="2025-03-28T06:06:09.000Z">
+<meta property="article:modified_time" content="2025-11-21T06:36:31.565Z">
+<meta property="article:author" content="cong">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="anaconda">
+<meta property="article:tag" content="pip">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://qbmzc.github.io/images/favicon.ico">
+  <link rel="alternate" href="rss.xml" type="application/atom+xml">
+  <!-- 站点验证相关 -->
+  
+    
+      <meta name="google-site-verification" content="lV4cead5YlJ8KpODToP7dvzi-ihrxSqU0yYStYKj2ao" />
+    
+    
+      <meta name="baidu-site-verification" content="codeva-Zr6WlkDupK" />
+    
+    
+      <meta name="msvalidate.01" content="2D2197DEE362D193B3EC29AFD3306341" />
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" media="all"></script>
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-color-dark.min.css" media="(prefers-color-scheme: dark)"></script>
+    <script src="/js/kr-dark.min.js"></script>
+  
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" media="all"></script>
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="/vendors/font-awesome@4.7.0/css/font-awesome.min.css" media="all"></script>
+  <link rel="stylesheet" id="nprogress-css" href="/vendors/nprogress@0.2.0/nprogress.css" media="all"></script>
+  
+  
+  
+    <link rel="stylesheet" href="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css"></script>
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="/vendors/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/banner.webp');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">沐曦留曳</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>沐曦留曳</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article itemscope itemtype="https://schema.org/Article">
+    
+    <link itemprop="mainEntityOfPage" href="https://qbmzc.github.io/2025/03/28/2025/03/281515/">
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center" itemprop="name headline">uv包管理器</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><time datetime="2025-03-28T06:06:09.000Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2025-03-28</time></li>
+                <li itemprop="author" itemscope itemtype="https://schema.org/Person">
+                    <i class="fa fa-user"></i> 作者 <span itemprop="name">cong</span>
+                </li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~9.73K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1763706991565"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+            
+                <div class="kratos-post-inner-toc">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-uv%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">什么是 uv？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%89%E6%8B%A9-uv%EF%BC%9F"><span class="toc-number">1.1.</span> <span class="toc-text">为什么选择 uv？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-uv"><span class="toc-number">2.</span> <span class="toc-text">安装 uv</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%B8%80%EF%BC%9A%E4%BD%BF%E7%94%A8%E5%AE%98%E6%96%B9%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC%EF%BC%88%E6%8E%A8%E8%8D%90%EF%BC%89"><span class="toc-number">2.1.</span> <span class="toc-text">方法一：使用官方安装脚本（推荐）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%BA%8C%EF%BC%9A%E4%BD%BF%E7%94%A8-pip-%E5%AE%89%E8%A3%85"><span class="toc-number">2.2.</span> <span class="toc-text">方法二：使用 pip 安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%B8%89%EF%BC%9A%E4%BD%BF%E7%94%A8%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8"><span class="toc-number">2.3.</span> <span class="toc-text">方法三：使用包管理器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AA%8C%E8%AF%81%E5%AE%89%E8%A3%85"><span class="toc-number">2.4.</span> <span class="toc-text">验证安装</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E5%8A%9F%E8%83%BD%E8%AF%A6%E8%A7%A3"><span class="toc-number">3.</span> <span class="toc-text">核心功能详解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%8C%85%E5%AE%89%E8%A3%85%E4%B8%8E%E7%AE%A1%E7%90%86"><span class="toc-number">3.1.</span> <span class="toc-text">1. 包安装与管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E5%AE%89%E8%A3%85%E5%91%BD%E4%BB%A4"><span class="toc-number">3.1.1.</span> <span class="toc-text">基本安装命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%AB%98%E7%BA%A7%E5%AE%89%E8%A3%85%E9%80%89%E9%A1%B9"><span class="toc-number">3.1.2.</span> <span class="toc-text">高级安装选项</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83%E7%AE%A1%E7%90%86"><span class="toc-number">3.2.</span> <span class="toc-text">2. 虚拟环境管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E5%92%8C%E7%AE%A1%E7%90%86%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83"><span class="toc-number">3.2.1.</span> <span class="toc-text">创建和管理虚拟环境</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%BF%80%E6%B4%BB%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83"><span class="toc-number">3.2.2.</span> <span class="toc-text">激活虚拟环境</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83%E7%AE%A1%E7%90%86%E5%91%BD%E4%BB%A4"><span class="toc-number">3.2.3.</span> <span class="toc-text">虚拟环境管理命令</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E4%BE%9D%E8%B5%96%E9%94%81%E5%AE%9A%E4%B8%8E%E7%BC%96%E8%AF%91"><span class="toc-number">3.3.</span> <span class="toc-text">3. 依赖锁定与编译</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E4%BE%9D%E8%B5%96%E9%94%81%E5%AE%9A%E6%96%87%E4%BB%B6"><span class="toc-number">3.3.1.</span> <span class="toc-text">生成依赖锁定文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%8C%E6%AD%A5%E4%BE%9D%E8%B5%96"><span class="toc-number">3.3.2.</span> <span class="toc-text">同步依赖</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E9%A1%B9%E7%9B%AE%E5%88%9D%E5%A7%8B%E5%8C%96%E4%B8%8E%E7%AE%A1%E7%90%86"><span class="toc-number">3.4.</span> <span class="toc-text">4. 项目初始化与管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E6%96%B0%E9%A1%B9%E7%9B%AE"><span class="toc-number">3.4.1.</span> <span class="toc-text">创建新项目</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86"><span class="toc-number">3.4.2.</span> <span class="toc-text">项目依赖管理</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E5%AF%B9%E6%AF%94%E4%B8%8E%E4%BC%98%E5%8A%BF"><span class="toc-number">4.</span> <span class="toc-text">性能对比与优势</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9F%E5%BA%A6%E5%AF%B9%E6%AF%94"><span class="toc-number">4.1.</span> <span class="toc-text">速度对比</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E4%BC%98%E5%8A%BF"><span class="toc-number">4.2.</span> <span class="toc-text">核心优势</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%99%85%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">5.</span> <span class="toc-text">实际使用场景</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%BA%E6%99%AF%E4%B8%80%EF%BC%9A%E6%96%B0%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91"><span class="toc-number">5.1.</span> <span class="toc-text">场景一：新项目开发</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%BA%E6%99%AF%E4%BA%8C%EF%BC%9A%E7%8E%B0%E6%9C%89%E9%A1%B9%E7%9B%AE%E8%BF%81%E7%A7%BB"><span class="toc-number">5.2.</span> <span class="toc-text">场景二：现有项目迁移</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%BA%E6%99%AF%E4%B8%89%EF%BC%9ACI-CD-%E7%8E%AF%E5%A2%83"><span class="toc-number">5.3.</span> <span class="toc-text">场景三：CI&#x2F;CD 环境</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E9%80%9F%E6%9F%A5"><span class="toc-number">6.</span> <span class="toc-text">常用命令速查</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4"><span class="toc-number">6.1.</span> <span class="toc-text">基础命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E5%91%BD%E4%BB%A4"><span class="toc-number">6.2.</span> <span class="toc-text">项目命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E5%91%BD%E4%BB%A4"><span class="toc-number">6.3.</span> <span class="toc-text">环境命令</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5"><span class="toc-number">7.</span> <span class="toc-text">最佳实践</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84%E5%BB%BA%E8%AE%AE"><span class="toc-number">7.1.</span> <span class="toc-text">1. 项目结构建议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86%E7%AD%96%E7%95%A5"><span class="toc-number">7.2.</span> <span class="toc-text">2. 依赖管理策略</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%9B%A2%E9%98%9F%E5%8D%8F%E4%BD%9C%E5%BB%BA%E8%AE%AE"><span class="toc-number">7.3.</span> <span class="toc-text">3. 团队协作建议</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E4%B8%8E%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="toc-number">8.</span> <span class="toc-text">常见问题与解决方案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q1-%E5%A6%82%E4%BD%95%E4%BB%8E-pip-%E8%BF%81%E7%A7%BB%E5%88%B0-uv%EF%BC%9F"><span class="toc-number">8.1.</span> <span class="toc-text">Q1: 如何从 pip 迁移到 uv？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q2-uv-%E4%B8%8E-Poetry-PDM-%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="toc-number">8.2.</span> <span class="toc-text">Q2: uv 与 Poetry&#x2F;PDM 有什么区别？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q3-%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%E7%A7%81%E6%9C%89%E5%8C%85%E4%BB%93%E5%BA%93%EF%BC%9F"><span class="toc-number">8.3.</span> <span class="toc-text">Q3: 如何处理私有包仓库？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q4-%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E4%BE%9D%E8%B5%96%E5%86%B2%E7%AA%81%EF%BC%9F"><span class="toc-number">8.4.</span> <span class="toc-text">Q4: 如何解决依赖冲突？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8Docker%E4%B8%AD%E4%BD%BF%E7%94%A8"><span class="toc-number">9.</span> <span class="toc-text">在Docker中使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%B8%80%EF%BC%9A%E5%AE%98%E6%96%B9%E6%8E%A8%E8%8D%90%E7%9A%84%E5%A4%9A%E9%98%B6%E6%AE%B5%E6%9E%84%E5%BB%BA"><span class="toc-number">9.1.</span> <span class="toc-text">方法一：官方推荐的多阶段构建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%BA%8C%EF%BC%9A%E4%BD%BF%E7%94%A8%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC"><span class="toc-number">9.2.</span> <span class="toc-text">方法二：使用安装脚本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%B8%89%EF%BC%9A%E4%BC%98%E5%8C%96%E7%9A%84%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="toc-number">9.3.</span> <span class="toc-text">方法三：优化的生产环境配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E5%9B%9B%EF%BC%9A%E4%BD%BF%E7%94%A8-Docker-Compose"><span class="toc-number">9.4.</span> <span class="toc-text">方法四：使用 Docker Compose</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5%E5%BB%BA%E8%AE%AE"><span class="toc-number">9.5.</span> <span class="toc-text">最佳实践建议</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%88%A9%E7%94%A8-Docker-%E7%BC%93%E5%AD%98%E5%B1%82"><span class="toc-number">9.5.1.</span> <span class="toc-text">1. 利用 Docker 缓存层</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E4%BD%BF%E7%94%A8-dockerignore"><span class="toc-number">9.5.2.</span> <span class="toc-text">2. 使用 .dockerignore</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E5%9B%BA%E5%AE%9A%E4%BE%9D%E8%B5%96%E7%89%88%E6%9C%AC"><span class="toc-number">9.5.3.</span> <span class="toc-text">3. 固定依赖版本</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E5%87%8F%E5%B0%8F%E9%95%9C%E5%83%8F%E4%BD%93%E7%A7%AF"><span class="toc-number">9.5.4.</span> <span class="toc-text">4. 减小镜像体积</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E5%AF%B9%E6%AF%94"><span class="toc-number">9.6.</span> <span class="toc-text">性能对比</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">9.7.</span> <span class="toc-text">常见问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">10.</span> <span class="toc-text">总结</span></a></li></ol>
+                </div>
+            
+            <hr />
+            <div itemprop="articleBody"><p><code>uv</code> 是 Astral 公司开发的一款革命性的 Python 包管理工具，被誉为 Python 包管理的未来。它以其极致的性能和现代化的设计理念，正在改变 Python 开发者的工作流程。</p>
+<span id="more"></span>
+
+<h2 id="什么是-uv？"><a href="#什么是-uv？" class="headerlink" title="什么是 uv？"></a>什么是 uv？</h2><p><code>uv</code> 是 Astral 公司开发的一款高性能的 Python 包管理工具，对标 Rust 的 Cargo 包管理器。它旨在替代传统的 <code>pip</code>、<code>pip-tools</code> 和 <code>virtualenv</code>，提供更快的依赖解析和安装速度，同时支持虚拟环境管理、依赖锁定等现代化功能。</p>
+<h3 id="为什么选择-uv？"><a href="#为什么选择-uv？" class="headerlink" title="为什么选择 uv？"></a>为什么选择 uv？</h3><ul>
+<li><strong>🚀 极速性能</strong>：比 pip 快 10-100 倍</li>
+<li><strong>🔒 确定性构建</strong>：确保可重现的依赖环境</li>
+<li><strong>🛠️ 统一工具链</strong>：一个工具解决所有包管理需求</li>
+<li><strong>🌍 跨平台支持</strong>：Windows、Linux、macOS 完美支持</li>
+<li><strong>📦 现代化设计</strong>：借鉴 Rust Cargo 的优秀设计理念</li>
+</ul>
+<h2 id="安装-uv"><a href="#安装-uv" class="headerlink" title="安装 uv"></a>安装 uv</h2><h3 id="方法一：使用官方安装脚本（推荐）"><a href="#方法一：使用官方安装脚本（推荐）" class="headerlink" title="方法一：使用官方安装脚本（推荐）"></a>方法一：使用官方安装脚本（推荐）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># macOS &amp; Linux</span></span><br><span class="line">curl -LsSf https://astral.sh/uv/install.sh | sh</span><br><span class="line"></span><br><span class="line"><span class="comment"># Windows (PowerShell)</span></span><br><span class="line">powershell -ExecutionPolicy ByPass -c <span class="string">&quot;irm https://astral.sh/uv/install.ps1 | iex&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="方法二：使用-pip-安装"><a href="#方法二：使用-pip-安装" class="headerlink" title="方法二：使用 pip 安装"></a>方法二：使用 pip 安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 需要 Python 3.8+</span></span><br><span class="line">pip install uv</span><br></pre></td></tr></table></figure>
+
+<h3 id="方法三：使用包管理器"><a href="#方法三：使用包管理器" class="headerlink" title="方法三：使用包管理器"></a>方法三：使用包管理器</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># macOS (Homebrew)</span></span><br><span class="line">brew install uv</span><br><span class="line"></span><br><span class="line"><span class="comment"># Arch Linux</span></span><br><span class="line">pacman -S uv</span><br><span class="line"></span><br><span class="line"><span class="comment"># Ubuntu/Debian (需要添加仓库)</span></span><br><span class="line">curl -LsSf https://astral.sh/uv/install.sh | sh</span><br></pre></td></tr></table></figure>
+
+<h3 id="验证安装"><a href="#验证安装" class="headerlink" title="验证安装"></a>验证安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">uv --version</span><br><span class="line"><span class="comment"># 输出类似：uv 0.1.0</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="核心功能详解"><a href="#核心功能详解" class="headerlink" title="核心功能详解"></a>核心功能详解</h2><h3 id="1-包安装与管理"><a href="#1-包安装与管理" class="headerlink" title="1. 包安装与管理"></a>1. 包安装与管理</h3><h4 id="基本安装命令"><a href="#基本安装命令" class="headerlink" title="基本安装命令"></a>基本安装命令</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装单个包</span></span><br><span class="line">uv pip install requests</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装指定版本</span></span><br><span class="line">uv pip install <span class="string">&quot;requests&gt;=2.25.0,&lt;3.0&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装多个包</span></span><br><span class="line">uv pip install requests numpy pandas</span><br><span class="line"></span><br><span class="line"><span class="comment"># 从 requirements.txt 安装</span></span><br><span class="line">uv pip install -r requirements.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装当前项目（开发模式）</span></span><br><span class="line">uv pip install -e .</span><br></pre></td></tr></table></figure>
+
+<h4 id="高级安装选项"><a href="#高级安装选项" class="headerlink" title="高级安装选项"></a>高级安装选项</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 只安装，不更新已存在的包</span></span><br><span class="line">uv pip install --no-upgrade requests</span><br><span class="line"></span><br><span class="line"><span class="comment"># 强制重新安装</span></span><br><span class="line">uv pip install --force-reinstall requests</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装到指定目录</span></span><br><span class="line">uv pip install --target ./packages requests</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装时忽略依赖</span></span><br><span class="line">uv pip install --no-deps requests</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-虚拟环境管理"><a href="#2-虚拟环境管理" class="headerlink" title="2. 虚拟环境管理"></a>2. 虚拟环境管理</h3><h4 id="创建和管理虚拟环境"><a href="#创建和管理虚拟环境" class="headerlink" title="创建和管理虚拟环境"></a>创建和管理虚拟环境</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建虚拟环境（使用默认 Python 版本）</span></span><br><span class="line">uv venv</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建指定 Python 版本的虚拟环境</span></span><br><span class="line">uv venv --python 3.11</span><br><span class="line">uv venv --python 3.12</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建指定名称的虚拟环境</span></span><br><span class="line">uv venv myenv</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建虚拟环境并指定路径</span></span><br><span class="line">uv venv /path/to/venv</span><br></pre></td></tr></table></figure>
+
+<h4 id="激活虚拟环境"><a href="#激活虚拟环境" class="headerlink" title="激活虚拟环境"></a>激活虚拟环境</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Linux/macOS</span></span><br><span class="line"><span class="built_in">source</span> venv/bin/activate</span><br><span class="line"></span><br><span class="line"><span class="comment"># Windows (Command Prompt)</span></span><br><span class="line">venv\Scripts\activate</span><br><span class="line"></span><br><span class="line"><span class="comment"># Windows (PowerShell)</span></span><br><span class="line">venv\Scripts\Activate.ps1</span><br></pre></td></tr></table></figure>
+
+<h4 id="虚拟环境管理命令"><a href="#虚拟环境管理命令" class="headerlink" title="虚拟环境管理命令"></a>虚拟环境管理命令</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 列出所有虚拟环境</span></span><br><span class="line">uv venv list</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除虚拟环境</span></span><br><span class="line">uv venv remove myenv</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在虚拟环境中运行命令</span></span><br><span class="line">uv run python script.py</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-依赖锁定与编译"><a href="#3-依赖锁定与编译" class="headerlink" title="3. 依赖锁定与编译"></a>3. 依赖锁定与编译</h3><h4 id="生成依赖锁定文件"><a href="#生成依赖锁定文件" class="headerlink" title="生成依赖锁定文件"></a>生成依赖锁定文件</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 从 pyproject.toml 生成 requirements.txt</span></span><br><span class="line">uv pip compile pyproject.toml -o requirements.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成开发环境依赖</span></span><br><span class="line">uv pip compile pyproject.toml -o requirements-dev.txt --extra dev</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成生产环境依赖</span></span><br><span class="line">uv pip compile pyproject.toml -o requirements-prod.txt --extra prod</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成所有依赖（包括可选依赖）</span></span><br><span class="line">uv pip compile pyproject.toml --all-extras -o requirements-all.txt</span><br></pre></td></tr></table></figure>
+
+<h4 id="同步依赖"><a href="#同步依赖" class="headerlink" title="同步依赖"></a>同步依赖</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 同步到锁定文件状态</span></span><br><span class="line">uv pip <span class="built_in">sync</span> requirements.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 从标准输入同步</span></span><br><span class="line">uv pip <span class="built_in">sync</span> -</span><br><span class="line"></span><br><span class="line"><span class="comment"># 同步并显示详细信息</span></span><br><span class="line">uv pip <span class="built_in">sync</span> --verbose requirements.txt</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-项目初始化与管理"><a href="#4-项目初始化与管理" class="headerlink" title="4. 项目初始化与管理"></a>4. 项目初始化与管理</h3><h4 id="创建新项目"><a href="#创建新项目" class="headerlink" title="创建新项目"></a>创建新项目</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 初始化新项目</span></span><br><span class="line">uv init my-project</span><br><span class="line"><span class="built_in">cd</span> my-project</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加依赖到项目</span></span><br><span class="line">uv add requests</span><br><span class="line">uv add <span class="string">&quot;numpy&gt;=1.20.0&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加开发依赖</span></span><br><span class="line">uv add --dev pytest</span><br><span class="line">uv add --dev black flake8</span><br><span class="line"></span><br><span class="line"><span class="comment"># 移除依赖</span></span><br><span class="line">uv remove requests</span><br></pre></td></tr></table></figure>
+
+<h4 id="项目依赖管理"><a href="#项目依赖管理" class="headerlink" title="项目依赖管理"></a>项目依赖管理</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看已安装的包</span></span><br><span class="line">uv pip list</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看过时的包</span></span><br><span class="line">uv pip list --outdated</span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新所有包</span></span><br><span class="line">uv pip install --upgrade</span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新特定包</span></span><br><span class="line">uv pip install --upgrade requests</span><br></pre></td></tr></table></figure>
+<h2 id="性能对比与优势"><a href="#性能对比与优势" class="headerlink" title="性能对比与优势"></a>性能对比与优势</h2><h3 id="速度对比"><a href="#速度对比" class="headerlink" title="速度对比"></a>速度对比</h3><p>根据官方基准测试，<code>uv</code> 在各个方面都显著优于传统工具：</p>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>pip</th>
+<th>uv</th>
+<th>提升倍数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>依赖解析</td>
+<td>2.8s</td>
+<td>0.1s</td>
+<td><strong>28x</strong></td>
+</tr>
+<tr>
+<td>包安装</td>
+<td>45s</td>
+<td>0.5s</td>
+<td><strong>90x</strong></td>
+</tr>
+<tr>
+<td>虚拟环境创建</td>
+<td>3.2s</td>
+<td>0.1s</td>
+<td><strong>32x</strong></td>
+</tr>
+</tbody></table>
+<h3 id="核心优势"><a href="#核心优势" class="headerlink" title="核心优势"></a>核心优势</h3><ul>
+<li><strong>🚀 极速性能</strong>：比 pip 快 10-100 倍，大幅提升开发效率</li>
+<li><strong>🔒 确定性构建</strong>：通过锁定文件确保完全可重现的构建环境</li>
+<li><strong>🛠️ 统一工具链</strong>：一个工具替代 pip、virtualenv、pip-tools</li>
+<li><strong>🌍 跨平台支持</strong>：Windows、Linux、macOS 完美支持</li>
+<li><strong>📦 现代化设计</strong>：借鉴 Rust Cargo 的优秀设计理念</li>
+<li><strong>💾 智能缓存</strong>：避免重复下载和编译</li>
+<li><strong>🔍 更好的错误信息</strong>：清晰的错误提示和解决建议</li>
+</ul>
+<h2 id="实际使用场景"><a href="#实际使用场景" class="headerlink" title="实际使用场景"></a>实际使用场景</h2><h3 id="场景一：新项目开发"><a href="#场景一：新项目开发" class="headerlink" title="场景一：新项目开发"></a>场景一：新项目开发</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 创建新项目</span></span><br><span class="line">uv init my-awesome-project</span><br><span class="line"><span class="built_in">cd</span> my-awesome-project</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 创建虚拟环境</span></span><br><span class="line">uv venv</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 激活环境并添加依赖</span></span><br><span class="line"><span class="built_in">source</span> venv/bin/activate  <span class="comment"># Linux/macOS</span></span><br><span class="line">uv add requests fastapi uvicorn</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. 添加开发依赖</span></span><br><span class="line">uv add --dev pytest black mypy</span><br><span class="line"></span><br><span class="line"><span class="comment"># 5. 开始开发</span></span><br><span class="line">uv run python main.py</span><br></pre></td></tr></table></figure>
+
+<h3 id="场景二：现有项目迁移"><a href="#场景二：现有项目迁移" class="headerlink" title="场景二：现有项目迁移"></a>场景二：现有项目迁移</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 从现有 requirements.txt 创建锁定文件</span></span><br><span class="line">uv pip compile requirements.txt -o requirements-lock.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 同步到新环境</span></span><br><span class="line">uv venv</span><br><span class="line"><span class="built_in">source</span> venv/bin/activate</span><br><span class="line">uv pip <span class="built_in">sync</span> requirements-lock.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 验证环境一致性</span></span><br><span class="line">uv pip list</span><br></pre></td></tr></table></figure>
+
+<h3 id="场景三：CI-CD-环境"><a href="#场景三：CI-CD-环境" class="headerlink" title="场景三：CI&#x2F;CD 环境"></a>场景三：CI&#x2F;CD 环境</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在 CI 中使用 uv 进行快速构建</span></span><br><span class="line">- name: Install dependencies</span><br><span class="line">  run: |</span><br><span class="line">    uv venv</span><br><span class="line">    <span class="built_in">source</span> venv/bin/activate</span><br><span class="line">    uv pip <span class="built_in">sync</span> requirements.txt</span><br><span class="line"></span><br><span class="line">- name: Run tests</span><br><span class="line">  run: |</span><br><span class="line">    <span class="built_in">source</span> venv/bin/activate</span><br><span class="line">    uv run pytest</span><br></pre></td></tr></table></figure>
+
+<h2 id="常用命令速查"><a href="#常用命令速查" class="headerlink" title="常用命令速查"></a>常用命令速查</h2><h3 id="基础命令"><a href="#基础命令" class="headerlink" title="基础命令"></a>基础命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看帮助</span></span><br><span class="line">uv --<span class="built_in">help</span></span><br><span class="line">uv pip --<span class="built_in">help</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看版本</span></span><br><span class="line">uv --version</span><br><span class="line"></span><br><span class="line"><span class="comment"># 清理缓存</span></span><br><span class="line">uv clean</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看配置</span></span><br><span class="line">uv config list</span><br></pre></td></tr></table></figure>
+
+<h3 id="项目命令"><a href="#项目命令" class="headerlink" title="项目命令"></a>项目命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 初始化项目</span></span><br><span class="line">uv init [project-name]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加依赖</span></span><br><span class="line">uv add package-name</span><br><span class="line">uv add <span class="string">&quot;package&gt;=1.0.0,&lt;2.0.0&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 移除依赖</span></span><br><span class="line">uv remove package-name</span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新依赖</span></span><br><span class="line">uv pip install --upgrade package-name</span><br></pre></td></tr></table></figure>
+
+<h3 id="环境命令"><a href="#环境命令" class="headerlink" title="环境命令"></a>环境命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建虚拟环境</span></span><br><span class="line">uv venv [env-name]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 列出虚拟环境</span></span><br><span class="line">uv venv list</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除虚拟环境</span></span><br><span class="line">uv venv remove env-name</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在环境中运行命令</span></span><br><span class="line">uv run python script.py</span><br></pre></td></tr></table></figure>
+
+<h2 id="最佳实践"><a href="#最佳实践" class="headerlink" title="最佳实践"></a>最佳实践</h2><h3 id="1-项目结构建议"><a href="#1-项目结构建议" class="headerlink" title="1. 项目结构建议"></a>1. 项目结构建议</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">my-project/</span><br><span class="line">├── pyproject.toml          # 项目配置和依赖声明</span><br><span class="line">├── requirements.txt        # 生产环境依赖</span><br><span class="line">├── requirements-dev.txt    # 开发环境依赖</span><br><span class="line">├── .python-version        # 指定 Python 版本</span><br><span class="line">└── .venv/                 # 虚拟环境目录</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-依赖管理策略"><a href="#2-依赖管理策略" class="headerlink" title="2. 依赖管理策略"></a>2. 依赖管理策略</h3><figure class="highlight toml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># pyproject.toml 示例</span></span><br><span class="line"><span class="section">[project]</span></span><br><span class="line"><span class="attr">name</span> = <span class="string">&quot;my-project&quot;</span></span><br><span class="line"><span class="attr">version</span> = <span class="string">&quot;0.1.0&quot;</span></span><br><span class="line"><span class="attr">dependencies</span> = [</span><br><span class="line">    <span class="string">&quot;requests&gt;=2.25.0&quot;</span>,</span><br><span class="line">    <span class="string">&quot;numpy&gt;=1.20.0&quot;</span>,</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="section">[project.optional-dependencies]</span></span><br><span class="line"><span class="attr">dev</span> = [</span><br><span class="line">    <span class="string">&quot;pytest&gt;=6.0&quot;</span>,</span><br><span class="line">    <span class="string">&quot;black&gt;=21.0&quot;</span>,</span><br><span class="line">    <span class="string">&quot;mypy&gt;=0.900&quot;</span>,</span><br><span class="line">]</span><br><span class="line"><span class="attr">test</span> = [</span><br><span class="line">    <span class="string">&quot;pytest-cov&gt;=2.10&quot;</span>,</span><br><span class="line">    <span class="string">&quot;pytest-mock&gt;=3.5&quot;</span>,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-团队协作建议"><a href="#3-团队协作建议" class="headerlink" title="3. 团队协作建议"></a>3. 团队协作建议</h3><ul>
+<li>使用 <code>uv pip compile</code> 生成锁定文件</li>
+<li>将锁定文件提交到版本控制</li>
+<li>在 CI&#x2F;CD 中使用 <code>uv pip sync</code> 确保环境一致性</li>
+<li>定期更新依赖并测试兼容性</li>
+</ul>
+<h2 id="常见问题与解决方案"><a href="#常见问题与解决方案" class="headerlink" title="常见问题与解决方案"></a>常见问题与解决方案</h2><h3 id="Q1-如何从-pip-迁移到-uv？"><a href="#Q1-如何从-pip-迁移到-uv？" class="headerlink" title="Q1: 如何从 pip 迁移到 uv？"></a>Q1: 如何从 pip 迁移到 uv？</h3><p><strong>A:</strong> 可以逐步迁移，无需一次性替换：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 保持现有 pip 环境</span></span><br><span class="line">pip freeze &gt; requirements.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 使用 uv 创建新环境</span></span><br><span class="line">uv venv new-env</span><br><span class="line"><span class="built_in">source</span> new-env/bin/activate</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 使用 uv 安装依赖</span></span><br><span class="line">uv pip install -r requirements.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. 验证环境一致性</span></span><br><span class="line">uv pip list</span><br></pre></td></tr></table></figure>
+
+<h3 id="Q2-uv-与-Poetry-PDM-有什么区别？"><a href="#Q2-uv-与-Poetry-PDM-有什么区别？" class="headerlink" title="Q2: uv 与 Poetry&#x2F;PDM 有什么区别？"></a>Q2: uv 与 Poetry&#x2F;PDM 有什么区别？</h3><table>
+<thead>
+<tr>
+<th>特性</th>
+<th>uv</th>
+<th>Poetry</th>
+<th>PDM</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>速度</td>
+<td>极快</td>
+<td>中等</td>
+<td>快</td>
+</tr>
+<tr>
+<td>功能范围</td>
+<td>包管理</td>
+<td>全栈项目管理</td>
+<td>包管理+发布</td>
+</tr>
+<tr>
+<td>学习曲线</td>
+<td>简单</td>
+<td>中等</td>
+<td>简单</td>
+</tr>
+<tr>
+<td>生态成熟度</td>
+<td>新</td>
+<td>成熟</td>
+<td>中等</td>
+</tr>
+</tbody></table>
+<h3 id="Q3-如何处理私有包仓库？"><a href="#Q3-如何处理私有包仓库？" class="headerlink" title="Q3: 如何处理私有包仓库？"></a>Q3: 如何处理私有包仓库？</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 配置私有仓库</span></span><br><span class="line">uv pip install --index-url https://pypi.company.com/simple/ package-name</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或使用配置文件</span></span><br><span class="line"><span class="comment"># ~/.pip/pip.conf</span></span><br><span class="line">[global]</span><br><span class="line">index-url = https://pypi.company.com/simple/</span><br><span class="line">trusted-host = pypi.company.com</span><br></pre></td></tr></table></figure>
+
+<h3 id="Q4-如何解决依赖冲突？"><a href="#Q4-如何解决依赖冲突？" class="headerlink" title="Q4: 如何解决依赖冲突？"></a>Q4: 如何解决依赖冲突？</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看依赖树</span></span><br><span class="line">uv pip show --tree package-name</span><br><span class="line"></span><br><span class="line"><span class="comment"># 强制重新解析</span></span><br><span class="line">uv pip install --force-reinstall package-name</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用约束文件</span></span><br><span class="line">uv pip install -c constraints.txt package-name</span><br></pre></td></tr></table></figure>
+
+<h2 id="在Docker中使用"><a href="#在Docker中使用" class="headerlink" title="在Docker中使用"></a>在Docker中使用</h2><p>在 Docker 容器中使用 <code>uv</code> 可以显著加快镜像构建速度，减少构建时间和镜像体积。以下是几种推荐的使用方式。</p>
+<h3 id="方法一：官方推荐的多阶段构建"><a href="#方法一：官方推荐的多阶段构建" class="headerlink" title="方法一：官方推荐的多阶段构建"></a>方法一：官方推荐的多阶段构建</h3><p>这是最推荐的方式，利用 Docker 多阶段构建来优化镜像大小：</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用官方 Python 镜像作为基础</span></span><br><span class="line"><span class="keyword">FROM</span> python:<span class="number">3.12</span>-slim AS builder</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装 uv</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置工作目录</span></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /app</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 复制依赖文件</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> pyproject.toml requirements.txt ./</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建虚拟环境并安装依赖</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> uv venv /app/.venv &amp;&amp; \</span></span><br><span class="line"><span class="language-bash">    uv pip install -r requirements.txt</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 最终阶段</span></span><br><span class="line"><span class="keyword">FROM</span> python:<span class="number">3.12</span>-slim</span><br><span class="line"></span><br><span class="line"><span class="comment"># 从构建阶段复制虚拟环境</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> --from=builder /app/.venv /app/.venv</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置工作目录</span></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /app</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 复制应用代码</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> . .</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置环境变量使用虚拟环境</span></span><br><span class="line"><span class="keyword">ENV</span> PATH=<span class="string">&quot;/app/.venv/bin:$PATH&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行应用</span></span><br><span class="line"><span class="keyword">CMD</span><span class="language-bash"> [<span class="string">&quot;python&quot;</span>, <span class="string">&quot;main.py&quot;</span>]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="方法二：使用安装脚本"><a href="#方法二：使用安装脚本" class="headerlink" title="方法二：使用安装脚本"></a>方法二：使用安装脚本</h3><p>适合需要在容器内直接安装 uv 的场景：</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> python:<span class="number">3.12</span>-slim</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装 uv</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> curl -LsSf https://astral.sh/uv/install.sh | sh</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 将 uv 添加到 PATH</span></span><br><span class="line"><span class="keyword">ENV</span> PATH=<span class="string">&quot;/root/.cargo/bin:$PATH&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /app</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 复制依赖文件</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> requirements.txt .</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用 uv 安装依赖</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> uv pip install --system -r requirements.txt</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 复制应用代码</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> . .</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">CMD</span><span class="language-bash"> [<span class="string">&quot;python&quot;</span>, <span class="string">&quot;main.py&quot;</span>]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="方法三：优化的生产环境配置"><a href="#方法三：优化的生产环境配置" class="headerlink" title="方法三：优化的生产环境配置"></a>方法三：优化的生产环境配置</h3><p>针对生产环境的优化配置，包含缓存和安全性考虑：</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> python:<span class="number">3.12</span>-slim AS builder</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装 uv</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /app</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 复制依赖文件</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> pyproject.toml requirements.txt ./</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用 uv 创建虚拟环境并安装依赖</span></span><br><span class="line"><span class="comment"># --no-cache 避免缓存占用空间</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> uv venv /app/.venv &amp;&amp; \</span></span><br><span class="line"><span class="language-bash">    uv pip install --no-cache -r requirements.txt</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 生产环境镜像</span></span><br><span class="line"><span class="keyword">FROM</span> python:<span class="number">3.12</span>-slim</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建非 root 用户</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> useradd -m -u 1000 appuser</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /app</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 从构建阶段复制虚拟环境</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> --from=builder --<span class="built_in">chown</span>=appuser:appuser /app/.venv /app/.venv</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 复制应用代码</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> --<span class="built_in">chown</span>=appuser:appuser . .</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 切换到非 root 用户</span></span><br><span class="line"><span class="keyword">USER</span> appuser</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置环境变量</span></span><br><span class="line"><span class="keyword">ENV</span> PATH=<span class="string">&quot;/app/.venv/bin:$PATH&quot;</span> \</span><br><span class="line">    PYTHONUNBUFFERED=<span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 健康检查（可选）</span></span><br><span class="line"><span class="keyword">HEALTHCHECK</span><span class="language-bash"> --interval=30s --<span class="built_in">timeout</span>=3s \</span></span><br><span class="line"><span class="language-bash">    CMD python -c <span class="string">&quot;import sys; sys.exit(0)&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">CMD</span><span class="language-bash"> [<span class="string">&quot;python&quot;</span>, <span class="string">&quot;main.py&quot;</span>]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="方法四：使用-Docker-Compose"><a href="#方法四：使用-Docker-Compose" class="headerlink" title="方法四：使用 Docker Compose"></a>方法四：使用 Docker Compose</h3><p>适合开发环境，支持热重载：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># docker-compose.yml</span></span><br><span class="line"><span class="attr">version:</span> <span class="string">&#x27;3.8&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">app:</span></span><br><span class="line">    <span class="attr">build:</span></span><br><span class="line">      <span class="attr">context:</span> <span class="string">.</span></span><br><span class="line">      <span class="attr">dockerfile:</span> <span class="string">Dockerfile.dev</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">.:/app</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">venv:/app/.venv</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">PYTHONUNBUFFERED=1</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;8000:8000&quot;</span></span><br><span class="line">    <span class="attr">command:</span> <span class="string">uv</span> <span class="string">run</span> <span class="string">python</span> <span class="string">main.py</span></span><br><span class="line"></span><br><span class="line"><span class="attr">volumes:</span></span><br><span class="line">  <span class="attr">venv:</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Dockerfile.dev</span></span><br><span class="line"><span class="keyword">FROM</span> python:<span class="number">3.12</span>-slim</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装 uv</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /app</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 复制依赖文件</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> requirements.txt requirements-dev.txt ./</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建虚拟环境并安装依赖</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> uv venv &amp;&amp; \</span></span><br><span class="line"><span class="language-bash">    uv pip install -r requirements.txt &amp;&amp; \</span></span><br><span class="line"><span class="language-bash">    uv pip install -r requirements-dev.txt</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">ENV</span> PATH=<span class="string">&quot;/app/.venv/bin:$PATH&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">CMD</span><span class="language-bash"> [<span class="string">&quot;python&quot;</span>, <span class="string">&quot;main.py&quot;</span>]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="最佳实践建议"><a href="#最佳实践建议" class="headerlink" title="最佳实践建议"></a>最佳实践建议</h3><h4 id="1-利用-Docker-缓存层"><a href="#1-利用-Docker-缓存层" class="headerlink" title="1. 利用 Docker 缓存层"></a>1. 利用 Docker 缓存层</h4><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 先复制依赖文件，利用缓存</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> requirements.txt .</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> uv pip install -r requirements.txt</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 再复制应用代码（经常变动）</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> . .</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="2-使用-dockerignore"><a href="#2-使用-dockerignore" class="headerlink" title="2. 使用 .dockerignore"></a>2. 使用 .dockerignore</h4><p>创建 <code>.dockerignore</code> 文件排除不必要的文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">.venv/</span><br><span class="line">__pycache__/</span><br><span class="line">*.pyc</span><br><span class="line">*.pyo</span><br><span class="line">*.pyd</span><br><span class="line">.git/</span><br><span class="line">.gitignore</span><br><span class="line">.pytest_cache/</span><br><span class="line">.coverage</span><br><span class="line">*.egg-info/</span><br><span class="line">dist/</span><br><span class="line">build/</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-固定依赖版本"><a href="#3-固定依赖版本" class="headerlink" title="3. 固定依赖版本"></a>3. 固定依赖版本</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 生成锁定文件</span></span><br><span class="line">uv pip compile requirements.txt -o requirements.lock</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在 Dockerfile 中使用锁定文件</span></span><br><span class="line">COPY requirements.lock .</span><br><span class="line">RUN uv pip install -r requirements.lock</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-减小镜像体积"><a href="#4-减小镜像体积" class="headerlink" title="4. 减小镜像体积"></a>4. 减小镜像体积</h4><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用 slim 或 alpine 基础镜像</span></span><br><span class="line"><span class="keyword">FROM</span> python:<span class="number">3.12</span>-slim</span><br><span class="line"></span><br><span class="line"><span class="comment"># 清理不必要的文件</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> uv pip install -r requirements.txt &amp;&amp; \</span></span><br><span class="line"><span class="language-bash">    <span class="built_in">rm</span> -rf /root/.cache/uv</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用多阶段构建分离构建和运行环境</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="性能对比"><a href="#性能对比" class="headerlink" title="性能对比"></a>性能对比</h3><p>在 Docker 环境中，<code>uv</code> 相比传统 <code>pip</code> 的优势更加明显：</p>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>pip</th>
+<th>uv</th>
+<th>提升</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>首次构建</td>
+<td>120s</td>
+<td>15s</td>
+<td><strong>8x</strong></td>
+</tr>
+<tr>
+<td>缓存构建</td>
+<td>45s</td>
+<td>3s</td>
+<td><strong>15x</strong></td>
+</tr>
+<tr>
+<td>镜像大小</td>
+<td>450MB</td>
+<td>380MB</td>
+<td><strong>减少15%</strong></td>
+</tr>
+</tbody></table>
+<h3 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h3><p><strong>Q: 如何在 Alpine Linux 中使用 uv？</strong></p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> python:<span class="number">3.12</span>-alpine</span><br><span class="line"></span><br><span class="line"><span class="comment"># Alpine 需要额外的依赖</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> apk add --no-cache curl gcc musl-dev</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装 uv</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> curl -LsSf https://astral.sh/uv/install.sh | sh</span></span><br><span class="line"><span class="keyword">ENV</span> PATH=<span class="string">&quot;/root/.cargo/bin:$PATH&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 其余配置同上</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>Q: 如何处理私有包仓库？</strong></p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用构建参数传递凭证</span></span><br><span class="line"><span class="keyword">ARG</span> PIP_INDEX_URL</span><br><span class="line"><span class="keyword">ENV</span> PIP_INDEX_URL=$&#123;PIP_INDEX_URL&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> uv pip install -r requirements.txt</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>Q: 如何在 CI&#x2F;CD 中使用？</strong></p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># GitHub Actions 示例</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Build</span> <span class="string">Docker</span> <span class="string">image</span></span><br><span class="line">  <span class="attr">run:</span> <span class="string">|</span></span><br><span class="line"><span class="string">    docker build -t myapp:latest .</span></span><br><span class="line"><span class="string"></span>    </span><br><span class="line"><span class="comment"># GitLab CI 示例</span></span><br><span class="line"><span class="attr">build:</span></span><br><span class="line">  <span class="attr">image:</span> <span class="string">docker:latest</span></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">docker</span> <span class="string">build</span> <span class="string">-t</span> <span class="string">myapp:latest</span> <span class="string">.</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><code>uv</code> 作为新一代 Python 包管理工具，以其卓越的性能和现代化的设计理念，正在成为 Python 开发者的首选。无论是新项目开发还是现有项目迁移，<code>uv</code> 都能显著提升开发效率和构建速度。</p>
+<p><strong>推荐使用场景：</strong></p>
+<ul>
+<li>新项目开发</li>
+<li>需要快速构建的 CI&#x2F;CD 环境</li>
+<li>大型项目的依赖管理</li>
+<li>团队协作开发</li>
+</ul>
+<p><strong>开始使用 uv，体验 Python 包管理的未来！</strong> 🚀</p>
+<hr>
+<p><em>更多详细信息请参考 <a target="_blank" rel="noopener" href="https://docs.astral.sh/uv/">uv 官方文档</a> 或运行 <code>uv --help</code> 查看帮助信息。</em></p>
+</div>
+        </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/anaconda/" rel="tag">anaconda</a>, <a class="tag-none-link" href="/tags/pip/" rel="tag">pip</a>, <a class="tag-none-link" href="/tags/python/" rel="tag">python</a>
+                </div>
+                <div class="pull-date">
+                    <time datetime="2025-11-21T06:36:31.565Z" itemprop="dateModified">最后编辑：2025-11-21</time>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" uBlock Origin" href="/2025/03/17/2025/03/171343/">&lt; 上一篇</a>
+            </div>
+            
+            
+            <div class="nav-next clearfix">
+                <a title=" rsync用法" href="/2025/04/18/2025/04/181042/">下一篇 &gt;</a>
+            </div>
+            
+        </nav>
+    
+    
+        <link rel="stylesheet" href="/vendors/gitalk@1.7.2/dist/gitalk.css"></script>
+<div id="gitalk-container" class="post-comments lazy-load" style="padding-left:2rem; padding-right:2rem;"></div>
+<script>
+    var load_comm = () => {
+        const init = () => {
+            console.log('Gitalk loading...');
+            const gitalk = new Gitalk(Object.assign({
+                id: '/2025/03/28/2025/03/281515/',
+                path: '/2025/03/28/2025/03/281515/'
+            }, JSON.parse('{"clientID":"56e6a743c63b9c4faa93","clientSecret":"888b7234051c5c2ed6ea7bdf18e8b5a2678775f1","repo":"gitalk-comments","owner":"qbmzc","admin":["qbmzc"]}')));
+
+            gitalk.render('gitalk-container');
+        }
+        if (typeof Gitalk === 'undefined') {
+            const src = '/vendors/gitalk@1.7.2/dist/gitalk.min.js';
+            $.getScript(src, init);
+        } else {
+            init();
+        }
+    };
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a></noscript>
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/avatar.webp" loading="lazy" decoding="auto" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center">流云与风，苍穹游牧</p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                499
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                8
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                229
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                    <aside id="krw-toc" class="widget widget-kratos-toc clearfix">
+    <div class="photo-background"></div>
+    <h4 class="widget-title no-after">
+        <i class="fa fa-compass"></i>
+        文章目录
+        <span class="toc-progress-bar" role="progressbar" aria-label="阅读进度："></span>
+    </h4>
+    <div class="textwidget">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-uv%EF%BC%9F"><span class="toc-text">什么是 uv？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%89%E6%8B%A9-uv%EF%BC%9F"><span class="toc-text">为什么选择 uv？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-uv"><span class="toc-text">安装 uv</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%B8%80%EF%BC%9A%E4%BD%BF%E7%94%A8%E5%AE%98%E6%96%B9%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC%EF%BC%88%E6%8E%A8%E8%8D%90%EF%BC%89"><span class="toc-text">方法一：使用官方安装脚本（推荐）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%BA%8C%EF%BC%9A%E4%BD%BF%E7%94%A8-pip-%E5%AE%89%E8%A3%85"><span class="toc-text">方法二：使用 pip 安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%B8%89%EF%BC%9A%E4%BD%BF%E7%94%A8%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8"><span class="toc-text">方法三：使用包管理器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AA%8C%E8%AF%81%E5%AE%89%E8%A3%85"><span class="toc-text">验证安装</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E5%8A%9F%E8%83%BD%E8%AF%A6%E8%A7%A3"><span class="toc-text">核心功能详解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%8C%85%E5%AE%89%E8%A3%85%E4%B8%8E%E7%AE%A1%E7%90%86"><span class="toc-text">1. 包安装与管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E5%AE%89%E8%A3%85%E5%91%BD%E4%BB%A4"><span class="toc-text">基本安装命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%AB%98%E7%BA%A7%E5%AE%89%E8%A3%85%E9%80%89%E9%A1%B9"><span class="toc-text">高级安装选项</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83%E7%AE%A1%E7%90%86"><span class="toc-text">2. 虚拟环境管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E5%92%8C%E7%AE%A1%E7%90%86%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83"><span class="toc-text">创建和管理虚拟环境</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%BF%80%E6%B4%BB%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83"><span class="toc-text">激活虚拟环境</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83%E7%AE%A1%E7%90%86%E5%91%BD%E4%BB%A4"><span class="toc-text">虚拟环境管理命令</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E4%BE%9D%E8%B5%96%E9%94%81%E5%AE%9A%E4%B8%8E%E7%BC%96%E8%AF%91"><span class="toc-text">3. 依赖锁定与编译</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E4%BE%9D%E8%B5%96%E9%94%81%E5%AE%9A%E6%96%87%E4%BB%B6"><span class="toc-text">生成依赖锁定文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%8C%E6%AD%A5%E4%BE%9D%E8%B5%96"><span class="toc-text">同步依赖</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E9%A1%B9%E7%9B%AE%E5%88%9D%E5%A7%8B%E5%8C%96%E4%B8%8E%E7%AE%A1%E7%90%86"><span class="toc-text">4. 项目初始化与管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E6%96%B0%E9%A1%B9%E7%9B%AE"><span class="toc-text">创建新项目</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86"><span class="toc-text">项目依赖管理</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E5%AF%B9%E6%AF%94%E4%B8%8E%E4%BC%98%E5%8A%BF"><span class="toc-text">性能对比与优势</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9F%E5%BA%A6%E5%AF%B9%E6%AF%94"><span class="toc-text">速度对比</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E4%BC%98%E5%8A%BF"><span class="toc-text">核心优势</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%99%85%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-text">实际使用场景</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%BA%E6%99%AF%E4%B8%80%EF%BC%9A%E6%96%B0%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91"><span class="toc-text">场景一：新项目开发</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%BA%E6%99%AF%E4%BA%8C%EF%BC%9A%E7%8E%B0%E6%9C%89%E9%A1%B9%E7%9B%AE%E8%BF%81%E7%A7%BB"><span class="toc-text">场景二：现有项目迁移</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%BA%E6%99%AF%E4%B8%89%EF%BC%9ACI-CD-%E7%8E%AF%E5%A2%83"><span class="toc-text">场景三：CI&#x2F;CD 环境</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E9%80%9F%E6%9F%A5"><span class="toc-text">常用命令速查</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4"><span class="toc-text">基础命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E5%91%BD%E4%BB%A4"><span class="toc-text">项目命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E5%91%BD%E4%BB%A4"><span class="toc-text">环境命令</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5"><span class="toc-text">最佳实践</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84%E5%BB%BA%E8%AE%AE"><span class="toc-text">1. 项目结构建议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E4%BE%9D%E8%B5%96%E7%AE%A1%E7%90%86%E7%AD%96%E7%95%A5"><span class="toc-text">2. 依赖管理策略</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%9B%A2%E9%98%9F%E5%8D%8F%E4%BD%9C%E5%BB%BA%E8%AE%AE"><span class="toc-text">3. 团队协作建议</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E4%B8%8E%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="toc-text">常见问题与解决方案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q1-%E5%A6%82%E4%BD%95%E4%BB%8E-pip-%E8%BF%81%E7%A7%BB%E5%88%B0-uv%EF%BC%9F"><span class="toc-text">Q1: 如何从 pip 迁移到 uv？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q2-uv-%E4%B8%8E-Poetry-PDM-%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="toc-text">Q2: uv 与 Poetry&#x2F;PDM 有什么区别？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q3-%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%E7%A7%81%E6%9C%89%E5%8C%85%E4%BB%93%E5%BA%93%EF%BC%9F"><span class="toc-text">Q3: 如何处理私有包仓库？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q4-%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E4%BE%9D%E8%B5%96%E5%86%B2%E7%AA%81%EF%BC%9F"><span class="toc-text">Q4: 如何解决依赖冲突？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8Docker%E4%B8%AD%E4%BD%BF%E7%94%A8"><span class="toc-text">在Docker中使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%B8%80%EF%BC%9A%E5%AE%98%E6%96%B9%E6%8E%A8%E8%8D%90%E7%9A%84%E5%A4%9A%E9%98%B6%E6%AE%B5%E6%9E%84%E5%BB%BA"><span class="toc-text">方法一：官方推荐的多阶段构建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%BA%8C%EF%BC%9A%E4%BD%BF%E7%94%A8%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC"><span class="toc-text">方法二：使用安装脚本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E4%B8%89%EF%BC%9A%E4%BC%98%E5%8C%96%E7%9A%84%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="toc-text">方法三：优化的生产环境配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B9%E6%B3%95%E5%9B%9B%EF%BC%9A%E4%BD%BF%E7%94%A8-Docker-Compose"><span class="toc-text">方法四：使用 Docker Compose</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5%E5%BB%BA%E8%AE%AE"><span class="toc-text">最佳实践建议</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%88%A9%E7%94%A8-Docker-%E7%BC%93%E5%AD%98%E5%B1%82"><span class="toc-text">1. 利用 Docker 缓存层</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E4%BD%BF%E7%94%A8-dockerignore"><span class="toc-text">2. 使用 .dockerignore</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E5%9B%BA%E5%AE%9A%E4%BE%9D%E8%B5%96%E7%89%88%E6%9C%AC"><span class="toc-text">3. 固定依赖版本</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E5%87%8F%E5%B0%8F%E9%95%9C%E5%83%8F%E4%BD%93%E7%A7%AF"><span class="toc-text">4. 减小镜像体积</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E5%AF%B9%E6%AF%94"><span class="toc-text">性能对比</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-text">常见问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol>
+    </div>
+</aside>
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">137</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">151</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">29</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/congco/">congco</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/work/">work</a><span class="category-list-count">118</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wuw/">wuw</a><span class="category-list-count">48</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/">技术笔记</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/AES/" style="font-size: 0.6em;">AES</a> <a href="/tags/AI/" style="font-size: 0.7em;">AI</a> <a href="/tags/AWS/" style="font-size: 0.7em;">AWS</a> <a href="/tags/Arch/" style="font-size: 0.6em;">Arch</a> <a href="/tags/Arch-Linux/" style="font-size: 0.8em;">Arch Linux</a> <a href="/tags/ArchLinux/" style="font-size: 0.8em;">ArchLinux</a> <a href="/tags/CAS/" style="font-size: 0.6em;">CAS</a> <a href="/tags/CI-CD/" style="font-size: 0.6em;">CI/CD</a> <a href="/tags/Caffeine/" style="font-size: 0.6em;">Caffeine</a> <a href="/tags/CompletableFuture/" style="font-size: 0.7em;">CompletableFuture</a> <a href="/tags/DNS/" style="font-size: 0.8em;">DNS</a> <a href="/tags/Docker/" style="font-size: 0.6em;">Docker</a> <a href="/tags/Flask/" style="font-size: 0.6em;">Flask</a> <a href="/tags/Future/" style="font-size: 0.7em;">Future</a> <a href="/tags/GC/" style="font-size: 0.6em;">GC</a> <a href="/tags/GPT/" style="font-size: 0.6em;">GPT</a> <a href="/tags/GraalVM/" style="font-size: 0.8em;">GraalVM</a> <a href="/tags/HashMap/" style="font-size: 0.6em;">HashMap</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/14/2025/11/141727/"><i class="fa  fa-book"></i> karakeep</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111335/"><i class="fa  fa-book"></i> SonarQube 扫描支持多 JDK 版本的实践方案</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111045/"><i class="fa  fa-book"></i> 一次修复 PDF 中文乱码的排查记录</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/23/2025/10/221500/"><i class="fa  fa-book"></i> dig命令使用详解</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/13/2025/10/131645/"><i class="fa  fa-book"></i> DNS解析异常导致视频播放缓慢问题排查与解决</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  >
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        <li><a href="mailto:congco@foxmail.com"><i class="fa fa-envelope"></i></a></li>
+                        
+                        
+                        
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://github.com/qbmzc"><i class="fa fa-github"></i></a></li>
+                        <li><a target="_blank" rel="nofollow" href="/rss.xml"><i class="fa fa-rss"></i></a></li>
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2025 沐曦留曳 版权所有.</li>
+                            <li>本站已运行<span id="span_dt">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
+                            <li>Site built with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by cong.</li>
+                        </div>
+                        <div>
+                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
+                            <li>Hosted on <a href="https://github.io" target="_blank">Github Pages</a></li>
+                        </div>
+                        <div>
+                            
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="/vendors/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="/vendors/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+
+    <script defer src="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="/vendors/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>

@@ -1,0 +1,1526 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="/images/favicon.ico">
+  
+  <title>Redis-Cluster集群:docker-compose方式 | 沐曦留曳</title>
+  <meta name="author" content="cong" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="Redis" />
+  
+  <meta property="og:type" content="article">
+<meta property="og:title" content="Redis-Cluster集群:docker-compose方式">
+<meta property="og:url" content="https://qbmzc.github.io/2021/03/11/2021/03/112053/index.html">
+<meta property="og:site_name" content="沐曦留曳">
+<meta property="og:locale">
+<meta property="og:image" content="https://qbmzc.github.io/images/favicon.ico">
+<meta property="article:published_time" content="2021-03-10T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-11-21T06:36:31.548Z">
+<meta property="article:author" content="cong">
+<meta property="article:tag" content="Redis">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://qbmzc.github.io/images/favicon.ico">
+  <link rel="alternate" href="rss.xml" type="application/atom+xml">
+  <!-- 站点验证相关 -->
+  
+    
+      <meta name="google-site-verification" content="lV4cead5YlJ8KpODToP7dvzi-ihrxSqU0yYStYKj2ao" />
+    
+    
+      <meta name="baidu-site-verification" content="codeva-Zr6WlkDupK" />
+    
+    
+      <meta name="msvalidate.01" content="2D2197DEE362D193B3EC29AFD3306341" />
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" media="all"></script>
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-color-dark.min.css" media="(prefers-color-scheme: dark)"></script>
+    <script src="/js/kr-dark.min.js"></script>
+  
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" media="all"></script>
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="/vendors/font-awesome@4.7.0/css/font-awesome.min.css" media="all"></script>
+  <link rel="stylesheet" id="nprogress-css" href="/vendors/nprogress@0.2.0/nprogress.css" media="all"></script>
+  
+  
+  
+    <link rel="stylesheet" href="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css"></script>
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="/vendors/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/banner.webp');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">沐曦留曳</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>沐曦留曳</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article itemscope itemtype="https://schema.org/Article">
+    
+    <link itemprop="mainEntityOfPage" href="https://qbmzc.github.io/2021/03/11/2021/03/112053/">
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center" itemprop="name headline">Redis-Cluster集群:docker-compose方式</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><time datetime="2021-03-10T16:00:00.000Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2021-03-11</time></li>
+                <li itemprop="author" itemscope itemtype="https://schema.org/Person">
+                    <i class="fa fa-user"></i> 作者 <span itemprop="name">cong</span>
+                </li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~16.96K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1763706991548"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+            
+            <hr />
+            <div itemprop="articleBody"><p><img src="https://fastly.jsdelivr.net/gh/qbmzc/images/md/wallhaven-pkkm6p.png" alt="pkkm6p"></p>
+<span id="more"></span>
+
+<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">         .-/+oossssoo+/-.               zc@ns-01 </span><br><span class="line">        `:+ssssssssssssssssss+:`           -------- </span><br><span class="line">      -+ssssssssssssssssssyyssss+-         OS: Ubuntu 18.04.1 LTS x86_64 </span><br><span class="line">    .ossssssssssssssssssdMMMNysssso.       Host: HP Z238 Microtower Workstation </span><br><span class="line">   /ssssssssssshdmmNNmmyNMMMMhssssss/      Kernel: 4.15.0-128-generic </span><br><span class="line">  +ssssssssshmydMMMMMMMNddddyssssssss+     Uptime: 66 days, 4 hours, 48 mins </span><br><span class="line"> /sssssssshNMMMyhhyyyyhmNMMMNhssssssss/    Packages: 648 </span><br><span class="line">.ssssssssdMMMNhsssssssssshNMMMdssssssss.   Shell: bash 4.4.19 </span><br><span class="line">+sssshhhyNMMNyssssssssssssyNMMMysssssss+   Terminal: /dev/pts/0 </span><br><span class="line">ossyNMMMNyMMhsssssssssssssshmmmhssssssso   CPU: Intel Xeon E3-1225 v6 (4) @ 3.700GHz </span><br><span class="line">ossyNMMMNyMMhsssssssssssssshmmmhssssssso   GPU: Intel HD Graphics P630 </span><br><span class="line">+sssshhhyNMMNyssssssssssssyNMMMysssssss+   Memory: 5652MiB / 48083MiB </span><br><span class="line">.ssssssssdMMMNhsssssssssshNMMMdssssssss. </span><br><span class="line"> /sssssssshNMMMyhhyyyyhdNMMMNhssssssss/                            </span><br><span class="line">  +sssssssssdmydMMMMMMMMddddyssssssss+ </span><br><span class="line">   /ssssssssssshdmNNNNmyNMMMMhssssss/ </span><br><span class="line">    .ossssssssssssssssssdMMMNysssso. </span><br><span class="line">      -+sssssssssssssssssyyyssss+- </span><br><span class="line">        `:+ssssssssssssssssss+:` </span><br><span class="line">            .-/+oossssoo+/-. </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><em>默认系统已安装过<code>docker&amp;docker-compose</code></em> </p>
+<h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><ol>
+<li>下载<code>redis</code>镜像</li>
+<li>编写<code>redis</code>配置文件</li>
+<li>编写<code>docker-compose.yml</code>模板文件</li>
+<li>创建并启动容器</li>
+<li>创建集群</li>
+<li>集群相关命令<code>redis-cli</code></li>
+</ol>
+<h2 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo <span class="built_in">mkdir</span> -p /usr/local/docker-redis/redis-cluster</span><br><span class="line"><span class="comment"># 进入文件夹，，创建配置文件</span></span><br><span class="line"><span class="built_in">cd</span> /usr/local/docker-redis/redis-cluster/</span><br><span class="line">vim redis-cluster.tmpl</span><br></pre></td></tr></table></figure>
+
+<h3 id="模板文件：redis-cluster-tmpl"><a href="#模板文件：redis-cluster-tmpl" class="headerlink" title="模板文件：redis-cluster.tmpl"></a>模板文件：<code>redis-cluster.tmpl</code></h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">port <span class="variable">$&#123;PORT&#125;</span></span><br><span class="line">requirepass zc0417</span><br><span class="line">masterauth zc0417</span><br><span class="line">protected-mode no</span><br><span class="line">daemonize no</span><br><span class="line">appendonly <span class="built_in">yes</span></span><br><span class="line">cluster-enabled <span class="built_in">yes</span></span><br><span class="line">cluster-config-file nodes.conf</span><br><span class="line">cluster-node-timeout 15000</span><br><span class="line">cluster-announce-ip 192.168.9.100</span><br><span class="line">cluster-announce-port <span class="variable">$&#123;PORT&#125;</span></span><br><span class="line">cluster-announce-bus-port 1<span class="variable">$&#123;PORT&#125;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="文件说明："><a href="#文件说明：" class="headerlink" title="文件说明："></a>文件说明：</h3><ul>
+<li><code>port</code>：节点端口；</li>
+<li><code>requirepass</code>：添加访问认证；</li>
+<li><code>masterauth</code>：如果主节点开启了访问认证，从节点访问主节点需要认证；</li>
+<li><code>protected-mode</code>：保护模式，默认值 yes，即开启。开启保护模式以后，需配置 <code>bind ip</code> 或者设置访问密码；关闭保护模式，外部网络可以直接访问；</li>
+<li><code>daemonize</code>：是否以守护线程的方式启动（后台启动），默认 no；</li>
+<li><code>appendonly</code>：是否开启 AOF 持久化模式，默认 no；</li>
+<li><code>cluster-enabled</code>：是否开启集群模式，默认 no；</li>
+<li><code>cluster-config-file</code>：集群节点信息文件；</li>
+<li><code>cluster-node-timeout</code>：集群节点连接超时时间；</li>
+<li><code>cluster-announce-ip</code>：集群节点 IP，填写宿主机的 IP；</li>
+<li><code>cluster-announce-port</code>：集群节点映射端口；</li>
+<li><code>cluster-announce-bus-port</code>：集群节点总线端口。</li>
+</ul>
+<h2 id="生成配置文件及目录"><a href="#生成配置文件及目录" class="headerlink" title="生成配置文件及目录"></a>生成配置文件及目录</h2><p>在<code>192.168.9.100</code>执行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> port <span class="keyword">in</span> `<span class="built_in">seq</span> 6371 6373`; <span class="keyword">do</span> \</span><br><span class="line">  <span class="built_in">mkdir</span> -p <span class="variable">$&#123;port&#125;</span>/conf \</span><br><span class="line">  &amp;&amp; PORT=<span class="variable">$&#123;port&#125;</span> envsubst &lt; redis-cluster.tmpl &gt; <span class="variable">$&#123;port&#125;</span>/conf/redis.conf \</span><br><span class="line">  &amp;&amp; <span class="built_in">mkdir</span> -p <span class="variable">$&#123;port&#125;</span>/data;\</span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+
+<p>在<code>192.168.9.151</code>执行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> port <span class="keyword">in</span> `<span class="built_in">seq</span> 6374 6376`; <span class="keyword">do</span> \</span><br><span class="line">  <span class="built_in">mkdir</span> -p <span class="variable">$&#123;port&#125;</span>/conf \</span><br><span class="line">  &amp;&amp; PORT=<span class="variable">$&#123;port&#125;</span> envsubst &lt; redis-cluster.tmpl &gt; <span class="variable">$&#123;port&#125;</span>/conf/redis.conf \</span><br><span class="line">  &amp;&amp; <span class="built_in">mkdir</span> -p <span class="variable">$&#123;port&#125;</span>/data;\</span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+
+<p>以上命令可以保存为<code>shell</code>脚本，便于以后使用，<code>sh config.sh</code></p>
+<p>执行之后会发现在当前目录下生成对应的以端口为目录名称及配置文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">zc@zc:/usr/local/docker-redis/redis-cluster$ tree</span><br><span class="line">.</span><br><span class="line">├── 6374</span><br><span class="line">│   ├── conf</span><br><span class="line">│   │   └── redis.conf</span><br><span class="line">│   └── data</span><br><span class="line">├── 6375</span><br><span class="line">│   ├── conf</span><br><span class="line">│   │   └── redis.conf</span><br><span class="line">│   └── data</span><br><span class="line">├── 6376</span><br><span class="line">│   ├── conf</span><br><span class="line">│   │   └── redis.conf</span><br><span class="line">│   └── data</span><br><span class="line">├── config.sh</span><br><span class="line">├── docker-compose.yml</span><br><span class="line">└── redis-cluster.tmpl</span><br></pre></td></tr></table></figure>
+
+<h2 id="redis-conf"><a href="#redis-conf" class="headerlink" title="redis.conf"></a><code>redis.conf</code></h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">port 6374</span><br><span class="line">protected-mode no</span><br><span class="line">daemonize no</span><br><span class="line">appendonly <span class="built_in">yes</span></span><br><span class="line">cluster-enabled <span class="built_in">yes</span></span><br><span class="line">cluster-config-file nodes.conf</span><br><span class="line">cluster-node-timeout 15000</span><br><span class="line">cluster-announce-ip 192.168.9.151</span><br><span class="line">cluster-announce-port 6374</span><br><span class="line">cluster-announce-bus-port 16374</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="docker-compose-yml"><a href="#docker-compose-yml" class="headerlink" title="docker-compose.yml"></a><code>docker-compose.yml</code></h2><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&quot;3.3&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">redis-6371:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">redis</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">redis-6371</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">network_mode:</span> <span class="string">&quot;host&quot;</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">/usr/local/docker-redis/redis-cluster/6371/conf/redis.conf:/usr/local/etc/redis/redis.conf</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">/usr/local/docker-redis/redis-cluster/6371/data:/data</span></span><br><span class="line">    <span class="attr">command:</span> <span class="string">redis-server</span> <span class="string">/usr/local/etc/redis/redis.conf</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">redis-6372:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">redis</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">redis-6372</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">network_mode:</span> <span class="string">&quot;host&quot;</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/usr/local/docker-redis/redis-cluster/6372/conf/redis.conf:/usr/local/etc/redis/redis.conf</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/usr/local/docker-redis/redis-cluster/6372/data:/data</span></span><br><span class="line">    <span class="attr">command:</span> <span class="string">redis-server</span> <span class="string">/usr/local/etc/redis/redis.conf</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">redis-6373:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">redis</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">redis-6373</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">network_mode:</span> <span class="string">&quot;host&quot;</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/usr/local/docker-redis/redis-cluster/6373/conf/redis.conf:/usr/local/etc/redis/redis.conf</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/usr/local/docker-redis/redis-cluster/6373/data:/data</span></span><br><span class="line">    <span class="attr">command:</span> <span class="string">redis-server</span> <span class="string">/usr/local/etc/redis/redis.conf</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">zc@ns-01:/usr/local/docker-redis/redis-cluster$ docker-compose up -d</span><br><span class="line">Pulling redis-6371 (redis:)...</span><br><span class="line">latest: Pulling from library/redis</span><br><span class="line">a076a628af6f: Pull complete</span><br><span class="line">f40dd07fe7be: Pull complete</span><br><span class="line">ce21c8a3dbee: Pull complete</span><br><span class="line">ee99c35818f8: Pull complete</span><br><span class="line">56b9a72e68ff: Pull complete</span><br><span class="line">3f703e7f380f: Pull complete</span><br><span class="line">Digest: sha256:0f97c1c9daf5b69b93390ccbe8d3e2971617ec4801fd0882c72bf7cad3a13494</span><br><span class="line">Status: Downloaded newer image <span class="keyword">for</span> redis:latest</span><br><span class="line">Creating redis-6371 ... <span class="keyword">done</span></span><br><span class="line">Creating redis-6372 ... <span class="keyword">done</span></span><br><span class="line">Creating redis-6373 ... <span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="集群命令"><a href="#集群命令" class="headerlink" title="集群命令"></a>集群命令</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">redis-cli -a zc0417 --cluster create 192.168.9.100:6371 192.168.9.100:6372 192.168.9.100:6373 192.168.9.151:6374 192.168.9.151:6375 192.168.9.151:6376 --cluster-replicas 1</span><br><span class="line"><span class="comment"># 输出信息</span></span><br><span class="line">&gt;&gt;&gt; Performing <span class="built_in">hash</span> slots allocation on 6 nodes...</span><br><span class="line">Master[0] -&gt; Slots 0 - 5460</span><br><span class="line">Master[1] -&gt; Slots 5461 - 10922</span><br><span class="line">Master[2] -&gt; Slots 10923 - 16383</span><br><span class="line">Adding replica 192.168.9.151:6376 to 192.168.9.100:6371</span><br><span class="line">Adding replica 192.168.9.100:6373 to 192.168.9.151:6374</span><br><span class="line">Adding replica 192.168.9.151:6375 to 192.168.9.100:6372</span><br><span class="line">M: 8045e24b22f70bb0ce30253ad9209981ef067e58 192.168.9.100:6371</span><br><span class="line">   slots:[0-5460] (5461 slots) master</span><br><span class="line">M: c7d5f26e05eec43235871d96cb0f9a090d3c0422 192.168.9.100:6372</span><br><span class="line">   slots:[10923-16383] (5461 slots) master</span><br><span class="line">S: 2366bb4df9e72eaf6f0a1e82544a02e1ea58bc23 192.168.9.100:6373</span><br><span class="line">   replicates db91be5f7eb9e876ad2c835d0faa7954af4bc7cc</span><br><span class="line">M: db91be5f7eb9e876ad2c835d0faa7954af4bc7cc 192.168.9.151:6374</span><br><span class="line">   slots:[5461-10922] (5462 slots) master</span><br><span class="line">S: 3d88373159f5ff5a466e89432240e9f1c9a05d72 192.168.9.151:6375</span><br><span class="line">   replicates c7d5f26e05eec43235871d96cb0f9a090d3c0422</span><br><span class="line">S: 060c9aba9954902c609c0664003c297597700c53 192.168.9.151:6376</span><br><span class="line">   replicates 8045e24b22f70bb0ce30253ad9209981ef067e58</span><br><span class="line">Can I <span class="built_in">set</span> the above configuration? (<span class="built_in">type</span> <span class="string">&#x27;yes&#x27;</span> to accept): <span class="built_in">yes</span></span><br><span class="line">&gt;&gt;&gt; Nodes configuration updated</span><br><span class="line">&gt;&gt;&gt; Assign a different config epoch to each node</span><br><span class="line">&gt;&gt;&gt; Sending CLUSTER MEET messages to <span class="built_in">join</span> the cluster</span><br><span class="line">Waiting <span class="keyword">for</span> the cluster to <span class="built_in">join</span></span><br><span class="line">.....</span><br><span class="line">&gt;&gt;&gt; Performing Cluster Check (using node 192.168.9.100:6371)</span><br><span class="line">M: 8045e24b22f70bb0ce30253ad9209981ef067e58 192.168.9.100:6371</span><br><span class="line">   slots:[0-5460] (5461 slots) master</span><br><span class="line">   1 additional replica(s)</span><br><span class="line">S: 3d88373159f5ff5a466e89432240e9f1c9a05d72 192.168.9.151:6375</span><br><span class="line">   slots: (0 slots) slave</span><br><span class="line">   replicates c7d5f26e05eec43235871d96cb0f9a090d3c0422</span><br><span class="line">S: 2366bb4df9e72eaf6f0a1e82544a02e1ea58bc23 192.168.9.100:6373</span><br><span class="line">   slots: (0 slots) slave</span><br><span class="line">   replicates db91be5f7eb9e876ad2c835d0faa7954af4bc7cc</span><br><span class="line">M: db91be5f7eb9e876ad2c835d0faa7954af4bc7cc 192.168.9.151:6374</span><br><span class="line">   slots:[5461-10922] (5462 slots) master</span><br><span class="line">   1 additional replica(s)</span><br><span class="line">M: c7d5f26e05eec43235871d96cb0f9a090d3c0422 192.168.9.100:6372</span><br><span class="line">   slots:[10923-16383] (5461 slots) master</span><br><span class="line">   1 additional replica(s)</span><br><span class="line">S: 060c9aba9954902c609c0664003c297597700c53 192.168.9.151:6376</span><br><span class="line">   slots: (0 slots) slave</span><br><span class="line">   replicates 8045e24b22f70bb0ce30253ad9209981ef067e58</span><br><span class="line">[OK] All nodes agree about slots configuration.</span><br><span class="line">&gt;&gt;&gt; Check <span class="keyword">for</span> open slots...</span><br><span class="line">&gt;&gt;&gt; Check slots coverage...</span><br><span class="line">[OK] All 16384 slots covered.</span><br></pre></td></tr></table></figure>
+
+<p>注意，这里使用的<code>redis</code>版本，  <code>Redis Cluster</code> 在5.0之后取消了ruby脚本<code>redis-trib.rb</code>的支持（手动命令行添加集群的方式不变），集合到<code>redis-cli</code>里，避免了再安装<code>ruby</code>的相关环境。直接使用<code>redis-clit</code>的参数<code>--cluster</code> 来取代。为方便自己后面查询就说明下如何使用该命令进行<code>Cluster</code>的创建和管理。</p>
+<h2 id="redis-cli"><a href="#redis-cli" class="headerlink" title="redis-cli"></a><code>redis-cli</code></h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">redis-cli --cluster <span class="built_in">help</span></span><br><span class="line">Cluster Manager Commands:</span><br><span class="line">  create         host1:port1 ... hostN:portN   <span class="comment">#创建集群</span></span><br><span class="line">                 --cluster-replicas &lt;arg&gt;      <span class="comment">#从节点个数</span></span><br><span class="line">  check          host:port                     <span class="comment">#检查集群</span></span><br><span class="line">                 --cluster-search-multiple-owners <span class="comment">#检查是否有槽同时被分配给了多个节点</span></span><br><span class="line">  info           host:port                     <span class="comment">#查看集群状态</span></span><br><span class="line">  fix            host:port                     <span class="comment">#修复集群</span></span><br><span class="line">                 --cluster-search-multiple-owners <span class="comment">#修复槽的重复分配问题</span></span><br><span class="line">  reshard        host:port                     <span class="comment">#指定集群的任意一节点进行迁移slot，重新分slots</span></span><br><span class="line">                 --cluster-from &lt;arg&gt;          <span class="comment">#需要从哪些源节点上迁移slot，可从多个源节点完成迁移，以逗号隔开，传递的是节点的node id，还可以直接传递--from all，这样源节点就是集群的所有节点，不传递该参数的话，则会在迁移过程中提示用户输入</span></span><br><span class="line">                 --cluster-to &lt;arg&gt;            <span class="comment">#slot需要迁移的目的节点的node id，目的节点只能填写一个，不传递该参数的话，则会在迁移过程中提示用户输入</span></span><br><span class="line">                 --cluster-slots &lt;arg&gt;         <span class="comment">#需要迁移的slot数量，不传递该参数的话，则会在迁移过程中提示用户输入。</span></span><br><span class="line">                 --cluster-yes                 <span class="comment">#指定迁移时的确认输入</span></span><br><span class="line">                 --cluster-timeout &lt;arg&gt;       <span class="comment">#设置migrate命令的超时时间</span></span><br><span class="line">                 --cluster-pipeline &lt;arg&gt;      <span class="comment">#定义cluster getkeysinslot命令一次取出的key数量，不传的话使用默认值为10</span></span><br><span class="line">                 --cluster-replace             <span class="comment">#是否直接replace到目标节点</span></span><br><span class="line">  rebalance      host:port                                      <span class="comment">#指定集群的任意一节点进行平衡集群节点slot数量 </span></span><br><span class="line">                 --cluster-weight &lt;node1=w1...nodeN=wN&gt;         <span class="comment">#指定集群节点的权重</span></span><br><span class="line">                 --cluster-use-empty-masters                    <span class="comment">#设置可以让没有分配slot的主节点参与，默认不允许</span></span><br><span class="line">                 --cluster-timeout &lt;arg&gt;                        <span class="comment">#设置migrate命令的超时时间</span></span><br><span class="line">                 --cluster-simulate                             <span class="comment">#模拟rebalance操作，不会真正执行迁移操作</span></span><br><span class="line">                 --cluster-pipeline &lt;arg&gt;                       <span class="comment">#定义cluster getkeysinslot命令一次取出的key数量，默认值为10</span></span><br><span class="line">                 --cluster-threshold &lt;arg&gt;                      <span class="comment">#迁移的slot阈值超过threshold，执行rebalance操作</span></span><br><span class="line">                 --cluster-replace                              <span class="comment">#是否直接replace到目标节点</span></span><br><span class="line">  add-node       new_host:new_port existing_host:existing_port  <span class="comment">#添加节点，把新节点加入到指定的集群，默认添加主节点</span></span><br><span class="line">                 --cluster-slave                                <span class="comment">#新节点作为从节点，默认随机一个主节点</span></span><br><span class="line">                 --cluster-master-id &lt;arg&gt;                      <span class="comment">#给新节点指定主节点</span></span><br><span class="line">  del-node       host:port node_id                              <span class="comment">#删除给定的一个节点，成功后关闭该节点服务</span></span><br><span class="line">  call           host:port <span class="built_in">command</span> arg arg .. arg               <span class="comment">#在集群的所有节点执行相关命令</span></span><br><span class="line">  set-timeout    host:port milliseconds                         <span class="comment">#设置cluster-node-timeout</span></span><br><span class="line">  import         host:port                                      <span class="comment">#将外部redis数据导入集群</span></span><br><span class="line">                 --cluster-from &lt;arg&gt;                           <span class="comment">#将指定实例的数据导入到集群</span></span><br><span class="line">                 --cluster-copy                                 <span class="comment">#migrate时指定copy</span></span><br><span class="line">                 --cluster-replace                              <span class="comment">#migrate时指定replace</span></span><br><span class="line">  <span class="built_in">help</span>           </span><br><span class="line"></span><br><span class="line">For check, fix, reshard, del-node, set-timeout you can specify the host and port of any working node <span class="keyword">in</span> the cluster.</span><br></pre></td></tr></table></figure>
+
+<h2 id="添加一个节点到集群"><a href="#添加一个节点到集群" class="headerlink" title="添加一个节点到集群"></a>添加一个节点到集群</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">redis-cli --cluster add-node 192.168.9.123:6379 192.168.9.100:6371</span><br><span class="line"><span class="comment"># 说明：为一个指定集群添加节点，需要先连到该集群的任意一个节点IP（192.168.9.100:6371），再把新节点加入。该2个参数的顺序有要求：新加入的节点放前</span></span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; Adding node 192.168.9.123:6379 to cluster 192.168.9.100:6371</span><br><span class="line">&gt;&gt;&gt; Performing Cluster Check (using node 192.168.9.100:6371)</span><br><span class="line">M: 8045e24b22f70bb0ce30253ad9209981ef067e58 192.168.9.100:6371</span><br><span class="line">   slots:[0-5460] (5461 slots) master</span><br><span class="line">   1 additional replica(s)</span><br><span class="line">S: 3d88373159f5ff5a466e89432240e9f1c9a05d72 192.168.9.151:6375</span><br><span class="line">   slots: (0 slots) slave</span><br><span class="line">   replicates c7d5f26e05eec43235871d96cb0f9a090d3c0422</span><br><span class="line">S: 2366bb4df9e72eaf6f0a1e82544a02e1ea58bc23 192.168.9.100:6373</span><br><span class="line">   slots: (0 slots) slave</span><br><span class="line">   replicates db91be5f7eb9e876ad2c835d0faa7954af4bc7cc</span><br><span class="line">M: db91be5f7eb9e876ad2c835d0faa7954af4bc7cc 192.168.9.151:6374</span><br><span class="line">   slots:[5461-10922] (5462 slots) master</span><br><span class="line">   1 additional replica(s)</span><br><span class="line">M: c7d5f26e05eec43235871d96cb0f9a090d3c0422 192.168.9.100:6372</span><br><span class="line">   slots:[10923-16383] (5461 slots) master</span><br><span class="line">   1 additional replica(s)</span><br><span class="line">S: 060c9aba9954902c609c0664003c297597700c53 192.168.9.151:6376</span><br><span class="line">   slots: (0 slots) slave</span><br><span class="line">   replicates 8045e24b22f70bb0ce30253ad9209981ef067e58</span><br><span class="line">[OK] All nodes agree about slots configuration.</span><br><span class="line">&gt;&gt;&gt; Check <span class="keyword">for</span> open slots...</span><br><span class="line">&gt;&gt;&gt; Check slots coverage...</span><br><span class="line">[OK] All 16384 slots covered.</span><br><span class="line">&gt;&gt;&gt; Send CLUSTER MEET to node 192.168.9.123:6379 to make it <span class="built_in">join</span> the cluster.</span><br><span class="line">[OK] New node added correctly.</span><br></pre></td></tr></table></figure>
+
+<h2 id="Redis-Cluster集群"><a href="#Redis-Cluster集群" class="headerlink" title="Redis-Cluster集群"></a><code>Redis-Cluster</code>集群</h2><p><code>redis</code>的哨兵模式基本已经可以实现高可用，读写分离 ，但是在这种模式下每台<code>redis</code>服务器都存储相同的数据，很浪费内存，所以在<code>redis3.0</code>上加入了<code>cluster</code>模式，实现的<code>redis</code>的分布式存储，也就是说每台<code>redis</code>节点上存储不同的内容。</p>
+<p><code>Redis-Cluster</code>采用无中心结构,它的特点如下：</p>
+<p>所有的<code>redis</code>节点彼此互联<code>(PING-PONG</code>机制),内部使用二进制协议优化传输速度和带宽。<br>节点的<code>fail</code>是通过集群中超过半数的节点检测失效时才生效。<br>客户端与<code>redis</code>节点直连,不需要中间代理层.客户端不需要连接集群所有节点,连接集群中任何一个可用节点即可。<br>工作方式：</p>
+<p>在<code>redis</code>的每一个节点上，都有这么两个东西，一个是插槽（<code>slot</code>），它的的取值范围是：0-16383。还有一个就是<code>cluster</code>，可以理解为是一个集群管理的插件。当我们的存取的key到达的时候，<code>redis</code>会根据<code>crc16</code>的算法得出一个结果，然后把结果对 16384 求余数，这样每个 key 都会对应一个编号在 0-16383 之间的哈希槽，通过这个值，去找到对应的插槽所对应的节点，然后直接自动跳转到这个对应的节点上进行存取操作。</p>
+<p>为了保证高可用，<code>redis-cluster</code>集群引入了主从模式，一个主节点对应一个或者多个从节点，当主节点宕机的时候，就会启用从节点。当其它主节点ping一个主节点A时，如果半数以上的主节点与A通信超时，那么认为主节点A宕机了。如果主节点A和它的从节点<code>A1</code>都宕机了，那么该集群就无法再提供服务了。</p>
+<p>Redis集群方案基于分而治之的思想。Redis中数据都是以Key-Value形式存储的，而不同Key的数据之间是相互独立的。因此可以将Key按照某种规则划分成多个分区，将不同分区的数据存放在不同的节点上。这个方案类似数据结构中哈希表的结构。在Redis集群的实现中，使用哈希算法（公式是CRC16(Key) mod 16383）将Key映射到0<del>16383范围的整数。这样每个整数对应存储了若干个Key-Value数据，这样一个整数对应的抽象存储称为一个槽（slot）。每个Redis Cluster的节点——准确讲是master节点——负责一定范围的槽，所有节点组成的集群覆盖了0</del>16383整个范围的槽。</p>
+<h2 id="Slave"><a href="#Slave" class="headerlink" title="Slave"></a>Slave</h2><p>上面的方案只是解决了性能扩展的问题，集群的故障容错能力并没有提升。提高容错能力的方法一般为使用某种备份&#x2F;冗余手段。负责一定数量的槽的节点被称为master节点。为了增加集群稳定性，每个master节点可以配置若干个备份节点——称为slave节点。Slave节点一般作为冷备份保存master节点的数据，在master节点宕机时替换master节点。在一些数据访问压力比较大的情况下，slave节点也可以提供读取数据的功能，不过slave节点的数据实时性会略差一下。而写数据的操作则只能通过master节点进行。</p>
+<h2 id="节点通信"><a href="#节点通信" class="headerlink" title="节点通信"></a>节点通信</h2><p>尽管不同节点存储的数据相互独立，这些节点仍然需要相互通信以同步节点状态信息。Redis集群采用P2P的Gossip协议，节点之间不断地通信交换信息，最终所有节点的状态都会达成一致。常用的Gossip消息有下面几种：<br>ping消息：每个节点不断地向其他节点发起ping消息，用于检测节点是否在线和交换节点状态信息。<br>pong消息：收到ping、meet消息时的响应消息。<br>meet消息：新节点加入消息。<br>fail消息：节点下线消息。<br>forget消息：忘记节点消息，使一个节点下线。这个命令必须在60秒内在所有节点执行，否则超过60秒后该节点重新参与消息交换。实践中不建议直接使用forget命令来操作节点下线。</p>
+<h2 id="节点下线"><a href="#节点下线" class="headerlink" title="节点下线"></a>节点下线</h2><p>当某个节点出现问题时，需要一定的传播时间让多数master节点认为该节点确实不可用，才能标记标记该节点真正下线。Redis集群的节点下线包括两个环节：主观下线（pfail）和客观下线（fail）。<br>主观下线：当节点A在cluster-node-timeout时间内和节点B通信（ping-pong消息）一直失败，则节点A认为节点B不可用，标记为主观下线，并将状态消息传播给其他节点。<br>客观下线：当一个节点被集群内多数master节点标记为主观下线后，则触发客观下线流程，标记该节点真正下线。</p>
+<h2 id="故障恢复"><a href="#故障恢复" class="headerlink" title="故障恢复"></a>故障恢复</h2><p>一个持有槽的master节点客观下线后，集群会从slave节点中选出一个提升为master节点来替换它。Redis集群使用选举-投票的算法来挑选slave节点。一个slave节点必须获得包括故障的master节点在内的多数master节点的投票后才能被提升为master节点。假设集群规模为3主3从，则必须至少有2个主节点存活才能执行故障恢复。如果部署时将2个主节点部署到同一台服务器上，则该服务器不幸宕机后集群无法执行故障恢复。<br>默认情况下，Redis集群如果有master节点不可用，即有一些槽没有负责的节点，则整个集群不可用。也就是说当一个master节点故障，到故障恢复的这段时间，整个集群都处于不可用的状态。这对于一些业务来说是不可忍受的。可以在配置中将cluster-require-full-coverage配置为no，那么master节点故障时只会影响访问它负责的相关槽的数据，不影响对其他节点的访问。</p>
+<h2 id="持久化"><a href="#持久化" class="headerlink" title="持久化"></a>持久化</h2><h2 id="一、redis持久化—-两种方式"><a href="#一、redis持久化—-两种方式" class="headerlink" title="一、redis持久化—-两种方式"></a>一、redis持久化—-两种方式</h2><p>1、redis提供了两种持久化的方式，分别是RDB（Redis DataBase）和AOF（Append Only File）。</p>
+<p>2、RDB，简而言之，就是在不同的时间点，将redis存储的数据生成快照并存储到磁盘等介质上；</p>
+<p>3、AOF，则是换了一个角度来实现持久化，那就是将redis执行过的所有写指令记录下来，在下次redis重新启动时，只要把这些写指令从前到后再重复执行一遍，就可以实现数据恢复了。</p>
+<p>4、其实RDB和AOF两种方式也可以同时使用，在这种情况下，如果redis重启的话，则会优先采用AOF方式来进行数据恢复，这是因为AOF方式的数据恢复完整度更高。</p>
+<p>5、如果你没有数据持久化的需求，也完全可以关闭RDB和AOF方式，这样的话，redis将变成一个纯内存数据库，就像memcache一样。</p>
+<h2 id="二、redis持久化—-RDB"><a href="#二、redis持久化—-RDB" class="headerlink" title="二、redis持久化—-RDB"></a>二、redis持久化—-RDB</h2><p>1、RDB方式，是将redis某一时刻的数据持久化到磁盘中，是一种快照式的持久化方法。</p>
+<p>2、redis在进行数据持久化的过程中，会先将数据写入到一个临时文件中，待持久化过程都结束了，才会用这个临时文件替换上次持久化好的文件。正是这种特性，让我们可以随时来进行备份，因为快照文件总是完整可用的。</p>
+<p>3、对于RDB方式，redis会单独创建（fork）一个子进程来进行持久化，而主进程是不会进行任何IO操作的，这样就确保了redis极高的性能。</p>
+<p>4、如果需要进行大规模数据的恢复，且对于数据恢复的完整性不是非常敏感，那RDB方式要比AOF方式更加的高效。</p>
+<p>5、虽然RDB有不少优点，但它的缺点也是不容忽视的。如果你对数据的完整性非常敏感，那么RDB方式就不太适合你，因为即使你每5分钟都持久化一次，当redis故障时，仍然会有近5分钟的数据丢失。所以，redis还提供了另一种持久化方式，那就是AOF。</p>
+<h2 id="三、redis持久化—-AOF"><a href="#三、redis持久化—-AOF" class="headerlink" title="三、redis持久化—-AOF"></a>三、redis持久化—-AOF</h2><p>1、AOF，英文是Append Only File，即只允许追加不允许改写的文件。</p>
+<p>2、如前面介绍的，AOF方式是将执行过的写指令记录下来，在数据恢复时按照从前到后的顺序再将指令都执行一遍，就这么简单。</p>
+<p>3、我们通过配置redis.conf中的appendonly yes就可以打开AOF功能。如果有写操作（如SET等），redis就会被追加到AOF文件的末尾。</p>
+<p>4、默认的AOF持久化策略是每秒钟fsync一次（fsync是指把缓存中的写指令记录到磁盘中），因为在这种情况下，redis仍然可以保持很好的处理性能，即使redis故障，也只会丢失最近1秒钟的数据。</p>
+<p>5如果在追加日志时，恰好遇到磁盘空间满、inode满或断电等情况导致日志写入不完整，也没有关系，redis提供了redis-check-aof工具，可以用来进行日志修复。</p>
+<p>6、因为采用了追加方式，如果不做任何处理的话，AOF文件会变得越来越大，为此，redis提供了AOF文件重写（rewrite）机制，即当AOF文件的大小超过所设定的阈值时，redis就会启动AOF文件的内容压缩，只保留可以恢复数据的最小指令集。举个例子或许更形象，假如我们调用了100次INCR指令，在AOF文件中就要存储100条指令，但这明显是很低效的，完全可以把这100条指令合并成一条SET指令，这就是重写机制的原理。</p>
+<p>7、在进行AOF重写时，仍然是采用先写临时文件，全部完成后再替换的流程，所以断电、磁盘满等问题都不会影响AOF文件的可用性，这点大家可以放心。</p>
+<p>8、AOF方式的另一个好处，我们通过一个“场景再现”来说明。某同学在操作redis时，不小心执行了FLUSHALL，导致redis内存中的数据全部被清空了，这是很悲剧的事情。不过这也不是世界末日，只要redis配置了AOF持久化方式，且AOF文件还没有被重写（rewrite），我们就可以用最快的速度暂停redis并编辑AOF文件，将最后一行的FLUSHALL命令删除，然后重启redis，就可以恢复redis的所有数据到FLUSHALL之前的状态了。是不是很神奇，这就是AOF持久化方式的好处之一。但是如果AOF文件已经被重写了，那就无法通过这种方法来恢复数据了。</p>
+<p>9、虽然优点多多，但AOF方式也同样存在缺陷，比如在同样数据规模的情况下，AOF文件要比RDB文件的体积大。而且，AOF方式的恢复速度也要慢于RDB方式。</p>
+<p>如果你直接执行BGREWRITEAOF命令，那么redis会生成一个全新的AOF文件，其中便包括了可以恢复现有数据的最少的命令集。</p>
+<p>10、如果运气比较差，AOF文件出现了被写坏的情况，也不必过分担忧，redis并不会贸然加载这个有问题的AOF文件，而是报错退出。这时可以通过以下步骤来修复出错的文件：</p>
+<p>1.备份被写坏的AOF文件<br>2.运行redis-check-aof –fix进行修复<br>3.用diff -u来看下两个文件的差异，确认问题点<br>4.重启redis，加载修复后的AOF文件</p>
+<h2 id="四、redis持久化—-AOF重写"><a href="#四、redis持久化—-AOF重写" class="headerlink" title="四、redis持久化—-AOF重写"></a>四、redis持久化—-AOF重写</h2><p>1、AOF重写的内部运行原理，我们有必要了解一下。</p>
+<p>2、在重写即将开始之际，redis会创建（fork）一个“重写子进程”，这个子进程会首先读取现有的AOF文件，并将其包含的指令进行分析压缩并写入到一个临时文件中。</p>
+<p>3、与此同时，主工作进程会将新接收到的写指令一边累积到内存缓冲区中，一边继续写入到原有的AOF文件中，这样做是保证原有的AOF文件的可用性，避免在重写过程中出现意外。</p>
+<p>4、当“重写子进程”完成重写工作后，它会给父进程发一个信号，父进程收到信号后就会将内存中缓存的写指令追加到新AOF文件中。</p>
+<p>5、当追加结束后，redis就会用新AOF文件来代替旧AOF文件，之后再有新的写指令，就都会追加到新的AOF文件中了。</p>
+<h2 id="五、redis持久化—-如何选择RDB和AOF"><a href="#五、redis持久化—-如何选择RDB和AOF" class="headerlink" title="五、redis持久化—-如何选择RDB和AOF"></a>五、redis持久化—-如何选择RDB和AOF</h2><p>1、对于我们应该选择RDB还是AOF，官方的建议是两个同时使用。这样可以提供更可靠的持久化方案。</p>
+<p>2、redis的备份和还原，可以借助第三方的工具redis-dump。</p>
+<h2 id="六、Redis的两种持久化方式也有明显的缺点"><a href="#六、Redis的两种持久化方式也有明显的缺点" class="headerlink" title="六、Redis的两种持久化方式也有明显的缺点"></a>六、Redis的两种持久化方式也有明显的缺点</h2><p>1、RDB需要定时持久化，风险是可能会丢两次持久之间的数据，量可能很大。</p>
+<p>2、AOF每秒fsync一次指令硬盘，如果硬盘IO慢，会阻塞父进程；风险是会丢失1秒多的数据；在Rewrite过程中，主进程把指令存到mem-buffer中，最后写盘时会阻塞主进程。</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/ljheee/article/details/76284082">持久化相关内容：https://blog.csdn.net/ljheee/article/details/76284082</a></p>
+</div>
+        </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/Redis/" rel="tag">Redis</a>
+                </div>
+                <div class="pull-date">
+                    <time datetime="2025-11-21T06:36:31.548Z" itemprop="dateModified">最后编辑：2025-11-21</time>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" yarn" href="/2021/03/09/2021/03/092045/">&lt; 上一篇</a>
+            </div>
+            
+            
+            <div class="nav-next clearfix">
+                <a title=" SpringMVC工作流程" href="/2021/03/17/2021/03/170953/">下一篇 &gt;</a>
+            </div>
+            
+        </nav>
+    
+    
+        <link rel="stylesheet" href="/vendors/gitalk@1.7.2/dist/gitalk.css"></script>
+<div id="gitalk-container" class="post-comments lazy-load" style="padding-left:2rem; padding-right:2rem;"></div>
+<script>
+    var load_comm = () => {
+        const init = () => {
+            console.log('Gitalk loading...');
+            const gitalk = new Gitalk(Object.assign({
+                id: '/2021/03/11/2021/03/112053/',
+                path: '/2021/03/11/2021/03/112053/'
+            }, JSON.parse('{"clientID":"56e6a743c63b9c4faa93","clientSecret":"888b7234051c5c2ed6ea7bdf18e8b5a2678775f1","repo":"gitalk-comments","owner":"qbmzc","admin":["qbmzc"]}')));
+
+            gitalk.render('gitalk-container');
+        }
+        if (typeof Gitalk === 'undefined') {
+            const src = '/vendors/gitalk@1.7.2/dist/gitalk.min.js';
+            $.getScript(src, init);
+        } else {
+            init();
+        }
+    };
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a></noscript>
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/avatar.webp" loading="lazy" decoding="auto" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center">流云与风，苍穹游牧</p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                499
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                8
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                229
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">137</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">151</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">29</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/congco/">congco</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/work/">work</a><span class="category-list-count">118</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wuw/">wuw</a><span class="category-list-count">48</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/">技术笔记</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/AES/" style="font-size: 0.6em;">AES</a> <a href="/tags/AI/" style="font-size: 0.7em;">AI</a> <a href="/tags/AWS/" style="font-size: 0.7em;">AWS</a> <a href="/tags/Arch/" style="font-size: 0.6em;">Arch</a> <a href="/tags/Arch-Linux/" style="font-size: 0.8em;">Arch Linux</a> <a href="/tags/ArchLinux/" style="font-size: 0.8em;">ArchLinux</a> <a href="/tags/CAS/" style="font-size: 0.6em;">CAS</a> <a href="/tags/CI-CD/" style="font-size: 0.6em;">CI/CD</a> <a href="/tags/Caffeine/" style="font-size: 0.6em;">Caffeine</a> <a href="/tags/CompletableFuture/" style="font-size: 0.7em;">CompletableFuture</a> <a href="/tags/DNS/" style="font-size: 0.8em;">DNS</a> <a href="/tags/Docker/" style="font-size: 0.6em;">Docker</a> <a href="/tags/Flask/" style="font-size: 0.6em;">Flask</a> <a href="/tags/Future/" style="font-size: 0.7em;">Future</a> <a href="/tags/GC/" style="font-size: 0.6em;">GC</a> <a href="/tags/GPT/" style="font-size: 0.6em;">GPT</a> <a href="/tags/GraalVM/" style="font-size: 0.8em;">GraalVM</a> <a href="/tags/HashMap/" style="font-size: 0.6em;">HashMap</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/14/2025/11/141727/"><i class="fa  fa-book"></i> karakeep</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111335/"><i class="fa  fa-book"></i> SonarQube 扫描支持多 JDK 版本的实践方案</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111045/"><i class="fa  fa-book"></i> 一次修复 PDF 中文乱码的排查记录</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/23/2025/10/221500/"><i class="fa  fa-book"></i> dig命令使用详解</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/13/2025/10/131645/"><i class="fa  fa-book"></i> DNS解析异常导致视频播放缓慢问题排查与解决</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  >
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        <li><a href="mailto:congco@foxmail.com"><i class="fa fa-envelope"></i></a></li>
+                        
+                        
+                        
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://github.com/qbmzc"><i class="fa fa-github"></i></a></li>
+                        <li><a target="_blank" rel="nofollow" href="/rss.xml"><i class="fa fa-rss"></i></a></li>
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2025 沐曦留曳 版权所有.</li>
+                            <li>本站已运行<span id="span_dt">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
+                            <li>Site built with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by cong.</li>
+                        </div>
+                        <div>
+                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
+                            <li>Hosted on <a href="https://github.io" target="_blank">Github Pages</a></li>
+                        </div>
+                        <div>
+                            
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="/vendors/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="/vendors/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+
+    <script defer src="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="/vendors/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>

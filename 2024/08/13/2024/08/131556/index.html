@@ -1,0 +1,1496 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="/images/favicon.ico">
+  
+  <title>autoindex | 沐曦留曳</title>
+  <meta name="author" content="cong" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="autoindex" />
+  
+  <meta name="description" content="搭建文件共享服务">
+<meta property="og:type" content="article">
+<meta property="og:title" content="autoindex">
+<meta property="og:url" content="https://qbmzc.github.io/2024/08/13/2024/08/131556/index.html">
+<meta property="og:site_name" content="沐曦留曳">
+<meta property="og:description" content="搭建文件共享服务">
+<meta property="og:locale">
+<meta property="og:image" content="https://qbmzc.github.io/images/favicon.ico">
+<meta property="article:published_time" content="2024-08-12T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-11-21T06:36:31.563Z">
+<meta property="article:author" content="cong">
+<meta property="article:tag" content="autoindex">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://qbmzc.github.io/images/favicon.ico">
+  <link rel="alternate" href="rss.xml" type="application/atom+xml">
+  <!-- 站点验证相关 -->
+  
+    
+      <meta name="google-site-verification" content="lV4cead5YlJ8KpODToP7dvzi-ihrxSqU0yYStYKj2ao" />
+    
+    
+      <meta name="baidu-site-verification" content="codeva-Zr6WlkDupK" />
+    
+    
+      <meta name="msvalidate.01" content="2D2197DEE362D193B3EC29AFD3306341" />
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" media="all"></script>
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-color-dark.min.css" media="(prefers-color-scheme: dark)"></script>
+    <script src="/js/kr-dark.min.js"></script>
+  
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" media="all"></script>
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="/vendors/font-awesome@4.7.0/css/font-awesome.min.css" media="all"></script>
+  <link rel="stylesheet" id="nprogress-css" href="/vendors/nprogress@0.2.0/nprogress.css" media="all"></script>
+  
+  
+  
+    <link rel="stylesheet" href="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css"></script>
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="/vendors/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/banner.webp');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">沐曦留曳</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>沐曦留曳</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article itemscope itemtype="https://schema.org/Article">
+    
+    <link itemprop="mainEntityOfPage" href="https://qbmzc.github.io/2024/08/13/2024/08/131556/">
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center" itemprop="name headline">autoindex</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><time datetime="2024-08-12T16:00:00.000Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2024-08-13</time></li>
+                <li itemprop="author" itemscope itemtype="https://schema.org/Person">
+                    <i class="fa fa-user"></i> 作者 <span itemprop="name">cong</span>
+                </li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~14.32K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1763706991563"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+            
+                <div class="kratos-post-inner-toc">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#nginx-autoindex"><span class="toc-number">1.</span> <span class="toc-text">nginx autoindex</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B%E9%85%8D%E7%BD%AE"><span class="toc-number">1.1.</span> <span class="toc-text">示例配置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#flask-autoindex-%E5%B7%B2%E4%B8%8D%E5%86%8D%E6%9B%B4%E6%96%B0"><span class="toc-number">2.</span> <span class="toc-text">flask autoindex 已不再更新</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Apache-httpd"><span class="toc-number">3.</span> <span class="toc-text">Apache(httpd)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#python"><span class="toc-number">4.</span> <span class="toc-text">python</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Simple-Web-Server"><span class="toc-number">5.</span> <span class="toc-text">Simple Web Server</span></a></li></ol>
+                </div>
+            
+            <hr />
+            <div itemprop="articleBody"><p>搭建文件共享服务</p>
+<span id="more"></span>
+
+
+<h2 id="nginx-autoindex"><a href="#nginx-autoindex" class="headerlink" title="nginx autoindex"></a>nginx autoindex</h2><p>Nginx 是一个高性能的 HTTP 和反向代理服务器，它也可以作为 IMAP&#x2F;POP3 代理服务器。Nginx 以其稳定性、丰富的功能集、简单的配置和低资源消耗而闻名。</p>
+<p><code>autoindex</code> 是 Nginx 模块中的一个特性，它允许 Nginx 服务器自动生成目录索引页面。这意味着当用户访问一个目录而不是一个具体的文件时，Nginx 可以返回一个包含该目录下所有文件和子目录列表的页面。这对于网站管理员来说非常有用，因为它可以方便地展示文件结构，而无需手动创建索引页面。</p>
+<p>以下是 Nginx 使用 <code>autoindex</code> 模块的一些基本配置示例：</p>
+<ol>
+<li><p><strong>启用 autoindex 模块</strong>：<br>在 Nginx 配置文件中，你需要启用 <code>autoindex</code> 模块。通常，这可以通过在 <code>server</code> 块中添加 <code>autoindex on;</code> 指令来实现。</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">80</span>;</span><br><span class="line">    <span class="attribute">server_name</span> example.com;</span><br><span class="line">    <span class="attribute">root</span> /path/to/your/directory;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">autoindex</span> <span class="literal">on</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>自定义索引页面</strong>：<br>你可以使用 <code>autoindex_exact_size</code> 和 <code>autoindex_localtime</code> 指令来自定义索引页面的显示。<code>autoindex_exact_size</code> 允许显示文件的确切大小，而 <code>autoindex_localtime</code> 则使用本地时间而不是GMT时间。</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">autoindex_exact_size</span> <span class="literal">off</span>;</span><br><span class="line"><span class="attribute">autoindex_localtime</span> <span class="literal">on</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>设置索引页面的格式</strong>：<br>你还可以使用 <code>autoindex_format</code> 指令来设置索引页面的格式，它可以是 <code>html</code> 或 <code>json</code>。</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">autoindex_format</span> html;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>添加自定义样式</strong>：<br>如果你想对自动生成的索引页面进行样式定制，你可以使用 <code>autoindex_style</code> 指令来指定一个 CSS 文件。</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">autoindex_style</span> /path/to/your/style.css;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>限制访问</strong>：<br>如果你只想让特定的用户或IP地址访问索引页面，你可以使用 <code>allow</code> 和 <code>deny</code> 指令来设置访问控制。</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">location</span> / &#123;</span><br><span class="line">    <span class="attribute">allow</span> <span class="number">192.168.1.0</span>/<span class="number">24</span>;</span><br><span class="line">    <span class="attribute">deny</span> all;</span><br><span class="line">    <span class="attribute">autoindex</span> <span class="literal">on</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="示例配置"><a href="#示例配置" class="headerlink" title="示例配置"></a>示例配置</h3><ol>
+<li>配置文件</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br></pre></td><td class="code"><pre><span class="line"># Generated by nginxconfig.io</span><br><span class="line"># See nginxconfig.txt for the configuration share link</span><br><span class="line"></span><br><span class="line">user                 nginx;</span><br><span class="line">pid                  /var/run/nginx.pid;</span><br><span class="line">worker_processes     auto;</span><br><span class="line">worker_rlimit_nofile 65535;</span><br><span class="line"></span><br><span class="line"># Load modules</span><br><span class="line">include              /etc/nginx/modules-enabled/*.conf;</span><br><span class="line"></span><br><span class="line">events &#123;</span><br><span class="line">    multi_accept       on;</span><br><span class="line">    worker_connections 65535;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">http &#123;</span><br><span class="line">    charset                utf-8;</span><br><span class="line">    sendfile               on;</span><br><span class="line">    tcp_nopush             on;</span><br><span class="line">    tcp_nodelay            on;</span><br><span class="line">    server_tokens          off;</span><br><span class="line">    log_not_found          off;</span><br><span class="line">    types_hash_max_size    2048;</span><br><span class="line">    types_hash_bucket_size 64;</span><br><span class="line">    client_max_body_size   16M;</span><br><span class="line"></span><br><span class="line">    # MIME</span><br><span class="line">    include                mime.types;</span><br><span class="line">    default_type           application/octet-stream;</span><br><span class="line"></span><br><span class="line">    # Logging</span><br><span class="line">    access_log             off;</span><br><span class="line">    error_log              /dev/null;</span><br><span class="line"></span><br><span class="line">    # Load configs</span><br><span class="line">    include                /etc/nginx/conf.d/*.conf;</span><br><span class="line"></span><br><span class="line">    # 192.168.72.5</span><br><span class="line">    server &#123;</span><br><span class="line">        listen                             80;</span><br><span class="line">        listen                             [::]:80;</span><br><span class="line">        server_name                        yx.taimei.com;</span><br><span class="line">        root                               /usr/share/nginx/html;</span><br><span class="line"></span><br><span class="line">        # security headers</span><br><span class="line">        add_header X-XSS-Protection        &quot;1; mode=block&quot; always;</span><br><span class="line">        add_header X-Content-Type-Options  &quot;nosniff&quot; always;</span><br><span class="line">        add_header Referrer-Policy         &quot;no-referrer-when-downgrade&quot; always;</span><br><span class="line">        add_header Content-Security-Policy &quot;default-src &#x27;self&#x27; http: https: ws: wss: data: blob: &#x27;unsafe-inline&#x27;; frame-ancestors &#x27;self&#x27;;&quot; always;</span><br><span class="line">        add_header Permissions-Policy      &quot;interest-cohort=()&quot; always;</span><br><span class="line"></span><br><span class="line">        # . files</span><br><span class="line">        location ~ /\.(?!well-known) &#123;</span><br><span class="line">            deny all;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        # logging</span><br><span class="line">        access_log /var/log/nginx/access.log combined buffer=512k flush=1m;</span><br><span class="line">        error_log  /var/log/nginx/error.log warn;</span><br><span class="line"></span><br><span class="line">        # index.html fallback</span><br><span class="line">        location / &#123;</span><br><span class="line">            try_files $uri $uri/ /index.html;</span><br><span class="line">            autoindex on;</span><br><span class="line">            autoindex_format  html; </span><br><span class="line">            autoindex_exact_size  on;</span><br><span class="line">            autoindex_localtime on;</span><br><span class="line">            add_after_body /.autoindex.html;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        # favicon.ico</span><br><span class="line">        location = /favicon.ico &#123;</span><br><span class="line">            log_not_found off;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        # robots.txt</span><br><span class="line">        location = /robots.txt &#123;</span><br><span class="line">            log_not_found off;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        # assets, media</span><br><span class="line">        location ~* \.(?:css(\.map)?|js(\.map)?|jpe?g|png|gif|ico|cur|heic|webp|tiff?|mp3|m4a|aac|ogg|midi?|wav|mp4|mov|webm|mpe?g|avi|ogv|flv|wmv)$ &#123;</span><br><span class="line">            expires 7d;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        # svg, fonts</span><br><span class="line">        location ~* \.(?:svgz?|ttf|ttc|otf|eot|woff2?)$ &#123;</span><br><span class="line">            add_header Access-Control-Allow-Origin &quot;*&quot;;</span><br><span class="line">            expires    7d;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">        # gzip</span><br><span class="line">        gzip            on;</span><br><span class="line">        gzip_vary       on;</span><br><span class="line">        gzip_proxied    any;</span><br><span class="line">        gzip_comp_level 6;</span><br><span class="line">        gzip_types      text/plain text/css text/xml application/json application/javascript application/rss+xml application/atom+xml image/svg+;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>docker-compose</li>
+</ol>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">web:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">nginx</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">./nginx.conf:/etc/nginx/nginx.conf</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">./www:/usr/share/nginx/html</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">&quot;80:80&quot;</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">NGINX_PORT=80</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">NGINX_HOST=yx.taimei.com</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>样式自定义<code>.autoindex.html</code>放在<code>www</code>目录下</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;icon&quot;</span> <span class="attr">href</span>=<span class="string">&quot;https://file.trialos.com.cn/resources/8a8dbdbc90c1807401914aaa302f2f07.jpg&quot;</span> <span class="attr">type</span>=<span class="string">&quot;image/x-icon&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css">    <span class="selector-tag">body</span> &gt; hr &#123;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">display</span>: none;</span></span><br><span class="line"><span class="language-css">    &#125;</span></span><br><span class="line"><span class="language-css">  </span></span><br><span class="line"><span class="language-css">    <span class="selector-class">.yq-row</span> &#123;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">display</span>: flex;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">justify-content</span>: flex-start;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">align-items</span>: center;</span></span><br><span class="line"><span class="language-css">    &#125;</span></span><br><span class="line"><span class="language-css">  </span></span><br><span class="line"><span class="language-css">    <span class="selector-class">.yq-row</span> &gt; * &#123;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">flex</span>: <span class="number">1</span>;</span></span><br><span class="line"><span class="language-css">    &#125;</span></span><br><span class="line"><span class="language-css">  </span></span><br><span class="line"><span class="language-css">    <span class="selector-class">.yq-outer-box</span> <span class="selector-tag">a</span> &#123;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">color</span>: <span class="number">#000</span>;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">padding</span>: <span class="number">10px</span> <span class="number">5px</span>;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">margin</span>: <span class="number">0</span> -<span class="number">5px</span>;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">white-space</span>: nowrap;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">overflow</span>: hidden;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">display</span>: block;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">width</span>: <span class="number">100%</span>;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">text-overflow</span>: ellipsis;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">text-decoration</span>: none;</span></span><br><span class="line"><span class="language-css">    &#125;</span></span><br><span class="line"><span class="language-css">  </span></span><br><span class="line"><span class="language-css">    <span class="selector-class">.yq-outer-box</span> <span class="selector-tag">a</span><span class="selector-pseudo">::before</span> &#123;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">display</span>: inline-block;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">vertical-align</span>: middle;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">margin-right</span>: <span class="number">10px</span>;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">width</span>: <span class="number">24px</span>;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">text-align</span>: center;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">line-height</span>: <span class="number">12px</span>;</span></span><br><span class="line"><span class="language-css">    &#125;</span></span><br><span class="line"><span class="language-css">  </span></span><br><span class="line"><span class="language-css">    <span class="selector-class">.yq-outer-box</span> <span class="selector-tag">a</span><span class="selector-class">.file</span><span class="selector-pseudo">::before</span> &#123;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">content</span>: <span class="built_in">url</span>(<span class="string">&quot;data:image/svg+xml;utf8,&lt;svg width=&#x27;15&#x27; height=&#x27;19&#x27; fill=&#x27;none&#x27; xmlns=&#x27;http://www.w3.org/2000/svg&#x27;&gt;&lt;path d=&#x27;M10 8C8.34 8 7 6.66 7 5V1H3c-1.1 0-2 .9-2 2v13c0 1.1.9 2 2 2h9c1.1 0 2-.9 2-2V8h-4zM8 5c0 1.1.9 2 2 2h3.59L8 1.41V5zM3 0h5l7 7v9c0 1.66-1.34 3-3 3H3c-1.66 0-3-1.34-3-3V3c0-1.66 1.34-3 3-3z&#x27; fill=&#x27;black&#x27;/&gt;&lt;/svg&gt;&quot;</span>);</span></span><br><span class="line"><span class="language-css">    &#125;</span></span><br><span class="line"><span class="language-css">  </span></span><br><span class="line"><span class="language-css">    <span class="selector-class">.yq-outer-box</span> <span class="selector-tag">a</span><span class="selector-pseudo">:hover</span> &#123;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">text-decoration</span>: underline;</span></span><br><span class="line"><span class="language-css">    &#125;</span></span><br><span class="line"><span class="language-css">  </span></span><br><span class="line"><span class="language-css">    <span class="selector-class">.yq-outer-box</span> <span class="selector-tag">a</span><span class="selector-class">.folder</span><span class="selector-pseudo">::before</span> &#123;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">content</span>: <span class="built_in">url</span>(<span class="string">&quot;data:image/svg+xml;utf8,&lt;svg width=&#x27;20&#x27; height=&#x27;19&#x27; fill=&#x27;none&#x27; xmlns=&#x27;http://www.w3.org/2000/svg&#x27;&gt;&lt;path d=&#x27;M18.784 3.87a1.565 1.565 0 0 0-.565-.356V2.426c0-.648-.523-1.171-1.15-1.171H8.996L7.908.25A.89.89 0 0 0 7.302 0H2.094C1.445 0 .944.523.944 1.171v2.3c-.21.085-.398.21-.565.356a1.348 1.348 0 0 0-.377 1.004l.398 9.83C.42 15.393 1.048 16 1.8 16h15.583c.753 0 1.36-.586 1.4-1.339l.398-9.83c.021-.313-.125-.69-.397-.962zM1.843 3.41V1.191c0-.146.104-.272.25-.272H7.26l1.234 1.088c.083.042.167.104.293.104h8.282c.125 0 .25.126.25.272V3.41H1.844zm15.54 11.712H1.78a.47.47 0 0 1-.481-.46l-.397-9.83c0-.147.041-.252.125-.356a.504.504 0 0 1 .377-.147H17.78c.125 0 .272.063.377.147.083.083.125.209.125.334l-.418 9.83c-.021.272-.23.482-.481.482z&#x27; fill=&#x27;black&#x27;/&gt;&lt;/svg&gt;&quot;</span>);</span></span><br><span class="line"><span class="language-css">    &#125;</span></span><br><span class="line"><span class="language-css">  </span></span><br><span class="line"><span class="language-css">    <span class="selector-class">.yq-outer-box</span> <span class="selector-tag">a</span><span class="selector-class">.lambda</span><span class="selector-pseudo">::before</span> &#123;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">content</span>: <span class="built_in">url</span>(<span class="string">&quot;data:image/svg+xml; utf8,&lt;svg width=&#x27;15&#x27; height=&#x27;19&#x27; fill=&#x27;none&#x27; xmlns=&#x27;http://www.w3.org/2000/svg&#x27;&gt;&lt;path d=&#x27;M3.5 14.4354H5.31622L7.30541 9.81311H7.43514L8.65315 13.0797C9.05676 14.1643 9.55405 14.5 10.7 14.5C11.0171 14.5 11.291 14.4677 11.5 14.4032V13.1572C11.3847 13.1766 11.2622 13.2024 11.1541 13.2024C10.6351 13.2024 10.3829 13.0281 10.1595 12.4664L8.02613 7.07586C7.21171 5.01646 6.54865 4.5 5.11441 4.5C4.83333 4.5 4.62432 4.53228 4.37207 4.59038V5.83635C4.56667 5.81052 4.66036 5.79761 4.77568 5.79761C5.64775 5.79761 5.9 6.0042 6.4045 7.19852L6.64234 7.77954L3.5 14.4354Z&#x27; fill=&#x27;black&#x27;/&gt;&lt;rect x=&#x27;0.5&#x27; y=&#x27;0.5&#x27; width=&#x27;14&#x27; height=&#x27;18&#x27; rx=&#x27;2.5&#x27; stroke=&#x27;black&#x27;/&gt;&lt;/svg&gt;&quot;</span>);</span></span><br><span class="line"><span class="language-css">    &#125;</span></span><br><span class="line"><span class="language-css">  </span></span><br><span class="line"><span class="language-css">    <span class="selector-class">.yq-outer-box</span> <span class="selector-tag">a</span><span class="selector-class">.img</span><span class="selector-pseudo">::before</span> &#123;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">content</span>: <span class="built_in">url</span>(<span class="string">&quot;data:image/svg+xml;utf8,&lt;svg width=&#x27;16&#x27; height=&#x27;19&#x27; viewBox=&#x27;0 0 80 80&#x27; xmlns=&#x27;http://www.w3.org/2000/svg&#x27; fill=&#x27;none&#x27; stroke=&#x27;black&#x27; stroke-width=&#x27;5&#x27; stroke-linecap=&#x27;round&#x27; stroke-linejoin=&#x27;round&#x27;&gt;&lt;rect x=&#x27;6&#x27; y=&#x27;6&#x27; width=&#x27;68&#x27; height=&#x27;68&#x27; rx=&#x27;5&#x27; ry=&#x27;5&#x27;/&gt;&lt;circle cx=&#x27;24&#x27; cy=&#x27;24&#x27; r=&#x27;8&#x27;/&gt;&lt;path d=&#x27;M73 49L59 34 37 52m16 20L27 42 7 58&#x27;/&gt;&lt;/svg&gt;&quot;</span>);</span></span><br><span class="line"><span class="language-css">    &#125;</span></span><br><span class="line"><span class="language-css">  </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">function</span> <span class="title function_">getClassName</span>(<span class="params">filename</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">if</span> (!filename) &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">return</span> <span class="string">&#x27;file&#x27;</span>;</span></span><br><span class="line"><span class="language-javascript">      &#125;</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">if</span> (filename.<span class="title function_">endsWith</span>(<span class="string">&#x27;/&#x27;</span>)) &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">return</span> <span class="string">&#x27;folder&#x27;</span>;</span></span><br><span class="line"><span class="language-javascript">      &#125;</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">const</span> array = filename.<span class="title function_">split</span>(<span class="string">&#x27;.&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">let</span> suffix = array[array.<span class="property">length</span> - <span class="number">1</span>];</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">if</span> (!suffix) &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">return</span> <span class="string">&#x27;file&#x27;</span>;</span></span><br><span class="line"><span class="language-javascript">      &#125;</span></span><br><span class="line"><span class="language-javascript">      suffix = suffix.<span class="title function_">toLowerCase</span>();</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">const</span> img = [<span class="string">&#x27;gif&#x27;</span>, <span class="string">&#x27;jpg&#x27;</span>, <span class="string">&#x27;png&#x27;</span>, <span class="string">&#x27;svg&#x27;</span>, <span class="string">&#x27;jpeg&#x27;</span>, <span class="string">&#x27;bmp&#x27;</span>];</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">if</span> (img.<span class="title function_">includes</span>(suffix)) &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">return</span> <span class="string">&#x27;img&#x27;</span>;</span></span><br><span class="line"><span class="language-javascript">      &#125;</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">const</span> lambda = [<span class="string">&#x27;java&#x27;</span>, <span class="string">&#x27;js&#x27;</span>, <span class="string">&#x27;ts&#x27;</span>, <span class="string">&#x27;go&#x27;</span>, <span class="string">&#x27;c&#x27;</span>, <span class="string">&#x27;cpp&#x27;</span>, <span class="string">&#x27;cs&#x27;</span>, <span class="string">&#x27;py&#x27;</span>, <span class="string">&#x27;sh&#x27;</span>, <span class="string">&#x27;swift&#x27;</span>, <span class="string">&#x27;php&#x27;</span>, <span class="string">&#x27;html&#x27;</span>, <span class="string">&#x27;css&#x27;</span>, <span class="string">&#x27;xml&#x27;</span>, <span class="string">&#x27;json&#x27;</span>, <span class="string">&#x27;yml&#x27;</span>, <span class="string">&#x27;yaml&#x27;</span>, <span class="string">&#x27;md&#x27;</span>, <span class="string">&#x27;log&#x27;</span>, <span class="string">&#x27;ini&#x27;</span>, <span class="string">&#x27;conf&#x27;</span>, <span class="string">&#x27;properties&#x27;</span>, <span class="string">&#x27;cmd&#x27;</span>, <span class="string">&#x27;bat&#x27;</span>];</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">if</span> (lambda.<span class="title function_">includes</span>(suffix)) &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">return</span> <span class="string">&#x27;lambda&#x27;</span>;</span></span><br><span class="line"><span class="language-javascript">      &#125;</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">return</span> <span class="string">&#x27;file&#x27;</span>;</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript">  </span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">function</span> <span class="title function_">formatDate</span>(<span class="params">date, time</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">const</span> mon = &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="title class_">Jan</span>: <span class="string">&#x27;01&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">        <span class="title class_">Feb</span>: <span class="string">&#x27;02&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">        <span class="title class_">Mar</span>: <span class="string">&#x27;03&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">        <span class="title class_">Apr</span>: <span class="string">&#x27;04&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">        <span class="title class_">May</span>: <span class="string">&#x27;05&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">        <span class="title class_">Jun</span>: <span class="string">&#x27;06&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">        <span class="title class_">Jul</span>: <span class="string">&#x27;07&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">        <span class="title class_">Aug</span>: <span class="string">&#x27;08&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">        <span class="title class_">Sep</span>: <span class="string">&#x27;09&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">        <span class="title class_">Oct</span>: <span class="string">&#x27;10&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">        <span class="title class_">Nov</span>: <span class="string">&#x27;11&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">        <span class="title class_">Dec</span>: <span class="string">&#x27;12&#x27;</span>,</span></span><br><span class="line"><span class="language-javascript">      &#125;;</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">const</span> [day, month, year] = date.<span class="title function_">split</span>(<span class="string">&#x27;-&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">return</span> <span class="string">`<span class="subst">$&#123;year&#125;</span>-<span class="subst">$&#123;mon[month]&#125;</span>-<span class="subst">$&#123;day&#125;</span> <span class="subst">$&#123;time&#125;</span>`</span>;</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript">  </span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">function</span> <span class="title function_">formatSize</span>(<span class="params">size</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">if</span> (size === <span class="string">&#x27;-&#x27;</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">return</span> <span class="string">&#x27;&#x27;</span>;</span></span><br><span class="line"><span class="language-javascript">      &#125;</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">const</span> units = [<span class="string">&#x27;B&#x27;</span>, <span class="string">&#x27;KB&#x27;</span>, <span class="string">&#x27;MB&#x27;</span>, <span class="string">&#x27;GB&#x27;</span>, <span class="string">&#x27;TB&#x27;</span>];</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">let</span> s = <span class="title class_">Number</span>(size);</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">for</span> (<span class="keyword">const</span> u <span class="keyword">of</span> units) &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">if</span> (s &lt; <span class="number">1024</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">          <span class="keyword">return</span> s.<span class="title function_">toFixed</span>(<span class="number">2</span>) + <span class="string">&#x27; &#x27;</span> + u;</span></span><br><span class="line"><span class="language-javascript">        &#125;</span></span><br><span class="line"><span class="language-javascript">        s = s / <span class="number">1024</span>;</span></span><br><span class="line"><span class="language-javascript">      &#125;</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">return</span> s.<span class="title function_">toFixed</span>(<span class="number">2</span>) + <span class="string">&#x27; &#x27;</span> + units[units.<span class="property">length</span> - <span class="number">1</span>];</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript">  </span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">function</span> <span class="title function_">change</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">const</span> preElement = <span class="variable language_">document</span>.<span class="title function_">getElementsByTagName</span>(<span class="string">&#x27;pre&#x27;</span>)[<span class="number">0</span>];</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">const</span> preClassName = preElement.<span class="property">className</span>;</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">if</span> (preClassName) &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">return</span>;</span></span><br><span class="line"><span class="language-javascript">      &#125;</span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">const</span> outerBox = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;div&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">      outerBox.<span class="property">classList</span>.<span class="title function_">add</span>(<span class="string">&#x27;yq-outer-box&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">  </span></span><br><span class="line"><span class="language-javascript">      <span class="keyword">let</span> row;</span></span><br><span class="line"><span class="language-javascript">      preElement.<span class="property">childNodes</span>.<span class="title function_">forEach</span>(<span class="function">(<span class="params">child</span>) =&gt;</span> &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">if</span> (child.<span class="property">nodeType</span> === <span class="title class_">Node</span>.<span class="property">ELEMENT_NODE</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">          row = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;div&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">          row.<span class="property">classList</span>.<span class="title function_">add</span>(<span class="string">&#x27;yq-row&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">          <span class="keyword">const</span> name = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;a&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">          name.<span class="property">href</span> = child.<span class="property">href</span>;</span></span><br><span class="line"><span class="language-javascript">          name.<span class="property">innerText</span> = child.<span class="property">text</span>;</span></span><br><span class="line"><span class="language-javascript">          name.<span class="property">classList</span>.<span class="title function_">add</span>(<span class="title function_">getClassName</span>(child.<span class="property">text</span>));</span></span><br><span class="line"><span class="language-javascript">          row.<span class="title function_">appendChild</span>(name);</span></span><br><span class="line"><span class="language-javascript">          outerBox.<span class="title function_">appendChild</span>(row);</span></span><br><span class="line"><span class="language-javascript">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (child.<span class="property">nodeType</span> === <span class="title class_">Node</span>.<span class="property">TEXT_NODE</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">          <span class="keyword">const</span> text = child.<span class="property">nodeValue</span>.<span class="title function_">trim</span>();</span></span><br><span class="line"><span class="language-javascript">          <span class="keyword">if</span> (!text) &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">return</span>;</span></span><br><span class="line"><span class="language-javascript">          &#125;</span></span><br><span class="line"><span class="language-javascript">          <span class="keyword">const</span> textArray = text.<span class="title function_">split</span>(<span class="string">&#x27; &#x27;</span>).<span class="title function_">filter</span>(<span class="function">(<span class="params">item</span>) =&gt;</span> item.<span class="title function_">trim</span>());</span></span><br><span class="line"><span class="language-javascript">          <span class="keyword">const</span> lastModified = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;div&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">          lastModified.<span class="property">innerText</span> = <span class="title function_">formatDate</span>(textArray[<span class="number">0</span>], textArray[<span class="number">1</span>]);</span></span><br><span class="line"><span class="language-javascript">          lastModified.<span class="property">classList</span>.<span class="title function_">add</span>(<span class="string">&#x27;last-modified&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">          row.<span class="title function_">appendChild</span>(lastModified);</span></span><br><span class="line"><span class="language-javascript">          <span class="keyword">const</span> size = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;div&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">          size.<span class="property">innerText</span> = <span class="title function_">formatSize</span>(textArray[<span class="number">2</span>]);</span></span><br><span class="line"><span class="language-javascript">          size.<span class="property">classList</span>.<span class="title function_">add</span>(<span class="string">&#x27;size&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">          row.<span class="title function_">appendChild</span>(size);</span></span><br><span class="line"><span class="language-javascript">        &#125;</span></span><br><span class="line"><span class="language-javascript">      &#125;);</span></span><br><span class="line"><span class="language-javascript">  </span></span><br><span class="line"><span class="language-javascript">      <span class="variable language_">document</span>.<span class="property">body</span>.<span class="title function_">removeChild</span>(preElement);</span></span><br><span class="line"><span class="language-javascript">      <span class="variable language_">document</span>.<span class="property">body</span>.<span class="title function_">appendChild</span>(outerBox);</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript">  </span></span><br><span class="line"><span class="language-javascript">    <span class="title function_">change</span>();</span></span><br><span class="line"><span class="language-javascript">  </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="flask-autoindex-已不再更新"><a href="#flask-autoindex-已不再更新" class="headerlink" title="flask autoindex 已不再更新"></a><del>flask autoindex</del> 已不再更新</h2><p><a target="_blank" rel="noopener" href="https://github.com/general03/flask-autoindex">github:flask-autoindex</a></p>
+<h2 id="Apache-httpd"><a href="#Apache-httpd" class="headerlink" title="Apache(httpd)"></a>Apache(httpd)</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">apache:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">httpd:latest</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">apache_file_share</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;9080:80&quot;</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./files:/usr/local/apache2/htdocs/files</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./htpasswd:/usr/local/apache2/htdocs/.htpasswd</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose up -d</span><br></pre></td></tr></table></figure>
+
+<p>(可选)修改配置文件<code>/usr/local/apache2/conf/httpd.conf</code></p>
+<p>反注释掉 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Include conf/extra/httpd-autoindex.conf</span><br><span class="line"># 再次执行 docker-compose up -d</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="python"><a href="#python" class="headerlink" title="python"></a>python</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m http.server</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>docker-compose</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">http-server:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">python:3.12-slim</span></span><br><span class="line">    <span class="attr">command:</span> <span class="string">python</span> <span class="string">-m</span> <span class="string">http.server</span> <span class="number">8000</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;8000:8000&quot;</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./share:/app</span></span><br><span class="line">    <span class="attr">working_dir:</span> <span class="string">/app</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Simple-Web-Server"><a href="#Simple-Web-Server" class="headerlink" title="Simple Web Server"></a>Simple Web Server</h2><p>jdk18+</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.cong;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.sun.net.httpserver.HttpServer;</span><br><span class="line"><span class="keyword">import</span> com.sun.net.httpserver.SimpleFileServer;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.net.InetSocketAddress;</span><br><span class="line"><span class="keyword">import</span> java.nio.file.Path;</span><br><span class="line"><span class="keyword">import</span> java.nio.file.Paths;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">        <span class="comment">// 设置根目录路径</span></span><br><span class="line">        <span class="type">Path</span> <span class="variable">root</span> <span class="operator">=</span> Paths.get(<span class="string">&quot;/Users/cong/IdeaProjects/http-server/src/main/resources/public&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 创建 HTTP 服务器，监听端口 8000</span></span><br><span class="line">        <span class="type">HttpServer</span> <span class="variable">server</span> <span class="operator">=</span> SimpleFileServer.createFileServer(<span class="keyword">new</span> <span class="title class_">InetSocketAddress</span>(<span class="number">8000</span>), root, SimpleFileServer.OutputLevel.VERBOSE);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 启动服务器</span></span><br><span class="line">        server.start();</span><br><span class="line">        System.out.println(<span class="string">&quot;Static file server started at http://localhost:8000/&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></div>
+        </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/autoindex/" rel="tag">autoindex</a>
+                </div>
+                <div class="pull-date">
+                    <time datetime="2025-11-21T06:36:31.563Z" itemprop="dateModified">最后编辑：2025-11-21</time>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" ArchLinux下安装Pytorch" href="/2024/08/11/2024/08/111054/">&lt; 上一篇</a>
+            </div>
+            
+            
+            <div class="nav-next clearfix">
+                <a title=" MySQL合并多列数据" href="/2024/08/17/2024/08/172130/">下一篇 &gt;</a>
+            </div>
+            
+        </nav>
+    
+    
+        <link rel="stylesheet" href="/vendors/gitalk@1.7.2/dist/gitalk.css"></script>
+<div id="gitalk-container" class="post-comments lazy-load" style="padding-left:2rem; padding-right:2rem;"></div>
+<script>
+    var load_comm = () => {
+        const init = () => {
+            console.log('Gitalk loading...');
+            const gitalk = new Gitalk(Object.assign({
+                id: '/2024/08/13/2024/08/131556/',
+                path: '/2024/08/13/2024/08/131556/'
+            }, JSON.parse('{"clientID":"56e6a743c63b9c4faa93","clientSecret":"888b7234051c5c2ed6ea7bdf18e8b5a2678775f1","repo":"gitalk-comments","owner":"qbmzc","admin":["qbmzc"]}')));
+
+            gitalk.render('gitalk-container');
+        }
+        if (typeof Gitalk === 'undefined') {
+            const src = '/vendors/gitalk@1.7.2/dist/gitalk.min.js';
+            $.getScript(src, init);
+        } else {
+            init();
+        }
+    };
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a></noscript>
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/avatar.webp" loading="lazy" decoding="auto" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center">流云与风，苍穹游牧</p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                499
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                8
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                229
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                    <aside id="krw-toc" class="widget widget-kratos-toc clearfix">
+    <div class="photo-background"></div>
+    <h4 class="widget-title no-after">
+        <i class="fa fa-compass"></i>
+        文章目录
+        <span class="toc-progress-bar" role="progressbar" aria-label="阅读进度："></span>
+    </h4>
+    <div class="textwidget">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#nginx-autoindex"><span class="toc-text">nginx autoindex</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B%E9%85%8D%E7%BD%AE"><span class="toc-text">示例配置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#flask-autoindex-%E5%B7%B2%E4%B8%8D%E5%86%8D%E6%9B%B4%E6%96%B0"><span class="toc-text">flask autoindex 已不再更新</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Apache-httpd"><span class="toc-text">Apache(httpd)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#python"><span class="toc-text">python</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Simple-Web-Server"><span class="toc-text">Simple Web Server</span></a></li></ol>
+    </div>
+</aside>
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">137</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">151</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">29</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/congco/">congco</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/work/">work</a><span class="category-list-count">118</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wuw/">wuw</a><span class="category-list-count">48</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/">技术笔记</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/AES/" style="font-size: 0.6em;">AES</a> <a href="/tags/AI/" style="font-size: 0.7em;">AI</a> <a href="/tags/AWS/" style="font-size: 0.7em;">AWS</a> <a href="/tags/Arch/" style="font-size: 0.6em;">Arch</a> <a href="/tags/Arch-Linux/" style="font-size: 0.8em;">Arch Linux</a> <a href="/tags/ArchLinux/" style="font-size: 0.8em;">ArchLinux</a> <a href="/tags/CAS/" style="font-size: 0.6em;">CAS</a> <a href="/tags/CI-CD/" style="font-size: 0.6em;">CI/CD</a> <a href="/tags/Caffeine/" style="font-size: 0.6em;">Caffeine</a> <a href="/tags/CompletableFuture/" style="font-size: 0.7em;">CompletableFuture</a> <a href="/tags/DNS/" style="font-size: 0.8em;">DNS</a> <a href="/tags/Docker/" style="font-size: 0.6em;">Docker</a> <a href="/tags/Flask/" style="font-size: 0.6em;">Flask</a> <a href="/tags/Future/" style="font-size: 0.7em;">Future</a> <a href="/tags/GC/" style="font-size: 0.6em;">GC</a> <a href="/tags/GPT/" style="font-size: 0.6em;">GPT</a> <a href="/tags/GraalVM/" style="font-size: 0.8em;">GraalVM</a> <a href="/tags/HashMap/" style="font-size: 0.6em;">HashMap</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/14/2025/11/141727/"><i class="fa  fa-book"></i> karakeep</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111335/"><i class="fa  fa-book"></i> SonarQube 扫描支持多 JDK 版本的实践方案</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111045/"><i class="fa  fa-book"></i> 一次修复 PDF 中文乱码的排查记录</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/23/2025/10/221500/"><i class="fa  fa-book"></i> dig命令使用详解</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/13/2025/10/131645/"><i class="fa  fa-book"></i> DNS解析异常导致视频播放缓慢问题排查与解决</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  >
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        <li><a href="mailto:congco@foxmail.com"><i class="fa fa-envelope"></i></a></li>
+                        
+                        
+                        
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://github.com/qbmzc"><i class="fa fa-github"></i></a></li>
+                        <li><a target="_blank" rel="nofollow" href="/rss.xml"><i class="fa fa-rss"></i></a></li>
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2025 沐曦留曳 版权所有.</li>
+                            <li>本站已运行<span id="span_dt">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
+                            <li>Site built with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by cong.</li>
+                        </div>
+                        <div>
+                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
+                            <li>Hosted on <a href="https://github.io" target="_blank">Github Pages</a></li>
+                        </div>
+                        <div>
+                            
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="/vendors/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="/vendors/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+
+    <script defer src="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="/vendors/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>

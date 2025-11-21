@@ -1,0 +1,1537 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="/images/favicon.ico">
+  
+  <title>SSL&amp;nginx配置 | 沐曦留曳</title>
+  <meta name="author" content="cong" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="SSL, nginx" />
+  
+  <meta name="description" content="证书生成第三方购买或免费申请 解压后包含文件 121_www.domain.com_bundle.crt 证书文件2_www.domain.com.key 私钥文件  操作步骤 上传上述文件到服务器中（使用“FileZilla”连接服务器并上传文件），路径与nginx.conf保持同一目录。  通过ssh方式登录到服务器。  编辑配置文件&#x2F;etc&#x2F;nginx&#x2F;nginx.conf   1$sudo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SSL&amp;nginx配置">
+<meta property="og:url" content="https://qbmzc.github.io/2019/10/25/2019/10/251858/index.html">
+<meta property="og:site_name" content="沐曦留曳">
+<meta property="og:description" content="证书生成第三方购买或免费申请 解压后包含文件 121_www.domain.com_bundle.crt 证书文件2_www.domain.com.key 私钥文件  操作步骤 上传上述文件到服务器中（使用“FileZilla”连接服务器并上传文件），路径与nginx.conf保持同一目录。  通过ssh方式登录到服务器。  编辑配置文件&#x2F;etc&#x2F;nginx&#x2F;nginx.conf   1$sudo">
+<meta property="og:locale">
+<meta property="og:image" content="https://qbmzc.github.io/images/favicon.ico">
+<meta property="article:published_time" content="2019-10-24T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-11-21T06:36:31.542Z">
+<meta property="article:author" content="cong">
+<meta property="article:tag" content="nginx">
+<meta property="article:tag" content="SSL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://qbmzc.github.io/images/favicon.ico">
+  <link rel="alternate" href="rss.xml" type="application/atom+xml">
+  <!-- 站点验证相关 -->
+  
+    
+      <meta name="google-site-verification" content="lV4cead5YlJ8KpODToP7dvzi-ihrxSqU0yYStYKj2ao" />
+    
+    
+      <meta name="baidu-site-verification" content="codeva-Zr6WlkDupK" />
+    
+    
+      <meta name="msvalidate.01" content="2D2197DEE362D193B3EC29AFD3306341" />
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" media="all"></script>
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-color-dark.min.css" media="(prefers-color-scheme: dark)"></script>
+    <script src="/js/kr-dark.min.js"></script>
+  
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" media="all"></script>
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="/vendors/font-awesome@4.7.0/css/font-awesome.min.css" media="all"></script>
+  <link rel="stylesheet" id="nprogress-css" href="/vendors/nprogress@0.2.0/nprogress.css" media="all"></script>
+  
+  
+  
+    <link rel="stylesheet" href="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css"></script>
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="/vendors/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/banner.webp');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">沐曦留曳</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>沐曦留曳</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article itemscope itemtype="https://schema.org/Article">
+    
+    <link itemprop="mainEntityOfPage" href="https://qbmzc.github.io/2019/10/25/2019/10/251858/">
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center" itemprop="name headline">SSL&nginx配置</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><time datetime="2019-10-24T16:00:00.000Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2019-10-25</time></li>
+                <li itemprop="author" itemscope itemtype="https://schema.org/Person">
+                    <i class="fa fa-user"></i> 作者 <span itemprop="name">cong</span>
+                </li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~4.73K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1763706991542"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+            
+            <hr />
+            <div itemprop="articleBody"><h2 id="证书生成"><a href="#证书生成" class="headerlink" title="证书生成"></a>证书生成</h2><p>第三方购买或免费申请</p>
+<p>解压后包含文件</p>
+<figure class="highlight md"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1<span class="emphasis">_www.domain.com_</span>bundle.crt 证书文件</span><br><span class="line">2<span class="emphasis">_www.domain.com.key 私钥文件</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="操作步骤"><a href="#操作步骤" class="headerlink" title="操作步骤"></a>操作步骤</h2><ol>
+<li><p>上传上述文件到服务器中（使用“FileZilla”连接服务器并上传文件），路径与<code>nginx.conf</code>保持同一目录。</p>
+</li>
+<li><p>通过<code>ssh</code>方式登录到服务器。</p>
+</li>
+<li><p>编辑配置文件<code>/etc/nginx/nginx.conf</code></p>
+</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$sudo</span> vim /etc/nginx/nginx.conf</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>修改内容如下</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">     <span class="comment">#SSL 访问端口号为 443</span></span><br><span class="line">     listen 443 ssl; </span><br><span class="line">     <span class="comment">#填写绑定证书的域名</span></span><br><span class="line">     server_name cloud.tencent.com; </span><br><span class="line">     <span class="comment">#证书文件名称</span></span><br><span class="line">     ssl_certificate 1_cloud.tencent.com_bundle.crt; </span><br><span class="line">     <span class="comment">#私钥文件名称</span></span><br><span class="line">     ssl_certificate_key 2_cloud.tencent.com.key; </span><br><span class="line">     ssl_session_timeout 5m;</span><br><span class="line">     <span class="comment">#请按照以下协议配置</span></span><br><span class="line">     ssl_protocols TLSv1 TLSv1.1 TLSv1.2; </span><br><span class="line">     <span class="comment">#请按照以下套件配置，配置加密套件，写法遵循 openssl 标准。</span></span><br><span class="line">     ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:HIGH:!aNULL:!MD5:!RC4:!DHE; </span><br><span class="line">     ssl_prefer_server_ciphers on;</span><br><span class="line">     location / &#123;</span><br><span class="line">        <span class="comment">#网站主页路径。此路径仅供参考，具体请您按照实际目录操作。</span></span><br><span class="line">         root /var/www/cloud.tencent.com; </span><br><span class="line">         index  index.html index.htm;</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>重启 <code>Nginx</code>，即可使用 <code>https://www.domain.com</code> 进行访问。</li>
+</ol>
+<h2 id="生成证书"><a href="#生成证书" class="headerlink" title="生成证书"></a>生成证书</h2><p>要生成虚拟证书，您可以执行以下步骤：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> / usr / <span class="built_in">local</span> / nginx / conf</span><br><span class="line">$ openssl genrsa -des3 -out server.key 1024</span><br><span class="line">$ openssl req -new -key server.key -out server.csr</span><br><span class="line">$ <span class="built_in">cp</span> server.key server.key.org</span><br><span class="line">$ openssl rsa -<span class="keyword">in</span> server.key.org -out server.key</span><br><span class="line">$ openssl x509 -req -days 365 -<span class="keyword">in</span> server.csr -signkey server.key -out server.crt</span><br></pre></td></tr></table></figure>
+
+<p>将新证书配置到nginx.conf中：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line"></span><br><span class="line">    server_name YOUR_DOMAINNAME_HERE;</span><br><span class="line">    listen 443 ;</span><br><span class="line">    ssl on;</span><br><span class="line">    ssl_certificate /usr/local/nginx/conf/server.crt;</span><br><span class="line">    ssl_certificate_key /usr/local/nginx/conf/server.key;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>重新启动Nginx。</p>
+<p>现在，所有人都可以使用以下方法进行访问：</p>
+<p>https：&#x2F;&#x2F; YOUR_DOMAINNAME_HERE</p>
+<h2 id="HTTP-自动跳转-HTTPS-的安全配置"><a href="#HTTP-自动跳转-HTTPS-的安全配置" class="headerlink" title="HTTP 自动跳转 HTTPS 的安全配置"></a>HTTP 自动跳转 HTTPS 的安全配置</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">listen 443 ssl;</span><br><span class="line"><span class="comment">#填写绑定证书的域名</span></span><br><span class="line">server_name cloud.tencent.com; </span><br><span class="line"><span class="comment">#网站主页路径。此路径仅供参考，具体请您按照实际目录操作。</span></span><br><span class="line">root /var/www/cloud.tencent.com; </span><br><span class="line">index index.html index.htm;   </span><br><span class="line"><span class="comment">#证书文件名称</span></span><br><span class="line">ssl_certificate  1_cloud.tencent.com_bundle.crt; </span><br><span class="line"><span class="comment">#私钥文件名称</span></span><br><span class="line">ssl_certificate_key 2_cloud.tencent.com.key; </span><br><span class="line">ssl_session_timeout 5m;</span><br><span class="line">ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;</span><br><span class="line">ssl_protocols TLSv1 TLSv1.1 TLSv1.2;</span><br><span class="line">ssl_prefer_server_ciphers on;</span><br><span class="line">location / &#123;</span><br><span class="line">   index index.html index.htm;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">server &#123;</span><br><span class="line">listen 80;</span><br><span class="line"><span class="comment">#填写绑定证书的域名</span></span><br><span class="line">server_name cloud.tencent.com; </span><br><span class="line"><span class="comment">#把http的域名请求转成https</span></span><br><span class="line"><span class="built_in">return</span> 301 https://$host<span class="variable">$request_uri</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h2><h2 id="ssl"><a href="#ssl" class="headerlink" title="ssl"></a>ssl</h2><p><strong>语法：</strong> <em>ssl [on | off]</em></p>
+<p><strong>默认值：</strong> <em>ssl off</em></p>
+<p><strong>上下文：</strong> <em>主服务器</em></p>
+<p>为服务器启用HTTPS。</p>
+<h2 id="ssl-certificate"><a href="#ssl-certificate" class="headerlink" title="ssl_certificate"></a>ssl_certificate</h2><p><strong>语法：</strong> <em>ssl_certificate文件</em></p>
+<p><strong>默认值：</strong> <em>ssl_certificate cert.pem</em></p>
+<p><strong>上下文：</strong> <em>主服务器</em></p>
+<p>指示此虚拟服务器带有PEM格式的证书的文件。同一文件可以包含其他证书，也可以包含PEM格式的密钥。从0.6.7版开始，文件路径是相对于nginx配置文件nginx.conf的目录，而不是相对于nginx前缀目录。</p>
+<h2 id="ssl-certificate-key"><a href="#ssl-certificate-key" class="headerlink" title="ssl_certificate_key"></a>ssl_certificate_key</h2><p><strong>语法：</strong> <em>ssl_certificate_key文件</em></p>
+<p><strong>默认值：</strong> <em>ssl_certificate_key cert.pem</em></p>
+<p><strong>上下文：</strong> <em>主服务器</em></p>
+<p>指示此虚拟服务器具有PEM格式的密钥的文件。从0.6.7版开始，文件名路径是相对于nginx配置文件nginx.conf的目录，而不是相对于nginx前缀目录。</p>
+<h2 id="ssl-client-certificate"><a href="#ssl-client-certificate" class="headerlink" title="ssl_client_certificate"></a>ssl_client_certificate</h2><p><strong>语法：</strong> <em>ssl_client_certificate文件</em></p>
+<p><strong>默认值：</strong> <em>无</em></p>
+<p><strong>上下文：</strong> <em>主服务器</em></p>
+<p>表示带有PEM格式证书CA的文件，用于检查客户端证书。</p>
+<h2 id="ssl-dhparam"><a href="#ssl-dhparam" class="headerlink" title="ssl_dhparam"></a>ssl_dhparam</h2><p><strong>语法：</strong> <em>ssl_dhparam文件</em></p>
+<p><strong>默认值：</strong> <em>无</em></p>
+<p><strong>上下文：</strong> <em>主服务器</em></p>
+<p>指示具有PEM格式的Diffie-Hellman参数的文件，用于协商TLS会话密钥。</p>
+<h2 id="ssl-ciphers"><a href="#ssl-ciphers" class="headerlink" title="ssl_ciphers"></a>ssl_ciphers</h2><p><strong>语法：</strong> <em>ssl_ciphers文件</em></p>
+<p><strong>默认值：</strong> <em>ssl_ciphers ALL：！ADH：RC4 + RSA：+ HIGH：+ MEDIUM：+ LOW：+ SSLv2：+ EXP</em></p>
+<p><strong>上下文：</strong> <em>主服务器</em></p>
+<p>指令描述了允许的密码。密码以OpenSSL支持的格式分配，例如：</p>
+<p>ssl_ciphers ALL：！ADH：！EXPORT56：RC4 + RSA：+ HIGH：+ MEDIUM：+ LOW：+ SSLv2：+ EXP;</p>
+<p>可以使用以下命令查看完整列表：</p>
+<p> openssl密码</p>
+<h2 id="ssl-crl"><a href="#ssl-crl" class="headerlink" title="ssl_crl"></a>ssl_crl</h2><p><strong>语法：</strong> <em>ssl_crl文件</em></p>
+<p><strong>默认值：</strong> <em>无</em></p>
+<p><strong>上下文：</strong> <em>http，服务器</em></p>
+<p>该指令（0.8.7+）在PEM中指定一个带有吊销证书（CRL）的文件，该文件用于检查客户端证书。</p>
+<h2 id="ssl-prefer-server-ciphers"><a href="#ssl-prefer-server-ciphers" class="headerlink" title="ssl_prefer_server_ciphers"></a>ssl_prefer_server_ciphers</h2><p><strong>语法：</strong> <em>ssl_prefer_server_ciphers [on | off]</em></p>
+<p><strong>默认值：</strong> <em>ssl_prefer_server_ciphers关闭</em></p>
+<p><strong>上下文：</strong> <em>主服务器</em></p>
+<p>要求协议SSLv3和TLSv1服务器密码优先于客户端密码。</p>
+<h2 id="ssl-protocols"><a href="#ssl-protocols" class="headerlink" title="ssl_protocols"></a>ssl_protocols</h2><p><strong>语法：</strong> <em>ssl_protocols [SSLv2] [SSLv3] [TLSv1]</em></p>
+<p><strong>默认值：</strong> <em>ssl_protocols SSLv2 SSLv3 TLSv1</em></p>
+<p><strong>上下文：</strong> <em>主服务器</em></p>
+<p>指令启用指示的协议。</p>
+<h2 id="ssl-verify-client"><a href="#ssl-verify-client" class="headerlink" title="ssl_verify_client"></a>ssl_verify_client</h2><p><strong>语法：</strong> <em>ssl_verify_client on | off | ask</em></p>
+<p><strong>默认值：</strong> <em>ssl_verify_client关闭</em></p>
+<p><strong>上下文：</strong> <em>主服务器</em></p>
+<p>指令启用验证客户端证书。参数“询问”检查是否提供了客户端证书。</p>
+<h2 id="ssl-verify-depth"><a href="#ssl-verify-depth" class="headerlink" title="ssl_verify_depth"></a>ssl_verify_depth</h2><p><strong>语法：</strong> <em>ssl_verify_depth数字</em></p>
+<p><strong>默认值：</strong> <em>ssl_verify_depth 1</em></p>
+<p><strong>上下文：</strong> <em>主服务器</em></p>
+<p>在客户端证书链中设置深度检查。</p>
+<h2 id="ssl-session-cache"><a href="#ssl-session-cache" class="headerlink" title="ssl_session_cache"></a>ssl_session_cache</h2><p><strong>语法：</strong> <em>ssl_session_cache off | none | builtin：size和&#x2F;或shared：name：size</em></p>
+<p><strong>默认值：</strong> <em>ssl_session_cache关闭</em></p>
+<p><strong>上下文：</strong> <em>主服务器</em></p>
+<p>该指令设置用于存储SSL会话的缓存的类型和大小。<br>缓存类型为：</p>
+<ul>
+<li>关闭-困难重重：nginx对客户端明确表示无法重用会话。</li>
+<li>无-正常运行：nginx对客户端说可以重新开始会话，但是nginx实际上从不重用它们。对于某些邮件客户端，这是解决方法，因为ssl_session_cache可以在邮件代理以及HTTP服务器中使用。</li>
+<li>内置-OpenSSL内置缓存仅在一个工作进程中使用。缓存大小在会话数中分配。注意：使用此方法似乎存在内存碎片问题，请在使用此方法时加以考虑。请参阅下面的“参考”。</li>
+<li>共享-缓存在所有工作进程之间共享。缓存的大小以字节为单位分配，1 MB的缓存可以包含大约4000个会话。每个共享缓存必须具有任意名称。具有相同名称的缓存可以在多个虚拟服务器中使用。</li>
+</ul>
+<p>可以同时使用两种类型的缓存，例如：</p>
+<p> ssl_session_cache内置：1000共享：SSL：10m;</p>
+<p>但是，只有内置的共享缓存使用情况才更有效。</p>
+<h2 id="ssl-session-timeout"><a href="#ssl-session-timeout" class="headerlink" title="ssl_session_timeout"></a>ssl_session_timeout</h2><p><strong>语法：</strong> <em>ssl_session_timeout时间</em></p>
+<p><strong>默认值：</strong> <em>ssl_session_timeout 5m</em></p>
+<p><strong>上下文：</strong> <em>主服务器</em></p>
+<p>指定客户端可以重复使用会话参数的时间，该参数存储在缓存中。</p>
+<p>该模块支持几种非标准错误代码，这些错误代码可在伪指令error_page的帮助下用于调试：</p>
+<ul>
+<li>495-错误检查客户端证书</li>
+<li>496-客户未授予所需的证书</li>
+<li>497-正常请求已发送到HTTPS</li>
+</ul>
+<p>完全取消请求后即可进行调试，并可以通过$ request_uri，$ uri，$ arg等变量进行访问。内置变量模块ngx_http_ssl_module支持多个内置变量：</p>
+<ul>
+<li>$ ssl_cipher返回那些用于建立SSL连接的密码的行</li>
+<li>$ ssl_client_serial返回已建立的SSL连接的客户端证书的序列号</li>
+<li>$ ssl_client_s_dn为建立的SSL连接返回客户端证书的行主题DN</li>
+<li>$ ssl_client_i_dn为建立的SSL连接返回客户端证书的行发行者DN</li>
+<li>$ ssl_protocol返回已建立的SSL连接的协议</li>
+</ul>
+<h2 id="ssl-engine"><a href="#ssl-engine" class="headerlink" title="ssl_engine"></a>ssl_engine</h2><p><strong>语法：</strong> <em>ssl_engine</em></p>
+<p>这允许指定要使用的OpenSSL引擎，例如Padlock。它需要更新版本的OpenSSL。</p>
+</div>
+        </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/SSL/" rel="tag">SSL</a>, <a class="tag-none-link" href="/tags/nginx/" rel="tag">nginx</a>
+                </div>
+                <div class="pull-date">
+                    <time datetime="2025-11-21T06:36:31.542Z" itemprop="dateModified">最后编辑：2025-11-21</time>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" nginx" href="/2019/10/24/2019/10/241138/">&lt; 上一篇</a>
+            </div>
+            
+            
+            <div class="nav-next clearfix">
+                <a title=" 改变swagger请求的url" href="/2019/10/25/2019/10/251426/">下一篇 &gt;</a>
+            </div>
+            
+        </nav>
+    
+    
+        <link rel="stylesheet" href="/vendors/gitalk@1.7.2/dist/gitalk.css"></script>
+<div id="gitalk-container" class="post-comments lazy-load" style="padding-left:2rem; padding-right:2rem;"></div>
+<script>
+    var load_comm = () => {
+        const init = () => {
+            console.log('Gitalk loading...');
+            const gitalk = new Gitalk(Object.assign({
+                id: '/2019/10/25/2019/10/251858/',
+                path: '/2019/10/25/2019/10/251858/'
+            }, JSON.parse('{"clientID":"56e6a743c63b9c4faa93","clientSecret":"888b7234051c5c2ed6ea7bdf18e8b5a2678775f1","repo":"gitalk-comments","owner":"qbmzc","admin":["qbmzc"]}')));
+
+            gitalk.render('gitalk-container');
+        }
+        if (typeof Gitalk === 'undefined') {
+            const src = '/vendors/gitalk@1.7.2/dist/gitalk.min.js';
+            $.getScript(src, init);
+        } else {
+            init();
+        }
+    };
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a></noscript>
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/avatar.webp" loading="lazy" decoding="auto" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center">流云与风，苍穹游牧</p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                499
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                8
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                229
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">137</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">151</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">29</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/congco/">congco</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/work/">work</a><span class="category-list-count">118</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wuw/">wuw</a><span class="category-list-count">48</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/">技术笔记</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/AES/" style="font-size: 0.6em;">AES</a> <a href="/tags/AI/" style="font-size: 0.7em;">AI</a> <a href="/tags/AWS/" style="font-size: 0.7em;">AWS</a> <a href="/tags/Arch/" style="font-size: 0.6em;">Arch</a> <a href="/tags/Arch-Linux/" style="font-size: 0.8em;">Arch Linux</a> <a href="/tags/ArchLinux/" style="font-size: 0.8em;">ArchLinux</a> <a href="/tags/CAS/" style="font-size: 0.6em;">CAS</a> <a href="/tags/CI-CD/" style="font-size: 0.6em;">CI/CD</a> <a href="/tags/Caffeine/" style="font-size: 0.6em;">Caffeine</a> <a href="/tags/CompletableFuture/" style="font-size: 0.7em;">CompletableFuture</a> <a href="/tags/DNS/" style="font-size: 0.8em;">DNS</a> <a href="/tags/Docker/" style="font-size: 0.6em;">Docker</a> <a href="/tags/Flask/" style="font-size: 0.6em;">Flask</a> <a href="/tags/Future/" style="font-size: 0.7em;">Future</a> <a href="/tags/GC/" style="font-size: 0.6em;">GC</a> <a href="/tags/GPT/" style="font-size: 0.6em;">GPT</a> <a href="/tags/GraalVM/" style="font-size: 0.8em;">GraalVM</a> <a href="/tags/HashMap/" style="font-size: 0.6em;">HashMap</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/14/2025/11/141727/"><i class="fa  fa-book"></i> karakeep</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111335/"><i class="fa  fa-book"></i> SonarQube 扫描支持多 JDK 版本的实践方案</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111045/"><i class="fa  fa-book"></i> 一次修复 PDF 中文乱码的排查记录</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/23/2025/10/221500/"><i class="fa  fa-book"></i> dig命令使用详解</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/13/2025/10/131645/"><i class="fa  fa-book"></i> DNS解析异常导致视频播放缓慢问题排查与解决</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  >
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        <li><a href="mailto:congco@foxmail.com"><i class="fa fa-envelope"></i></a></li>
+                        
+                        
+                        
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://github.com/qbmzc"><i class="fa fa-github"></i></a></li>
+                        <li><a target="_blank" rel="nofollow" href="/rss.xml"><i class="fa fa-rss"></i></a></li>
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2025 沐曦留曳 版权所有.</li>
+                            <li>本站已运行<span id="span_dt">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
+                            <li>Site built with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by cong.</li>
+                        </div>
+                        <div>
+                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
+                            <li>Hosted on <a href="https://github.io" target="_blank">Github Pages</a></li>
+                        </div>
+                        <div>
+                            
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="/vendors/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="/vendors/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+
+    <script defer src="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="/vendors/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>

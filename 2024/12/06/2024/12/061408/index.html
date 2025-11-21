@@ -1,0 +1,1641 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="/images/favicon.ico">
+  
+  <title>构建一个基于Amazon S3存储的音乐播放器 | 沐曦留曳</title>
+  <meta name="author" content="cong" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="music" />
+  
+  <meta name="description" content="将分别介绍如何使用 Vue.js 和 Spring Boot 构建一个基于Amazon S3存储的音乐播放器，以及如何使用 Rust 构建一个命令行式的播放程序。您可以根据项目需求和个人偏好选择合适的技术栈。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="构建一个基于Amazon S3存储的音乐播放器">
+<meta property="og:url" content="https://qbmzc.github.io/2024/12/06/2024/12/061408/index.html">
+<meta property="og:site_name" content="沐曦留曳">
+<meta property="og:description" content="将分别介绍如何使用 Vue.js 和 Spring Boot 构建一个基于Amazon S3存储的音乐播放器，以及如何使用 Rust 构建一个命令行式的播放程序。您可以根据项目需求和个人偏好选择合适的技术栈。">
+<meta property="og:locale">
+<meta property="og:image" content="https://qbmzc.github.io/images/favicon.ico">
+<meta property="article:published_time" content="2024-12-05T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-11-21T06:36:31.564Z">
+<meta property="article:author" content="cong">
+<meta property="article:tag" content="music">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://qbmzc.github.io/images/favicon.ico">
+  <link rel="alternate" href="rss.xml" type="application/atom+xml">
+  <!-- 站点验证相关 -->
+  
+    
+      <meta name="google-site-verification" content="lV4cead5YlJ8KpODToP7dvzi-ihrxSqU0yYStYKj2ao" />
+    
+    
+      <meta name="baidu-site-verification" content="codeva-Zr6WlkDupK" />
+    
+    
+      <meta name="msvalidate.01" content="2D2197DEE362D193B3EC29AFD3306341" />
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" media="all"></script>
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-color-dark.min.css" media="(prefers-color-scheme: dark)"></script>
+    <script src="/js/kr-dark.min.js"></script>
+  
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" media="all"></script>
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="/vendors/font-awesome@4.7.0/css/font-awesome.min.css" media="all"></script>
+  <link rel="stylesheet" id="nprogress-css" href="/vendors/nprogress@0.2.0/nprogress.css" media="all"></script>
+  
+  
+  
+    <link rel="stylesheet" href="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css"></script>
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="/vendors/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/banner.webp');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">沐曦留曳</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>沐曦留曳</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article itemscope itemtype="https://schema.org/Article">
+    
+    <link itemprop="mainEntityOfPage" href="https://qbmzc.github.io/2024/12/06/2024/12/061408/">
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center" itemprop="name headline">构建一个基于Amazon S3存储的音乐播放器</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><time datetime="2024-12-05T16:00:00.000Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2024-12-06</time></li>
+                <li itemprop="author" itemscope itemtype="https://schema.org/Person">
+                    <i class="fa fa-user"></i> 作者 <span itemprop="name">cong</span>
+                </li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~27.96K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1763706991564"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+            
+                <div class="kratos-post-inner-toc">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%89%E9%A1%B9%E4%B8%80%EF%BC%9A%E4%BD%BF%E7%94%A8-Vue-js-%E5%92%8C-Spring-Boot-%E6%9E%84%E5%BB%BA%E9%9F%B3%E4%B9%90%E6%92%AD%E6%94%BE%E5%99%A8"><span class="toc-number">1.</span> <span class="toc-text">选项一：使用 Vue.js 和 Spring Boot 构建音乐播放器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E9%A1%B9%E7%9B%AE%E6%80%BB%E4%BD%93%E7%BB%93%E6%9E%84"><span class="toc-number">1.1.</span> <span class="toc-text">一、项目总体结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6"><span class="toc-number">1.2.</span> <span class="toc-text">二、版本控制</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%88%9D%E5%A7%8B%E5%8C%96Git%E4%BB%93%E5%BA%93"><span class="toc-number">1.2.1.</span> <span class="toc-text">1. 初始化Git仓库</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%88%9B%E5%BB%BA-gitignore"><span class="toc-number">1.2.2.</span> <span class="toc-text">2. 创建 .gitignore</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E6%A1%86%E6%9E%B6%E6%90%AD%E5%BB%BA%EF%BC%88Vue-js%EF%BC%89"><span class="toc-number">1.3.</span> <span class="toc-text">三、前端开发框架搭建（Vue.js）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%88%9D%E5%A7%8B%E5%8C%96Vue%E9%A1%B9%E7%9B%AE"><span class="toc-number">1.3.1.</span> <span class="toc-text">1. 初始化Vue项目</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%AE%89%E8%A3%85%E5%BF%85%E8%A6%81%E7%9A%84%E4%BE%9D%E8%B5%96"><span class="toc-number">1.3.2.</span> <span class="toc-text">2. 安装必要的依赖</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E8%AE%BE%E7%BD%AE%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84"><span class="toc-number">1.3.3.</span> <span class="toc-text">3. 设置项目结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="toc-number">1.3.4.</span> <span class="toc-text">4. 配置环境变量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-%E5%88%9B%E5%BB%BA%E4%B8%8A%E4%BC%A0%E7%BB%84%E4%BB%B6"><span class="toc-number">1.3.5.</span> <span class="toc-text">5. 创建上传组件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-%E5%88%9B%E5%BB%BA%E9%9F%B3%E4%B9%90%E5%88%97%E8%A1%A8%E7%BB%84%E4%BB%B6"><span class="toc-number">1.3.6.</span> <span class="toc-text">6. 创建音乐列表组件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-%E9%85%8D%E7%BD%AE%E8%B7%AF%E7%94%B1"><span class="toc-number">1.3.7.</span> <span class="toc-text">7. 配置路由</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#8-%E9%9B%86%E6%88%90%E5%88%B0%E4%B8%BB%E5%BA%94%E7%94%A8"><span class="toc-number">1.3.8.</span> <span class="toc-text">8. 集成到主应用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-%E9%85%8D%E7%BD%AE%E4%BB%A3%E7%90%86%E8%A7%A3%E5%86%B3%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98"><span class="toc-number">1.3.9.</span> <span class="toc-text">9. 配置代理解决跨域问题</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91%E6%A1%86%E6%9E%B6%E6%90%AD%E5%BB%BA%EF%BC%88Spring-Boot%EF%BC%89"><span class="toc-number">1.4.</span> <span class="toc-text">四、后端开发框架搭建（Spring Boot）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%88%9D%E5%A7%8B%E5%8C%96Spring-Boot%E9%A1%B9%E7%9B%AE"><span class="toc-number">1.4.1.</span> <span class="toc-text">1. 初始化Spring Boot项目</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E9%85%8D%E7%BD%AE-pom-xml"><span class="toc-number">1.4.2.</span> <span class="toc-text">2. 配置 pom.xml</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E9%85%8D%E7%BD%AE%E5%BA%94%E7%94%A8%E5%B1%9E%E6%80%A7"><span class="toc-number">1.4.3.</span> <span class="toc-text">3. 配置应用属性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E5%88%9B%E5%BB%BAS3%E6%9C%8D%E5%8A%A1"><span class="toc-number">1.4.4.</span> <span class="toc-text">4. 创建S3服务</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-%E5%88%9B%E5%BB%BA%E6%8E%A7%E5%88%B6%E5%99%A8"><span class="toc-number">1.4.5.</span> <span class="toc-text">5. 创建控制器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-%E9%85%8D%E7%BD%AECORS"><span class="toc-number">1.4.6.</span> <span class="toc-text">6. 配置CORS</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-%E6%95%B0%E6%8D%AE%E5%BA%93%E9%85%8D%E7%BD%AE%EF%BC%88%E5%8F%AF%E9%80%89%EF%BC%89"><span class="toc-number">1.4.7.</span> <span class="toc-text">7. 数据库配置（可选）</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#a-%E9%85%8D%E7%BD%AE%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5"><span class="toc-number">1.4.7.1.</span> <span class="toc-text">a. 配置数据库连接</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#b-%E5%88%9B%E5%BB%BA%E5%AE%9E%E4%BD%93%E7%B1%BB"><span class="toc-number">1.4.7.2.</span> <span class="toc-text">b. 创建实体类</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#c-%E5%88%9B%E5%BB%BA%E4%BB%93%E5%BA%93%E6%8E%A5%E5%8F%A3"><span class="toc-number">1.4.7.3.</span> <span class="toc-text">c. 创建仓库接口</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#d-%E5%90%8C%E6%AD%A5%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-number">1.4.7.4.</span> <span class="toc-text">d. 同步数据库</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#8-%E7%94%A8%E6%88%B7%E8%AE%A4%E8%AF%81%E4%B8%8E%E6%8E%88%E6%9D%83"><span class="toc-number">1.4.8.</span> <span class="toc-text">8. 用户认证与授权</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#a-%E6%B7%BB%E5%8A%A0%E4%BE%9D%E8%B5%96"><span class="toc-number">1.4.8.1.</span> <span class="toc-text">a. 添加依赖</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#b-%E9%85%8D%E7%BD%AESpring-Security"><span class="toc-number">1.4.8.2.</span> <span class="toc-text">b. 配置Spring Security</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#c-%E5%88%9B%E5%BB%BA%E8%AE%A4%E8%AF%81%E6%8E%A7%E5%88%B6%E5%99%A8"><span class="toc-number">1.4.8.3.</span> <span class="toc-text">c. 创建认证控制器</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#d-%E9%85%8D%E7%BD%AE%E5%AF%86%E7%A0%81%E7%BC%96%E7%A0%81%E5%99%A8"><span class="toc-number">1.4.8.4.</span> <span class="toc-text">d. 配置密码编码器</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#e-%E5%AE%9E%E7%8E%B0JWT%E7%94%9F%E6%88%90%E4%B8%8E%E9%AA%8C%E8%AF%81"><span class="toc-number">1.4.8.5.</span> <span class="toc-text">e. 实现JWT生成与验证</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E9%83%A8%E7%BD%B2%E4%B8%8E%E8%BF%90%E7%BB%B4"><span class="toc-number">1.5.</span> <span class="toc-text">五、部署与运维</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E4%BD%BF%E7%94%A8Docker%E5%AE%B9%E5%99%A8%E5%8C%96%E5%BA%94%E7%94%A8"><span class="toc-number">1.5.1.</span> <span class="toc-text">1. 使用Docker容器化应用</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#a-%E5%88%9B%E5%BB%BADockerfile"><span class="toc-number">1.5.1.1.</span> <span class="toc-text">a. 创建Dockerfile</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#b-%E5%88%9B%E5%BB%BA-docker-compose-yml"><span class="toc-number">1.5.1.2.</span> <span class="toc-text">b. 创建 docker-compose.yml</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#c-%E6%9E%84%E5%BB%BA%E5%92%8C%E5%90%AF%E5%8A%A8%E5%AE%B9%E5%99%A8"><span class="toc-number">1.5.1.3.</span> <span class="toc-text">c. 构建和启动容器</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E9%83%A8%E7%BD%B2%E5%88%B0AWS"><span class="toc-number">1.5.2.</span> <span class="toc-text">2. 部署到AWS</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#a-%E5%AE%89%E8%A3%85AWS-CLI%E5%92%8CElastic-Beanstalk-CLI"><span class="toc-number">1.5.2.1.</span> <span class="toc-text">a. 安装AWS CLI和Elastic Beanstalk CLI</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#b-%E9%85%8D%E7%BD%AEAWS-CLI"><span class="toc-number">1.5.2.2.</span> <span class="toc-text">b. 配置AWS CLI</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#c-%E5%88%9D%E5%A7%8B%E5%8C%96Elastic-Beanstalk"><span class="toc-number">1.5.2.3.</span> <span class="toc-text">c. 初始化Elastic Beanstalk</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#d-%E5%88%9B%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%B9%B6%E9%83%A8%E7%BD%B2"><span class="toc-number">1.5.2.4.</span> <span class="toc-text">d. 创建环境并部署</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E5%AE%89%E5%85%A8%E4%B8%8E%E5%90%88%E8%A7%84"><span class="toc-number">1.6.</span> <span class="toc-text">六、安全与合规</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E6%95%B0%E6%8D%AE%E5%8A%A0%E5%AF%86"><span class="toc-number">1.6.1.</span> <span class="toc-text">1. 数据加密</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8"><span class="toc-number">1.6.2.</span> <span class="toc-text">2. 网络安全</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E7%9B%91%E6%8E%A7%E4%B8%8E%E6%97%A5%E5%BF%97"><span class="toc-number">1.6.3.</span> <span class="toc-text">3. 监控与日志</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E6%80%BB%E7%BB%93"><span class="toc-number">1.7.</span> <span class="toc-text">七、总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%89%E9%A1%B9%E4%BA%8C%EF%BC%9A%E4%BD%BF%E7%94%A8-Rust-%E6%9E%84%E5%BB%BA%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%BC%8F%E7%9A%84%E9%9F%B3%E4%B9%90%E6%92%AD%E6%94%BE%E7%A8%8B%E5%BA%8F"><span class="toc-number">2.</span> <span class="toc-text">选项二：使用 Rust 构建命令行式的音乐播放程序</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E9%A1%B9%E7%9B%AE%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">2.1.</span> <span class="toc-text">一、项目初始化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%AE%89%E8%A3%85Rust"><span class="toc-number">2.1.1.</span> <span class="toc-text">1. 安装Rust</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%88%9B%E5%BB%BA%E6%96%B0%E9%A1%B9%E7%9B%AE"><span class="toc-number">2.1.2.</span> <span class="toc-text">2. 创建新项目</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%8A%80%E6%9C%AF%E9%80%89%E5%9E%8B"><span class="toc-number">2.2.</span> <span class="toc-text">二、技术选型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%B7%BB%E5%8A%A0%E4%BE%9D%E8%B5%96"><span class="toc-number">2.3.</span> <span class="toc-text">三、添加依赖</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="toc-number">2.4.</span> <span class="toc-text">四、配置环境变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E5%AE%9E%E7%8E%B0%E5%8A%9F%E8%83%BD"><span class="toc-number">2.5.</span> <span class="toc-text">五、实现功能</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E6%9E%84%E5%BB%BA%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%8E%A5%E5%8F%A3"><span class="toc-number">2.5.1.</span> <span class="toc-text">1. 构建命令行接口</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%AE%9E%E7%8E%B0%E4%B8%8A%E4%BC%A0%E5%8A%9F%E8%83%BD"><span class="toc-number">2.5.2.</span> <span class="toc-text">2. 实现上传功能</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E5%AE%9E%E7%8E%B0%E5%88%97%E5%87%BA%E9%9F%B3%E4%B9%90%E6%96%87%E4%BB%B6"><span class="toc-number">2.5.3.</span> <span class="toc-text">3. 实现列出音乐文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E5%AE%9E%E7%8E%B0%E6%92%AD%E6%94%BE%E5%8A%9F%E8%83%BD"><span class="toc-number">2.5.4.</span> <span class="toc-text">4. 实现播放功能</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E8%BF%90%E8%A1%8C%E7%A8%8B%E5%BA%8F"><span class="toc-number">2.6.</span> <span class="toc-text">四、运行程序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E4%BC%98%E5%8C%96%E4%B8%8E%E5%A2%9E%E5%BC%BA"><span class="toc-number">2.7.</span> <span class="toc-text">五、优化与增强</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86"><span class="toc-number">2.7.1.</span> <span class="toc-text">1. 错误处理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86"><span class="toc-number">2.7.2.</span> <span class="toc-text">2. 配置管理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E5%B9%B6%E5%8F%91%E4%B8%8E%E6%80%A7%E8%83%BD"><span class="toc-number">2.7.3.</span> <span class="toc-text">3. 并发与性能</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E9%9F%B3%E9%A2%91%E6%A0%BC%E5%BC%8F%E6%94%AF%E6%8C%81"><span class="toc-number">2.7.4.</span> <span class="toc-text">4. 音频格式支持</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E9%83%A8%E7%BD%B2%E4%B8%8E%E5%88%86%E5%8F%91"><span class="toc-number">2.8.</span> <span class="toc-text">六、部署与分发</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E6%9E%84%E5%BB%BA%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%96%87%E4%BB%B6"><span class="toc-number">2.8.1.</span> <span class="toc-text">1. 构建二进制文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E6%89%93%E5%8C%85%E4%B8%8E%E5%88%86%E5%8F%91"><span class="toc-number">2.8.2.</span> <span class="toc-text">2. 打包与分发</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E5%AE%89%E5%85%A8%E4%B8%8E%E5%90%88%E8%A7%84"><span class="toc-number">2.9.</span> <span class="toc-text">七、安全与合规</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%87%AD%E8%AF%81%E7%AE%A1%E7%90%86"><span class="toc-number">2.9.1.</span> <span class="toc-text">1. 凭证管理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E6%95%B0%E6%8D%AE%E5%8A%A0%E5%AF%86"><span class="toc-number">2.9.2.</span> <span class="toc-text">2. 数据加密</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8"><span class="toc-number">2.9.3.</span> <span class="toc-text">3. 网络安全</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E6%80%BB%E7%BB%93"><span class="toc-number">2.10.</span> <span class="toc-text">八、总结</span></a></li></ol></li></ol>
+                </div>
+            
+            <hr />
+            <div itemprop="articleBody"><p>将分别介绍如何使用 <strong>Vue.js</strong> 和 <strong>Spring Boot</strong> 构建一个基于Amazon S3存储的音乐播放器，以及如何使用 <strong>Rust</strong> 构建一个命令行式的播放程序。您可以根据项目需求和个人偏好选择合适的技术栈。</p>
+<span id="more"></span>
+
+<h2 id="选项一：使用-Vue-js-和-Spring-Boot-构建音乐播放器"><a href="#选项一：使用-Vue-js-和-Spring-Boot-构建音乐播放器" class="headerlink" title="选项一：使用 Vue.js 和 Spring Boot 构建音乐播放器"></a>选项一：使用 Vue.js 和 Spring Boot 构建音乐播放器</h2><h3 id="一、项目总体结构"><a href="#一、项目总体结构" class="headerlink" title="一、项目总体结构"></a>一、项目总体结构</h3><p>一个典型的 Vue.js 前端和 Spring Boot 后端的项目结构如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">music-player/</span><br><span class="line">├── backend/</span><br><span class="line">│   ├── src/</span><br><span class="line">│   │   ├── main/</span><br><span class="line">│   │   │   ├── java/</span><br><span class="line">│   │   │   └── resources/</span><br><span class="line">│   ├── pom.xml</span><br><span class="line">│   └── ...</span><br><span class="line">├── frontend/</span><br><span class="line">│   ├── src/</span><br><span class="line">│   │   ├── components/</span><br><span class="line">│   │   ├── views/</span><br><span class="line">│   │   └── ...</span><br><span class="line">│   ├── public/</span><br><span class="line">│   ├── package.json</span><br><span class="line">│   └── ...</span><br><span class="line">├── docker-compose.yml</span><br><span class="line">└── README.md</span><br></pre></td></tr></table></figure>
+
+<h3 id="二、版本控制"><a href="#二、版本控制" class="headerlink" title="二、版本控制"></a>二、版本控制</h3><h4 id="1-初始化Git仓库"><a href="#1-初始化Git仓库" class="headerlink" title="1. 初始化Git仓库"></a>1. 初始化Git仓库</h4><p>在项目根目录下初始化Git仓库：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-创建-gitignore"><a href="#2-创建-gitignore" class="headerlink" title="2. 创建 .gitignore"></a>2. 创建 <code>.gitignore</code></h4><p>在根目录下创建一个 <code>.gitignore</code> 文件，添加以下内容以忽略不必要的文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"># Java</span><br><span class="line">/target/</span><br><span class="line">/*.class</span><br><span class="line"></span><br><span class="line"># Maven</span><br><span class="line">/.mvn/</span><br><span class="line">/!.mvn/wrapper/maven-wrapper.jar</span><br><span class="line"></span><br><span class="line"># Node.js</span><br><span class="line">node_modules/</span><br><span class="line">frontend/node_modules/</span><br><span class="line"></span><br><span class="line"># Environment variables</span><br><span class="line">.env</span><br><span class="line"></span><br><span class="line"># Logs</span><br><span class="line">logs</span><br><span class="line">*.log</span><br><span class="line"></span><br><span class="line"># IDEs</span><br><span class="line">.idea/</span><br><span class="line">.vscode/</span><br></pre></td></tr></table></figure>
+
+<h3 id="三、前端开发框架搭建（Vue-js）"><a href="#三、前端开发框架搭建（Vue-js）" class="headerlink" title="三、前端开发框架搭建（Vue.js）"></a>三、前端开发框架搭建（Vue.js）</h3><p>假设选择 <strong>Vue.js</strong> 作为前端框架，并使用 <strong>Vuetify</strong> 作为UI组件库。</p>
+<h4 id="1-初始化Vue项目"><a href="#1-初始化Vue项目" class="headerlink" title="1. 初始化Vue项目"></a>1. 初始化Vue项目</h4><p>使用 Vue CLI 初始化项目：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install -g @vue/cli</span><br><span class="line">vue create frontend</span><br></pre></td></tr></table></figure>
+
+<p>选择默认配置或根据需要自定义配置。</p>
+<h4 id="2-安装必要的依赖"><a href="#2-安装必要的依赖" class="headerlink" title="2. 安装必要的依赖"></a>2. 安装必要的依赖</h4><p>进入 <code>frontend</code> 目录并安装Vuetify和AWS SDK：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> frontend</span><br><span class="line">vue add vuetify</span><br><span class="line">npm install aws-sdk axios vue-router</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-设置项目结构"><a href="#3-设置项目结构" class="headerlink" title="3. 设置项目结构"></a>3. 设置项目结构</h4><p>在 <code>frontend/src</code> 下创建以下文件夹：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">src/</span><br><span class="line">├── components/</span><br><span class="line">├── views/</span><br><span class="line">├── services/</span><br><span class="line">├── router/</span><br><span class="line">├── store/</span><br><span class="line">└── ...</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-配置环境变量"><a href="#4-配置环境变量" class="headerlink" title="4. 配置环境变量"></a>4. 配置环境变量</h4><p>在 <code>frontend</code> 目录下创建 <code>.env</code> 文件，添加AWS相关配置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">VUE_APP_AWS_ACCESS_KEY_ID=your_access_key_id</span><br><span class="line">VUE_APP_AWS_SECRET_ACCESS_KEY=your_secret_access_key</span><br><span class="line">VUE_APP_AWS_REGION=your_aws_region</span><br><span class="line">VUE_APP_S3_BUCKET_NAME=your_s3_bucket_name</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>注意</strong>：<strong>不要</strong>在前端直接暴露AWS密钥。推荐使用后端代理来处理S3访问，或者使用预签名URL。</p>
+</blockquote>
+<h4 id="5-创建上传组件"><a href="#5-创建上传组件" class="headerlink" title="5. 创建上传组件"></a>5. 创建上传组件</h4><p>在 <code>frontend/src/components/Upload.vue</code> 中创建上传组件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;v-card&gt;</span><br><span class="line">    &lt;v-card-title&gt;上传音乐&lt;/v-card-title&gt;</span><br><span class="line">    &lt;v-card-text&gt;</span><br><span class="line">      &lt;v-file-input v-model=&quot;file&quot; label=&quot;选择音乐文件&quot; accept=&quot;audio/*&quot;&gt;&lt;/v-file-input&gt;</span><br><span class="line">      &lt;v-btn @click=&quot;uploadFile&quot; color=&quot;primary&quot;&gt;上传&lt;/v-btn&gt;</span><br><span class="line">    &lt;/v-card-text&gt;</span><br><span class="line">  &lt;/v-card&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">import axios from &#x27;axios&#x27;</span><br><span class="line"></span><br><span class="line">export default &#123;</span><br><span class="line">  data() &#123;</span><br><span class="line">    return &#123;</span><br><span class="line">      file: null</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  methods: &#123;</span><br><span class="line">    async uploadFile() &#123;</span><br><span class="line">      if (!this.file) &#123;</span><br><span class="line">        alert(&#x27;请先选择文件&#x27;)</span><br><span class="line">        return</span><br><span class="line">      &#125;</span><br><span class="line">      try &#123;</span><br><span class="line">        // 获取预签名URL</span><br><span class="line">        const response = await axios.get(&#x27;/api/upload/presigned-url&#x27;, &#123;</span><br><span class="line">          params: &#123;</span><br><span class="line">            fileName: this.file.name,</span><br><span class="line">            fileType: this.file.type</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">        const &#123; url &#125; = response.data</span><br><span class="line"></span><br><span class="line">        // 上传文件到S3</span><br><span class="line">        await axios.put(url, this.file, &#123;</span><br><span class="line">          headers: &#123;</span><br><span class="line">            &#x27;Content-Type&#x27;: this.file.type</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;)</span><br><span class="line"></span><br><span class="line">        alert(&#x27;上传成功&#x27;)</span><br><span class="line">      &#125; catch (error) &#123;</span><br><span class="line">        console.error(error)</span><br><span class="line">        alert(&#x27;上传失败&#x27;)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="6-创建音乐列表组件"><a href="#6-创建音乐列表组件" class="headerlink" title="6. 创建音乐列表组件"></a>6. 创建音乐列表组件</h4><p>在 <code>frontend/src/components/MusicList.vue</code> 中创建音乐列表组件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;v-card&gt;</span><br><span class="line">    &lt;v-card-title&gt;音乐列表&lt;/v-card-title&gt;</span><br><span class="line">    &lt;v-card-text&gt;</span><br><span class="line">      &lt;v-list&gt;</span><br><span class="line">        &lt;v-list-item v-for=&quot;item in music&quot; :key=&quot;item.key&quot;&gt;</span><br><span class="line">          &lt;v-list-item-content&gt;</span><br><span class="line">            &lt;v-list-item-title&gt;&#123;&#123; item.key &#125;&#125;&lt;/v-list-item-title&gt;</span><br><span class="line">            &lt;v-list-item-subtitle&gt;大小: &#123;&#123; item.size &#125;&#125; 字节&lt;/v-list-item-subtitle&gt;</span><br><span class="line">          &lt;/v-list-item-content&gt;</span><br><span class="line">          &lt;v-list-item-action&gt;</span><br><span class="line">            &lt;v-btn icon @click=&quot;playMusic(item.url)&quot;&gt;</span><br><span class="line">              &lt;v-icon&gt;mdi-play&lt;/v-icon&gt;</span><br><span class="line">            &lt;/v-btn&gt;</span><br><span class="line">          &lt;/v-list-item-action&gt;</span><br><span class="line">        &lt;/v-list-item&gt;</span><br><span class="line">      &lt;/v-list&gt;</span><br><span class="line">    &lt;/v-card-text&gt;</span><br><span class="line">  &lt;/v-card&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">import axios from &#x27;axios&#x27;</span><br><span class="line"></span><br><span class="line">export default &#123;</span><br><span class="line">  data() &#123;</span><br><span class="line">    return &#123;</span><br><span class="line">      music: []</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  created() &#123;</span><br><span class="line">    this.fetchMusicList()</span><br><span class="line">  &#125;,</span><br><span class="line">  methods: &#123;</span><br><span class="line">    async fetchMusicList() &#123;</span><br><span class="line">      try &#123;</span><br><span class="line">        const response = await axios.get(&#x27;/api/music/list&#x27;)</span><br><span class="line">        this.music = response.data</span><br><span class="line">      &#125; catch (error) &#123;</span><br><span class="line">        console.error(error)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    playMusic(url) &#123;</span><br><span class="line">      const audio = new Audio(url)</span><br><span class="line">      audio.play()</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="7-配置路由"><a href="#7-配置路由" class="headerlink" title="7. 配置路由"></a>7. 配置路由</h4><p>在 <code>frontend/src/router/index.js</code> 中配置路由：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">Vue</span> <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">VueRouter</span> <span class="keyword">from</span> <span class="string">&#x27;vue-router&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">Upload</span> <span class="keyword">from</span> <span class="string">&#x27;@/components/Upload.vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">MusicList</span> <span class="keyword">from</span> <span class="string">&#x27;@/components/MusicList.vue&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="title class_">Vue</span>.<span class="title function_">use</span>(<span class="title class_">VueRouter</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> routes = [</span><br><span class="line">  &#123; <span class="attr">path</span>: <span class="string">&#x27;/&#x27;</span>, <span class="attr">component</span>: <span class="title class_">Upload</span> &#125;,</span><br><span class="line">  &#123; <span class="attr">path</span>: <span class="string">&#x27;/music&#x27;</span>, <span class="attr">component</span>: <span class="title class_">MusicList</span> &#125;</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> <span class="title class_">VueRouter</span>(&#123;</span><br><span class="line">  <span class="attr">mode</span>: <span class="string">&#x27;history&#x27;</span>,</span><br><span class="line">  routes</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> router</span><br></pre></td></tr></table></figure>
+
+<h4 id="8-集成到主应用"><a href="#8-集成到主应用" class="headerlink" title="8. 集成到主应用"></a>8. 集成到主应用</h4><p>在 <code>frontend/src/App.vue</code> 中集成导航：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;v-app&gt;</span><br><span class="line">    &lt;v-app-bar app&gt;</span><br><span class="line">      &lt;v-toolbar-title&gt;音乐播放器&lt;/v-toolbar-title&gt;</span><br><span class="line">      &lt;v-spacer&gt;&lt;/v-spacer&gt;</span><br><span class="line">      &lt;v-btn text to=&quot;/&quot;&gt;上传&lt;/v-btn&gt;</span><br><span class="line">      &lt;v-btn text to=&quot;/music&quot;&gt;音乐列表&lt;/v-btn&gt;</span><br><span class="line">    &lt;/v-app-bar&gt;</span><br><span class="line">    &lt;v-main&gt;</span><br><span class="line">      &lt;router-view&gt;&lt;/router-view&gt;</span><br><span class="line">    &lt;/v-main&gt;</span><br><span class="line">  &lt;/v-app&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">export default &#123;</span><br><span class="line">  name: &#x27;App&#x27;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>在 <code>frontend/src/main.js</code> 中引入路由：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">Vue</span> <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">App</span> <span class="keyword">from</span> <span class="string">&#x27;./App.vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> router <span class="keyword">from</span> <span class="string">&#x27;./router&#x27;</span></span><br><span class="line"><span class="keyword">import</span> vuetify <span class="keyword">from</span> <span class="string">&#x27;./plugins/vuetify&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="title class_">Vue</span>.<span class="property">config</span>.<span class="property">productionTip</span> = <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> <span class="title class_">Vue</span>(&#123;</span><br><span class="line">  router,</span><br><span class="line">  vuetify,</span><br><span class="line">  <span class="attr">render</span>: <span class="function"><span class="params">h</span> =&gt;</span> <span class="title function_">h</span>(<span class="title class_">App</span>)</span><br><span class="line">&#125;).$mount(<span class="string">&#x27;#app&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="9-配置代理解决跨域问题"><a href="#9-配置代理解决跨域问题" class="headerlink" title="9. 配置代理解决跨域问题"></a>9. 配置代理解决跨域问题</h4><p>在 <code>frontend/vue.config.js</code> 中配置代理：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="attr">devServer</span>: &#123;</span><br><span class="line">    <span class="attr">proxy</span>: &#123;</span><br><span class="line">      <span class="string">&#x27;/api&#x27;</span>: &#123;</span><br><span class="line">        <span class="attr">target</span>: <span class="string">&#x27;http://localhost:8080&#x27;</span>,</span><br><span class="line">        <span class="attr">changeOrigin</span>: <span class="literal">true</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="四、后端开发框架搭建（Spring-Boot）"><a href="#四、后端开发框架搭建（Spring-Boot）" class="headerlink" title="四、后端开发框架搭建（Spring Boot）"></a>四、后端开发框架搭建（Spring Boot）</h3><h4 id="1-初始化Spring-Boot项目"><a href="#1-初始化Spring-Boot项目" class="headerlink" title="1. 初始化Spring Boot项目"></a>1. 初始化Spring Boot项目</h4><p>您可以使用 <a target="_blank" rel="noopener" href="https://start.spring.io/">Spring Initializr</a> 初始化项目，选择以下依赖：</p>
+<ul>
+<li>Spring Web</li>
+<li>Spring Security</li>
+<li>Spring Data JPA</li>
+<li>AWS SDK (需要手动添加)</li>
+<li>PostgreSQL Driver (或其他数据库驱动)</li>
+<li>Lombok (可选)</li>
+</ul>
+<p>下载并解压项目，导入到您的IDE（如 IntelliJ IDEA）。</p>
+<h4 id="2-配置-pom-xml"><a href="#2-配置-pom-xml" class="headerlink" title="2. 配置 pom.xml"></a>2. 配置 <code>pom.xml</code></h4><p>在 <code>pom.xml</code> 中添加AWS SDK依赖：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 其他依赖 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>software.amazon.awssdk<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>s3<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>software.amazon.awssdk<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>auth<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="3-配置应用属性"><a href="#3-配置应用属性" class="headerlink" title="3. 配置应用属性"></a>3. 配置应用属性</h4><p>在 <code>src/main/resources/application.properties</code> 中配置数据库和AWS信息：</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Server</span></span><br><span class="line"><span class="attr">server.port</span>=<span class="string">8080</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># Database</span></span><br><span class="line"><span class="attr">spring.datasource.url</span>=<span class="string">jdbc:postgresql://localhost:5432/musicplayer</span></span><br><span class="line"><span class="attr">spring.datasource.username</span>=<span class="string">your_db_username</span></span><br><span class="line"><span class="attr">spring.datasource.password</span>=<span class="string">your_db_password</span></span><br><span class="line"><span class="attr">spring.jpa.hibernate.ddl-auto</span>=<span class="string">update</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># AWS</span></span><br><span class="line"><span class="attr">aws.accessKeyId</span>=<span class="string">your_access_key_id</span></span><br><span class="line"><span class="attr">aws.secretAccessKey</span>=<span class="string">your_secret_access_key</span></span><br><span class="line"><span class="attr">aws.region</span>=<span class="string">your_aws_region</span></span><br><span class="line"><span class="attr">aws.s3.bucketName</span>=<span class="string">your_s3_bucket_name</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>注意</strong>：为了安全，建议使用环境变量或AWS IAM角色管理凭证，避免在配置文件中明文存储密钥。</p>
+</blockquote>
+<h4 id="4-创建S3服务"><a href="#4-创建S3服务" class="headerlink" title="4. 创建S3服务"></a>4. 创建S3服务</h4><p>创建一个服务类来处理与S3的交互。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/main/java/com/example/musicplayer/service/S3Service.java</span></span><br><span class="line"><span class="keyword">package</span> com.example.musicplayer.service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Value;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</span><br><span class="line"><span class="keyword">import</span> software.amazon.awssdk.auth.credentials.AwsBasicCredentials;</span><br><span class="line"><span class="keyword">import</span> software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;</span><br><span class="line"><span class="keyword">import</span> software.amazon.awssdk.regions.Region;</span><br><span class="line"><span class="keyword">import</span> software.amazon.awssdk.services.s3.S3Client;</span><br><span class="line"><span class="keyword">import</span> software.amazon.awssdk.services.s3.model.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.net.URL;</span><br><span class="line"><span class="keyword">import</span> java.time.Duration;</span><br><span class="line"><span class="keyword">import</span> java.util.UUID;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">S3Service</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> S3Client s3Client;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value(&quot;$&#123;aws.s3.bucketName&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String bucketName;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">S3Service</span><span class="params">(</span></span><br><span class="line"><span class="params">            <span class="meta">@Value(&quot;$&#123;aws.accessKeyId&#125;&quot;)</span> String accessKeyId,</span></span><br><span class="line"><span class="params">            <span class="meta">@Value(&quot;$&#123;aws.secretAccessKey&#125;&quot;)</span> String secretAccessKey,</span></span><br><span class="line"><span class="params">            <span class="meta">@Value(&quot;$&#123;aws.region&#125;&quot;)</span> String region</span></span><br><span class="line"><span class="params">    )</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.s3Client = S3Client.builder()</span><br><span class="line">                .credentialsProvider(StaticCredentialsProvider.create(</span><br><span class="line">                        AwsBasicCredentials.create(accessKeyId, secretAccessKey)</span><br><span class="line">                ))</span><br><span class="line">                .region(Region.of(region))</span><br><span class="line">                .build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">generatePresignedUrl</span><span class="params">(String fileName, String contentType)</span> &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">key</span> <span class="operator">=</span> UUID.randomUUID().toString() + <span class="string">&quot;_&quot;</span> + fileName;</span><br><span class="line"></span><br><span class="line">        <span class="type">PutObjectRequest</span> <span class="variable">putObjectRequest</span> <span class="operator">=</span> PutObjectRequest.builder()</span><br><span class="line">                .bucket(bucketName)</span><br><span class="line">                .key(key)</span><br><span class="line">                .contentType(contentType)</span><br><span class="line">                .acl(ObjectCannedACL.PUBLIC_READ)</span><br><span class="line">                .build();</span><br><span class="line"></span><br><span class="line">        <span class="type">PutObjectPresignRequest</span> <span class="variable">presignRequest</span> <span class="operator">=</span> PutObjectPresignRequest.builder()</span><br><span class="line">                .signatureDuration(Duration.ofMinutes(<span class="number">10</span>))</span><br><span class="line">                .putObjectRequest(putObjectRequest)</span><br><span class="line">                .build();</span><br><span class="line"></span><br><span class="line">        <span class="type">PresignedPutObjectRequest</span> <span class="variable">presignedRequest</span> <span class="operator">=</span> s3Client.presignPutObject(presignRequest);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> presignedRequest.url().toString();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> ListObjectsV2Response <span class="title function_">listMusicFiles</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="type">ListObjectsV2Request</span> <span class="variable">listReq</span> <span class="operator">=</span> ListObjectsV2Request.builder()</span><br><span class="line">                .bucket(bucketName)</span><br><span class="line">                .build();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> s3Client.listObjectsV2(listReq);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">generateGetUrl</span><span class="params">(String key)</span> &#123;</span><br><span class="line">        <span class="type">GetObjectRequest</span> <span class="variable">getObjectRequest</span> <span class="operator">=</span> GetObjectRequest.builder()</span><br><span class="line">                .bucket(bucketName)</span><br><span class="line">                .key(key)</span><br><span class="line">                .build();</span><br><span class="line"></span><br><span class="line">        <span class="type">GetObjectPresignRequest</span> <span class="variable">presignRequest</span> <span class="operator">=</span> GetObjectPresignRequest.builder()</span><br><span class="line">                .signatureDuration(Duration.ofHours(<span class="number">1</span>))</span><br><span class="line">                .getObjectRequest(getObjectRequest)</span><br><span class="line">                .build();</span><br><span class="line"></span><br><span class="line">        <span class="type">PresignedGetObjectRequest</span> <span class="variable">presignedGet</span> <span class="operator">=</span> s3Client.presignGetObject(presignRequest);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> presignedGet.url().toString();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="5-创建控制器"><a href="#5-创建控制器" class="headerlink" title="5. 创建控制器"></a>5. 创建控制器</h4><p>创建控制器来处理上传和获取音乐列表的请求。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/main/java/com/example/musicplayer/controller/S3Controller.java</span></span><br><span class="line"><span class="keyword">package</span> com.example.musicplayer.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.example.musicplayer.service.S3Service;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> software.amazon.awssdk.services.s3.model.S3Object;</span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.stream.Collectors;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/api&quot;)</span></span><br><span class="line"><span class="meta">@CrossOrigin(origins = &quot;http://localhost:8080&quot;)</span> <span class="comment">// 根据前端地址配置</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">S3Controller</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> S3Service s3Service;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/upload/presigned-url&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getPresignedUrl</span><span class="params">(<span class="meta">@RequestParam</span> String fileName, <span class="meta">@RequestParam</span> String fileType)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> s3Service.generatePresignedUrl(fileName, fileType);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping(&quot;/music/list&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> List&lt;MusicFile&gt; <span class="title function_">listMusic</span><span class="params">()</span> &#123;</span><br><span class="line">        List&lt;S3Object&gt; objects = s3Service.listMusicFiles().contents();</span><br><span class="line">        <span class="keyword">return</span> objects.stream().map(obj -&gt; <span class="keyword">new</span> <span class="title class_">MusicFile</span>(</span><br><span class="line">                obj.key(),</span><br><span class="line">                s3Service.generateGetUrl(obj.key()),</span><br><span class="line">                obj.size(),</span><br><span class="line">                obj.lastModified()</span><br><span class="line">        )).collect(Collectors.toList());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// DTO类</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">MusicFile</span> &#123;</span><br><span class="line">        <span class="keyword">private</span> String key;</span><br><span class="line">        <span class="keyword">private</span> String url;</span><br><span class="line">        <span class="keyword">private</span> <span class="type">long</span> size;</span><br><span class="line">        <span class="keyword">private</span> String lastModified;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> <span class="title function_">MusicFile</span><span class="params">(String key, String url, <span class="type">long</span> size, java.time.Instant lastModified)</span> &#123;</span><br><span class="line">            <span class="built_in">this</span>.key = key;</span><br><span class="line">            <span class="built_in">this</span>.url = url;</span><br><span class="line">            <span class="built_in">this</span>.size = size;</span><br><span class="line">            <span class="built_in">this</span>.lastModified = lastModified.toString();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Getters 和 Setters</span></span><br><span class="line">        <span class="keyword">public</span> String <span class="title function_">getKey</span><span class="params">()</span> &#123; <span class="keyword">return</span> key; &#125;</span><br><span class="line">        <span class="keyword">public</span> String <span class="title function_">getUrl</span><span class="params">()</span> &#123; <span class="keyword">return</span> url; &#125;</span><br><span class="line">        <span class="keyword">public</span> <span class="type">long</span> <span class="title function_">getSize</span><span class="params">()</span> &#123; <span class="keyword">return</span> size; &#125;</span><br><span class="line">        <span class="keyword">public</span> String <span class="title function_">getLastModified</span><span class="params">()</span> &#123; <span class="keyword">return</span> lastModified; &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setKey</span><span class="params">(String key)</span> &#123; <span class="built_in">this</span>.key = key; &#125;</span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setUrl</span><span class="params">(String url)</span> &#123; <span class="built_in">this</span>.url = url; &#125;</span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setSize</span><span class="params">(<span class="type">long</span> size)</span> &#123; <span class="built_in">this</span>.size = size; &#125;</span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setLastModified</span><span class="params">(String lastModified)</span> &#123; <span class="built_in">this</span>.lastModified = lastModified; &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="6-配置CORS"><a href="#6-配置CORS" class="headerlink" title="6. 配置CORS"></a>6. 配置CORS</h4><p>确保Spring Boot允许来自前端的跨域请求。在 <code>src/main/java/com/example/musicplayer/config/WebConfig.java</code> 中配置：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.musicplayer.config;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.config.annotation.*;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">WebConfig</span> <span class="keyword">implements</span> <span class="title class_">WebMvcConfigurer</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">addCorsMappings</span><span class="params">(CorsRegistry registry)</span> &#123;</span><br><span class="line">        registry.addMapping(<span class="string">&quot;/api/**&quot;</span>)</span><br><span class="line">                .allowedOrigins(<span class="string">&quot;http://localhost:8080&quot;</span>) <span class="comment">// 前端地址</span></span><br><span class="line">                .allowedMethods(<span class="string">&quot;GET&quot;</span>, <span class="string">&quot;POST&quot;</span>, <span class="string">&quot;PUT&quot;</span>, <span class="string">&quot;DELETE&quot;</span>, <span class="string">&quot;OPTIONS&quot;</span>)</span><br><span class="line">                .allowedHeaders(<span class="string">&quot;*&quot;</span>)</span><br><span class="line">                .allowCredentials(<span class="literal">true</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="7-数据库配置（可选）"><a href="#7-数据库配置（可选）" class="headerlink" title="7. 数据库配置（可选）"></a>7. 数据库配置（可选）</h4><p>如果需要存储用户信息、播放列表等数据，可以配置数据库并使用JPA进行管理。这里假设使用 PostgreSQL。</p>
+<h5 id="a-配置数据库连接"><a href="#a-配置数据库连接" class="headerlink" title="a. 配置数据库连接"></a>a. 配置数据库连接</h5><p>在 <code>application.properties</code> 中已经配置了数据库连接参数。</p>
+<h5 id="b-创建实体类"><a href="#b-创建实体类" class="headerlink" title="b. 创建实体类"></a>b. 创建实体类</h5><p>例如，创建 <code>User</code> 实体：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/main/java/com/example/musicplayer/model/User.java</span></span><br><span class="line"><span class="keyword">package</span> com.example.musicplayer.model;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.persistence.*;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="meta">@Table(name = &quot;users&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">User</span> &#123;</span><br><span class="line">    <span class="meta">@Id</span></span><br><span class="line">    <span class="meta">@GeneratedValue(strategy = GenerationType.IDENTITY)</span></span><br><span class="line">    <span class="keyword">private</span> Long id;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Column(unique = true, nullable = false)</span></span><br><span class="line">    <span class="keyword">private</span> String username;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Column(nullable = false)</span></span><br><span class="line">    <span class="keyword">private</span> String password;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 其他字段，如邮箱等</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Getters 和 Setters</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="c-创建仓库接口"><a href="#c-创建仓库接口" class="headerlink" title="c. 创建仓库接口"></a>c. 创建仓库接口</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/main/java/com/example/musicplayer/repository/UserRepository.java</span></span><br><span class="line"><span class="keyword">package</span> com.example.musicplayer.repository;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.example.musicplayer.model.User;</span><br><span class="line"><span class="keyword">import</span> org.springframework.data.jpa.repository.JpaRepository;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">UserRepository</span> <span class="keyword">extends</span> <span class="title class_">JpaRepository</span>&lt;User, Long&gt; &#123;</span><br><span class="line">    User <span class="title function_">findByUsername</span><span class="params">(String username)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="d-同步数据库"><a href="#d-同步数据库" class="headerlink" title="d. 同步数据库"></a>d. 同步数据库</h5><p>确保在应用启动时，JPA自动创建或更新表结构：</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring.jpa.hibernate.ddl-auto</span>=<span class="string">update</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="8-用户认证与授权"><a href="#8-用户认证与授权" class="headerlink" title="8. 用户认证与授权"></a>8. 用户认证与授权</h4><p>可以使用 <strong>Spring Security</strong> 实现用户认证和授权，或者集成 <strong>Amazon Cognito</strong>。这里以 <strong>Spring Security</strong> + <strong>JWT</strong> 为例。</p>
+<h5 id="a-添加依赖"><a href="#a-添加依赖" class="headerlink" title="a. 添加依赖"></a>a. 添加依赖</h5><p>在 <code>pom.xml</code> 中添加Spring Security和JWT相关依赖：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-security<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.jsonwebtoken<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jjwt<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>0.9.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="b-配置Spring-Security"><a href="#b-配置Spring-Security" class="headerlink" title="b. 配置Spring Security"></a>b. 配置Spring Security</h5><p>创建一个配置类 <code>SecurityConfig</code>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/main/java/com/example/musicplayer/config/SecurityConfig.java</span></span><br><span class="line"><span class="keyword">package</span> com.example.musicplayer.config;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.config.annotation.web.builders.HttpSecurity;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.config.annotation.web.configuration.*;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.web.SecurityFilterChain;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@EnableWebSecurity</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SecurityConfig</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="keyword">public</span> SecurityFilterChain <span class="title function_">filterChain</span><span class="params">(HttpSecurity http)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        http</span><br><span class="line">            .csrf().disable() <span class="comment">// 根据需要配置</span></span><br><span class="line">            .authorizeRequests()</span><br><span class="line">                .antMatchers(<span class="string">&quot;/api/auth/**&quot;</span>).permitAll()</span><br><span class="line">                .anyRequest().authenticated()</span><br><span class="line">            .and()</span><br><span class="line">            .httpBasic(); <span class="comment">// 或者配置JWT认证</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> http.build();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="c-创建认证控制器"><a href="#c-创建认证控制器" class="headerlink" title="c. 创建认证控制器"></a>c. 创建认证控制器</h5><p>创建一个简单的认证控制器进行用户注册和登录。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/main/java/com/example/musicplayer/controller/AuthController.java</span></span><br><span class="line"><span class="keyword">package</span> com.example.musicplayer.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.example.musicplayer.model.User;</span><br><span class="line"><span class="keyword">import</span> com.example.musicplayer.repository.UserRepository;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.*;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/api/auth&quot;)</span></span><br><span class="line"><span class="meta">@CrossOrigin(origins = &quot;http://localhost:8080&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">AuthController</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> UserRepository userRepository;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> BCryptPasswordEncoder passwordEncoder;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@PostMapping(&quot;/register&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">register</span><span class="params">(<span class="meta">@RequestBody</span> User user)</span> &#123;</span><br><span class="line">        user.setPassword(passwordEncoder.encode(user.getPassword()));</span><br><span class="line">        userRepository.save(user);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;注册成功&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 登录接口和JWT生成逻辑</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="d-配置密码编码器"><a href="#d-配置密码编码器" class="headerlink" title="d. 配置密码编码器"></a>d. 配置密码编码器</h5><p>在 <code>SecurityConfig</code> 中添加密码编码器 Bean：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="keyword">public</span> BCryptPasswordEncoder <span class="title function_">passwordEncoder</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">BCryptPasswordEncoder</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="e-实现JWT生成与验证"><a href="#e-实现JWT生成与验证" class="headerlink" title="e. 实现JWT生成与验证"></a>e. 实现JWT生成与验证</h5><p>需要实现JWT生成和验证逻辑，包括过滤器、JWT工具类等。具体实现可以参考Spring Security与JWT的集成教程，这里略过详细代码。</p>
+<h3 id="五、部署与运维"><a href="#五、部署与运维" class="headerlink" title="五、部署与运维"></a>五、部署与运维</h3><h4 id="1-使用Docker容器化应用"><a href="#1-使用Docker容器化应用" class="headerlink" title="1. 使用Docker容器化应用"></a>1. 使用Docker容器化应用</h4><h5 id="a-创建Dockerfile"><a href="#a-创建Dockerfile" class="headerlink" title="a. 创建Dockerfile"></a>a. 创建Dockerfile</h5><p><strong>后端Dockerfile</strong> (<code>backend/Dockerfile</code>):</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用官方Java运行时作为基础镜像</span></span><br><span class="line"><span class="keyword">FROM</span> openjdk:<span class="number">17</span>-jdk-alpine</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置工作目录</span></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /app</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 复制Maven构建的JAR文件</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> target/music-player-backend.jar app.jar</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 暴露端口</span></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">8080</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 运行JAR文件</span></span><br><span class="line"><span class="keyword">ENTRYPOINT</span><span class="language-bash"> [<span class="string">&quot;java&quot;</span>,<span class="string">&quot;-jar&quot;</span>,<span class="string">&quot;app.jar&quot;</span>]</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>前端Dockerfile</strong> (<code>frontend/Dockerfile</code>):</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 构建阶段</span></span><br><span class="line"><span class="keyword">FROM</span> node:<span class="number">16</span> as build-stage</span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /app</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> package*.json ./</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> npm install</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> . .</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> npm run build</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 生产阶段</span></span><br><span class="line"><span class="keyword">FROM</span> nginx:alpine</span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> --from=build-stage /app/dist /usr/share/nginx/html</span></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">80</span></span><br><span class="line"><span class="keyword">CMD</span><span class="language-bash"> [<span class="string">&quot;nginx&quot;</span>, <span class="string">&quot;-g&quot;</span>, <span class="string">&quot;daemon off;&quot;</span>]</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="b-创建-docker-compose-yml"><a href="#b-创建-docker-compose-yml" class="headerlink" title="b. 创建 docker-compose.yml"></a>b. 创建 <code>docker-compose.yml</code></h5><p>在项目根目录下创建 <code>docker-compose.yml</code> 文件：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;3.8&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">backend:</span></span><br><span class="line">    <span class="attr">build:</span> <span class="string">./backend</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;8080:8080&quot;</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">AWS_ACCESS_KEY_ID=your_access_key_id</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">AWS_SECRET_ACCESS_KEY=your_secret_access_key</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">AWS_REGION=your_aws_region</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">AWS_S3_BUCKET_NAME=your_s3_bucket_name</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/musicplayer</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">SPRING_DATASOURCE_USERNAME=your_db_username</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">SPRING_DATASOURCE_PASSWORD=your_db_password</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">db</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">frontend:</span></span><br><span class="line">    <span class="attr">build:</span> <span class="string">./frontend</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;80:80&quot;</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">backend</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">db:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">postgres:13</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">POSTGRES_USER:</span> <span class="string">your_db_username</span></span><br><span class="line">      <span class="attr">POSTGRES_PASSWORD:</span> <span class="string">your_db_password</span></span><br><span class="line">      <span class="attr">POSTGRES_DB:</span> <span class="string">musicplayer</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;5432:5432&quot;</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">db-data:/var/lib/postgresql/data</span></span><br><span class="line"></span><br><span class="line"><span class="attr">volumes:</span></span><br><span class="line">  <span class="attr">db-data:</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="c-构建和启动容器"><a href="#c-构建和启动容器" class="headerlink" title="c. 构建和启动容器"></a>c. 构建和启动容器</h5><p>在项目根目录下运行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose up --build</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-部署到AWS"><a href="#2-部署到AWS" class="headerlink" title="2. 部署到AWS"></a>2. 部署到AWS</h4><p>可以使用 <strong>AWS Elastic Beanstalk</strong>、<strong>Amazon ECS</strong> 或 <strong>AWS Fargate</strong> 部署容器化应用。以下以 <strong>Elastic Beanstalk</strong> 为例：</p>
+<h5 id="a-安装AWS-CLI和Elastic-Beanstalk-CLI"><a href="#a-安装AWS-CLI和Elastic-Beanstalk-CLI" class="headerlink" title="a. 安装AWS CLI和Elastic Beanstalk CLI"></a>a. 安装AWS CLI和Elastic Beanstalk CLI</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装AWS CLI</span></span><br><span class="line">pip install awscli</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装Elastic Beanstalk CLI</span></span><br><span class="line">pip install awsebcli</span><br></pre></td></tr></table></figure>
+
+<h5 id="b-配置AWS-CLI"><a href="#b-配置AWS-CLI" class="headerlink" title="b. 配置AWS CLI"></a>b. 配置AWS CLI</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aws configure</span><br></pre></td></tr></table></figure>
+
+<p>输入您的AWS访问密钥、秘密密钥、区域和输出格式。</p>
+<h5 id="c-初始化Elastic-Beanstalk"><a href="#c-初始化Elastic-Beanstalk" class="headerlink" title="c. 初始化Elastic Beanstalk"></a>c. 初始化Elastic Beanstalk</h5><p>进入 <code>backend</code> 目录并初始化：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> backend</span><br><span class="line">eb init -p docker music-player-backend</span><br></pre></td></tr></table></figure>
+
+<h5 id="d-创建环境并部署"><a href="#d-创建环境并部署" class="headerlink" title="d. 创建环境并部署"></a>d. 创建环境并部署</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">eb create music-player-backend-env</span><br><span class="line">eb deploy</span><br></pre></td></tr></table></figure>
+
+<p>类似地，可以为前端创建Elastic Beanstalk环境，或将前后端整合到同一个应用中。</p>
+<h3 id="六、安全与合规"><a href="#六、安全与合规" class="headerlink" title="六、安全与合规"></a>六、安全与合规</h3><h4 id="1-数据加密"><a href="#1-数据加密" class="headerlink" title="1. 数据加密"></a>1. 数据加密</h4><p>确保S3存储桶启用了服务器端加密（SSE）：</p>
+<ol>
+<li>在S3存储桶设置中，启用默认的SSE（如AES-256或使用KMS）。</li>
+<li>配置Spring Boot中的S3客户端以使用加密选项。</li>
+</ol>
+<h4 id="2-网络安全"><a href="#2-网络安全" class="headerlink" title="2. 网络安全"></a>2. 网络安全</h4><ul>
+<li>使用 <strong>VPC</strong> 和 <strong>安全组</strong> 控制数据库和后端的访问权限。</li>
+<li>配置 <strong>HTTPS</strong> 以加密传输数据。可以使用 <strong>AWS Certificate Manager</strong> 申请SSL证书，并在Elastic Beanstalk或CloudFront中配置。</li>
+</ul>
+<h4 id="3-监控与日志"><a href="#3-监控与日志" class="headerlink" title="3. 监控与日志"></a>3. 监控与日志</h4><p>使用 <strong>AWS CloudWatch</strong> 监控应用性能和安全事件。</p>
+<ul>
+<li>配置CloudWatch Logs来收集后端和前端的日志。</li>
+<li>设置CloudWatch Alarms以监控关键指标，如CPU使用率、内存使用等。</li>
+</ul>
+<h3 id="七、总结"><a href="#七、总结" class="headerlink" title="七、总结"></a>七、总结</h3><p>使用 <strong>Vue.js</strong> 和 <strong>Spring Boot</strong> 构建一个基于Amazon S3存储的音乐播放器，可以充分利用这两种技术的优势。Vue.js 提供了灵活的前端开发体验，Spring Boot 则提供了强大的后端服务能力。通过合理的项目结构、容器化部署和安全配置，您可以构建一个高效、可扩展且安全的音乐播放器。</p>
+<p>如果在开发过程中遇到具体问题，欢迎随时提问！</p>
+<hr>
+<h2 id="选项二：使用-Rust-构建命令行式的音乐播放程序"><a href="#选项二：使用-Rust-构建命令行式的音乐播放程序" class="headerlink" title="选项二：使用 Rust 构建命令行式的音乐播放程序"></a>选项二：使用 Rust 构建命令行式的音乐播放程序</h2><p>如果您希望构建一个命令行式的音乐播放器，可以使用 <strong>Rust</strong> 语言来实现。Rust 拥有高性能和安全性，非常适合构建高效的CLI应用。以下是详细的步骤和技术选型建议。</p>
+<h3 id="一、项目初始化"><a href="#一、项目初始化" class="headerlink" title="一、项目初始化"></a>一、项目初始化</h3><h4 id="1-安装Rust"><a href="#1-安装Rust" class="headerlink" title="1. 安装Rust"></a>1. 安装Rust</h4><p>确保您已经安装了Rust工具链。如果还没有安装，可以使用 <a target="_blank" rel="noopener" href="https://rustup.rs/">rustup</a> 安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl --proto <span class="string">&#x27;=https&#x27;</span> --tlsv1.2 -sSf https://sh.rustup.rs | sh</span><br></pre></td></tr></table></figure>
+
+<p>安装完成后，重新启动终端并验证安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rustc --version</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-创建新项目"><a href="#2-创建新项目" class="headerlink" title="2. 创建新项目"></a>2. 创建新项目</h4><p>使用Cargo（Rust的包管理工具）创建新项目：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cargo new music-player-cli</span><br><span class="line"><span class="built_in">cd</span> music-player-cli</span><br></pre></td></tr></table></figure>
+
+<h3 id="二、技术选型"><a href="#二、技术选型" class="headerlink" title="二、技术选型"></a>二、技术选型</h3><ul>
+<li><strong>HTTP 客户端</strong>：<code>reqwest</code> 用于与S3进行通信。</li>
+<li><strong>JSON 解析</strong>：<code>serde</code> 和 <code>serde_json</code> 用于处理JSON数据。</li>
+<li><strong>CLI 框架</strong>：<code>clap</code> 或 <code>structopt</code> 用于构建命令行界面。</li>
+<li><strong>异步编程</strong>：<code>tokio</code> 提供异步运行时。</li>
+<li><strong>音频播放</strong>：<code>rodio</code> 用于播放音频。</li>
+<li><strong>AWS SDK</strong>：<code>aws-sdk-s3</code>（目前Rust的AWS SDK在发展中，可考虑使用其他库或通过HTTP API进行S3交互）。</li>
+</ul>
+<h3 id="三、添加依赖"><a href="#三、添加依赖" class="headerlink" title="三、添加依赖"></a>三、添加依赖</h3><p>编辑 <code>Cargo.toml</code> 文件，添加所需依赖：</p>
+<figure class="highlight toml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[dependencies]</span></span><br><span class="line"><span class="attr">clap</span> = &#123; version = <span class="string">&quot;4.0&quot;</span>, features = [<span class="string">&quot;derive&quot;</span>] &#125;</span><br><span class="line"><span class="attr">reqwest</span> = &#123; version = <span class="string">&quot;0.11&quot;</span>, features = [<span class="string">&quot;json&quot;</span>, <span class="string">&quot;blocking&quot;</span>] &#125;</span><br><span class="line"><span class="attr">serde</span> = &#123; version = <span class="string">&quot;1.0&quot;</span>, features = [<span class="string">&quot;derive&quot;</span>] &#125;</span><br><span class="line"><span class="attr">serde_json</span> = <span class="string">&quot;1.0&quot;</span></span><br><span class="line"><span class="attr">tokio</span> = &#123; version = <span class="string">&quot;1&quot;</span>, features = [<span class="string">&quot;full&quot;</span>] &#125;</span><br><span class="line"><span class="attr">rodio</span> = <span class="string">&quot;0.17&quot;</span></span><br><span class="line"><span class="attr">dotenv</span> = <span class="string">&quot;0.15&quot;</span></span><br><span class="line"><span class="attr">uuid</span> = &#123; version = <span class="string">&quot;1&quot;</span>, features = [<span class="string">&quot;v4&quot;</span>] &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="四、配置环境变量"><a href="#四、配置环境变量" class="headerlink" title="四、配置环境变量"></a>四、配置环境变量</h3><p>使用 <code>.env</code> 文件存储AWS凭证和配置。</p>
+<p>在项目根目录下创建 <code>.env</code> 文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">AWS_ACCESS_KEY_ID=your_access_key_id</span><br><span class="line">AWS_SECRET_ACCESS_KEY=your_secret_access_key</span><br><span class="line">AWS_REGION=your_aws_region</span><br><span class="line">S3_BUCKET_NAME=your_s3_bucket_name</span><br></pre></td></tr></table></figure>
+
+<p>安装 <code>dotenv</code> 以加载环境变量。</p>
+<h3 id="五、实现功能"><a href="#五、实现功能" class="headerlink" title="五、实现功能"></a>五、实现功能</h3><h4 id="1-构建命令行接口"><a href="#1-构建命令行接口" class="headerlink" title="1. 构建命令行接口"></a>1. 构建命令行接口</h4><p>使用 <code>clap</code> 定义CLI命令和选项。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/main.rs</span></span><br><span class="line"><span class="keyword">use</span> clap::&#123;Parser, Subcommand&#125;;</span><br><span class="line"><span class="keyword">use</span> dotenv::dotenv;</span><br><span class="line"><span class="keyword">use</span> std::env;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[derive(Parser)]</span></span><br><span class="line"><span class="meta">#[command(name = <span class="string">&quot;Music Player CLI&quot;</span>)]</span></span><br><span class="line"><span class="meta">#[command(about = <span class="string">&quot;A command-line music player using Amazon S3&quot;</span>, long_about = None)]</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Cli</span> &#123;</span><br><span class="line">    <span class="meta">#[command(subcommand)]</span></span><br><span class="line">    command: Commands,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[derive(Subcommand)]</span></span><br><span class="line"><span class="keyword">enum</span> <span class="title class_">Commands</span> &#123;</span><br><span class="line">    <span class="comment">/// Upload a music file to S3</span></span><br><span class="line">    Upload &#123;</span><br><span class="line">        <span class="comment">/// Path to the music file</span></span><br><span class="line">        file_path: <span class="type">String</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">/// List music files in S3</span></span><br><span class="line">    List,</span><br><span class="line">    <span class="comment">/// Play a music file from S3</span></span><br><span class="line">    Play &#123;</span><br><span class="line">        <span class="comment">/// Key of the music file in S3</span></span><br><span class="line">        key: <span class="type">String</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[tokio::main]</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">    <span class="title function_ invoke__">dotenv</span>().<span class="title function_ invoke__">ok</span>();</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">cli</span> = Cli::<span class="title function_ invoke__">parse</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">match</span> &amp;cli.command &#123;</span><br><span class="line">        Commands::Upload &#123; file_path &#125; =&gt; &#123;</span><br><span class="line">            <span class="title function_ invoke__">upload_file</span>(file_path).<span class="keyword">await</span>;</span><br><span class="line">        &#125;,</span><br><span class="line">        Commands::List =&gt; &#123;</span><br><span class="line">            <span class="title function_ invoke__">list_music</span>().<span class="keyword">await</span>;</span><br><span class="line">        &#125;,</span><br><span class="line">        Commands::Play &#123; key &#125; =&gt; &#123;</span><br><span class="line">            <span class="title function_ invoke__">play_music</span>(key).<span class="keyword">await</span>;</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-实现上传功能"><a href="#2-实现上传功能" class="headerlink" title="2. 实现上传功能"></a>2. 实现上传功能</h4><p>创建一个模块来处理S3上传。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/s3.rs</span></span><br><span class="line"><span class="keyword">use</span> reqwest::Client;</span><br><span class="line"><span class="keyword">use</span> serde::Deserialize;</span><br><span class="line"><span class="keyword">use</span> std::env;</span><br><span class="line"><span class="keyword">use</span> tokio::fs::File;</span><br><span class="line"><span class="keyword">use</span> tokio::io::AsyncReadExt;</span><br><span class="line"><span class="keyword">use</span> uuid::Uuid;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[derive(Deserialize)]</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">PresignedUrlResponse</span> &#123;</span><br><span class="line">    url: <span class="type">String</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">pub</span> <span class="keyword">async</span> <span class="keyword">fn</span> <span class="title function_">upload_file</span>(file_path: &amp;<span class="type">str</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">file_name</span> = <span class="keyword">match</span> std::path::Path::<span class="title function_ invoke__">new</span>(file_path).<span class="title function_ invoke__">file_name</span>() &#123;</span><br><span class="line">        <span class="title function_ invoke__">Some</span>(name) =&gt; name.<span class="title function_ invoke__">to_string_lossy</span>().<span class="title function_ invoke__">to_string</span>(),</span><br><span class="line">        <span class="literal">None</span> =&gt; &#123;</span><br><span class="line">            eprintln!(<span class="string">&quot;Invalid file path&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取预签名URL</span></span><br><span class="line">    <span class="keyword">let</span> <span class="variable">client</span> = Client::<span class="title function_ invoke__">new</span>();</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">backend_url</span> = <span class="string">&quot;http://localhost:8080/api/upload/presigned-url&quot;</span>; <span class="comment">// 后端地址</span></span><br><span class="line">    <span class="keyword">let</span> <span class="variable">resp</span> = client</span><br><span class="line">        .<span class="title function_ invoke__">get</span>(backend_url)</span><br><span class="line">        .<span class="title function_ invoke__">query</span>(&amp;[(<span class="string">&quot;fileName&quot;</span>, file_name.<span class="title function_ invoke__">clone</span>()), (<span class="string">&quot;fileType&quot;</span>, <span class="string">&quot;audio/mpeg&quot;</span>)])</span><br><span class="line">        .<span class="title function_ invoke__">send</span>()</span><br><span class="line">        .<span class="keyword">await</span></span><br><span class="line">        .<span class="title function_ invoke__">expect</span>(<span class="string">&quot;Failed to get presigned URL&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> !resp.<span class="title function_ invoke__">status</span>().<span class="title function_ invoke__">is_success</span>() &#123;</span><br><span class="line">        eprintln!(<span class="string">&quot;Failed to get presigned URL&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> <span class="variable">presigned</span>: PresignedUrlResponse = resp.<span class="title function_ invoke__">json</span>().<span class="keyword">await</span>.<span class="title function_ invoke__">expect</span>(<span class="string">&quot;Invalid response&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 读取文件内容</span></span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">file</span> = File::<span class="title function_ invoke__">open</span>(file_path).<span class="keyword">await</span>.<span class="title function_ invoke__">expect</span>(<span class="string">&quot;Failed to open file&quot;</span>);</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut </span><span class="variable">contents</span> = <span class="type">Vec</span>::<span class="title function_ invoke__">new</span>();</span><br><span class="line">    file.<span class="title function_ invoke__">read_to_end</span>(&amp;<span class="keyword">mut</span> contents).<span class="keyword">await</span>.<span class="title function_ invoke__">expect</span>(<span class="string">&quot;Failed to read file&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 上传到S3</span></span><br><span class="line">    <span class="keyword">let</span> <span class="variable">upload_resp</span> = client</span><br><span class="line">        .<span class="title function_ invoke__">put</span>(&amp;presigned.url)</span><br><span class="line">        .<span class="title function_ invoke__">header</span>(<span class="string">&quot;Content-Type&quot;</span>, <span class="string">&quot;audio/mpeg&quot;</span>)</span><br><span class="line">        .<span class="title function_ invoke__">body</span>(contents)</span><br><span class="line">        .<span class="title function_ invoke__">send</span>()</span><br><span class="line">        .<span class="keyword">await</span></span><br><span class="line">        .<span class="title function_ invoke__">expect</span>(<span class="string">&quot;Failed to upload file&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> upload_resp.<span class="title function_ invoke__">status</span>().<span class="title function_ invoke__">is_success</span>() &#123;</span><br><span class="line">        <span class="built_in">println!</span>(<span class="string">&quot;上传成功&quot;</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        eprintln!(<span class="string">&quot;上传失败: &#123;&#125;&quot;</span>, upload_resp.<span class="title function_ invoke__">status</span>());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 <code>main.rs</code> 中引入 <code>s3</code> 模块：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">mod</span> s3;</span><br><span class="line"><span class="keyword">use</span> s3::upload_file;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-实现列出音乐文件"><a href="#3-实现列出音乐文件" class="headerlink" title="3. 实现列出音乐文件"></a>3. 实现列出音乐文件</h4><figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/s3.rs (继续添加)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> serde::Serialize;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[derive(Serialize, Deserialize, Debug)]</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">MusicFile</span> &#123;</span><br><span class="line">    key: <span class="type">String</span>,</span><br><span class="line">    url: <span class="type">String</span>,</span><br><span class="line">    size: <span class="type">u64</span>,</span><br><span class="line">    last_modified: <span class="type">String</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">pub</span> <span class="keyword">async</span> <span class="keyword">fn</span> <span class="title function_">list_music</span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">client</span> = Client::<span class="title function_ invoke__">new</span>();</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">backend_url</span> = <span class="string">&quot;http://localhost:8080/api/music/list&quot;</span>; <span class="comment">// 后端地址</span></span><br><span class="line">    <span class="keyword">let</span> <span class="variable">resp</span> = client</span><br><span class="line">        .<span class="title function_ invoke__">get</span>(backend_url)</span><br><span class="line">        .<span class="title function_ invoke__">send</span>()</span><br><span class="line">        .<span class="keyword">await</span></span><br><span class="line">        .<span class="title function_ invoke__">expect</span>(<span class="string">&quot;Failed to fetch music list&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> !resp.<span class="title function_ invoke__">status</span>().<span class="title function_ invoke__">is_success</span>() &#123;</span><br><span class="line">        eprintln!(<span class="string">&quot;Failed to fetch music list&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> <span class="variable">music_list</span>: <span class="type">Vec</span>&lt;MusicFile&gt; = resp.<span class="title function_ invoke__">json</span>().<span class="keyword">await</span>.<span class="title function_ invoke__">expect</span>(<span class="string">&quot;Invalid response&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">println!</span>(<span class="string">&quot;&#123;:&lt;50&#125; &#123;:&lt;10&#125; &#123;&#125;&quot;</span>, <span class="string">&quot;Key&quot;</span>, <span class="string">&quot;Size&quot;</span>, <span class="string">&quot;Last Modified&quot;</span>);</span><br><span class="line">    <span class="keyword">for</span> <span class="variable">music</span> <span class="keyword">in</span> music_list &#123;</span><br><span class="line">        <span class="built_in">println!</span>(</span><br><span class="line">            <span class="string">&quot;&#123;:&lt;50&#125; &#123;:&lt;10&#125; &#123;&#125;&quot;</span>,</span><br><span class="line">            music.key, music.size, music.last_modified</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 <code>main.rs</code> 中引入 <code>list_music</code> 函数。</p>
+<h4 id="4-实现播放功能"><a href="#4-实现播放功能" class="headerlink" title="4. 实现播放功能"></a>4. 实现播放功能</h4><p>使用 <code>rodio</code> 播放音频。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/s3.rs (继续添加)</span></span><br><span class="line"><span class="keyword">use</span> rodio::&#123;Decoder, OutputStream, source::Source&#125;;</span><br><span class="line"><span class="keyword">use</span> std::io::Cursor;</span><br><span class="line"></span><br><span class="line"><span class="keyword">pub</span> <span class="keyword">async</span> <span class="keyword">fn</span> <span class="title function_">play_music</span>(key: &amp;<span class="type">str</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">client</span> = Client::<span class="title function_ invoke__">new</span>();</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">backend_url</span> = <span class="string">&quot;http://localhost:8080/api/music/list&quot;</span>; <span class="comment">// 后端地址</span></span><br><span class="line">    <span class="keyword">let</span> <span class="variable">resp</span> = client</span><br><span class="line">        .<span class="title function_ invoke__">get</span>(backend_url)</span><br><span class="line">        .<span class="title function_ invoke__">send</span>()</span><br><span class="line">        .<span class="keyword">await</span></span><br><span class="line">        .<span class="title function_ invoke__">expect</span>(<span class="string">&quot;Failed to fetch music list&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> !resp.<span class="title function_ invoke__">status</span>().<span class="title function_ invoke__">is_success</span>() &#123;</span><br><span class="line">        eprintln!(<span class="string">&quot;Failed to fetch music list&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> <span class="variable">music_list</span>: <span class="type">Vec</span>&lt;MusicFile&gt; = resp.<span class="title function_ invoke__">json</span>().<span class="keyword">await</span>.<span class="title function_ invoke__">expect</span>(<span class="string">&quot;Invalid response&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> <span class="variable">music</span> = music_list.<span class="title function_ invoke__">iter</span>().<span class="title function_ invoke__">find</span>(|m| m.key == key);</span><br><span class="line">    <span class="keyword">if</span> music.<span class="title function_ invoke__">is_none</span>() &#123;</span><br><span class="line">        eprintln!(<span class="string">&quot;Music file not found&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">music</span> = music.<span class="title function_ invoke__">unwrap</span>();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 下载音频数据</span></span><br><span class="line">    <span class="keyword">let</span> <span class="variable">audio_resp</span> = client</span><br><span class="line">        .<span class="title function_ invoke__">get</span>(&amp;music.url)</span><br><span class="line">        .<span class="title function_ invoke__">send</span>()</span><br><span class="line">        .<span class="keyword">await</span></span><br><span class="line">        .<span class="title function_ invoke__">expect</span>(<span class="string">&quot;Failed to download audio&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> !audio_resp.<span class="title function_ invoke__">status</span>().<span class="title function_ invoke__">is_success</span>() &#123;</span><br><span class="line">        eprintln!(<span class="string">&quot;Failed to download audio&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> <span class="variable">audio_data</span> = audio_resp.<span class="title function_ invoke__">bytes</span>().<span class="keyword">await</span>.<span class="title function_ invoke__">expect</span>(<span class="string">&quot;Failed to read audio data&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 播放音频</span></span><br><span class="line">    <span class="keyword">let</span> (_stream, stream_handle) = OutputStream::<span class="title function_ invoke__">try_default</span>().<span class="title function_ invoke__">unwrap</span>();</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">sink</span> = rodio::Sink::<span class="title function_ invoke__">try_new</span>(&amp;stream_handle).<span class="title function_ invoke__">unwrap</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> <span class="variable">cursor</span> = Cursor::<span class="title function_ invoke__">new</span>(audio_data.<span class="title function_ invoke__">to_vec</span>());</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">source</span> = Decoder::<span class="title function_ invoke__">new</span>(cursor).<span class="title function_ invoke__">unwrap</span>().<span class="title function_ invoke__">repeat_infinite</span>();</span><br><span class="line">    sink.<span class="title function_ invoke__">append</span>(source);</span><br><span class="line">    sink.<span class="title function_ invoke__">sleep_until_end</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 <code>main.rs</code> 中引入 <code>play_music</code> 函数。</p>
+<h3 id="四、运行程序"><a href="#四、运行程序" class="headerlink" title="四、运行程序"></a>四、运行程序</h3><p>确保后端服务已启动并可访问。</p>
+<p>在项目根目录下运行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cargo run -- upload path/to/your/musicfile.mp3</span><br><span class="line">cargo run -- list</span><br><span class="line">cargo run -- play your_music_file_key</span><br></pre></td></tr></table></figure>
+
+<h3 id="五、优化与增强"><a href="#五、优化与增强" class="headerlink" title="五、优化与增强"></a>五、优化与增强</h3><h4 id="1-错误处理"><a href="#1-错误处理" class="headerlink" title="1. 错误处理"></a>1. 错误处理</h4><p>为所有异步操作添加更完善的错误处理，避免程序崩溃。</p>
+<h4 id="2-配置管理"><a href="#2-配置管理" class="headerlink" title="2. 配置管理"></a>2. 配置管理</h4><p>使用 <code>dotenv</code> 加载环境变量，增强安全性和灵活性。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在 main.rs 中添加</span></span><br><span class="line"><span class="keyword">use</span> dotenv::dotenv;</span><br><span class="line"></span><br><span class="line"><span class="meta">#[tokio::main]</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">fn</span> <span class="title function_">main</span>() &#123;</span><br><span class="line">    <span class="title function_ invoke__">dotenv</span>().<span class="title function_ invoke__">ok</span>();</span><br><span class="line">    <span class="comment">// 其余代码</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-并发与性能"><a href="#3-并发与性能" class="headerlink" title="3. 并发与性能"></a>3. 并发与性能</h4><p>使用 <code>tokio</code> 提高网络请求和音频处理的并发性能。</p>
+<h4 id="4-音频格式支持"><a href="#4-音频格式支持" class="headerlink" title="4. 音频格式支持"></a>4. 音频格式支持</h4><p>确保 <code>rodio</code> 支持您需要播放的音频格式，必要时引入额外的编解码器。</p>
+<h3 id="六、部署与分发"><a href="#六、部署与分发" class="headerlink" title="六、部署与分发"></a>六、部署与分发</h3><h4 id="1-构建二进制文件"><a href="#1-构建二进制文件" class="headerlink" title="1. 构建二进制文件"></a>1. 构建二进制文件</h4><p>使用Cargo构建适用于目标平台的二进制文件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cargo build --release</span><br></pre></td></tr></table></figure>
+
+<p>生成的可执行文件位于 <code>target/release/</code> 目录下。</p>
+<h4 id="2-打包与分发"><a href="#2-打包与分发" class="headerlink" title="2. 打包与分发"></a>2. 打包与分发</h4><p>根据目标平台，打包二进制文件或创建安装脚本，方便用户下载和使用。</p>
+<h3 id="七、安全与合规"><a href="#七、安全与合规" class="headerlink" title="七、安全与合规"></a>七、安全与合规</h3><h4 id="1-凭证管理"><a href="#1-凭证管理" class="headerlink" title="1. 凭证管理"></a>1. 凭证管理</h4><p>避免在代码中硬编码AWS凭证，使用环境变量或AWS IAM角色管理凭证。</p>
+<h4 id="2-数据加密"><a href="#2-数据加密" class="headerlink" title="2. 数据加密"></a>2. 数据加密</h4><p>确保上传到S3的文件启用了服务器端加密（SSE）。</p>
+<h4 id="3-网络安全"><a href="#3-网络安全" class="headerlink" title="3. 网络安全"></a>3. 网络安全</h4><p>确保与后端通信时使用HTTPS，保护数据传输的安全性。</p>
+<h3 id="八、总结"><a href="#八、总结" class="headerlink" title="八、总结"></a>八、总结</h3><p>使用 <strong>Rust</strong> 构建命令行式的音乐播放器，可以实现高效、可靠的音乐播放功能。通过与Spring Boot后端的协作，CLI程序可以安全地与Amazon S3交互，上传、列出和播放音乐文件。Rust的性能和安全性使其成为构建此类应用的理想选择。</p>
+<p>如果您需要更详细的实现细节或在开发过程中遇到问题，欢迎随时提问！</p>
+</div>
+        </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/music/" rel="tag">music</a>
+                </div>
+                <div class="pull-date">
+                    <time datetime="2025-11-21T06:36:31.564Z" itemprop="dateModified">最后编辑：2025-11-21</time>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" 使用 Steam 的双重验证" href="/2024/12/05/2024/12/051438/">&lt; 上一篇</a>
+            </div>
+            
+            
+            <div class="nav-next clearfix">
+                <a title=" 使用Navidrome构建个人音乐服务" href="/2024/12/12/2024/12/121212/">下一篇 &gt;</a>
+            </div>
+            
+        </nav>
+    
+    
+        <link rel="stylesheet" href="/vendors/gitalk@1.7.2/dist/gitalk.css"></script>
+<div id="gitalk-container" class="post-comments lazy-load" style="padding-left:2rem; padding-right:2rem;"></div>
+<script>
+    var load_comm = () => {
+        const init = () => {
+            console.log('Gitalk loading...');
+            const gitalk = new Gitalk(Object.assign({
+                id: '/2024/12/06/2024/12/061408/',
+                path: '/2024/12/06/2024/12/061408/'
+            }, JSON.parse('{"clientID":"56e6a743c63b9c4faa93","clientSecret":"888b7234051c5c2ed6ea7bdf18e8b5a2678775f1","repo":"gitalk-comments","owner":"qbmzc","admin":["qbmzc"]}')));
+
+            gitalk.render('gitalk-container');
+        }
+        if (typeof Gitalk === 'undefined') {
+            const src = '/vendors/gitalk@1.7.2/dist/gitalk.min.js';
+            $.getScript(src, init);
+        } else {
+            init();
+        }
+    };
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a></noscript>
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/avatar.webp" loading="lazy" decoding="auto" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center">流云与风，苍穹游牧</p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                499
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                8
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                229
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                    <aside id="krw-toc" class="widget widget-kratos-toc clearfix">
+    <div class="photo-background"></div>
+    <h4 class="widget-title no-after">
+        <i class="fa fa-compass"></i>
+        文章目录
+        <span class="toc-progress-bar" role="progressbar" aria-label="阅读进度："></span>
+    </h4>
+    <div class="textwidget">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%89%E9%A1%B9%E4%B8%80%EF%BC%9A%E4%BD%BF%E7%94%A8-Vue-js-%E5%92%8C-Spring-Boot-%E6%9E%84%E5%BB%BA%E9%9F%B3%E4%B9%90%E6%92%AD%E6%94%BE%E5%99%A8"><span class="toc-text">选项一：使用 Vue.js 和 Spring Boot 构建音乐播放器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E9%A1%B9%E7%9B%AE%E6%80%BB%E4%BD%93%E7%BB%93%E6%9E%84"><span class="toc-text">一、项目总体结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6"><span class="toc-text">二、版本控制</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%88%9D%E5%A7%8B%E5%8C%96Git%E4%BB%93%E5%BA%93"><span class="toc-text">1. 初始化Git仓库</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%88%9B%E5%BB%BA-gitignore"><span class="toc-text">2. 创建 .gitignore</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E6%A1%86%E6%9E%B6%E6%90%AD%E5%BB%BA%EF%BC%88Vue-js%EF%BC%89"><span class="toc-text">三、前端开发框架搭建（Vue.js）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%88%9D%E5%A7%8B%E5%8C%96Vue%E9%A1%B9%E7%9B%AE"><span class="toc-text">1. 初始化Vue项目</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%AE%89%E8%A3%85%E5%BF%85%E8%A6%81%E7%9A%84%E4%BE%9D%E8%B5%96"><span class="toc-text">2. 安装必要的依赖</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E8%AE%BE%E7%BD%AE%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84"><span class="toc-text">3. 设置项目结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="toc-text">4. 配置环境变量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-%E5%88%9B%E5%BB%BA%E4%B8%8A%E4%BC%A0%E7%BB%84%E4%BB%B6"><span class="toc-text">5. 创建上传组件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-%E5%88%9B%E5%BB%BA%E9%9F%B3%E4%B9%90%E5%88%97%E8%A1%A8%E7%BB%84%E4%BB%B6"><span class="toc-text">6. 创建音乐列表组件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-%E9%85%8D%E7%BD%AE%E8%B7%AF%E7%94%B1"><span class="toc-text">7. 配置路由</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#8-%E9%9B%86%E6%88%90%E5%88%B0%E4%B8%BB%E5%BA%94%E7%94%A8"><span class="toc-text">8. 集成到主应用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-%E9%85%8D%E7%BD%AE%E4%BB%A3%E7%90%86%E8%A7%A3%E5%86%B3%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98"><span class="toc-text">9. 配置代理解决跨域问题</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91%E6%A1%86%E6%9E%B6%E6%90%AD%E5%BB%BA%EF%BC%88Spring-Boot%EF%BC%89"><span class="toc-text">四、后端开发框架搭建（Spring Boot）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%88%9D%E5%A7%8B%E5%8C%96Spring-Boot%E9%A1%B9%E7%9B%AE"><span class="toc-text">1. 初始化Spring Boot项目</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E9%85%8D%E7%BD%AE-pom-xml"><span class="toc-text">2. 配置 pom.xml</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E9%85%8D%E7%BD%AE%E5%BA%94%E7%94%A8%E5%B1%9E%E6%80%A7"><span class="toc-text">3. 配置应用属性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E5%88%9B%E5%BB%BAS3%E6%9C%8D%E5%8A%A1"><span class="toc-text">4. 创建S3服务</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-%E5%88%9B%E5%BB%BA%E6%8E%A7%E5%88%B6%E5%99%A8"><span class="toc-text">5. 创建控制器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-%E9%85%8D%E7%BD%AECORS"><span class="toc-text">6. 配置CORS</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-%E6%95%B0%E6%8D%AE%E5%BA%93%E9%85%8D%E7%BD%AE%EF%BC%88%E5%8F%AF%E9%80%89%EF%BC%89"><span class="toc-text">7. 数据库配置（可选）</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#a-%E9%85%8D%E7%BD%AE%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5"><span class="toc-text">a. 配置数据库连接</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#b-%E5%88%9B%E5%BB%BA%E5%AE%9E%E4%BD%93%E7%B1%BB"><span class="toc-text">b. 创建实体类</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#c-%E5%88%9B%E5%BB%BA%E4%BB%93%E5%BA%93%E6%8E%A5%E5%8F%A3"><span class="toc-text">c. 创建仓库接口</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#d-%E5%90%8C%E6%AD%A5%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-text">d. 同步数据库</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#8-%E7%94%A8%E6%88%B7%E8%AE%A4%E8%AF%81%E4%B8%8E%E6%8E%88%E6%9D%83"><span class="toc-text">8. 用户认证与授权</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#a-%E6%B7%BB%E5%8A%A0%E4%BE%9D%E8%B5%96"><span class="toc-text">a. 添加依赖</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#b-%E9%85%8D%E7%BD%AESpring-Security"><span class="toc-text">b. 配置Spring Security</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#c-%E5%88%9B%E5%BB%BA%E8%AE%A4%E8%AF%81%E6%8E%A7%E5%88%B6%E5%99%A8"><span class="toc-text">c. 创建认证控制器</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#d-%E9%85%8D%E7%BD%AE%E5%AF%86%E7%A0%81%E7%BC%96%E7%A0%81%E5%99%A8"><span class="toc-text">d. 配置密码编码器</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#e-%E5%AE%9E%E7%8E%B0JWT%E7%94%9F%E6%88%90%E4%B8%8E%E9%AA%8C%E8%AF%81"><span class="toc-text">e. 实现JWT生成与验证</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E9%83%A8%E7%BD%B2%E4%B8%8E%E8%BF%90%E7%BB%B4"><span class="toc-text">五、部署与运维</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E4%BD%BF%E7%94%A8Docker%E5%AE%B9%E5%99%A8%E5%8C%96%E5%BA%94%E7%94%A8"><span class="toc-text">1. 使用Docker容器化应用</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#a-%E5%88%9B%E5%BB%BADockerfile"><span class="toc-text">a. 创建Dockerfile</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#b-%E5%88%9B%E5%BB%BA-docker-compose-yml"><span class="toc-text">b. 创建 docker-compose.yml</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#c-%E6%9E%84%E5%BB%BA%E5%92%8C%E5%90%AF%E5%8A%A8%E5%AE%B9%E5%99%A8"><span class="toc-text">c. 构建和启动容器</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E9%83%A8%E7%BD%B2%E5%88%B0AWS"><span class="toc-text">2. 部署到AWS</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#a-%E5%AE%89%E8%A3%85AWS-CLI%E5%92%8CElastic-Beanstalk-CLI"><span class="toc-text">a. 安装AWS CLI和Elastic Beanstalk CLI</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#b-%E9%85%8D%E7%BD%AEAWS-CLI"><span class="toc-text">b. 配置AWS CLI</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#c-%E5%88%9D%E5%A7%8B%E5%8C%96Elastic-Beanstalk"><span class="toc-text">c. 初始化Elastic Beanstalk</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#d-%E5%88%9B%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%B9%B6%E9%83%A8%E7%BD%B2"><span class="toc-text">d. 创建环境并部署</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E5%AE%89%E5%85%A8%E4%B8%8E%E5%90%88%E8%A7%84"><span class="toc-text">六、安全与合规</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E6%95%B0%E6%8D%AE%E5%8A%A0%E5%AF%86"><span class="toc-text">1. 数据加密</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8"><span class="toc-text">2. 网络安全</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E7%9B%91%E6%8E%A7%E4%B8%8E%E6%97%A5%E5%BF%97"><span class="toc-text">3. 监控与日志</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E6%80%BB%E7%BB%93"><span class="toc-text">七、总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%89%E9%A1%B9%E4%BA%8C%EF%BC%9A%E4%BD%BF%E7%94%A8-Rust-%E6%9E%84%E5%BB%BA%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%BC%8F%E7%9A%84%E9%9F%B3%E4%B9%90%E6%92%AD%E6%94%BE%E7%A8%8B%E5%BA%8F"><span class="toc-text">选项二：使用 Rust 构建命令行式的音乐播放程序</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E9%A1%B9%E7%9B%AE%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-text">一、项目初始化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%AE%89%E8%A3%85Rust"><span class="toc-text">1. 安装Rust</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%88%9B%E5%BB%BA%E6%96%B0%E9%A1%B9%E7%9B%AE"><span class="toc-text">2. 创建新项目</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%8A%80%E6%9C%AF%E9%80%89%E5%9E%8B"><span class="toc-text">二、技术选型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%B7%BB%E5%8A%A0%E4%BE%9D%E8%B5%96"><span class="toc-text">三、添加依赖</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="toc-text">四、配置环境变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E5%AE%9E%E7%8E%B0%E5%8A%9F%E8%83%BD"><span class="toc-text">五、实现功能</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E6%9E%84%E5%BB%BA%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%8E%A5%E5%8F%A3"><span class="toc-text">1. 构建命令行接口</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%AE%9E%E7%8E%B0%E4%B8%8A%E4%BC%A0%E5%8A%9F%E8%83%BD"><span class="toc-text">2. 实现上传功能</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E5%AE%9E%E7%8E%B0%E5%88%97%E5%87%BA%E9%9F%B3%E4%B9%90%E6%96%87%E4%BB%B6"><span class="toc-text">3. 实现列出音乐文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E5%AE%9E%E7%8E%B0%E6%92%AD%E6%94%BE%E5%8A%9F%E8%83%BD"><span class="toc-text">4. 实现播放功能</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E8%BF%90%E8%A1%8C%E7%A8%8B%E5%BA%8F"><span class="toc-text">四、运行程序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E4%BC%98%E5%8C%96%E4%B8%8E%E5%A2%9E%E5%BC%BA"><span class="toc-text">五、优化与增强</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86"><span class="toc-text">1. 错误处理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86"><span class="toc-text">2. 配置管理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E5%B9%B6%E5%8F%91%E4%B8%8E%E6%80%A7%E8%83%BD"><span class="toc-text">3. 并发与性能</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E9%9F%B3%E9%A2%91%E6%A0%BC%E5%BC%8F%E6%94%AF%E6%8C%81"><span class="toc-text">4. 音频格式支持</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E9%83%A8%E7%BD%B2%E4%B8%8E%E5%88%86%E5%8F%91"><span class="toc-text">六、部署与分发</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E6%9E%84%E5%BB%BA%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%96%87%E4%BB%B6"><span class="toc-text">1. 构建二进制文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E6%89%93%E5%8C%85%E4%B8%8E%E5%88%86%E5%8F%91"><span class="toc-text">2. 打包与分发</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E5%AE%89%E5%85%A8%E4%B8%8E%E5%90%88%E8%A7%84"><span class="toc-text">七、安全与合规</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%87%AD%E8%AF%81%E7%AE%A1%E7%90%86"><span class="toc-text">1. 凭证管理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E6%95%B0%E6%8D%AE%E5%8A%A0%E5%AF%86"><span class="toc-text">2. 数据加密</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8"><span class="toc-text">3. 网络安全</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E6%80%BB%E7%BB%93"><span class="toc-text">八、总结</span></a></li></ol></li></ol>
+    </div>
+</aside>
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">137</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">151</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">29</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/congco/">congco</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/work/">work</a><span class="category-list-count">118</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wuw/">wuw</a><span class="category-list-count">48</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/">技术笔记</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/AES/" style="font-size: 0.6em;">AES</a> <a href="/tags/AI/" style="font-size: 0.7em;">AI</a> <a href="/tags/AWS/" style="font-size: 0.7em;">AWS</a> <a href="/tags/Arch/" style="font-size: 0.6em;">Arch</a> <a href="/tags/Arch-Linux/" style="font-size: 0.8em;">Arch Linux</a> <a href="/tags/ArchLinux/" style="font-size: 0.8em;">ArchLinux</a> <a href="/tags/CAS/" style="font-size: 0.6em;">CAS</a> <a href="/tags/CI-CD/" style="font-size: 0.6em;">CI/CD</a> <a href="/tags/Caffeine/" style="font-size: 0.6em;">Caffeine</a> <a href="/tags/CompletableFuture/" style="font-size: 0.7em;">CompletableFuture</a> <a href="/tags/DNS/" style="font-size: 0.8em;">DNS</a> <a href="/tags/Docker/" style="font-size: 0.6em;">Docker</a> <a href="/tags/Flask/" style="font-size: 0.6em;">Flask</a> <a href="/tags/Future/" style="font-size: 0.7em;">Future</a> <a href="/tags/GC/" style="font-size: 0.6em;">GC</a> <a href="/tags/GPT/" style="font-size: 0.6em;">GPT</a> <a href="/tags/GraalVM/" style="font-size: 0.8em;">GraalVM</a> <a href="/tags/HashMap/" style="font-size: 0.6em;">HashMap</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/14/2025/11/141727/"><i class="fa  fa-book"></i> karakeep</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111335/"><i class="fa  fa-book"></i> SonarQube 扫描支持多 JDK 版本的实践方案</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111045/"><i class="fa  fa-book"></i> 一次修复 PDF 中文乱码的排查记录</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/23/2025/10/221500/"><i class="fa  fa-book"></i> dig命令使用详解</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/13/2025/10/131645/"><i class="fa  fa-book"></i> DNS解析异常导致视频播放缓慢问题排查与解决</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  >
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        <li><a href="mailto:congco@foxmail.com"><i class="fa fa-envelope"></i></a></li>
+                        
+                        
+                        
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://github.com/qbmzc"><i class="fa fa-github"></i></a></li>
+                        <li><a target="_blank" rel="nofollow" href="/rss.xml"><i class="fa fa-rss"></i></a></li>
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2025 沐曦留曳 版权所有.</li>
+                            <li>本站已运行<span id="span_dt">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
+                            <li>Site built with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by cong.</li>
+                        </div>
+                        <div>
+                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
+                            <li>Hosted on <a href="https://github.io" target="_blank">Github Pages</a></li>
+                        </div>
+                        <div>
+                            
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="/vendors/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="/vendors/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+
+    <script defer src="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="/vendors/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>

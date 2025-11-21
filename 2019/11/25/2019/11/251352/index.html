@@ -1,0 +1,1484 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="/images/favicon.ico">
+  
+  <title>PyTorch迁移学习 | 沐曦留曳</title>
+  <meta name="author" content="cong" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="PyTorch" />
+  
+  <meta name="description" content="1%matplotlib inline   Transfer Learning for Computer Vision TutorialAuthor: Sasank Chilamkurthy &lt;https:&#x2F;&#x2F;chsasank.github.io&gt;_ In this tutorial, you will learn how to train a convolutional neural">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PyTorch迁移学习">
+<meta property="og:url" content="https://qbmzc.github.io/2019/11/25/2019/11/251352/index.html">
+<meta property="og:site_name" content="沐曦留曳">
+<meta property="og:description" content="1%matplotlib inline   Transfer Learning for Computer Vision TutorialAuthor: Sasank Chilamkurthy &lt;https:&#x2F;&#x2F;chsasank.github.io&gt;_ In this tutorial, you will learn how to train a convolutional neural">
+<meta property="og:locale">
+<meta property="og:image" content="https://qbmzc.github.io/images/favicon.ico">
+<meta property="article:published_time" content="2019-11-24T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-11-21T06:36:31.543Z">
+<meta property="article:author" content="cong">
+<meta property="article:tag" content="PyTorch">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://qbmzc.github.io/images/favicon.ico">
+  <link rel="alternate" href="rss.xml" type="application/atom+xml">
+  <!-- 站点验证相关 -->
+  
+    
+      <meta name="google-site-verification" content="lV4cead5YlJ8KpODToP7dvzi-ihrxSqU0yYStYKj2ao" />
+    
+    
+      <meta name="baidu-site-verification" content="codeva-Zr6WlkDupK" />
+    
+    
+      <meta name="msvalidate.01" content="2D2197DEE362D193B3EC29AFD3306341" />
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" media="all"></script>
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-color-dark.min.css" media="(prefers-color-scheme: dark)"></script>
+    <script src="/js/kr-dark.min.js"></script>
+  
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" media="all"></script>
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="/vendors/font-awesome@4.7.0/css/font-awesome.min.css" media="all"></script>
+  <link rel="stylesheet" id="nprogress-css" href="/vendors/nprogress@0.2.0/nprogress.css" media="all"></script>
+  
+  
+  
+    <link rel="stylesheet" href="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css"></script>
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="/vendors/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/banner.webp');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">沐曦留曳</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>沐曦留曳</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article itemscope itemtype="https://schema.org/Article">
+    
+    <link itemprop="mainEntityOfPage" href="https://qbmzc.github.io/2019/11/25/2019/11/251352/">
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center" itemprop="name headline">PyTorch迁移学习</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><time datetime="2019-11-24T16:00:00.000Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2019-11-25</time></li>
+                <li itemprop="author" itemscope itemtype="https://schema.org/Person">
+                    <i class="fa fa-user"></i> 作者 <span itemprop="name">Sasank Chilamkurthy</span>
+                </li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~10.68K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1763706991543"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+            
+            <hr />
+            <div itemprop="articleBody"><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%matplotlib inline</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="Transfer-Learning-for-Computer-Vision-Tutorial"><a href="#Transfer-Learning-for-Computer-Vision-Tutorial" class="headerlink" title="Transfer Learning for Computer Vision Tutorial"></a>Transfer Learning for Computer Vision Tutorial</h1><p><strong>Author</strong>: <code>Sasank Chilamkurthy &lt;https://chsasank.github.io&gt;</code>_</p>
+<p>In this tutorial, you will learn how to train a convolutional neural network for<br>image classification using transfer learning. You can read more about the transfer<br>learning at <code>cs231n notes &lt;https://cs231n.github.io/transfer-learning/&gt;</code>__</p>
+<p>Quoting these notes,</p>
+<pre><code>In practice, very few people train an entire Convolutional Network
+from scratch (with random initialization), because it is relatively
+rare to have a dataset of sufficient size. Instead, it is common to
+pretrain a ConvNet on a very large dataset (e.g. ImageNet, which
+contains 1.2 million images with 1000 categories), and then use the
+ConvNet either as an initialization or a fixed feature extractor for
+the task of interest.
+</code></pre>
+<p>These two major transfer learning scenarios look as follows:</p>
+<ul>
+<li><strong>Finetuning the convnet</strong>: Instead of random initializaion, we<br>initialize the network with a pretrained network, like the one that is<br>trained on imagenet 1000 dataset. Rest of the training looks as<br>usual.</li>
+<li><strong>ConvNet as fixed feature extractor</strong>: Here, we will freeze the weights<br>for all of the network except that of the final fully connected<br>layer. This last fully connected layer is replaced with a new one<br>with random weights and only this layer is trained.</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># License: BSD</span></span><br><span class="line"><span class="comment"># Author: Sasank Chilamkurthy</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function, division</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line"><span class="keyword">import</span> torch.optim <span class="keyword">as</span> optim</span><br><span class="line"><span class="keyword">from</span> torch.optim <span class="keyword">import</span> lr_scheduler</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> torchvision</span><br><span class="line"><span class="keyword">from</span> torchvision <span class="keyword">import</span> datasets, models, transforms</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> copy</span><br><span class="line"></span><br><span class="line">plt.ion()   <span class="comment"># interactive mode</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Load-Data"><a href="#Load-Data" class="headerlink" title="Load Data"></a>Load Data</h2><p>We will use torchvision and torch.utils.data packages for loading the<br>data.</p>
+<p>The problem we’re going to solve today is to train a model to classify<br><strong>ants</strong> and <strong>bees</strong>. We have about 120 training images each for ants and bees.<br>There are 75 validation images for each class. Usually, this is a very<br>small dataset to generalize upon, if trained from scratch. Since we<br>are using transfer learning, we should be able to generalize reasonably<br>well.</p>
+<p>This dataset is a very small subset of imagenet.</p>
+<p>.. Note ::<br>   Download the data from<br>   <code>here &lt;https://download.pytorch.org/tutorial/hymenoptera_data.zip&gt;</code>_<br>   and extract it to the current directory.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Data augmentation and normalization for training</span></span><br><span class="line"><span class="comment"># Just normalization for validation</span></span><br><span class="line">data_transforms = &#123;</span><br><span class="line">    <span class="string">&#x27;train&#x27;</span>: transforms.Compose([</span><br><span class="line">        transforms.RandomResizedCrop(<span class="number">224</span>),</span><br><span class="line">        transforms.RandomHorizontalFlip(),</span><br><span class="line">        transforms.ToTensor(),</span><br><span class="line">        transforms.Normalize([<span class="number">0.485</span>, <span class="number">0.456</span>, <span class="number">0.406</span>], [<span class="number">0.229</span>, <span class="number">0.224</span>, <span class="number">0.225</span>])</span><br><span class="line">    ]),</span><br><span class="line">    <span class="string">&#x27;val&#x27;</span>: transforms.Compose([</span><br><span class="line">        transforms.Resize(<span class="number">256</span>),</span><br><span class="line">        transforms.CenterCrop(<span class="number">224</span>),</span><br><span class="line">        transforms.ToTensor(),</span><br><span class="line">        transforms.Normalize([<span class="number">0.485</span>, <span class="number">0.456</span>, <span class="number">0.406</span>], [<span class="number">0.229</span>, <span class="number">0.224</span>, <span class="number">0.225</span>])</span><br><span class="line">    ]),</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">data_dir = <span class="string">&#x27;data/hymenoptera_data&#x27;</span></span><br><span class="line">image_datasets = &#123;x: datasets.ImageFolder(os.path.join(data_dir, x),</span><br><span class="line">                                          data_transforms[x])</span><br><span class="line">                  <span class="keyword">for</span> x <span class="keyword">in</span> [<span class="string">&#x27;train&#x27;</span>, <span class="string">&#x27;val&#x27;</span>]&#125;</span><br><span class="line">dataloaders = &#123;x: torch.utils.data.DataLoader(image_datasets[x], batch_size=<span class="number">4</span>,</span><br><span class="line">                                             shuffle=<span class="literal">True</span>, num_workers=<span class="number">4</span>)</span><br><span class="line">              <span class="keyword">for</span> x <span class="keyword">in</span> [<span class="string">&#x27;train&#x27;</span>, <span class="string">&#x27;val&#x27;</span>]&#125;</span><br><span class="line">dataset_sizes = &#123;x: <span class="built_in">len</span>(image_datasets[x]) <span class="keyword">for</span> x <span class="keyword">in</span> [<span class="string">&#x27;train&#x27;</span>, <span class="string">&#x27;val&#x27;</span>]&#125;</span><br><span class="line">class_names = image_datasets[<span class="string">&#x27;train&#x27;</span>].classes</span><br><span class="line"></span><br><span class="line">device = torch.device(<span class="string">&quot;cuda:0&quot;</span> <span class="keyword">if</span> torch.cuda.is_available() <span class="keyword">else</span> <span class="string">&quot;cpu&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>Visualize a few images<br>^^^^^^^^^^^^^^^^^^^^^^<br>Let’s visualize a few training images so as to understand the data<br>augmentations.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">imshow</span>(<span class="params">inp, title=<span class="literal">None</span></span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;Imshow for Tensor.&quot;&quot;&quot;</span></span><br><span class="line">    inp = inp.numpy().transpose((<span class="number">1</span>, <span class="number">2</span>, <span class="number">0</span>))</span><br><span class="line">    mean = np.array([<span class="number">0.485</span>, <span class="number">0.456</span>, <span class="number">0.406</span>])</span><br><span class="line">    std = np.array([<span class="number">0.229</span>, <span class="number">0.224</span>, <span class="number">0.225</span>])</span><br><span class="line">    inp = std * inp + mean</span><br><span class="line">    inp = np.clip(inp, <span class="number">0</span>, <span class="number">1</span>)</span><br><span class="line">    plt.imshow(inp)</span><br><span class="line">    <span class="keyword">if</span> title <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:</span><br><span class="line">        plt.title(title)</span><br><span class="line">    plt.pause(<span class="number">0.001</span>)  <span class="comment"># pause a bit so that plots are updated</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Get a batch of training data</span></span><br><span class="line">inputs, classes = <span class="built_in">next</span>(<span class="built_in">iter</span>(dataloaders[<span class="string">&#x27;train&#x27;</span>]))</span><br><span class="line"></span><br><span class="line"><span class="comment"># Make a grid from batch</span></span><br><span class="line">out = torchvision.utils.make_grid(inputs)</span><br><span class="line"></span><br><span class="line">imshow(out, title=[class_names[x] <span class="keyword">for</span> x <span class="keyword">in</span> classes])</span><br></pre></td></tr></table></figure>
+
+<h2 id="Training-the-model"><a href="#Training-the-model" class="headerlink" title="Training the model"></a>Training the model</h2><p>Now, let’s write a general function to train a model. Here, we will<br>illustrate:</p>
+<ul>
+<li>Scheduling the learning rate</li>
+<li>Saving the best model</li>
+</ul>
+<p>In the following, parameter <code>scheduler</code> is an LR scheduler object from<br><code>torch.optim.lr_scheduler</code>.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">train_model</span>(<span class="params">model, criterion, optimizer, scheduler, num_epochs=<span class="number">25</span></span>):</span><br><span class="line">    since = time.time()</span><br><span class="line"></span><br><span class="line">    best_model_wts = copy.deepcopy(model.state_dict())</span><br><span class="line">    best_acc = <span class="number">0.0</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(num_epochs):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;Epoch &#123;&#125;/&#123;&#125;&#x27;</span>.<span class="built_in">format</span>(epoch, num_epochs - <span class="number">1</span>))</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;-&#x27;</span> * <span class="number">10</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Each epoch has a training and validation phase</span></span><br><span class="line">        <span class="keyword">for</span> phase <span class="keyword">in</span> [<span class="string">&#x27;train&#x27;</span>, <span class="string">&#x27;val&#x27;</span>]:</span><br><span class="line">            <span class="keyword">if</span> phase == <span class="string">&#x27;train&#x27;</span>:</span><br><span class="line">                model.train()  <span class="comment"># Set model to training mode</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                model.<span class="built_in">eval</span>()   <span class="comment"># Set model to evaluate mode</span></span><br><span class="line"></span><br><span class="line">            running_loss = <span class="number">0.0</span></span><br><span class="line">            running_corrects = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">            <span class="comment"># Iterate over data.</span></span><br><span class="line">            <span class="keyword">for</span> inputs, labels <span class="keyword">in</span> dataloaders[phase]:</span><br><span class="line">                inputs = inputs.to(device)</span><br><span class="line">                labels = labels.to(device)</span><br><span class="line"></span><br><span class="line">                <span class="comment"># zero the parameter gradients</span></span><br><span class="line">                optimizer.zero_grad()</span><br><span class="line"></span><br><span class="line">                <span class="comment"># forward</span></span><br><span class="line">                <span class="comment"># track history if only in train</span></span><br><span class="line">                <span class="keyword">with</span> torch.set_grad_enabled(phase == <span class="string">&#x27;train&#x27;</span>):</span><br><span class="line">                    outputs = model(inputs)</span><br><span class="line">                    _, preds = torch.<span class="built_in">max</span>(outputs, <span class="number">1</span>)</span><br><span class="line">                    loss = criterion(outputs, labels)</span><br><span class="line"></span><br><span class="line">                    <span class="comment"># backward + optimize only if in training phase</span></span><br><span class="line">                    <span class="keyword">if</span> phase == <span class="string">&#x27;train&#x27;</span>:</span><br><span class="line">                        loss.backward()</span><br><span class="line">                        optimizer.step()</span><br><span class="line"></span><br><span class="line">                <span class="comment"># statistics</span></span><br><span class="line">                running_loss += loss.item() * inputs.size(<span class="number">0</span>)</span><br><span class="line">                running_corrects += torch.<span class="built_in">sum</span>(preds == labels.data)</span><br><span class="line">            <span class="keyword">if</span> phase == <span class="string">&#x27;train&#x27;</span>:</span><br><span class="line">                scheduler.step()</span><br><span class="line"></span><br><span class="line">            epoch_loss = running_loss / dataset_sizes[phase]</span><br><span class="line">            epoch_acc = running_corrects.double() / dataset_sizes[phase]</span><br><span class="line"></span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;&#123;&#125; Loss: &#123;:.4f&#125; Acc: &#123;:.4f&#125;&#x27;</span>.<span class="built_in">format</span>(</span><br><span class="line">                phase, epoch_loss, epoch_acc))</span><br><span class="line"></span><br><span class="line">            <span class="comment"># deep copy the model</span></span><br><span class="line">            <span class="keyword">if</span> phase == <span class="string">&#x27;val&#x27;</span> <span class="keyword">and</span> epoch_acc &gt; best_acc:</span><br><span class="line">                best_acc = epoch_acc</span><br><span class="line">                best_model_wts = copy.deepcopy(model.state_dict())</span><br><span class="line"></span><br><span class="line">        <span class="built_in">print</span>()</span><br><span class="line"></span><br><span class="line">    time_elapsed = time.time() - since</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;Training complete in &#123;:.0f&#125;m &#123;:.0f&#125;s&#x27;</span>.<span class="built_in">format</span>(</span><br><span class="line">        time_elapsed // <span class="number">60</span>, time_elapsed % <span class="number">60</span>))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;Best val Acc: &#123;:4f&#125;&#x27;</span>.<span class="built_in">format</span>(best_acc))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># load best model weights</span></span><br><span class="line">    model.load_state_dict(best_model_wts)</span><br><span class="line">    <span class="keyword">return</span> model</span><br></pre></td></tr></table></figure>
+
+<p>Visualizing the model predictions<br>^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</p>
+<p>Generic function to display predictions for a few images</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">visualize_model</span>(<span class="params">model, num_images=<span class="number">6</span></span>):</span><br><span class="line">    was_training = model.training</span><br><span class="line">    model.<span class="built_in">eval</span>()</span><br><span class="line">    images_so_far = <span class="number">0</span></span><br><span class="line">    fig = plt.figure()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">with</span> torch.no_grad():</span><br><span class="line">        <span class="keyword">for</span> i, (inputs, labels) <span class="keyword">in</span> <span class="built_in">enumerate</span>(dataloaders[<span class="string">&#x27;val&#x27;</span>]):</span><br><span class="line">            inputs = inputs.to(device)</span><br><span class="line">            labels = labels.to(device)</span><br><span class="line"></span><br><span class="line">            outputs = model(inputs)</span><br><span class="line">            _, preds = torch.<span class="built_in">max</span>(outputs, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(inputs.size()[<span class="number">0</span>]):</span><br><span class="line">                images_so_far += <span class="number">1</span></span><br><span class="line">                ax = plt.subplot(num_images//<span class="number">2</span>, <span class="number">2</span>, images_so_far)</span><br><span class="line">                ax.axis(<span class="string">&#x27;off&#x27;</span>)</span><br><span class="line">                ax.set_title(<span class="string">&#x27;predicted: &#123;&#125;&#x27;</span>.<span class="built_in">format</span>(class_names[preds[j]]))</span><br><span class="line">                imshow(inputs.cpu().data[j])</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> images_so_far == num_images:</span><br><span class="line">                    model.train(mode=was_training)</span><br><span class="line">                    <span class="keyword">return</span></span><br><span class="line">        model.train(mode=was_training)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Finetuning-the-convnet"><a href="#Finetuning-the-convnet" class="headerlink" title="Finetuning the convnet"></a>Finetuning the convnet</h2><p>Load a pretrained model and reset final fully connected layer.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">model_ft = models.resnet18(pretrained=<span class="literal">True</span>)</span><br><span class="line">num_ftrs = model_ft.fc.in_features</span><br><span class="line"><span class="comment"># Here the size of each output sample is set to 2.</span></span><br><span class="line"><span class="comment"># Alternatively, it can be generalized to nn.Linear(num_ftrs, len(class_names)).</span></span><br><span class="line">model_ft.fc = nn.Linear(num_ftrs, <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">model_ft = model_ft.to(device)</span><br><span class="line"></span><br><span class="line">criterion = nn.CrossEntropyLoss()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Observe that all parameters are being optimized</span></span><br><span class="line">optimizer_ft = optim.SGD(model_ft.parameters(), lr=<span class="number">0.001</span>, momentum=<span class="number">0.9</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Decay LR by a factor of 0.1 every 7 epochs</span></span><br><span class="line">exp_lr_scheduler = lr_scheduler.StepLR(optimizer_ft, step_size=<span class="number">7</span>, gamma=<span class="number">0.1</span>)</span><br></pre></td></tr></table></figure>
+
+<p>Train and evaluate<br>^^^^^^^^^^^^^^^^^^</p>
+<p>It should take around 15-25 min on CPU. On GPU though, it takes less than a<br>minute.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">model_ft = train_model(model_ft, criterion, optimizer_ft, exp_lr_scheduler,</span><br><span class="line">                       num_epochs=<span class="number">25</span>)</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">visualize_model(model_ft)</span><br></pre></td></tr></table></figure>
+
+<h2 id="ConvNet-as-fixed-feature-extractor"><a href="#ConvNet-as-fixed-feature-extractor" class="headerlink" title="ConvNet as fixed feature extractor"></a>ConvNet as fixed feature extractor</h2><p>Here, we need to freeze all the network except the final layer. We need<br>to set <code>requires_grad == False</code> to freeze the parameters so that the<br>gradients are not computed in <code>backward()</code>.</p>
+<p>You can read more about this in the documentation<br><code>here &lt;https://pytorch.org/docs/notes/autograd.html#excluding-subgraphs-from-backward&gt;</code>__.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">model_conv = torchvision.models.resnet18(pretrained=<span class="literal">True</span>)</span><br><span class="line"><span class="keyword">for</span> param <span class="keyword">in</span> model_conv.parameters():</span><br><span class="line">    param.requires_grad = <span class="literal">False</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Parameters of newly constructed modules have requires_grad=True by default</span></span><br><span class="line">num_ftrs = model_conv.fc.in_features</span><br><span class="line">model_conv.fc = nn.Linear(num_ftrs, <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">model_conv = model_conv.to(device)</span><br><span class="line"></span><br><span class="line">criterion = nn.CrossEntropyLoss()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Observe that only parameters of final layer are being optimized as</span></span><br><span class="line"><span class="comment"># opposed to before.</span></span><br><span class="line">optimizer_conv = optim.SGD(model_conv.fc.parameters(), lr=<span class="number">0.001</span>, momentum=<span class="number">0.9</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Decay LR by a factor of 0.1 every 7 epochs</span></span><br><span class="line">exp_lr_scheduler = lr_scheduler.StepLR(optimizer_conv, step_size=<span class="number">7</span>, gamma=<span class="number">0.1</span>)</span><br></pre></td></tr></table></figure>
+
+<p>Train and evaluate<br>^^^^^^^^^^^^^^^^^^</p>
+<p>On CPU this will take about half the time compared to previous scenario.<br>This is expected as gradients don’t need to be computed for most of the<br>network. However, forward does need to be computed.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">model_conv = train_model(model_conv, criterion, optimizer_conv,</span><br><span class="line">                         exp_lr_scheduler, num_epochs=<span class="number">25</span>)</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">visualize_model(model_conv)</span><br><span class="line"></span><br><span class="line">plt.ioff()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></div>
+        </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/PyTorch/" rel="tag">PyTorch</a>
+                </div>
+                <div class="pull-date">
+                    <time datetime="2025-11-21T06:36:31.543Z" itemprop="dateModified">最后编辑：2025-11-21</time>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" JQuery 定时任务请求" href="/2019/11/21/2019/11/211054/">&lt; 上一篇</a>
+            </div>
+            
+            
+            <div class="nav-next clearfix">
+                <a title=" Deploying PyTorch in Python via a REST API with Flask" href="/2019/11/25/2019/11/251144/">下一篇 &gt;</a>
+            </div>
+            
+        </nav>
+    
+    
+        <link rel="stylesheet" href="/vendors/gitalk@1.7.2/dist/gitalk.css"></script>
+<div id="gitalk-container" class="post-comments lazy-load" style="padding-left:2rem; padding-right:2rem;"></div>
+<script>
+    var load_comm = () => {
+        const init = () => {
+            console.log('Gitalk loading...');
+            const gitalk = new Gitalk(Object.assign({
+                id: '/2019/11/25/2019/11/251352/',
+                path: '/2019/11/25/2019/11/251352/'
+            }, JSON.parse('{"clientID":"56e6a743c63b9c4faa93","clientSecret":"888b7234051c5c2ed6ea7bdf18e8b5a2678775f1","repo":"gitalk-comments","owner":"qbmzc","admin":["qbmzc"]}')));
+
+            gitalk.render('gitalk-container');
+        }
+        if (typeof Gitalk === 'undefined') {
+            const src = '/vendors/gitalk@1.7.2/dist/gitalk.min.js';
+            $.getScript(src, init);
+        } else {
+            init();
+        }
+    };
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a></noscript>
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/avatar.webp" loading="lazy" decoding="auto" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center">流云与风，苍穹游牧</p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                499
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                8
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                229
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">137</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">151</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">29</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/congco/">congco</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/work/">work</a><span class="category-list-count">118</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wuw/">wuw</a><span class="category-list-count">48</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/">技术笔记</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/AES/" style="font-size: 0.6em;">AES</a> <a href="/tags/AI/" style="font-size: 0.7em;">AI</a> <a href="/tags/AWS/" style="font-size: 0.7em;">AWS</a> <a href="/tags/Arch/" style="font-size: 0.6em;">Arch</a> <a href="/tags/Arch-Linux/" style="font-size: 0.8em;">Arch Linux</a> <a href="/tags/ArchLinux/" style="font-size: 0.8em;">ArchLinux</a> <a href="/tags/CAS/" style="font-size: 0.6em;">CAS</a> <a href="/tags/CI-CD/" style="font-size: 0.6em;">CI/CD</a> <a href="/tags/Caffeine/" style="font-size: 0.6em;">Caffeine</a> <a href="/tags/CompletableFuture/" style="font-size: 0.7em;">CompletableFuture</a> <a href="/tags/DNS/" style="font-size: 0.8em;">DNS</a> <a href="/tags/Docker/" style="font-size: 0.6em;">Docker</a> <a href="/tags/Flask/" style="font-size: 0.6em;">Flask</a> <a href="/tags/Future/" style="font-size: 0.7em;">Future</a> <a href="/tags/GC/" style="font-size: 0.6em;">GC</a> <a href="/tags/GPT/" style="font-size: 0.6em;">GPT</a> <a href="/tags/GraalVM/" style="font-size: 0.8em;">GraalVM</a> <a href="/tags/HashMap/" style="font-size: 0.6em;">HashMap</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/14/2025/11/141727/"><i class="fa  fa-book"></i> karakeep</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111335/"><i class="fa  fa-book"></i> SonarQube 扫描支持多 JDK 版本的实践方案</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111045/"><i class="fa  fa-book"></i> 一次修复 PDF 中文乱码的排查记录</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/23/2025/10/221500/"><i class="fa  fa-book"></i> dig命令使用详解</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/13/2025/10/131645/"><i class="fa  fa-book"></i> DNS解析异常导致视频播放缓慢问题排查与解决</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  >
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        <li><a href="mailto:congco@foxmail.com"><i class="fa fa-envelope"></i></a></li>
+                        
+                        
+                        
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://github.com/qbmzc"><i class="fa fa-github"></i></a></li>
+                        <li><a target="_blank" rel="nofollow" href="/rss.xml"><i class="fa fa-rss"></i></a></li>
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2025 沐曦留曳 版权所有.</li>
+                            <li>本站已运行<span id="span_dt">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
+                            <li>Site built with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by cong.</li>
+                        </div>
+                        <div>
+                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
+                            <li>Hosted on <a href="https://github.io" target="_blank">Github Pages</a></li>
+                        </div>
+                        <div>
+                            
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="/vendors/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="/vendors/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+
+    <script defer src="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="/vendors/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>

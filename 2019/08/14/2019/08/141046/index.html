@@ -1,0 +1,1675 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="/images/favicon.ico">
+  
+  <title>Stream API | 沐曦留曳</title>
+  <meta name="author" content="cong" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="Java, Stream" />
+  
+  <meta name="description" content="流是什么流是Java API的新成员，它允许你以声明性方式处理数据集合（通过查询语句来表达，而不是临时编写一个实现）。就现在来说，你可以把它们看成遍历数据集的高级迭代器。此外，流还可以透明地并行处理，你无需写任何多线程代码了！ java7 123456789101112131415List&lt;Dish&gt; lowCaloricDishes &#x3D; new ArrayList&lt;&gt;()">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Stream API">
+<meta property="og:url" content="https://qbmzc.github.io/2019/08/14/2019/08/141046/index.html">
+<meta property="og:site_name" content="沐曦留曳">
+<meta property="og:description" content="流是什么流是Java API的新成员，它允许你以声明性方式处理数据集合（通过查询语句来表达，而不是临时编写一个实现）。就现在来说，你可以把它们看成遍历数据集的高级迭代器。此外，流还可以透明地并行处理，你无需写任何多线程代码了！ java7 123456789101112131415List&lt;Dish&gt; lowCaloricDishes &#x3D; new ArrayList&lt;&gt;()">
+<meta property="og:locale">
+<meta property="og:image" content="https://qbmzc.github.io/images/favicon.ico">
+<meta property="article:published_time" content="2019-08-13T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-11-21T06:36:31.541Z">
+<meta property="article:author" content="cong">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="Stream">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://qbmzc.github.io/images/favicon.ico">
+  <link rel="alternate" href="rss.xml" type="application/atom+xml">
+  <!-- 站点验证相关 -->
+  
+    
+      <meta name="google-site-verification" content="lV4cead5YlJ8KpODToP7dvzi-ihrxSqU0yYStYKj2ao" />
+    
+    
+      <meta name="baidu-site-verification" content="codeva-Zr6WlkDupK" />
+    
+    
+      <meta name="msvalidate.01" content="2D2197DEE362D193B3EC29AFD3306341" />
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" media="all"></script>
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-color-dark.min.css" media="(prefers-color-scheme: dark)"></script>
+    <script src="/js/kr-dark.min.js"></script>
+  
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" media="all"></script>
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="/vendors/font-awesome@4.7.0/css/font-awesome.min.css" media="all"></script>
+  <link rel="stylesheet" id="nprogress-css" href="/vendors/nprogress@0.2.0/nprogress.css" media="all"></script>
+  
+  
+  
+    <link rel="stylesheet" href="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css"></script>
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="/vendors/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/banner.webp');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">沐曦留曳</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>沐曦留曳</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article itemscope itemtype="https://schema.org/Article">
+    
+    <link itemprop="mainEntityOfPage" href="https://qbmzc.github.io/2019/08/14/2019/08/141046/">
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center" itemprop="name headline">Stream API</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><time datetime="2019-08-13T16:00:00.000Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2019-08-14</time></li>
+                <li itemprop="author" itemscope itemtype="https://schema.org/Person">
+                    <i class="fa fa-user"></i> 作者 <span itemprop="name">cong</span>
+                </li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~9.79K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1763706991541"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+            
+            <hr />
+            <div itemprop="articleBody"><h2 id="流"><a href="#流" class="headerlink" title="流"></a>流</h2><p>是什么<br>流是Java API的新成员，它允许你以声明性方式处理数据集合（通过查询语句来表达，而不是临时编写一个实现）。就现在来说，你可以把它们看成遍历数据集的高级迭代器。此外，流还可以透明地并行处理，你无需写任何多线程代码了！</p>
+<p>java7</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Dish&gt; lowCaloricDishes = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line"><span class="keyword">for</span>(Dish d: menu)&#123;</span><br><span class="line">    <span class="keyword">if</span>(d.getCalories() &lt; <span class="number">400</span>)&#123;    ←─用累加器筛选元素</span><br><span class="line">        lowCaloricDishes.add(d);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">Collections.sort(lowCaloricDishes, <span class="keyword">new</span> <span class="title class_">Comparator</span>&lt;Dish&gt;() &#123;    ←─用匿名类对菜肴排序</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">compare</span><span class="params">(Dish d1, Dish d2)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Integer.compare(d1.getCalories(), d2.getCalories());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line">List&lt;String&gt; lowCaloricDishesName = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line"><span class="keyword">for</span>(Dish d: lowCaloricDishes)&#123;</span><br><span class="line">    lowCaloricDishesName.add(d.getName());    ←─处理排序后的菜名列表</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>java8</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> java.util.Comparator.comparing;</span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> java.util.stream.Collectors.toList;</span><br><span class="line">List&lt;String&gt; lowCaloricDishesName =</span><br><span class="line">               menu.stream()</span><br><span class="line">                   .filter(d -&gt; d.getCalories() &lt; <span class="number">400</span>)    ←─选出<span class="number">400</span>卡路里以下的菜肴</span><br><span class="line">                   .sorted(comparing(Dish::getCalories))    ←─按照卡路里排序</span><br><span class="line">                   .map(Dish::getName)    ←─提取菜肴的名称</span><br><span class="line">                   .collect(toList());    ←─将所有名称保存在List中</span><br></pre></td></tr></table></figure>
+
+<p>并行执行</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; lowCaloricDishesName =</span><br><span class="line">               menu.parallelStream()</span><br><span class="line">                   .filter(d -&gt; d.getCalories() &lt; <span class="number">400</span>)</span><br><span class="line">                   .sorted(comparing(Dishes::getCalories))</span><br><span class="line">                   .map(Dish::getName)</span><br><span class="line">                   .collect(toList());</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用流"><a href="#使用流" class="headerlink" title="使用流"></a>使用流</h2><h2 id="筛选和切片"><a href="#筛选和切片" class="headerlink" title="筛选和切片"></a>筛选和切片</h2><p><code>filter</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Dish&gt; vegetarianMenu = menu.stream()</span><br><span class="line">                                .filter(Dish::isVegetarian)    ←─方法引用检查菜肴是否适合素食者</span><br><span class="line">                                .collect(toList());</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://s2.ax1x.com/2019/08/14/miXPGF.jpg" alt="miXPGF.jpg"></p>
+<h3 id="筛选各异的元素"><a href="#筛选各异的元素" class="headerlink" title="筛选各异的元素"></a>筛选各异的元素</h3><p><code>distinct</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Integer&gt; numbers = Arrays.asList(<span class="number">1</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">4</span>);</span><br><span class="line">numbers.stream()</span><br><span class="line">       .filter(i -&gt; i % <span class="number">2</span> == <span class="number">0</span>)</span><br><span class="line">       .distinct()</span><br><span class="line">       .forEach(System.out::println);</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://s2.ax1x.com/2019/08/14/miXi24.jpg" alt="miXi24.jpg"></p>
+<h3 id="截短流"><a href="#截短流" class="headerlink" title="截短流"></a>截短流</h3><p><code>limit(n)</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Dish&gt; dishes = menu.stream()</span><br><span class="line">                        .filter(d -&gt; d.getCalories() &gt; <span class="number">300</span>)</span><br><span class="line">                        .limit(<span class="number">3</span>)</span><br><span class="line">                        .collect(toList());</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://s2.ax1x.com/2019/08/14/mivS9U.jpg" alt="mivS9U.jpg"></p>
+<p><em>请注意<code>limit</code>也可以用在无序流上，比如源是一个<code>Set</code>。这种情况下，<code>limit</code>的结果不会以任何顺序排列。</em></p>
+<h3 id="跳过元素"><a href="#跳过元素" class="headerlink" title="跳过元素"></a>跳过元素</h3><p><code>skip(n)</code></p>
+<p>返回一个扔掉了前n个元素的流。如果流中元素不足n个，则返回一个空流。请注意，<code>limit(n)</code>和<code>skip(n)</code>是互补的！</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * 跳过超过300卡路里的头两道菜，并返回剩下的。</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">List&lt;Dish&gt; dishes = menu.stream()</span><br><span class="line">                        .filter(d -&gt; d.getCalories() &gt; <span class="number">300</span>)</span><br><span class="line">                        .skip(<span class="number">2</span>)</span><br><span class="line">                        .collect(toList());</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://s2.ax1x.com/2019/08/14/mivsU0.jpg" alt="mivsU0.jpg"></p>
+<h3 id="筛选"><a href="#筛选" class="headerlink" title="筛选"></a>筛选</h3><p>你将如何利用流来筛选前两个荤菜呢？</p>
+<p>答案：你可以把<code>filter</code>和<code>limit</code>复合在一起来解决这个问题，并用<code>collect(toList())</code>将流转换成一个列表。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Dish&gt; dishes =</span><br><span class="line">    menu.stream()</span><br><span class="line">        .filter(d -&gt; d.getType() == Dish.Type.MEAT)</span><br><span class="line">        .limit(<span class="number">2</span>)</span><br><span class="line">        .collect(toList());</span><br></pre></td></tr></table></figure>
+
+<h2 id="映射"><a href="#映射" class="headerlink" title="映射"></a>映射</h2><p><code>map</code></p>
+<h3 id="对流中每一个元素应用函数"><a href="#对流中每一个元素应用函数" class="headerlink" title="对流中每一个元素应用函数"></a>对流中每一个元素应用函数</h3><blockquote>
+<p>流支持map方法，它会接受一个函数作为参数。这个函数会被应用到每个元素上，并将其映射成一个新的元素（使用映射一词，是因为它和转换类似，但其中的细微差别在于它是“创建一个新版本”而不是去“修改”）</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; words = Arrays.asList(<span class="string">&quot;Java 8&quot;</span>, <span class="string">&quot;Lambdas&quot;</span>, <span class="string">&quot;In&quot;</span>, <span class="string">&quot;Action&quot;</span>);</span><br><span class="line">List&lt;Integer&gt; wordLengths = words.stream()</span><br><span class="line">                                 .map(String::length)</span><br><span class="line">                                 .collect(toList());</span><br><span class="line"><span class="comment">/** 找出每道菜的名称有多长 */</span></span><br><span class="line">List&lt;Integer&gt; dishNameLengths = menu.stream()</span><br><span class="line">                                    .map(Dish::getName)</span><br><span class="line">                                    .map(String::length)</span><br><span class="line">                                    .collect(toList());</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="流的扁平化"><a href="#流的扁平化" class="headerlink" title="流的扁平化"></a>流的扁平化</h3><p>Q:对于一张单词表，如何返回一张列表，列出里面各不相同的字符呢？例如，给定单词列表<code>[&quot;Hello&quot;,&quot;World&quot;]</code>，你想要返回列表<code>[&quot;H&quot;,&quot;e&quot;,&quot;l&quot;, &quot;o&quot;,&quot;W&quot;,&quot;r&quot;,&quot;d&quot;]</code>。</p>
+<p><code>flatMap</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; uniqueCharacters =</span><br><span class="line">    words.stream()</span><br><span class="line">         .map(w -&gt; w.split(<span class="string">&quot;&quot;</span>))    ←─将每个单词转换为由其字母构成的数组</span><br><span class="line">         .flatMap(Arrays::stream)    ←─将各个生成流扁平化为单个流</span><br><span class="line">         .distinct()</span><br><span class="line">         .collect(Collectors.toList());</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>使用<code>flatMap</code>方法的效果是，各个数组并不是分别映射成一个流，而是映射成流的内容。所有使用<code>map(Arrays::stream)</code>时生成的单个流都被合并起来，即扁平化为一个流。</p>
+</blockquote>
+<p><img src="https://s2.ax1x.com/2019/08/14/mFiFkd.jpg" alt="mFiFkd.jpg"></p>
+<p><strong>一言以蔽之，flatmap方法让你把一个流中的每个值都换成另一个流，然后把所有的流连接起来成为一个流。</strong></p>
+<p>(1) 给定一个数字列表，如何返回一个由每个数的平方构成的列表呢？例如，给定[1, 2, 3, 4, 5]，应该返回[1, 4, 9, 16, 25]。</p>
+<p>答案：你可以利用map方法的Lambda，接受一个数字，并返回该数字平方的Lambda来解决这个问题。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Integer&gt; numbers = Arrays.asList(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>);</span><br><span class="line">List&lt;Integer&gt; squares =</span><br><span class="line">    numbers.stream()</span><br><span class="line">           .map(n -&gt; n * n)</span><br><span class="line">           .collect(toList());</span><br></pre></td></tr></table></figure>
+
+<p>(2) 给定两个数字列表，如何返回所有的数对呢？例如，给定列表[1, 2, 3]和列表[3, 4]，应该返回[(1, 3), (1, 4), (2, 3), (2, 4), (3, 3), (3, 4)]。为简单起见，你可以用有两个元素的数组来代表数对。</p>
+<p>答案：你可以使用两个map来迭代这两个列表，并生成数对。但这样会返回一个<code>Stream&lt;Stream&lt;Integer[]&gt;&gt;</code>。你需要让生成的流扁平化，以得到一个<code>Stream&lt;Integer[]&gt;</code>。这正是<code>flatMap</code>所做的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Integer&gt; numbers1 = Arrays.asList(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>);</span><br><span class="line">List&lt;Integer&gt; numbers2 = Arrays.asList(<span class="number">3</span>, <span class="number">4</span>);</span><br><span class="line">List&lt;<span class="type">int</span>[]&gt; pairs =</span><br><span class="line">    numbers1.stream()</span><br><span class="line">            .flatMap(i -&gt; numbers2.stream()</span><br><span class="line">                                  .map(j -&gt; <span class="keyword">new</span> <span class="title class_">int</span>[]&#123;i, j&#125;)</span><br><span class="line">                    )</span><br><span class="line">            .collect(toList());</span><br></pre></td></tr></table></figure>
+
+<p>(3) 如何扩展前一个例子，只返回总和能被3整除的数对呢？例如(2, 4)和(3, 3)是可以的。</p>
+<p>答案：你在前面看到了，<code>filter</code>可以配合谓词使用来筛选流中的元素。因为在<code>flatMap</code>操作后，你有了一个代表数对的<code>int[]</code>流，所以你只需要一个谓词来检查总和是否能被3整除就可以了：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Integer&gt; numbers1 = Arrays.asList(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>);</span><br><span class="line">List&lt;Integer&gt; numbers2 = Arrays.asList(<span class="number">3</span>, <span class="number">4</span>);</span><br><span class="line">List&lt;<span class="type">int</span>[]&gt; pairs =</span><br><span class="line">    numbers1.stream()</span><br><span class="line">            .flatMap(i -&gt;</span><br><span class="line">                       numbers2.stream()</span><br><span class="line">                               .filter(j -&gt; (i + j) % <span class="number">3</span> == <span class="number">0</span>)</span><br><span class="line">                               .map(j -&gt; <span class="keyword">new</span> <span class="title class_">int</span>[]&#123;i, j&#125;)</span><br><span class="line">                    )</span><br><span class="line">            .collect(toList());</span><br></pre></td></tr></table></figure>
+
+<p>其结果是[(2, 4), (3, 3)]。</p>
+<h2 id="查找和匹配"><a href="#查找和匹配" class="headerlink" title="查找和匹配"></a>查找和匹配</h2><p>另一个常见的数据处理套路是看看数据集中的某些元素是否匹配一个给定的属性。Stream API通过<code>allMatch、anyMatch、noneMatch、findFirst</code>和<code>findAny</code>方法提供了这样的工具。</p>
+<h3 id="检查谓词是否至少匹配一个元素"><a href="#检查谓词是否至少匹配一个元素" class="headerlink" title="检查谓词是否至少匹配一个元素"></a>检查谓词是否至少匹配一个元素</h3><p><code>anyMatch</code>方法可以回答“流中是否有一个元素能匹配给定的谓词”。比如，你可以用它来看看菜单里面是否有素食可选择：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(menu.stream().anyMatch(Dish::isVegetarian))&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;The menu is (somewhat) vegetarian friendly!!&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>anyMatch</code>方法返回一个<code>boolean</code>，因此是一个终端操作。</p>
+<h3 id="检查谓词是否匹配所有元素"><a href="#检查谓词是否匹配所有元素" class="headerlink" title="检查谓词是否匹配所有元素"></a>检查谓词是否匹配所有元素</h3><p><code>allMatch</code>方法的工作原理和<code>anyMatch</code>类似，但它会看看流中的元素是否都能匹配给定的谓词。比如，你可以用它来看看菜品是否有利健康（即所有菜的热量都低于1000卡路里）：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">boolean</span> <span class="variable">isHealthy</span> <span class="operator">=</span> menu.stream()</span><br><span class="line">                        .allMatch(d -&gt; d.getCalories() &lt; <span class="number">1000</span>);</span><br></pre></td></tr></table></figure>
+
+<p><code>noneMatch</code></p>
+<p>和<code>allMatch</code>相对的是<code>noneMatch</code>。它可以确保流中没有任何元素与给定的谓词匹配。比如，你可以用<code>noneMatch</code>重写前面的例子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">boolean</span> <span class="variable">isHealthy</span> <span class="operator">=</span> menu.stream()</span><br><span class="line">                        .noneMatch(d -&gt; d.getCalories() &gt;= <span class="number">1000</span>);</span><br></pre></td></tr></table></figure>
+
+<p><code>anyMatch、allMatch</code>和<code>noneMatch</code>这三个操作都用到了我们所谓的短路，这就是大家熟悉的<code>Java</code>中<code>&amp;&amp;</code>和<code>||</code>运算符短路在流中的版本。</p>
+<p><strong>短路求值</strong></p>
+<p>有些操作不需要处理整个流就能得到结果。例如，假设你需要对一个用and连起来的大布尔表达式求值。不管表达式有多长，你只需找到一个表达式为false，就可以推断整个表达式将返回false，所以用不着计算整个表达式。这就是短路。</p>
+<p>对于流而言，某些操作（例如allMatch、anyMatch、noneMatch、findFirst和findAny）不用处理整个流就能得到结果。只要找到一个元素，就可以有结果了。同样，limit也是一个短路操作：它只需要创建一个给定大小的流，而用不着处理流中所有的元素。在碰到无限大小的流的时候，这种操作就有用了：它们可以把无限流变成有限流。</p>
+<h3 id="查找元素"><a href="#查找元素" class="headerlink" title="查找元素"></a>查找元素</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Optional&lt;Dish&gt; dish =</span><br><span class="line">    menu.stream()</span><br><span class="line">        .filter(Dish::isVegetarian)</span><br><span class="line">        .findAny();</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="Optional简介"><a href="#Optional简介" class="headerlink" title="Optional简介"></a>Optional简介</h4><p> <code>Optional&lt;T&gt;</code>类<code>（java.util.Optional）</code>是一个容器类，代表一个值存在或不存在。在上面的代码中，<code>findAny</code>可能什么元素都没找到。<code>Java 8</code>的库设计人员引入了<code>Optional&lt;T&gt;</code>，这样就不用返回众所周知容易出问题的<code>null</code>了。我们在这里不会详细讨论<code>Optional</code>，因为第10章会详细解释你的代码如何利用<code>Optional</code>，避免和<code>null</code>检查相关的<code>bug</code>。不过现在，了解一下<code>Optional</code>里面几种可以迫使你显式地检查值是否存在或处理值不存在的情形的方法也不错。</p>
+<p><code>isPresent()</code>将在<code>Optional</code>包含值的时候返回<code>true</code>, 否则返回<code>false</code>。</p>
+<p><code>ifPresent(Consumer&lt;T&gt; block)</code>会在值存在的时候执行给定的代码块。我们在第3章介绍了<code>Consumer</code>函数式接口；它让你传递一个接收T类型参数，并返回<code>void</code>的<code>Lambda</code>表达式。</p>
+<p> <code>T get()</code>会在值存在时返回值，否则抛出一个<code>NoSuchElement</code>异常。</p>
+<p> <code>T orElse(T other)</code>会在值存在时返回值，否则返回一个默认值。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">menu.stream()</span><br><span class="line">    .filter(Dish::isVegetarian)</span><br><span class="line">    .findAny()    <span class="comment">//←─返回一个Optional&lt;Dish&gt;</span></span><br><span class="line">    .ifPresent(d -&gt; System.out.println(d.getName());   <span class="comment">// ←─如果包含一个值就打印它，否则什么都不做</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="查找第一个元素"><a href="#查找第一个元素" class="headerlink" title="查找第一个元素"></a>查找第一个元素</h3><p><code>findFirst</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Integer&gt; someNumbers = Arrays.asList(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>);</span><br><span class="line">Optional&lt;Integer&gt; firstSquareDivisibleByThree =</span><br><span class="line">    someNumbers.stream()</span><br><span class="line">               .map(x -&gt; x * x)</span><br><span class="line">               .filter(x -&gt; x % <span class="number">3</span> == <span class="number">0</span>)</span><br><span class="line">               .findFirst(); <span class="comment">// 9</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>何时使用findFirst和findAny</strong></p>
+<p>你可能会想，为什么会同时有findFirst和findAny呢？答案是并行。找到第一个元素在并行上限制更多。如果你不关心返回的元素是哪个，请使用findAny，因为它在使用并行流时限制较少。</p>
+<h2 id="归约"><a href="#归约" class="headerlink" title="归约"></a>归约</h2><h3 id="元素求和"><a href="#元素求和" class="headerlink" title="元素求和"></a>元素求和</h3><p><code>reduce</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="variable">sum</span> <span class="operator">=</span> numbers.stream().reduce(<span class="number">0</span>,(a,b) -&gt; a+b);</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://s2.ax1x.com/2019/08/15/mAtTxI.jpg" alt="mAtTxI.jpg"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="variable">sum</span> <span class="operator">=</span> numbers.stream().reduce(<span class="number">0</span>, Integer::sum);</span><br></pre></td></tr></table></figure>
+
+<p>无初始值</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Optional&lt;Integer&gt; sum = numbers.stream().reduce((a, b) -&gt; (a + b));</span><br></pre></td></tr></table></figure>
+
+<h3 id="最大值和最小值"><a href="#最大值和最小值" class="headerlink" title="最大值和最小值"></a>最大值和最小值</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 最大值</span></span><br><span class="line">Optional&lt;Integer&gt; max = numbers.stream().reduce(Integer::max);</span><br><span class="line"><span class="comment">// 最小值</span></span><br><span class="line">Optional&lt;Integer&gt; min = numbers.stream().reduce(Integer::min);</span><br><span class="line"><span class="comment">// 计数</span></span><br><span class="line"><span class="type">int</span> <span class="variable">count</span> <span class="operator">=</span> menu.stream()</span><br><span class="line">                .map(d -&gt; <span class="number">1</span>)</span><br><span class="line">                .reduce(<span class="number">0</span>, (a, b) -&gt; a + b);</span><br><span class="line"><span class="comment">// count</span></span><br><span class="line"><span class="type">long</span> <span class="variable">count</span> <span class="operator">=</span> menu.stream().count();</span><br><span class="line"><span class="comment">// 并行化</span></span><br><span class="line"><span class="type">int</span> <span class="variable">sum</span> <span class="operator">=</span> numbers.parallelStream().reduce(<span class="number">0</span>, Integer::sum);</span><br></pre></td></tr></table></figure>
+
+<h2 id="斐波纳契元组序列"><a href="#斐波纳契元组序列" class="headerlink" title="斐波纳契元组序列"></a>斐波纳契元组序列</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Stream.iterate(<span class="keyword">new</span> <span class="title class_">int</span>[]&#123;<span class="number">0</span>, <span class="number">1</span>&#125;,</span><br><span class="line">               t -&gt; <span class="keyword">new</span> <span class="title class_">int</span>[]&#123;t[<span class="number">1</span>],t[<span class="number">0</span>] + t[<span class="number">1</span>]&#125;)</span><br><span class="line">      .limit(<span class="number">10</span>)</span><br><span class="line">      .map(t -&gt; t[<span class="number">0</span>])</span><br><span class="line">      .forEach(System.out::println);</span><br></pre></td></tr></table></figure>
+
+<p><strong>表 中间操作和终端操作</strong></p>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>类型</th>
+<th>返回类型</th>
+<th>使用的类型&#x2F;函数式接口</th>
+<th>函数描述符</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>filter</code></td>
+<td>中间</td>
+<td><code>Stream&lt;T&gt;</code></td>
+<td><code>Predicate&lt;T&gt;</code></td>
+<td><code>T -&gt; boolean</code></td>
+</tr>
+<tr>
+<td><code>distinct</code></td>
+<td>中间(有状态-无界)</td>
+<td><code>Stream&lt;T&gt;</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>skip</code></td>
+<td>中间(有状态-有界)</td>
+<td><code>Stream&lt;T&gt;</code></td>
+<td><code>long</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>limit</code></td>
+<td>中间(有状态-有界)</td>
+<td><code>Stream&lt;T&gt;</code></td>
+<td><code>long</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>map</code></td>
+<td>中间</td>
+<td><code>Stream&lt;R&gt;</code></td>
+<td><code>Function&lt;T, R&gt;</code></td>
+<td><code>T -&gt; R</code></td>
+</tr>
+<tr>
+<td><code>flatMap</code></td>
+<td>中间</td>
+<td><code>Stream&lt;R&gt;</code></td>
+<td><code>Function&lt;T, Stream&lt;R&gt;&gt;</code></td>
+<td><code>T -&gt; Stream&lt;R&gt;</code></td>
+</tr>
+<tr>
+<td><code>sorted</code></td>
+<td>中间(有状态-无界)</td>
+<td><code>Stream&lt;T&gt;</code></td>
+<td><code>Comparator&lt;T&gt;</code></td>
+<td><code>(T, T) -&gt; int</code></td>
+</tr>
+<tr>
+<td><code>anyMatch</code></td>
+<td>终端</td>
+<td><code>boolean</code></td>
+<td><code>Predicate&lt;T&gt;</code></td>
+<td><code>T -&gt; boolean</code></td>
+</tr>
+<tr>
+<td><code>noneMatch</code></td>
+<td>终端</td>
+<td><code>boolean</code></td>
+<td><code>Predicate&lt;T&gt;</code></td>
+<td><code>T -&gt; boolean</code></td>
+</tr>
+<tr>
+<td><code>allMatch</code></td>
+<td>终端</td>
+<td><code>boolean</code></td>
+<td><code>Predicate&lt;T&gt;</code></td>
+<td><code>T -&gt; boolean</code></td>
+</tr>
+<tr>
+<td><code>findAny</code></td>
+<td>终端</td>
+<td><code>Optional&lt;T&gt;</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>findFirst</code></td>
+<td>终端</td>
+<td><code>Optional&lt;T&gt;</code></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><code>forEach</code></td>
+<td>终端</td>
+<td><code>void</code></td>
+<td><code>Consumer&lt;T&gt;</code></td>
+<td><code>T -&gt; void</code></td>
+</tr>
+<tr>
+<td><code>collect</code></td>
+<td>终端</td>
+<td><code>R</code></td>
+<td><code>Collector&lt;T, A, R&gt;</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>reduce</code></td>
+<td>终端(有状态-有界)</td>
+<td><code>Optional&lt;T&gt;</code></td>
+<td><code>BinaryOperator&lt;T&gt;</code></td>
+<td><code>(T, T) -&gt; T</code></td>
+</tr>
+<tr>
+<td><code>count</code></td>
+<td>终端</td>
+<td><code>long</code></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><ul>
+<li><p>Streams API可以表达复杂的数据处理查询。常用的流操作总结在表5-1中。</p>
+</li>
+<li><p>你可以使用filter、distinct、skip和limit对流做筛选和切片。</p>
+</li>
+<li><p>你可以使用map和flatMap提取或转换流中的元素。</p>
+</li>
+<li><p>你可以使用findFirst和findAny方法查找流中的元素。你可以用allMatch、noneMatch和anyMatch方法让流匹配给定的谓词。</p>
+</li>
+<li><p>这些方法都利用了短路：找到结果就立即停止计算；没有必要处理整个流。</p>
+</li>
+<li><p>你可以利用reduce方法将流中所有的元素迭代合并成一个结果，例如求和或查找最大元素。</p>
+</li>
+<li><p>filter和map等操作是无状态的，它们并不存储任何状态。reduce等操作要存储状态才能计算出一个值。sorted和distinct等操作也要存储状态，因为它们需要把流中的所有元素缓存起来才能返回一个新的流。这种操作称为有状态操作。</p>
+</li>
+<li><p>流有三种基本的原始类型特化：IntStream、DoubleStream和LongStream。它们的操作也有相应的特化。</p>
+</li>
+<li><p>流不仅可以从集合创建，也可从值、数组、文件以及iterate与generate等特定方法创建。</p>
+</li>
+<li><p>无限流是没有固定大小的流。</p>
+</li>
+</ul>
+</div>
+        </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/Java/" rel="tag">Java</a>, <a class="tag-none-link" href="/tags/Stream/" rel="tag">Stream</a>
+                </div>
+                <div class="pull-date">
+                    <time datetime="2025-11-21T06:36:31.541Z" itemprop="dateModified">最后编辑：2025-11-21</time>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" HashMap分析" href="/2019/08/12/2019/08/121707/">&lt; 上一篇</a>
+            </div>
+            
+            
+            <div class="nav-next clearfix">
+                <a title=" SkypeForLinux新版启动问题" href="/2019/08/20/2019/08/201704/">下一篇 &gt;</a>
+            </div>
+            
+        </nav>
+    
+    
+        <link rel="stylesheet" href="/vendors/gitalk@1.7.2/dist/gitalk.css"></script>
+<div id="gitalk-container" class="post-comments lazy-load" style="padding-left:2rem; padding-right:2rem;"></div>
+<script>
+    var load_comm = () => {
+        const init = () => {
+            console.log('Gitalk loading...');
+            const gitalk = new Gitalk(Object.assign({
+                id: '/2019/08/14/2019/08/141046/',
+                path: '/2019/08/14/2019/08/141046/'
+            }, JSON.parse('{"clientID":"56e6a743c63b9c4faa93","clientSecret":"888b7234051c5c2ed6ea7bdf18e8b5a2678775f1","repo":"gitalk-comments","owner":"qbmzc","admin":["qbmzc"]}')));
+
+            gitalk.render('gitalk-container');
+        }
+        if (typeof Gitalk === 'undefined') {
+            const src = '/vendors/gitalk@1.7.2/dist/gitalk.min.js';
+            $.getScript(src, init);
+        } else {
+            init();
+        }
+    };
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a></noscript>
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/avatar.webp" loading="lazy" decoding="auto" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center">流云与风，苍穹游牧</p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                499
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                8
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                229
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">137</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">151</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">29</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/congco/">congco</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/work/">work</a><span class="category-list-count">118</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wuw/">wuw</a><span class="category-list-count">48</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/">技术笔记</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/AES/" style="font-size: 0.6em;">AES</a> <a href="/tags/AI/" style="font-size: 0.7em;">AI</a> <a href="/tags/AWS/" style="font-size: 0.7em;">AWS</a> <a href="/tags/Arch/" style="font-size: 0.6em;">Arch</a> <a href="/tags/Arch-Linux/" style="font-size: 0.8em;">Arch Linux</a> <a href="/tags/ArchLinux/" style="font-size: 0.8em;">ArchLinux</a> <a href="/tags/CAS/" style="font-size: 0.6em;">CAS</a> <a href="/tags/CI-CD/" style="font-size: 0.6em;">CI/CD</a> <a href="/tags/Caffeine/" style="font-size: 0.6em;">Caffeine</a> <a href="/tags/CompletableFuture/" style="font-size: 0.7em;">CompletableFuture</a> <a href="/tags/DNS/" style="font-size: 0.8em;">DNS</a> <a href="/tags/Docker/" style="font-size: 0.6em;">Docker</a> <a href="/tags/Flask/" style="font-size: 0.6em;">Flask</a> <a href="/tags/Future/" style="font-size: 0.7em;">Future</a> <a href="/tags/GC/" style="font-size: 0.6em;">GC</a> <a href="/tags/GPT/" style="font-size: 0.6em;">GPT</a> <a href="/tags/GraalVM/" style="font-size: 0.8em;">GraalVM</a> <a href="/tags/HashMap/" style="font-size: 0.6em;">HashMap</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/14/2025/11/141727/"><i class="fa  fa-book"></i> karakeep</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111335/"><i class="fa  fa-book"></i> SonarQube 扫描支持多 JDK 版本的实践方案</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111045/"><i class="fa  fa-book"></i> 一次修复 PDF 中文乱码的排查记录</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/23/2025/10/221500/"><i class="fa  fa-book"></i> dig命令使用详解</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/13/2025/10/131645/"><i class="fa  fa-book"></i> DNS解析异常导致视频播放缓慢问题排查与解决</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  >
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        <li><a href="mailto:congco@foxmail.com"><i class="fa fa-envelope"></i></a></li>
+                        
+                        
+                        
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://github.com/qbmzc"><i class="fa fa-github"></i></a></li>
+                        <li><a target="_blank" rel="nofollow" href="/rss.xml"><i class="fa fa-rss"></i></a></li>
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2025 沐曦留曳 版权所有.</li>
+                            <li>本站已运行<span id="span_dt">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
+                            <li>Site built with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by cong.</li>
+                        </div>
+                        <div>
+                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
+                            <li>Hosted on <a href="https://github.io" target="_blank">Github Pages</a></li>
+                        </div>
+                        <div>
+                            
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="/vendors/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="/vendors/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+
+    <script defer src="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="/vendors/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>

@@ -1,0 +1,1529 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="/images/favicon.ico">
+  
+  <title>Using GraalVM and Native Image on Windows | 沐曦留曳</title>
+  <meta name="author" content="cong" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="GraalVM, java, windows" />
+  
+  <meta name="description" content="合著者：Oracle 的 Scott Seighman  注意：从适用于 JDK 17 &#x2F; 20 的 GraalVM 开始，该工具会查找 Visual Studio 安装，并（如果找到）自动设置您的构建环境。因此，您可以在命令提示符或 PowerShell 中运行，而无需任何其他安装。*native-image*&#96;&#96;*native-image* 此博客文章已更新为与适用于 JDK 21">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Using GraalVM and Native Image on Windows">
+<meta property="og:url" content="https://qbmzc.github.io/2024/12/05/2024/12/051439/index.html">
+<meta property="og:site_name" content="沐曦留曳">
+<meta property="og:description" content="合著者：Oracle 的 Scott Seighman  注意：从适用于 JDK 17 &#x2F; 20 的 GraalVM 开始，该工具会查找 Visual Studio 安装，并（如果找到）自动设置您的构建环境。因此，您可以在命令提示符或 PowerShell 中运行，而无需任何其他安装。*native-image*&#96;&#96;*native-image* 此博客文章已更新为与适用于 JDK 21">
+<meta property="og:locale">
+<meta property="og:image" content="https://qbmzc.github.io/images/favicon.ico">
+<meta property="article:published_time" content="2024-12-04T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-11-21T06:36:31.564Z">
+<meta property="article:author" content="cong">
+<meta property="article:tag" content="java">
+<meta property="article:tag" content="GraalVM">
+<meta property="article:tag" content="windows">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://qbmzc.github.io/images/favicon.ico">
+  <link rel="alternate" href="rss.xml" type="application/atom+xml">
+  <!-- 站点验证相关 -->
+  
+    
+      <meta name="google-site-verification" content="lV4cead5YlJ8KpODToP7dvzi-ihrxSqU0yYStYKj2ao" />
+    
+    
+      <meta name="baidu-site-verification" content="codeva-Zr6WlkDupK" />
+    
+    
+      <meta name="msvalidate.01" content="2D2197DEE362D193B3EC29AFD3306341" />
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" media="all"></script>
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-color-dark.min.css" media="(prefers-color-scheme: dark)"></script>
+    <script src="/js/kr-dark.min.js"></script>
+  
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" media="all"></script>
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="/vendors/font-awesome@4.7.0/css/font-awesome.min.css" media="all"></script>
+  <link rel="stylesheet" id="nprogress-css" href="/vendors/nprogress@0.2.0/nprogress.css" media="all"></script>
+  
+  
+  
+    <link rel="stylesheet" href="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css"></script>
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="/vendors/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/banner.webp');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">沐曦留曳</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>沐曦留曳</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article itemscope itemtype="https://schema.org/Article">
+    
+    <link itemprop="mainEntityOfPage" href="https://qbmzc.github.io/2024/12/05/2024/12/051439/">
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center" itemprop="name headline">Using GraalVM and Native Image on Windows</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><time datetime="2024-12-04T16:00:00.000Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2024-12-05</time></li>
+                <li itemprop="author" itemscope itemtype="https://schema.org/Person">
+                    <i class="fa fa-user"></i> 作者 <span itemprop="name">cong</span>
+                </li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~3.12K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1763706991564"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+            
+                <div class="kratos-post-inner-toc">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC-1-%E9%83%A8%E5%88%86%EF%BC%9A%E5%AE%89%E8%A3%85-GraalVM"><span class="toc-number">1.</span> <span class="toc-text">第 1 部分：安装 GraalVM</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC-2-%E9%83%A8%E5%88%86%EF%BC%9A%E5%AE%89%E8%A3%85-Visual-Studio-%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7%E5%92%8C-Windows-11-SDK"><span class="toc-number">2.</span> <span class="toc-text">第 2 部分：安装 Visual Studio 构建工具和 Windows 11 SDK</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Visual-Studio%E7%9A%84"><span class="toc-number">2.1.</span> <span class="toc-text">Visual Studio的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Windows-11-%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7%E5%8C%85%EF%BC%9A"><span class="toc-number">2.2.</span> <span class="toc-text">Windows 11 开发工具包：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC-3-%E9%83%A8%E5%88%86%E3%80%82%E5%BC%80%E5%A7%8B%E5%9C%A8-Windows-%E4%B8%8A%E4%BD%BF%E7%94%A8-Native-Image"><span class="toc-number">3.</span> <span class="toc-text">第 3 部分。开始在 Windows 上使用 Native Image</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8E%9F%E6%96%87%E5%9C%B0%E5%9D%80"><span class="toc-number">3.1.</span> <span class="toc-text">原文地址</span></a></li></ol></li></ol>
+                </div>
+            
+            <hr />
+            <div itemprop="articleBody"><p><em>合著者：</em><a target="_blank" rel="noopener" href="https://medium.com/u/d11b08cee2a4?source=post_page---user_mention--9954dc071311--------------------------------"><em>Oracle 的 Scott Seighman</em></a></p>
+<blockquote>
+<p><strong>注意</strong>：从适用于 JDK 17 &#x2F; 20 的 GraalVM 开始，该工具会查找 Visual Studio 安装，并（如果找到）自动设置您的构建环境。因此，您可以在命令提示符或 PowerShell 中运行，而无需任何其他安装。<code>*native-image*``*native-image*</code></p>
+<p>此博客文章已更新为与适用于 JDK 21 及更高版本的 GraalVM 兼容。<a target="_blank" rel="noopener" href="https://www.graalvm.org/latest/docs/">网站上</a>提供了旧版 GraalVM 的安装说明。</p>
+</blockquote>
+<p><img src="http://test-fsservice.oss-cn-shanghai.aliyuncs.com/fs/test/2024/202412051444706.png" alt="img"></p>
+<p>在 Windows 上使用 GraalVM 和 Native Image</p>
+<p>本文将帮助任何使用 Windows 的人安装高性能 GraalVM JDK 及其 Native Image 工具。</p>
+<p>我们已经看到越来越多的 Windows 用户表示对使用 <a target="_blank" rel="noopener" href="https://www.graalvm.org/reference-manual/native-image/">GraalVM Native Image 感兴趣，GraalVM Native Image</a> 是一种预先 （AOT） 编译工具，可将 Java 字节码打包到独立的可执行文件中。此可执行文件是本机应用程序，与用户系统上的任何其他应用程序一样，通常可以实现更快的启动时间，同时占用的空间更小。</p>
+<p>在 Windows 上安装 GraalVM 既快速又简单。使用 Native Image 只有几个先决条件。让我们一步一步来。</p>
+<h1 id="第-1-部分：安装-GraalVM"><a href="#第-1-部分：安装-GraalVM" class="headerlink" title="第 1 部分：安装 GraalVM"></a>第 1 部分：安装 GraalVM</h1><ol>
+<li><p>转到 <a target="_blank" rel="noopener" href="https://www.graalvm.org/downloads/">graalvm.org&#x2F;downloads</a>，选择 Java 版本并下载。</p>
+</li>
+<li><p>将 directory 更改为要安装 GraalVM 的位置，然后将 <em>.zip</em> 文件移动到该位置。</p>
+</li>
+<li><p>解压缩文件。</p>
+</li>
+<li><p>接下来，您应该配置运行时环境，请注意计算机上可能安装了多个 JDK。打开 Windows 命令提示符并执行以下操作： - 将环境变量的值设置为 GraalVM <em>bin</em> 目录：</p>
+<ul>
+<li>将环境变量的值设置为安装目录：<code>PATH``setx /M PATH “C:\Progra~1\Java\&lt;graalvm install dir&gt;\bin;%PATH%”``JAVA_HOME</code> <code>setx /M JAVA_HOME “C:\Progra~1\Java\&lt;graalvm install dir&gt;”</code></li>
+</ul>
+</li>
+<li><p>要验证 GraalVM 是否安装成功，请重新启动命令提示符并执行 。<code>java -version</code></p>
+</li>
+</ol>
+<p>原生映像随 GraalVM 一起提供，但在 Windows 上，它需要 **Visual Studio 2022 版本 17.1.0 或更高版本，**以及 **Microsoft Visual C++ （MSVC）。**有两种安装选项：</p>
+<ul>
+<li><p>使用 Windows 11 SDK 安装 Visual Studio 生成工具</p>
+</li>
+<li><p>使用 Windows 11 SDK 安装 Visual Studio</p>
+</li>
+</ul>
+<h1 id="第-2-部分：安装-Visual-Studio-构建工具和-Windows-11-SDK"><a href="#第-2-部分：安装-Visual-Studio-构建工具和-Windows-11-SDK" class="headerlink" title="第 2 部分：安装 Visual Studio 构建工具和 Windows 11 SDK"></a>第 2 部分：安装 Visual Studio 构建工具和 Windows 11 SDK</h1><h2 id="Visual-Studio的"><a href="#Visual-Studio的" class="headerlink" title="Visual Studio的"></a>Visual Studio的</h2><ol>
+<li><p>从 <a target="_blank" href="https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=BuildTools&rel=16">visualstudio.microsoft.com</a> 下载 Visual Studio Build Tools 2022（C 开发环境）版本 17.1.0 或更高版本。</p>
+</li>
+<li><p>通过单击_.exe_文件开始 Visual Studio Build Tools 安装，然后单击 Continue：</p>
+</li>
+</ol>
+<p><img src="http://test-fsservice.oss-cn-shanghai.aliyuncs.com/fs/test/2024/202412051445499.png" alt="img"></p>
+<p>开始安装 Visual Studio Build Tools</p>
+<ol start="3">
+<li>在主窗口中选中使用 <strong>C++ 进行桌面开发</strong>复选框。此外，在右侧的 安装详细信息 下，选择 **Windows 11 SDK，**然后单击 <strong>安装</strong>.</li>
+</ol>
+<p><img src="http://test-fsservice.oss-cn-shanghai.aliyuncs.com/fs/test/2024/202412051445553.png" alt="img"></p>
+<p>使用 C++ 和 Windows 11 SDK 进行桌面开发</p>
+<ol start="4">
+<li>安装完成后，重新启动系统。</li>
+</ol>
+<h2 id="Windows-11-开发工具包："><a href="#Windows-11-开发工具包：" class="headerlink" title="Windows 11 开发工具包："></a>Windows 11 开发工具包：</h2><p>接下来，如果您安装了 Visual Studio 2022，则需要确保 <strong>Windows 11 SDK</strong> 也可用：</p>
+<ol>
+<li>打开 Visual Studio 安装程序：</li>
+</ol>
+<p><img src="http://test-fsservice.oss-cn-shanghai.aliyuncs.com/fs/test/2024/202412051445918.png" alt="img"></p>
+<p>Visual Studio 安装程序</p>
+<ol start="2">
+<li>在<strong>已安装</strong>选项卡下，单击<strong>修改</strong>，然后选择<strong>单个组件</strong>：</li>
+</ol>
+<p><img src="http://test-fsservice.oss-cn-shanghai.aliyuncs.com/fs/test/2024/202412051445424.png" alt="img"></p>
+<p>Visual Studio 安装程序</p>
+<ol start="3">
+<li>然后滚动到底部，检查是否安装了 <strong>Windows 11 SDK</strong>，并确认已安装构建工具。</li>
+</ol>
+<p>现在，您可以开始使用 <a target="_blank" rel="noopener" href="https://www.graalvm.org/reference-manual/native-image/">GraalVM Native Image</a>。</p>
+<h1 id="第-3-部分。开始在-Windows-上使用-Native-Image"><a href="#第-3-部分。开始在-Windows-上使用-Native-Image" class="headerlink" title="第 3 部分。开始在 Windows 上使用 Native Image"></a>第 3 部分。开始在 Windows 上使用 Native Image</h1><p>如果 Native Image 可以在已知位置找到合适的 Visual Studio 安装，它会自动在 Windows 上设置构建环境。</p>
+<p>由于您已安装 Windows 11 SDK 和 Visual Studio 工具，因此您现在可以在命令提示符 （） 或 PowerShell （） 中运行该实用程序。例如，检查版本：<code>native-image``cmd``pwsh``native-image</code></p>
+<p> C:&gt; native-image.cmd - version</p>
+<p>或者，您可以从 Visual Studio 2022 界面启动 Dev 命令提示符。</p>
+<p>现在让我们尝试一下 Native Image，看看它能做什么！</p>
+<ol>
+<li>将此简单代码保存到 <em>HelloWorld.java</em> 文件中：</li>
+</ol>
+<p> public class HelloWorld {<br>    public static void main(String[] args) {<br>       System.out.println(“Hello, GraalVM Native Image!”);<br>    }<br> }</p>
+<ol start="2">
+<li>在 JVM 上编译并运行：</li>
+</ol>
+<p> C:&gt; javac HelloWorld<br> C:&gt; java HelloWorld</p>
+<ol start="3">
+<li>现在将类编译为本机可执行文件：</li>
+</ol>
+<p> C:&gt; native-image HelloWorld</p>
+<p>这将在工作目录中生成一个可执行文件 。<code>helloworld</code></p>
+<ol start="4">
+<li>现在执行它：</li>
+</ol>
+<p> C:&gt; helloworld    <br> Hello, GraalVM Native Image!</p>
+<p>比较在 JVM 上运行时（步骤 2）和执行 生成的二进制文件时的启动时间（步骤 4）。或者在 <em>PowerShell</em> 中测量时间：<code>native-image</code></p>
+<p> C:&gt; Measure-Command {“.\helloworld”}<br>     <br> Days              : 0<br> Hours             : 0<br> Minutes           : 0<br> Seconds           : 0<br> Milliseconds      : 3<br> Ticks             : 38000<br> TotalDays         : 4.39814814814815E-08<br> TotalHours        : 1.05555555555556E-06<br> TotalMinutes      : 6.33333333333333E-05<br> TotalSeconds      : 0.0038<br> TotalMilliseconds : 3.8</p>
+<p><strong>总结</strong> 在 Windows 上安装 GraalVM 非常简单！请记住，使用 Native Image 有一定的要求。借助 Native Image，您可以充分利用大大增加的启动时间和更小的占用空间来提前编译 Java 应用程序。本指南适用于 Windows 11，但也应适用于 Windows 8 和 10。</p>
+<h2 id="原文地址"><a href="#原文地址" class="headerlink" title="原文地址"></a><a target="_blank" rel="noopener" href="https://medium.com/graalvm/using-graalvm-and-native-image-on-windows-10-9954dc071311">原文地址</a></h2></div>
+        </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/GraalVM/" rel="tag">GraalVM</a>, <a class="tag-none-link" href="/tags/java/" rel="tag">java</a>, <a class="tag-none-link" href="/tags/windows/" rel="tag">windows</a>
+                </div>
+                <div class="pull-date">
+                    <time datetime="2025-11-21T06:36:31.564Z" itemprop="dateModified">最后编辑：2025-11-21</time>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" 使用 GraalVM 将 Java 代码编译为本地可执行文件" href="/2024/11/29/2024/11/301856/">&lt; 上一篇</a>
+            </div>
+            
+            
+            <div class="nav-next clearfix">
+                <a title=" 使用 Steam 的双重验证" href="/2024/12/05/2024/12/051438/">下一篇 &gt;</a>
+            </div>
+            
+        </nav>
+    
+    
+        <link rel="stylesheet" href="/vendors/gitalk@1.7.2/dist/gitalk.css"></script>
+<div id="gitalk-container" class="post-comments lazy-load" style="padding-left:2rem; padding-right:2rem;"></div>
+<script>
+    var load_comm = () => {
+        const init = () => {
+            console.log('Gitalk loading...');
+            const gitalk = new Gitalk(Object.assign({
+                id: '/2024/12/05/2024/12/051439/',
+                path: '/2024/12/05/2024/12/051439/'
+            }, JSON.parse('{"clientID":"56e6a743c63b9c4faa93","clientSecret":"888b7234051c5c2ed6ea7bdf18e8b5a2678775f1","repo":"gitalk-comments","owner":"qbmzc","admin":["qbmzc"]}')));
+
+            gitalk.render('gitalk-container');
+        }
+        if (typeof Gitalk === 'undefined') {
+            const src = '/vendors/gitalk@1.7.2/dist/gitalk.min.js';
+            $.getScript(src, init);
+        } else {
+            init();
+        }
+    };
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a></noscript>
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/avatar.webp" loading="lazy" decoding="auto" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center">流云与风，苍穹游牧</p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                499
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                8
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                229
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                    <aside id="krw-toc" class="widget widget-kratos-toc clearfix">
+    <div class="photo-background"></div>
+    <h4 class="widget-title no-after">
+        <i class="fa fa-compass"></i>
+        文章目录
+        <span class="toc-progress-bar" role="progressbar" aria-label="阅读进度："></span>
+    </h4>
+    <div class="textwidget">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC-1-%E9%83%A8%E5%88%86%EF%BC%9A%E5%AE%89%E8%A3%85-GraalVM"><span class="toc-text">第 1 部分：安装 GraalVM</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC-2-%E9%83%A8%E5%88%86%EF%BC%9A%E5%AE%89%E8%A3%85-Visual-Studio-%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7%E5%92%8C-Windows-11-SDK"><span class="toc-text">第 2 部分：安装 Visual Studio 构建工具和 Windows 11 SDK</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Visual-Studio%E7%9A%84"><span class="toc-text">Visual Studio的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Windows-11-%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7%E5%8C%85%EF%BC%9A"><span class="toc-text">Windows 11 开发工具包：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC-3-%E9%83%A8%E5%88%86%E3%80%82%E5%BC%80%E5%A7%8B%E5%9C%A8-Windows-%E4%B8%8A%E4%BD%BF%E7%94%A8-Native-Image"><span class="toc-text">第 3 部分。开始在 Windows 上使用 Native Image</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8E%9F%E6%96%87%E5%9C%B0%E5%9D%80"><span class="toc-text">原文地址</span></a></li></ol></li></ol>
+    </div>
+</aside>
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">137</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">151</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">29</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/congco/">congco</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/work/">work</a><span class="category-list-count">118</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wuw/">wuw</a><span class="category-list-count">48</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/">技术笔记</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/AES/" style="font-size: 0.6em;">AES</a> <a href="/tags/AI/" style="font-size: 0.7em;">AI</a> <a href="/tags/AWS/" style="font-size: 0.7em;">AWS</a> <a href="/tags/Arch/" style="font-size: 0.6em;">Arch</a> <a href="/tags/Arch-Linux/" style="font-size: 0.8em;">Arch Linux</a> <a href="/tags/ArchLinux/" style="font-size: 0.8em;">ArchLinux</a> <a href="/tags/CAS/" style="font-size: 0.6em;">CAS</a> <a href="/tags/CI-CD/" style="font-size: 0.6em;">CI/CD</a> <a href="/tags/Caffeine/" style="font-size: 0.6em;">Caffeine</a> <a href="/tags/CompletableFuture/" style="font-size: 0.7em;">CompletableFuture</a> <a href="/tags/DNS/" style="font-size: 0.8em;">DNS</a> <a href="/tags/Docker/" style="font-size: 0.6em;">Docker</a> <a href="/tags/Flask/" style="font-size: 0.6em;">Flask</a> <a href="/tags/Future/" style="font-size: 0.7em;">Future</a> <a href="/tags/GC/" style="font-size: 0.6em;">GC</a> <a href="/tags/GPT/" style="font-size: 0.6em;">GPT</a> <a href="/tags/GraalVM/" style="font-size: 0.8em;">GraalVM</a> <a href="/tags/HashMap/" style="font-size: 0.6em;">HashMap</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/14/2025/11/141727/"><i class="fa  fa-book"></i> karakeep</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111335/"><i class="fa  fa-book"></i> SonarQube 扫描支持多 JDK 版本的实践方案</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111045/"><i class="fa  fa-book"></i> 一次修复 PDF 中文乱码的排查记录</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/23/2025/10/221500/"><i class="fa  fa-book"></i> dig命令使用详解</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/13/2025/10/131645/"><i class="fa  fa-book"></i> DNS解析异常导致视频播放缓慢问题排查与解决</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  >
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        <li><a href="mailto:congco@foxmail.com"><i class="fa fa-envelope"></i></a></li>
+                        
+                        
+                        
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://github.com/qbmzc"><i class="fa fa-github"></i></a></li>
+                        <li><a target="_blank" rel="nofollow" href="/rss.xml"><i class="fa fa-rss"></i></a></li>
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2025 沐曦留曳 版权所有.</li>
+                            <li>本站已运行<span id="span_dt">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
+                            <li>Site built with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by cong.</li>
+                        </div>
+                        <div>
+                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
+                            <li>Hosted on <a href="https://github.io" target="_blank">Github Pages</a></li>
+                        </div>
+                        <div>
+                            
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="/vendors/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="/vendors/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+
+    <script defer src="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="/vendors/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>

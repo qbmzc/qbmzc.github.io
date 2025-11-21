@@ -1,0 +1,1454 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="/images/favicon.ico">
+  
+  <title>java|Wps转PDF | 沐曦留曳</title>
+  <meta name="author" content="cong" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="java" />
+  
+  <meta property="og:type" content="article">
+<meta property="og:title" content="java|Wps转PDF">
+<meta property="og:url" content="https://qbmzc.github.io/2021/11/05/2021/11/051639/index.html">
+<meta property="og:site_name" content="沐曦留曳">
+<meta property="og:locale">
+<meta property="og:image" content="https://qbmzc.github.io/images/favicon.ico">
+<meta property="article:published_time" content="2021-11-04T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-11-21T06:36:31.552Z">
+<meta property="article:author" content="cong">
+<meta property="article:tag" content="java">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://qbmzc.github.io/images/favicon.ico">
+  <link rel="alternate" href="rss.xml" type="application/atom+xml">
+  <!-- 站点验证相关 -->
+  
+    
+      <meta name="google-site-verification" content="lV4cead5YlJ8KpODToP7dvzi-ihrxSqU0yYStYKj2ao" />
+    
+    
+      <meta name="baidu-site-verification" content="codeva-Zr6WlkDupK" />
+    
+    
+      <meta name="msvalidate.01" content="2D2197DEE362D193B3EC29AFD3306341" />
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" media="all"></script>
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-color-dark.min.css" media="(prefers-color-scheme: dark)"></script>
+    <script src="/js/kr-dark.min.js"></script>
+  
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" media="all"></script>
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="/vendors/font-awesome@4.7.0/css/font-awesome.min.css" media="all"></script>
+  <link rel="stylesheet" id="nprogress-css" href="/vendors/nprogress@0.2.0/nprogress.css" media="all"></script>
+  
+  
+  
+    <link rel="stylesheet" href="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css"></script>
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="/vendors/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/banner.webp');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">沐曦留曳</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>沐曦留曳</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article itemscope itemtype="https://schema.org/Article">
+    
+    <link itemprop="mainEntityOfPage" href="https://qbmzc.github.io/2021/11/05/2021/11/051639/">
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center" itemprop="name headline">java|Wps转PDF</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><time datetime="2021-11-04T16:00:00.000Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2021-11-05</time></li>
+                <li itemprop="author" itemscope itemtype="https://schema.org/Person">
+                    <i class="fa fa-user"></i> 作者 <span itemprop="name">cong</span>
+                </li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~18.24K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1763706991552"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+            
+            <hr />
+            <div itemprop="articleBody"><p><img src="https://fastly.jsdelivr.net/gh/qbmzc/images/2021/20211105232446.png" alt="20211105232446"></p>
+<span id="more"></span>
+
+<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>由于线上使用的编辑和预览方案都是<code>wps</code>,而转换引擎使用的为<code>MS Office&amp;LibreOffice</code>,二者在文件的呈现上存在兼容性的差异，为了使文件转换后与编辑预览时保持效果一致，针对<code>WPS</code>编辑的文件使用<code>WPS</code>引擎转换。</p>
+<h2 id="流程图"><a href="#流程图" class="headerlink" title="流程图"></a>流程图</h2><p><img src="https://fastly.jsdelivr.net/gh/qbmzc/images/2021/202111091029422.png" alt="未命名绘图.drawio"></p>
+<h2 id="文件元信息读取"><a href="#文件元信息读取" class="headerlink" title="文件元信息读取"></a>文件元信息读取</h2><p>首先需要获取到文件的编辑工具是<code>office</code>还是<code>WPS</code>，这里使用<code>tika</code>进行元数据的获取。</p>
+<h3 id="Apache-Tika"><a href="#Apache-Tika" class="headerlink" title="Apache Tika"></a>Apache Tika</h3><ul>
+<li><p>Apache Tika用于文件类型检测和从各种格式的文件内容提取的库。</p>
+</li>
+<li><p>在内部，Tika使用现有的各种文件解析器和文档类型的检测技术来检测和提取数据。</p>
+</li>
+<li><p>使用Tika，人们可以开发出通用型检测器和内容提取到的不同类型的文件，如电子表格，文本文件，图像，PDF文件甚至多媒体输入格式，在一定程度上提取结构化文本以及元数据。</p>
+</li>
+<li><p>Tika提供用于解析不同文件格式的一个通用API。它采用83个现有的专业解析器库，为每个文档类型。</p>
+</li>
+<li><p>所有这些解析器库是根据一个叫做Parser接口单一接口封装。</p>
+</li>
+</ul>
+<p><img src="https://fastly.jsdelivr.net/gh/qbmzc/images/2021/202111051647317.jpg" alt="Appache Tika"></p>
+<h3 id="解析示例"><a href="#解析示例" class="headerlink" title="解析示例"></a>解析示例</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.cong.filetest.utils;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.commons.lang3.StringUtils;</span><br><span class="line"><span class="keyword">import</span> org.apache.tika.metadata.Metadata;</span><br><span class="line"><span class="keyword">import</span> org.apache.tika.parser.ParseContext;</span><br><span class="line"><span class="keyword">import</span> org.apache.tika.parser.Parser;</span><br><span class="line"><span class="keyword">import</span> org.apache.tika.parser.microsoft.OfficeParser;</span><br><span class="line"><span class="keyword">import</span> org.apache.tika.parser.microsoft.ooxml.OOXMLParser;</span><br><span class="line"><span class="keyword">import</span> org.apache.tika.sax.BodyContentHandler;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.FileInputStream;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> cong</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 2021/11/5 16:06</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TikaUtils</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> String DOC=<span class="string">&quot;.doc&quot;</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(<span class="keyword">final</span> String[] args)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        String filePath=<span class="string">&quot;/Users/cong/Downloads/1.doc&quot;</span>;</span><br><span class="line">        <span class="type">BodyContentHandler</span> <span class="variable">handler</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BodyContentHandler</span>();</span><br><span class="line">        <span class="type">Metadata</span> <span class="variable">metadata</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Metadata</span>();</span><br><span class="line">        <span class="type">ParseContext</span> <span class="variable">pcontext</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ParseContext</span>();</span><br><span class="line">        <span class="keyword">try</span> (<span class="type">FileInputStream</span> <span class="variable">inputstream</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">FileInputStream</span>(filePath)) &#123;</span><br><span class="line">            <span class="type">Parser</span> <span class="variable">parser</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">            <span class="comment">//OOXml parser</span></span><br><span class="line">            <span class="keyword">if</span> (StringUtils.endsWith(filePath, DOC)) &#123;</span><br><span class="line">                parser = <span class="keyword">new</span> <span class="title class_">OfficeParser</span>();</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                parser = <span class="keyword">new</span> <span class="title class_">OOXMLParser</span>();</span><br><span class="line">            &#125;</span><br><span class="line">            parser.parse(inputstream, handler, metadata, pcontext);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">&quot;Contents of the document:&quot;</span> + handler.toString());</span><br><span class="line">        System.out.println(<span class="string">&quot;Metadata of the document:&quot;</span>);</span><br><span class="line">        String[] metadataNames = metadata.names();</span><br><span class="line">        <span class="keyword">for</span>(String name : metadataNames) &#123;</span><br><span class="line">            System.out.println(name + <span class="string">&quot;: &quot;</span> + metadata.get(name));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="元信息"><a href="#元信息" class="headerlink" title="元信息"></a>元信息</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Metadata of the document:</span><br><span class="line">extended-properties:Template: Normal.dotm</span><br><span class="line">extended-properties:Application: WPS 文字 <span class="comment">#这里是应用程序的名称</span></span><br><span class="line">meta:last-author: cong</span><br><span class="line">dc:creator: cong</span><br><span class="line">extended-properties:TotalTime: 0</span><br><span class="line">extended-properties:Company: </span><br><span class="line">xmpTPg:NPages: 1</span><br><span class="line">dcterms:created: 2021-11-05T16:14:00Z</span><br><span class="line">dcterms:modified: 2021-11-05T16:16:52Z</span><br><span class="line">meta:page-count: 1</span><br><span class="line">custom:KSOProductBuildVer: 2052-3.9.3.6359</span><br><span class="line">Content-Type: application/msword</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://fastly.jsdelivr.net/gh/qbmzc/images/2021/202111051719269.png" alt="C08C7177-E5E4-4768-B818-1BB8D8CAA3B6"></p>
+<p><img src="https://fastly.jsdelivr.net/gh/qbmzc/images/2021/202111081323537.png" alt="image-20211108132348470"></p>
+<h2 id="jacob调用wps转PDF"><a href="#jacob调用wps转PDF" class="headerlink" title="jacob调用wps转PDF"></a>jacob调用wps转PDF</h2><p>需要导入jacob-1.20.jar包，以及将jacob-1.20-x64.dll或者jacob-1.20-x86.dll放置到jdk的bin目录（或者windows的System32&#x2F;SysWoW64目录下）</p>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.cong.filetest.utils;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.jacob.activeX.ActiveXComponent;</span><br><span class="line"><span class="keyword">import</span> com.jacob.com.ComThread;</span><br><span class="line"><span class="keyword">import</span> com.jacob.com.Variant;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> cong</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 2021/11/4 17:48</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Word2Pdf</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">WORD_SERVER_STRING</span> <span class="operator">=</span> <span class="string">&quot;KWPS.Application&quot;</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">WORD_FORMAT_PDF</span> <span class="operator">=</span> <span class="number">17</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">word2Pdf</span><span class="params">(String srcFilePath, String pdfFilePath)</span> &#123;</span><br><span class="line">        <span class="type">ActiveXComponent</span> <span class="variable">pptActiveXComponent</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        <span class="type">ActiveXComponent</span> <span class="variable">workbook</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            ComThread.InitSTA();<span class="comment">//初始化COM线程</span></span><br><span class="line">            pptActiveXComponent = <span class="keyword">new</span> <span class="title class_">ActiveXComponent</span>(WORD_SERVER_STRING);<span class="comment">//初始化exe程序</span></span><br><span class="line">            Variant[] openParams = <span class="keyword">new</span> <span class="title class_">Variant</span>[]&#123;</span><br><span class="line">                    <span class="keyword">new</span> <span class="title class_">Variant</span>(srcFilePath),<span class="comment">//filePath</span></span><br><span class="line">                    <span class="keyword">new</span> <span class="title class_">Variant</span>(<span class="literal">true</span>),</span><br><span class="line">                    <span class="keyword">new</span> <span class="title class_">Variant</span>(<span class="literal">true</span>)<span class="comment">//readOnley</span></span><br><span class="line">            &#125;;</span><br><span class="line">            workbook = pptActiveXComponent.invokeGetComponent(<span class="string">&quot;Documents&quot;</span>).invokeGetComponent</span><br><span class="line">                    (<span class="string">&quot;Open&quot;</span>, openParams);</span><br><span class="line">            workbook.invoke(<span class="string">&quot;SaveAs&quot;</span>, <span class="keyword">new</span> <span class="title class_">Variant</span>(pdfFilePath), <span class="keyword">new</span> <span class="title class_">Variant</span>(WORD_FORMAT_PDF));</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (workbook != <span class="literal">null</span>) &#123;</span><br><span class="line">                workbook.invoke(<span class="string">&quot;Close&quot;</span>);</span><br><span class="line">                workbook.safeRelease();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (pptActiveXComponent != <span class="literal">null</span>) &#123;</span><br><span class="line">                pptActiveXComponent.invoke(<span class="string">&quot;Quit&quot;</span>);</span><br><span class="line">                pptActiveXComponent.safeRelease();</span><br><span class="line">            &#125;</span><br><span class="line">            ComThread.Release();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="WPS"><a href="#WPS" class="headerlink" title="WPS"></a>WPS</h2><p><img src="https://fastly.jsdelivr.net/gh/qbmzc/images/2021/202111051727058.png" alt="image-20211105172725011"></p>
+<p>实际测试下来 没有发现该限制</p>
+<h2 id="方式一"><a href="#方式一" class="headerlink" title="方式一"></a>方式一</h2><p>实际使用下来发现，在另存为时可能会出现进程卡住的情况，建议使用方式二转换<br>ComThread.InitSTA(),该方法会导致进程卡住,建议注释掉</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.cong.filetest.utils;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.jacob.activeX.ActiveXComponent;</span><br><span class="line"><span class="keyword">import</span> com.jacob.com.ComThread;</span><br><span class="line"><span class="keyword">import</span> com.jacob.com.Dispatch;</span><br><span class="line"><span class="keyword">import</span> com.jacob.com.Variant;</span><br><span class="line"><span class="keyword">import</span> lombok.extern.slf4j.Slf4j;</span><br><span class="line"><span class="keyword">import</span> org.apache.logging.log4j.core.util.FileUtils;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> cong</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 2021/12/2 10:22</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Wps2Pdf</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="type">String</span> <span class="variable">WORDSERVER_STRING</span> <span class="operator">=</span> <span class="string">&quot;KWPS.Application&quot;</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="type">String</span> <span class="variable">PPTSERVER_STRING</span> <span class="operator">=</span> <span class="string">&quot;KWPP.Application&quot;</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="type">String</span> <span class="variable">EXECLSERVER_STRING</span> <span class="operator">=</span> <span class="string">&quot;KET.Application&quot;</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">wdFormatPDF</span> <span class="operator">=</span> <span class="number">17</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">xlTypePDF</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">ppSaveAsPDF</span> <span class="operator">=</span> <span class="number">32</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        String sourceFile=<span class="string">&quot;xlsx.xlsx&quot;</span>;</span><br><span class="line">        String targetFile=<span class="string">&quot;xlsx.pdf&quot;</span>;</span><br><span class="line">        officeToPdf(sourceFile,targetFile);</span><br><span class="line">        String pptx=<span class="string">&quot;pptx.pptx&quot;</span>;</span><br><span class="line">        String ppt2pdf=<span class="string">&quot;pptx.pdf&quot;</span>;</span><br><span class="line">        officeToPdf(pptx,ppt2pdf);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 操作成功与否的提示信息. 如果返回 -1, 表示找不到源文件, 或url.properties配置错误; 如果返回 0,</span></span><br><span class="line"><span class="comment">     * 则表示操作成功; 返回1, 则表示转换失败</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span>  <span class="keyword">static</span>  <span class="type">int</span> <span class="title function_">officeToPdf</span><span class="params">(String sourceFile, String destFile)</span> &#123;</span><br><span class="line">        <span class="type">File</span> <span class="variable">inputFile</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">File</span>(sourceFile);</span><br><span class="line">        <span class="keyword">if</span> (!inputFile.exists()) &#123;</span><br><span class="line">            log.info(<span class="string">&quot;找不到源文件, 返回-1&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span> -<span class="number">1</span>;<span class="comment">// 找不到源文件, 则返回-1</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 如果目标路径不存在, 则新建该路径</span></span><br><span class="line">        <span class="type">File</span> <span class="variable">outputFile</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">File</span>(destFile);</span><br><span class="line">        <span class="keyword">if</span> (!outputFile.getParentFile().exists()) &#123;</span><br><span class="line">            outputFile.getParentFile().mkdirs();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">String</span> <span class="variable">extentionName</span> <span class="operator">=</span> FileUtils.getFileExtension(<span class="keyword">new</span> <span class="title class_">File</span>(sourceFile));</span><br><span class="line">        <span class="keyword">if</span> (extentionName.equalsIgnoreCase(<span class="string">&quot;ppt&quot;</span>) || extentionName.equalsIgnoreCase(<span class="string">&quot;pptx&quot;</span>) || extentionName.equalsIgnoreCase(<span class="string">&quot;wpt&quot;</span>)) &#123;</span><br><span class="line">            ppt2pdf(sourceFile, destFile);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (extentionName.equalsIgnoreCase(<span class="string">&quot;doc&quot;</span>) || extentionName.equalsIgnoreCase(<span class="string">&quot;docx&quot;</span>) || extentionName.equalsIgnoreCase(<span class="string">&quot;wps&quot;</span>)) &#123;</span><br><span class="line">            doc2pdf(sourceFile, destFile);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (extentionName.equalsIgnoreCase(<span class="string">&quot;xls&quot;</span>) || extentionName.equalsIgnoreCase(<span class="string">&quot;xlsx&quot;</span>) || extentionName.equalsIgnoreCase(<span class="string">&quot;et&quot;</span>)) &#123;</span><br><span class="line">            excel2PDF(sourceFile, destFile);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//    public static void main(String[] args) &#123;</span></span><br><span class="line"><span class="comment">//        String extentionName= FileUtils.getFileExtension(new File(&quot;/Users/cong/Downloads/我是一个腾讯文档，测试wps转pdf.docx&quot;));</span></span><br><span class="line"><span class="comment">//        System.out.printf(extentionName);</span></span><br><span class="line"><span class="comment">//    &#125;</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">doc2pdf</span><span class="params">(String srcFilePath, String pdfFilePath)</span> &#123;</span><br><span class="line">        <span class="type">ActiveXComponent</span> <span class="variable">pptActiveXComponent</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        <span class="type">ActiveXComponent</span> <span class="variable">workbook</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">//ComThread.InitSTA();//初始化COM线程,该操作偶发卡进程</span></span><br><span class="line">            pptActiveXComponent = <span class="keyword">new</span> <span class="title class_">ActiveXComponent</span>(WORDSERVER_STRING);<span class="comment">//初始化exe程序</span></span><br><span class="line">            Variant[] openParams = <span class="keyword">new</span> <span class="title class_">Variant</span>[]&#123;</span><br><span class="line">                    <span class="keyword">new</span> <span class="title class_">Variant</span>(srcFilePath),<span class="comment">//filePath</span></span><br><span class="line">                    <span class="keyword">new</span> <span class="title class_">Variant</span>(<span class="literal">true</span>),</span><br><span class="line">                    <span class="keyword">new</span> <span class="title class_">Variant</span>(<span class="literal">true</span>)<span class="comment">//readOnly</span></span><br><span class="line">            &#125;;</span><br><span class="line">            workbook = pptActiveXComponent.invokeGetComponent(<span class="string">&quot;Documents&quot;</span>).invokeGetComponent</span><br><span class="line">                    (<span class="string">&quot;Open&quot;</span>, openParams);</span><br><span class="line">                    <span class="comment">// 这里可能会卡住</span></span><br><span class="line">            workbook.invoke(<span class="string">&quot;SaveAs&quot;</span>, <span class="keyword">new</span> <span class="title class_">Variant</span>(pdfFilePath), <span class="keyword">new</span> <span class="title class_">Variant</span>(wdFormatPDF));</span><br><span class="line">        &#125;<span class="keyword">catch</span>(Exception e)&#123;</span><br><span class="line">            log.info(<span class="string">&quot;转换失败：&#123;&#125;&quot;</span>,e.getMessage());</span><br><span class="line">        &#125;<span class="keyword">finally</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (workbook != <span class="literal">null</span>) &#123;</span><br><span class="line">                workbook.invoke(<span class="string">&quot;Close&quot;</span>);</span><br><span class="line">                workbook.safeRelease();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (pptActiveXComponent != <span class="literal">null</span>) &#123;</span><br><span class="line">                pptActiveXComponent.invoke(<span class="string">&quot;Quit&quot;</span>);</span><br><span class="line">                pptActiveXComponent.safeRelease();</span><br><span class="line">            &#125;</span><br><span class="line">            ComThread.Release();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">ppt2pdf</span><span class="params">(String srcFilePath, String pdfFilePath)</span> &#123;</span><br><span class="line">        <span class="type">ActiveXComponent</span> <span class="variable">pptActiveXComponent</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        <span class="type">ActiveXComponent</span> <span class="variable">workbook</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">//ComThread.InitSTA();//初始化COM线程</span></span><br><span class="line">            pptActiveXComponent = <span class="keyword">new</span> <span class="title class_">ActiveXComponent</span>(PPTSERVER_STRING);<span class="comment">//初始化exe程序</span></span><br><span class="line">            workbook = pptActiveXComponent.invokeGetComponent(<span class="string">&quot;Presentations&quot;</span>).invokeGetComponent</span><br><span class="line">                    (<span class="string">&quot;Open&quot;</span>, <span class="keyword">new</span> <span class="title class_">Variant</span>(srcFilePath), <span class="keyword">new</span> <span class="title class_">Variant</span>(<span class="literal">true</span>));</span><br><span class="line">            workbook.invoke(<span class="string">&quot;SaveAs&quot;</span>, <span class="keyword">new</span> <span class="title class_">Variant</span>(pdfFilePath), <span class="keyword">new</span> <span class="title class_">Variant</span>(ppSaveAsPDF));</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">            log.info(<span class="string">&quot;转换失败：&#123;&#125;&quot;</span>,e.getMessage());</span><br><span class="line">        &#125;<span class="keyword">finally</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (workbook != <span class="literal">null</span>) &#123;</span><br><span class="line">                workbook.invoke(<span class="string">&quot;Close&quot;</span>);</span><br><span class="line">                workbook.safeRelease();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (pptActiveXComponent != <span class="literal">null</span>) &#123;</span><br><span class="line">                pptActiveXComponent.invoke(<span class="string">&quot;Quit&quot;</span>);</span><br><span class="line">                pptActiveXComponent.safeRelease();</span><br><span class="line">            &#125;</span><br><span class="line">            ComThread.Release();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">excel2PDF</span><span class="params">(String srcFilePath, String pdfFilePath)</span> &#123;</span><br><span class="line">        <span class="type">ActiveXComponent</span> <span class="variable">et</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        <span class="type">Dispatch</span> <span class="variable">workbooks</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        <span class="type">Dispatch</span> <span class="variable">workbook</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">       <span class="comment">// ComThread.InitSTA();//初始化COM线程</span></span><br><span class="line">        <span class="comment">//ComThread.InitSTA(true);</span></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            et = <span class="keyword">new</span> <span class="title class_">ActiveXComponent</span>(EXECLSERVER_STRING);<span class="comment">//初始化et.exe程序</span></span><br><span class="line">            et.setProperty(<span class="string">&quot;Visible&quot;</span>, <span class="keyword">new</span> <span class="title class_">Variant</span>(<span class="literal">false</span>));</span><br><span class="line">            workbooks = et.getProperty(<span class="string">&quot;Workbooks&quot;</span>).toDispatch();</span><br><span class="line">            workbook = Dispatch.call(workbooks, <span class="string">&quot;Open&quot;</span>, srcFilePath).toDispatch();<span class="comment">//这一句也可以的</span></span><br><span class="line">            <span class="comment">//workbook = Dispatch.invoke(workbooks, &quot;Open&quot;, Dispatch.Method, new Object[]&#123;srcFilePath, 0, true&#125;, new int[1]).toDispatch();</span></span><br><span class="line">            Dispatch.invoke(workbook,<span class="string">&quot;SaveAs&quot;</span>,Dispatch.Method,<span class="keyword">new</span> <span class="title class_">Object</span>[]&#123;pdfFilePath,xlTypePDF&#125;,<span class="keyword">new</span> <span class="title class_">int</span>[<span class="number">1</span>]);</span><br><span class="line">            <span class="comment">//Dispatch.call(workbook, &quot;ExportAsFixedFormat&quot;, xlTypePDF, pdfFilePath);</span></span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">            log.info(<span class="string">&quot;转换失败：&#123;&#125;&quot;</span>,e.getMessage());</span><br><span class="line">        &#125;<span class="keyword">finally</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (workbook != <span class="literal">null</span>) &#123;</span><br><span class="line">                Dispatch.call(workbook, <span class="string">&quot;Close&quot;</span>);</span><br><span class="line">                workbook.safeRelease();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (et != <span class="literal">null</span>) &#123;</span><br><span class="line">                et.invoke(<span class="string">&quot;Quit&quot;</span>);</span><br><span class="line">                et.safeRelease();</span><br><span class="line">            &#125;</span><br><span class="line">            ComThread.Release();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="方式二"><a href="#方式二" class="headerlink" title="方式二"></a>方式二</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.taimei.convert.service.impl;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.jacob.activeX.ActiveXComponent;</span><br><span class="line"><span class="keyword">import</span> com.jacob.com.ComThread;</span><br><span class="line"><span class="keyword">import</span> com.jacob.com.Dispatch;</span><br><span class="line"><span class="keyword">import</span> com.jacob.com.Variant;</span><br><span class="line"><span class="keyword">import</span> com.taimei.convert.mq.vo.ConverterRequestVO;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.lang.StringUtils;</span><br><span class="line"><span class="keyword">import</span> org.apache.logging.log4j.core.util.FileUtils;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.Logger;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.LoggerFactory;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"><span class="keyword">import</span> java.time.LocalDateTime;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> cong</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 2021/12/2 10:30</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Wps2Pdf</span> <span class="keyword">extends</span> <span class="title class_">Abstract2PdfTransfer</span> &#123;</span><br><span class="line">    <span class="type">Logger</span> <span class="variable">logger</span> <span class="operator">=</span> LoggerFactory.getLogger(<span class="built_in">this</span>.getClass());</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="type">String</span> <span class="variable">WORDSERVER_STRING</span> <span class="operator">=</span> <span class="string">&quot;KWPS.Application&quot;</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="type">String</span> <span class="variable">PPTSERVER_STRING</span> <span class="operator">=</span> <span class="string">&quot;KWPP.Application&quot;</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="type">String</span> <span class="variable">EXECLSERVER_STRING</span> <span class="operator">=</span> <span class="string">&quot;KET.Application&quot;</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">wdFormatPDF</span> <span class="operator">=</span> <span class="number">17</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">xlTypePDF</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">ppSaveAsPDF</span> <span class="operator">=</span> <span class="number">32</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getCommand</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * wps2pdf</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> requestVo</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> from</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">transfer2Target</span><span class="params">(ConverterRequestVO requestVo, String from)</span> &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">to</span> <span class="operator">=</span> localPath + StringUtils.substringBeforeLast(requestVo.getSfileId(), <span class="string">&quot;.&quot;</span>) + <span class="string">&quot;.pdf&quot;</span>;</span><br><span class="line">        logger.info(<span class="string">&quot;&#123;&#125;使用wps转pdf===&gt;:&#123;&#125;&quot;</span>, from, to);</span><br><span class="line">        <span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> officeToPdf(from, to);</span><br><span class="line">        logger.info(<span class="string">&quot;&#123;&#125;wps2pdf转换结果：&#123;&#125;&quot;</span>, from, i == <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">return</span> to;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 操作成功与否的提示信息. 如果返回 -1, 表示找不到源文件, 或url.properties配置错误; 如果返回 0,</span></span><br><span class="line"><span class="comment">     * 则表示操作成功; 返回1, 则表示转换失败</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">officeToPdf</span><span class="params">(String sourceFile, String destFile)</span> &#123;</span><br><span class="line">        <span class="type">File</span> <span class="variable">inputFile</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">File</span>(sourceFile);</span><br><span class="line">        <span class="keyword">if</span> (!inputFile.exists()) &#123;</span><br><span class="line">            logger.info(<span class="string">&quot;找不到源文件, 返回-1&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span> -<span class="number">1</span>;<span class="comment">// 找不到源文件, 则返回-1</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 如果目标路径不存在, 则新建该路径</span></span><br><span class="line">        <span class="type">File</span> <span class="variable">outputFile</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">File</span>(destFile);</span><br><span class="line">        <span class="keyword">if</span> (!outputFile.getParentFile().exists()) &#123;</span><br><span class="line">            outputFile.getParentFile().mkdirs();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="type">String</span> <span class="variable">extentionName</span> <span class="operator">=</span> FileUtils.getFileExtension(<span class="keyword">new</span> <span class="title class_">File</span>(sourceFile));</span><br><span class="line">        logger.info(<span class="string">&quot;获取文件类「&#123;&#125;」&quot;</span>,extentionName);</span><br><span class="line">        <span class="type">long</span> <span class="variable">s</span> <span class="operator">=</span> System.currentTimeMillis();</span><br><span class="line">        logger.info(<span class="string">&quot;start convert&#123;&#125;&quot;</span>, LocalDateTime.now());</span><br><span class="line">        <span class="keyword">if</span> (extentionName.equalsIgnoreCase(<span class="string">&quot;ppt&quot;</span>) || extentionName.equalsIgnoreCase(<span class="string">&quot;pptx&quot;</span>) || extentionName.equalsIgnoreCase(<span class="string">&quot;wpt&quot;</span>)) &#123;</span><br><span class="line">            ppt2pdf(sourceFile, destFile);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (extentionName.equalsIgnoreCase(<span class="string">&quot;doc&quot;</span>) || extentionName.equalsIgnoreCase(<span class="string">&quot;docx&quot;</span>) || extentionName.equalsIgnoreCase(<span class="string">&quot;wps&quot;</span>)) &#123;</span><br><span class="line">            doc2pdf(sourceFile, destFile);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (extentionName.equalsIgnoreCase(<span class="string">&quot;xls&quot;</span>) || extentionName.equalsIgnoreCase(<span class="string">&quot;xlsx&quot;</span>) || extentionName.equalsIgnoreCase(<span class="string">&quot;et&quot;</span>)) &#123;</span><br><span class="line">            excel2PDF(sourceFile, destFile);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">long</span> <span class="variable">e</span> <span class="operator">=</span> System.currentTimeMillis();</span><br><span class="line">        logger.info(<span class="string">&quot;convert over:&#123;&#125; ms&quot;</span>,(e-s));</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">protected</span>  <span class="keyword">void</span> <span class="title function_">doc2pdf</span><span class="params">(String srcFilePath, String pdfFilePath)</span> &#123;</span><br><span class="line">        <span class="type">ActiveXComponent</span> <span class="variable">app</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            logger.info(<span class="string">&quot;init&quot;</span>);</span><br><span class="line">           <span class="comment">// ComThread.InitSTA();//初始化COM线程</span></span><br><span class="line">            app = <span class="keyword">new</span> <span class="title class_">ActiveXComponent</span>(WORDSERVER_STRING);<span class="comment">//初始化exe程序</span></span><br><span class="line">            app.setProperty(<span class="string">&quot;Visible&quot;</span>, <span class="literal">false</span>);</span><br><span class="line">            <span class="type">Dispatch</span> <span class="variable">docs</span> <span class="operator">=</span> app.getProperty(<span class="string">&quot;Documents&quot;</span>).toDispatch();</span><br><span class="line">            <span class="comment">// 调用Documents对象中Open方法打开文档，并返回打开的文档对象Document</span></span><br><span class="line">            <span class="type">Dispatch</span> <span class="variable">doc</span> <span class="operator">=</span> Dispatch.call(docs, <span class="string">&quot;Open&quot;</span>, srcFilePath, <span class="literal">false</span>, <span class="literal">true</span>)</span><br><span class="line">                    .toDispatch();</span><br><span class="line">            <span class="comment">// 调用Document对象的SaveAs方法，将文档保存为pdf格式</span></span><br><span class="line">            <span class="comment">/*</span></span><br><span class="line"><span class="comment">             * Dispatch.call(doc, &quot;SaveAs&quot;, pdfFile, wdFormatPDF</span></span><br><span class="line"><span class="comment">             * //word保存为pdf格式宏，值为17 );</span></span><br><span class="line"><span class="comment">             */</span></span><br><span class="line">            Dispatch.call(doc, <span class="string">&quot;ExportAsFixedFormat&quot;</span>, pdfFilePath, wdFormatPDF);<span class="comment">// word保存为pdf格式宏，值为17</span></span><br><span class="line">            <span class="comment">// 关闭文档</span></span><br><span class="line">            Dispatch.call(doc, <span class="string">&quot;Close&quot;</span>, <span class="literal">false</span>);</span><br><span class="line">        &#125;<span class="keyword">catch</span>(Exception e)&#123;</span><br><span class="line">            logger.info(<span class="string">&quot;转换失败：&#123;&#125;&quot;</span>,e.getMessage());</span><br><span class="line">        &#125;<span class="keyword">finally</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (app != <span class="literal">null</span>) &#123;</span><br><span class="line">                app.invoke(<span class="string">&quot;Quit&quot;</span>);</span><br><span class="line">                app.safeRelease();</span><br><span class="line">            &#125;</span><br><span class="line">            ComThread.Release();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">protected</span>  <span class="keyword">void</span> <span class="title function_">ppt2pdf</span><span class="params">(String srcFilePath, String pdfFilePath)</span> &#123;</span><br><span class="line">        <span class="type">ActiveXComponent</span> <span class="variable">app</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">//ComThread.InitSTA();//初始化COM线程</span></span><br><span class="line">            app = <span class="keyword">new</span> <span class="title class_">ActiveXComponent</span>(PPTSERVER_STRING);<span class="comment">//初始化exe程序</span></span><br><span class="line">            <span class="type">Dispatch</span>  <span class="variable">ppts</span> <span class="operator">=</span> app.getProperty(<span class="string">&quot;Presentations&quot;</span>).toDispatch();</span><br><span class="line">            <span class="type">Dispatch</span> <span class="variable">ppt</span> <span class="operator">=</span> Dispatch.call(ppts, <span class="string">&quot;Open&quot;</span>, srcFilePath, <span class="literal">true</span>, <span class="literal">true</span>, <span class="literal">false</span>).toDispatch();</span><br><span class="line">            Dispatch.call(ppt,<span class="string">&quot;SaveAs&quot;</span>, <span class="keyword">new</span> <span class="title class_">Variant</span>(pdfFilePath), <span class="keyword">new</span> <span class="title class_">Variant</span>(ppSaveAsPDF));</span><br><span class="line">            Dispatch.call(ppt,<span class="string">&quot;Close&quot;</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">            logger.info(<span class="string">&quot;转换失败：&#123;&#125;&quot;</span>,e.getMessage());</span><br><span class="line">        &#125;<span class="keyword">finally</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (app != <span class="literal">null</span>) &#123;</span><br><span class="line">                app.invoke(<span class="string">&quot;Quit&quot;</span>);</span><br><span class="line">                app.safeRelease();</span><br><span class="line">            &#125;</span><br><span class="line">            ComThread.Release();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">protected</span>  <span class="keyword">void</span> <span class="title function_">excel2PDF</span><span class="params">(String srcFilePath, String pdfFilePath)</span> &#123;</span><br><span class="line">        <span class="type">ActiveXComponent</span> <span class="variable">et</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">//ComThread.InitSTA();//初始化COM线程</span></span><br><span class="line">            logger.info(<span class="string">&quot;init &quot;</span>);</span><br><span class="line">            et = <span class="keyword">new</span> <span class="title class_">ActiveXComponent</span>(EXECLSERVER_STRING);<span class="comment">//初始化et.exe程序</span></span><br><span class="line">            et.setProperty(<span class="string">&quot;Visible&quot;</span>, <span class="keyword">new</span> <span class="title class_">Variant</span>(<span class="literal">false</span>));</span><br><span class="line">            <span class="type">Dispatch</span> <span class="variable">excels</span> <span class="operator">=</span> et.getProperty(<span class="string">&quot;Workbooks&quot;</span>).toDispatch();</span><br><span class="line">            logger.info(<span class="string">&quot;Open file&quot;</span>);</span><br><span class="line">            <span class="type">Dispatch</span> <span class="variable">excel</span> <span class="operator">=</span> Dispatch.call(excels, <span class="string">&quot;Open&quot;</span>, srcFilePath,<span class="literal">false</span>,<span class="literal">true</span>).toDispatch();</span><br><span class="line">            logger.info(<span class="string">&quot;save as pdf&quot;</span>);</span><br><span class="line">            Dispatch.call(excel, <span class="string">&quot;ExportAsFixedFormat&quot;</span>, xlTypePDF, pdfFilePath);</span><br><span class="line">            Dispatch.call(excel, <span class="string">&quot;Close&quot;</span>, <span class="literal">false</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">            logger.info(<span class="string">&quot;转换失败：&#123;&#125;&quot;</span>,e.getMessage());</span><br><span class="line">        &#125;<span class="keyword">finally</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (et != <span class="literal">null</span>) &#123;</span><br><span class="line">                et.invoke(<span class="string">&quot;Quit&quot;</span>);</span><br><span class="line">                et.safeRelease();</span><br><span class="line">            &#125;</span><br><span class="line">            ComThread.Release();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+        </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/java/" rel="tag">java</a>
+                </div>
+                <div class="pull-date">
+                    <time datetime="2025-11-21T06:36:31.552Z" itemprop="dateModified">最后编辑：2025-11-21</time>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" 十一月记录" href="/2021/11/04/2021/11/040943/">&lt; 上一篇</a>
+            </div>
+            
+            
+            <div class="nav-next clearfix">
+                <a title=" redis 交集、并集、差集" href="/2021/11/17/2021/11/171014/">下一篇 &gt;</a>
+            </div>
+            
+        </nav>
+    
+    
+        <link rel="stylesheet" href="/vendors/gitalk@1.7.2/dist/gitalk.css"></script>
+<div id="gitalk-container" class="post-comments lazy-load" style="padding-left:2rem; padding-right:2rem;"></div>
+<script>
+    var load_comm = () => {
+        const init = () => {
+            console.log('Gitalk loading...');
+            const gitalk = new Gitalk(Object.assign({
+                id: '/2021/11/05/2021/11/051639/',
+                path: '/2021/11/05/2021/11/051639/'
+            }, JSON.parse('{"clientID":"56e6a743c63b9c4faa93","clientSecret":"888b7234051c5c2ed6ea7bdf18e8b5a2678775f1","repo":"gitalk-comments","owner":"qbmzc","admin":["qbmzc"]}')));
+
+            gitalk.render('gitalk-container');
+        }
+        if (typeof Gitalk === 'undefined') {
+            const src = '/vendors/gitalk@1.7.2/dist/gitalk.min.js';
+            $.getScript(src, init);
+        } else {
+            init();
+        }
+    };
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a></noscript>
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/avatar.webp" loading="lazy" decoding="auto" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center">流云与风，苍穹游牧</p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                499
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                8
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                229
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">137</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">151</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">29</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/congco/">congco</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/work/">work</a><span class="category-list-count">118</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wuw/">wuw</a><span class="category-list-count">48</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/">技术笔记</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/AES/" style="font-size: 0.6em;">AES</a> <a href="/tags/AI/" style="font-size: 0.7em;">AI</a> <a href="/tags/AWS/" style="font-size: 0.7em;">AWS</a> <a href="/tags/Arch/" style="font-size: 0.6em;">Arch</a> <a href="/tags/Arch-Linux/" style="font-size: 0.8em;">Arch Linux</a> <a href="/tags/ArchLinux/" style="font-size: 0.8em;">ArchLinux</a> <a href="/tags/CAS/" style="font-size: 0.6em;">CAS</a> <a href="/tags/CI-CD/" style="font-size: 0.6em;">CI/CD</a> <a href="/tags/Caffeine/" style="font-size: 0.6em;">Caffeine</a> <a href="/tags/CompletableFuture/" style="font-size: 0.7em;">CompletableFuture</a> <a href="/tags/DNS/" style="font-size: 0.8em;">DNS</a> <a href="/tags/Docker/" style="font-size: 0.6em;">Docker</a> <a href="/tags/Flask/" style="font-size: 0.6em;">Flask</a> <a href="/tags/Future/" style="font-size: 0.7em;">Future</a> <a href="/tags/GC/" style="font-size: 0.6em;">GC</a> <a href="/tags/GPT/" style="font-size: 0.6em;">GPT</a> <a href="/tags/GraalVM/" style="font-size: 0.8em;">GraalVM</a> <a href="/tags/HashMap/" style="font-size: 0.6em;">HashMap</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/14/2025/11/141727/"><i class="fa  fa-book"></i> karakeep</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111335/"><i class="fa  fa-book"></i> SonarQube 扫描支持多 JDK 版本的实践方案</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111045/"><i class="fa  fa-book"></i> 一次修复 PDF 中文乱码的排查记录</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/23/2025/10/221500/"><i class="fa  fa-book"></i> dig命令使用详解</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/13/2025/10/131645/"><i class="fa  fa-book"></i> DNS解析异常导致视频播放缓慢问题排查与解决</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  >
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        <li><a href="mailto:congco@foxmail.com"><i class="fa fa-envelope"></i></a></li>
+                        
+                        
+                        
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://github.com/qbmzc"><i class="fa fa-github"></i></a></li>
+                        <li><a target="_blank" rel="nofollow" href="/rss.xml"><i class="fa fa-rss"></i></a></li>
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2025 沐曦留曳 版权所有.</li>
+                            <li>本站已运行<span id="span_dt">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
+                            <li>Site built with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by cong.</li>
+                        </div>
+                        <div>
+                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
+                            <li>Hosted on <a href="https://github.io" target="_blank">Github Pages</a></li>
+                        </div>
+                        <div>
+                            
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="/vendors/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="/vendors/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+
+    <script defer src="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="/vendors/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>

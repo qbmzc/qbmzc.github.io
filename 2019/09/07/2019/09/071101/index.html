@@ -1,0 +1,1575 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="/images/favicon.ico">
+  
+  <title>NIO | 沐曦留曳</title>
+  <meta name="author" content="cong" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="Java, NIO" />
+  
+  <meta name="description" content="NIOJava NIO中涉及的基础内容有通道（Channel）和缓冲区（Buffer）、文件IO和网络IO。 https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;23488863 NIO（Non-blocking I&#x2F;O，在Java领域，也称为New I&#x2F;O），是一种同步非阻塞的I&#x2F;O模型，也是I&#x2F;O多路复用的基础，已经被越来越多地应用到大型应用服务器">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NIO">
+<meta property="og:url" content="https://qbmzc.github.io/2019/09/07/2019/09/071101/index.html">
+<meta property="og:site_name" content="沐曦留曳">
+<meta property="og:description" content="NIOJava NIO中涉及的基础内容有通道（Channel）和缓冲区（Buffer）、文件IO和网络IO。 https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;23488863 NIO（Non-blocking I&#x2F;O，在Java领域，也称为New I&#x2F;O），是一种同步非阻塞的I&#x2F;O模型，也是I&#x2F;O多路复用的基础，已经被越来越多地应用到大型应用服务器">
+<meta property="og:locale">
+<meta property="og:image" content="https://qbmzc.github.io/images/favicon.ico">
+<meta property="article:published_time" content="2019-09-06T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-11-21T06:36:31.541Z">
+<meta property="article:author" content="cong">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="NIO">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://qbmzc.github.io/images/favicon.ico">
+  <link rel="alternate" href="rss.xml" type="application/atom+xml">
+  <!-- 站点验证相关 -->
+  
+    
+      <meta name="google-site-verification" content="lV4cead5YlJ8KpODToP7dvzi-ihrxSqU0yYStYKj2ao" />
+    
+    
+      <meta name="baidu-site-verification" content="codeva-Zr6WlkDupK" />
+    
+    
+      <meta name="msvalidate.01" content="2D2197DEE362D193B3EC29AFD3306341" />
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" media="all"></script>
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-color-dark.min.css" media="(prefers-color-scheme: dark)"></script>
+    <script src="/js/kr-dark.min.js"></script>
+  
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" media="all"></script>
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="/vendors/font-awesome@4.7.0/css/font-awesome.min.css" media="all"></script>
+  <link rel="stylesheet" id="nprogress-css" href="/vendors/nprogress@0.2.0/nprogress.css" media="all"></script>
+  
+  
+  
+    <link rel="stylesheet" href="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css"></script>
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="/vendors/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/banner.webp');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">沐曦留曳</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>沐曦留曳</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article itemscope itemtype="https://schema.org/Article">
+    
+    <link itemprop="mainEntityOfPage" href="https://qbmzc.github.io/2019/09/07/2019/09/071101/">
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center" itemprop="name headline">NIO</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><time datetime="2019-09-06T16:00:00.000Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2019-09-07</time></li>
+                <li itemprop="author" itemscope itemtype="https://schema.org/Person">
+                    <i class="fa fa-user"></i> 作者 <span itemprop="name">cong</span>
+                </li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~14.44K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1763706991541"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+            
+            <hr />
+            <div itemprop="articleBody"><h2 id="NIO"><a href="#NIO" class="headerlink" title="NIO"></a>NIO</h2><p>Java NIO中涉及的基础内容有通道（Channel）和缓冲区（Buffer）、文件IO和网络IO。</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/23488863">https://zhuanlan.zhihu.com/p/23488863</a></p>
+<p>NIO（Non-blocking I&#x2F;O，在Java领域，也称为New I&#x2F;O），是一种同步非阻塞的I&#x2F;O模型，也是I&#x2F;O多路复用的基础，已经被越来越多地应用到大型应用服务器，成为解决高并发与大量连接、I&#x2F;O处理问题的有效方式。</p>
+<p>那么NIO的本质是什么样的呢？它是怎样与事件模型结合来解放线程、提高系统吞吐的呢？</p>
+<p>本文会从传统的阻塞I&#x2F;O和线程池模型面临的问题讲起，然后对比几种常见I&#x2F;O模型，一步步分析NIO怎么利用事件模型处理I&#x2F;O，解决线程池瓶颈处理海量连接，包括利用面向事件的方式编写服务端&#x2F;客户端程序。最后延展到一些高级主题，如Reactor与Proactor模型的对比、Selector的唤醒、Buffer的选择等。</p>
+<p>注：本文的代码都是伪代码，主要是为了示意，不可用于生产环境。</p>
+<h2 id="传统BIO模型分析"><a href="#传统BIO模型分析" class="headerlink" title="传统BIO模型分析"></a>传统BIO模型分析</h2><p>让我们先回忆一下传统的服务器端同步阻塞I&#x2F;O处理（也就是BIO，Blocking I&#x2F;O）的经典编程模型：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"> <span class="type">ExecutorService</span> <span class="variable">executor</span> <span class="operator">=</span> Excutors.newFixedThreadPollExecutor(<span class="number">100</span>);<span class="comment">//线程池</span></span><br><span class="line"></span><br><span class="line"> <span class="type">ServerSocket</span> <span class="variable">serverSocket</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ServerSocket</span>();</span><br><span class="line"> serverSocket.bind(<span class="number">8088</span>);</span><br><span class="line"> <span class="keyword">while</span>(!Thread.currentThread.isInturrupted())&#123;<span class="comment">//主线程死循环等待新连接到来</span></span><br><span class="line"> <span class="type">Socket</span> <span class="variable">socket</span> <span class="operator">=</span> serverSocket.accept();</span><br><span class="line"> executor.submit(<span class="keyword">new</span> <span class="title class_">ConnectIOnHandler</span>(socket));<span class="comment">//为新的连接创建新的线程</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ConnectIOnHandler</span> <span class="keyword">extends</span> <span class="title class_">Thread</span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Socket socket;</span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">ConnectIOnHandler</span><span class="params">(Socket socket)</span>&#123;</span><br><span class="line">       <span class="built_in">this</span>.socket = socket;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span>&#123;</span><br><span class="line">      <span class="keyword">while</span>(!Thread.currentThread.isInturrupted()&amp;&amp;!socket.isClosed())&#123;死循环处理读写事件</span><br><span class="line">          <span class="type">String</span> <span class="variable">someThing</span> <span class="operator">=</span> socket.read()....<span class="comment">//读取数据</span></span><br><span class="line">          <span class="keyword">if</span>(someThing!=<span class="literal">null</span>)&#123;</span><br><span class="line">             ......<span class="comment">//处理数据</span></span><br><span class="line">             socket.write()....<span class="comment">//写数据</span></span><br><span class="line">          &#125;</span><br><span class="line"></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>这是一个经典的每连接每线程的模型，之所以使用多线程，主要原因在于socket.accept()、socket.read()、socket.write()三个主要函数都是同步阻塞的，当一个连接在处理I&#x2F;O的时候，系统是阻塞的，如果是单线程的话必然就挂死在那里；但CPU是被释放出来的，开启多线程，就可以让CPU去处理更多的事情。其实这也是所有使用多线程的本质：</p>
+<ol>
+<li>利用多核。</li>
+<li>当I&#x2F;O阻塞系统，但CPU空闲的时候，可以利用多线程使用CPU资源。</li>
+</ol>
+<p>现在的多线程一般都使用线程池，可以让线程的创建和回收成本相对较低。在活动连接数不是特别高（小于单机1000）的情况下，这种模型是比较不错的，可以让每一个连接专注于自己的I&#x2F;O并且编程模型简单，也不用过多考虑系统的过载、限流等问题。线程池本身就是一个天然的漏斗，可以缓冲一些系统处理不了的连接或请求。</p>
+<p>不过，这个模型最本质的问题在于，严重依赖于线程。但线程是很”贵”的资源，主要表现在：</p>
+<ol>
+<li>线程的创建和销毁成本很高，在Linux这样的操作系统中，线程本质上就是一个进程。创建和销毁都是重量级的系统函数。</li>
+<li>线程本身占用较大内存，像Java的线程栈，一般至少分配512K～1M的空间，如果系统中的线程数过千，恐怕整个JVM的内存都会被吃掉一半。</li>
+<li>线程的切换成本是很高的。操作系统发生线程切换的时候，需要保留线程的上下文，然后执行系统调用。如果线程数过高，可能执行线程切换的时间甚至会大于线程执行的时间，这时候带来的表现往往是系统load偏高、CPU sy使用率特别高（超过20%以上)，导致系统几乎陷入不可用的状态。</li>
+<li>容易造成锯齿状的系统负载。因为系统负载是用活动线程数或CPU核心数，一旦线程数量高但外部网络环境不是很稳定，就很容易造成大量请求的结果同时返回，激活大量阻塞线程从而使系统负载压力过大。</li>
+</ol>
+<p>所以，当面对十万甚至百万级连接的时候，传统的BIO模型是无能为力的。随着移动端应用的兴起和各种网络游戏的盛行，百万级长连接日趋普遍，此时，必然需要一种更高效的I&#x2F;O处理模型。</p>
+<h2 id="NIO是怎么工作的"><a href="#NIO是怎么工作的" class="headerlink" title="NIO是怎么工作的"></a>NIO是怎么工作的</h2><p>很多刚接触NIO的人，第一眼看到的就是Java相对晦涩的API，比如：Channel，Selector，Socket什么的；然后就是一坨上百行的代码来演示NIO的服务端Demo……瞬间头大有没有？</p>
+<p>我们不管这些，抛开现象看本质，先分析下NIO是怎么工作的。</p>
+<h2 id="常见I-O模型对比"><a href="#常见I-O模型对比" class="headerlink" title="常见I&#x2F;O模型对比"></a>常见I&#x2F;O模型对比</h2><p>所有的系统I&#x2F;O都分为两个阶段：等待就绪和操作。举例来说，读函数，分为等待系统可读和真正的读；同理，写函数分为等待网卡可以写和真正的写。</p>
+<p>需要说明的是等待就绪的阻塞是不使用CPU的，是在“空等”；而真正的读写操作的阻塞是使用CPU的，真正在”干活”，而且这个过程非常快，属于memory copy，带宽通常在1GB&#x2F;s级别以上，可以理解为基本不耗时。</p>
+<p>下图是几种常见I&#x2F;O模型的对比：</p>
+<p><img src="https://s2.ax1x.com/2019/09/10/nN1Jkd.jpg" alt="nN1Jkd.jpg"></p>
+<p>以socket.read()为例子：</p>
+<p>传统的BIO里面socket.read()，如果TCP RecvBuffer里没有数据，函数会一直阻塞，直到收到数据，返回读到的数据。</p>
+<p>对于NIO，如果TCP RecvBuffer有数据，就把数据从网卡读到内存，并且返回给用户；反之则直接返回0，永远不会阻塞。</p>
+<p>最新的AIO(Async I&#x2F;O)里面会更进一步：不但等待就绪是非阻塞的，就连数据从网卡到内存的过程也是异步的。</p>
+<p>换句话说，BIO里用户最关心“我要读”，NIO里用户最关心”我可以读了”，在AIO模型里用户更需要关注的是“读完了”。</p>
+<p>NIO一个重要的特点是：socket主要的读、写、注册和接收函数，在等待就绪阶段都是非阻塞的，真正的I&#x2F;O操作是同步阻塞的（消耗CPU但性能非常高）。</p>
+<h2 id="如何结合事件模型使用NIO同步非阻塞特性"><a href="#如何结合事件模型使用NIO同步非阻塞特性" class="headerlink" title="如何结合事件模型使用NIO同步非阻塞特性"></a>如何结合事件模型使用NIO同步非阻塞特性</h2><p>回忆BIO模型，之所以需要多线程，是因为在进行I&#x2F;O操作的时候，一是没有办法知道到底能不能写、能不能读，只能”傻等”，即使通过各种估算，算出来操作系统没有能力进行读写，也没法在socket.read()和socket.write()函数中返回，这两个函数无法进行有效的中断。所以除了多开线程另起炉灶，没有好的办法利用CPU。</p>
+<p>NIO的读写函数可以立刻返回，这就给了我们不开线程利用CPU的最好机会：如果一个连接不能读写（socket.read()返回0或者socket.write()返回0），我们可以把这件事记下来，记录的方式通常是在Selector上注册标记位，然后切换到其它就绪的连接（channel）继续进行读写。</p>
+<p>下面具体看下如何利用事件模型单线程处理所有I&#x2F;O请求：</p>
+<p>NIO的主要事件有几个：读就绪、写就绪、有新连接到来。</p>
+<p>我们首先需要注册当这几个事件到来的时候所对应的处理器。然后在合适的时机告诉事件选择器：我对这个事件感兴趣。对于写操作，就是写不出去的时候对写事件感兴趣；对于读操作，就是完成连接和系统没有办法承载新读入的数据的时；对于accept，一般是服务器刚启动的时候；而对于connect，一般是connect失败需要重连或者直接异步调用connect的时候。</p>
+<p>其次，用一个死循环选择就绪的事件，会执行系统调用（Linux 2.6之前是select、poll，2.6之后是epoll，Windows是IOCP），还会阻塞的等待新事件的到来。新事件到来的时候，会在selector上注册标记位，标示可读、可写或者有连接到来。</p>
+<p>注意，select是阻塞的，无论是通过操作系统的通知（epoll）还是不停的轮询(select，poll)，这个函数是阻塞的。所以你可以放心大胆地在一个while(true)里面调用这个函数而不用担心CPU空转。</p>
+<p>所以我们的程序大概的模样是：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">interface</span> <span class="title class_">ChannelHandler</span>&#123;</span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">channelReadable</span><span class="params">(Channel channel)</span>;</span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">channelWritable</span><span class="params">(Channel channel)</span>;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="keyword">class</span> <span class="title class_">Channel</span>&#123;</span><br><span class="line">   Socket socket;</span><br><span class="line">   Event event;<span class="comment">//读，写或者连接</span></span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> <span class="comment">//IO线程主循环:</span></span><br><span class="line"> <span class="keyword">class</span> <span class="title class_">IoThread</span> <span class="keyword">extends</span> <span class="title class_">Thread</span>&#123;</span><br><span class="line"> <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span>&#123;</span><br><span class="line"> Channel channel;</span><br><span class="line"> <span class="keyword">while</span>(channel=Selector.select())&#123;<span class="comment">//选择就绪的事件和对应的连接</span></span><br><span class="line">    <span class="keyword">if</span>(channel.event==accept)&#123;</span><br><span class="line">       registerNewChannelHandler(channel);<span class="comment">//如果是新连接，则注册一个新的读写处理器</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(channel.event==write)&#123;</span><br><span class="line">       getChannelHandler(channel).channelWritable(channel);<span class="comment">//如果可以写，则执行写事件</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(channel.event==read)&#123;</span><br><span class="line">        getChannelHandler(channel).channelReadable(channel);<span class="comment">//如果可以读，则执行读事件</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"> &#125;</span><br><span class="line"> Map&lt;Channel，ChannelHandler&gt; handlerMap;<span class="comment">//所有channel的对应事件处理器</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>这个程序很简短，也是最简单的Reactor模式：注册所有感兴趣的事件处理器，单线程轮询选择就绪事件，执行事件处理器。</p>
+<h2 id="优化线程模型"><a href="#优化线程模型" class="headerlink" title="优化线程模型"></a>优化线程模型</h2><p>由上面的示例我们大概可以总结出NIO是怎么解决掉线程的瓶颈并处理海量连接的：</p>
+<p>NIO由原来的阻塞读写（占用线程）变成了单线程轮询事件，找到可以进行读写的网络描述符进行读写。除了事件的轮询是阻塞的（没有可干的事情必须要阻塞），剩余的I&#x2F;O操作都是纯CPU操作，没有必要开启多线程。</p>
+<p>并且由于线程的节约，连接数大的时候因为线程切换带来的问题也随之解决，进而为处理海量连接提供了可能。</p>
+<p>单线程处理I&#x2F;O的效率确实非常高，没有线程切换，只是拼命的读、写、选择事件。但现在的服务器，一般都是多核处理器，如果能够利用多核心进行I&#x2F;O，无疑对效率会有更大的提高。</p>
+<p>仔细分析一下我们需要的线程，其实主要包括以下几种：</p>
+<ol>
+<li>事件分发器，单线程选择就绪的事件。</li>
+<li>I&#x2F;O处理器，包括connect、read、write等，这种纯CPU操作，一般开启CPU核心个线程就可以。</li>
+<li>业务线程，在处理完I&#x2F;O后，业务一般还会有自己的业务逻辑，有的还会有其他的阻塞I&#x2F;O，如DB操作，RPC等。只要有阻塞，就需要单独的线程。</li>
+</ol>
+<p>Java的Selector对于Linux系统来说，有一个致命限制：同一个channel的select不能被并发的调用。因此，如果有多个I&#x2F;O线程，必须保证：一个socket只能属于一个IoThread，而一个IoThread可以管理多个socket。</p>
+<p>另外连接的处理和读写的处理通常可以选择分开，这样对于海量连接的注册和读写就可以分发。虽然read()和write()是比较高效无阻塞的函数，但毕竟会占用CPU，如果面对更高的并发则无能为力。</p>
+<p><img src="https://s2.ax1x.com/2019/09/10/nN1YtA.png" alt="nN1YtA.png"></p>
+<h2 id="NIO在客户端的魔力"><a href="#NIO在客户端的魔力" class="headerlink" title="NIO在客户端的魔力"></a>NIO在客户端的魔力</h2><p>通过上面的分析，可以看出NIO在服务端对于解放线程，优化I&#x2F;O和处理海量连接方面，确实有自己的用武之地。那么在客户端上，NIO又有什么使用场景呢?</p>
+<p>常见的客户端BIO+连接池模型，可以建立n个连接，然后当某一个连接被I&#x2F;O占用的时候，可以使用其他连接来提高性能。</p>
+<p>但多线程的模型面临和服务端相同的问题：如果指望增加连接数来提高性能，则连接数又受制于线程数、线程很贵、无法建立很多线程，则性能遇到瓶颈。</p>
+<h2 id="每连接顺序请求的Redis"><a href="#每连接顺序请求的Redis" class="headerlink" title="每连接顺序请求的Redis"></a>每连接顺序请求的Redis</h2><p>对于Redis来说，由于服务端是全局串行的，能够保证同一连接的所有请求与返回顺序一致。这样可以使用单线程＋队列，把请求数据缓冲。然后pipeline发送，返回future，然后channel可读时，直接在队列中把future取回来，done()就可以了。</p>
+<p>伪代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">RedisClient</span> Implements ChannelHandler&#123;</span><br><span class="line"> <span class="keyword">private</span> BlockingQueue CmdQueue;</span><br><span class="line"> <span class="keyword">private</span> EventLoop eventLoop;</span><br><span class="line"> <span class="keyword">private</span> Channel channel;</span><br><span class="line"> <span class="keyword">class</span> <span class="title class_">Cmd</span>&#123;</span><br><span class="line">  String cmd;</span><br><span class="line">  Future result;</span><br><span class="line"> &#125;</span><br><span class="line"> <span class="keyword">public</span> Future <span class="title function_">get</span><span class="params">(String key)</span>&#123;</span><br><span class="line">   Cmd cmd= <span class="keyword">new</span> <span class="title class_">Cmd</span>(key);</span><br><span class="line">   queue.offer(cmd);</span><br><span class="line">   eventLoop.submit(<span class="keyword">new</span> <span class="title class_">Runnable</span>()&#123;</span><br><span class="line">        <span class="type">List</span> <span class="variable">list</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ArrayList</span>();</span><br><span class="line">        queue.drainTo(list);</span><br><span class="line">        <span class="keyword">if</span>(channel.isWritable())&#123;</span><br><span class="line">         channel.writeAndFlush(list);</span><br><span class="line">        &#125;</span><br><span class="line">   &#125;);</span><br><span class="line">&#125;</span><br><span class="line"> <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">ChannelReadFinish</span><span class="params">(Channel channel，Buffer Buffer)</span>&#123;</span><br><span class="line">    <span class="type">List</span> <span class="variable">result</span> <span class="operator">=</span> handleBuffer();<span class="comment">//处理数据</span></span><br><span class="line">    <span class="comment">//从cmdQueue取出future，并设值，future.done();</span></span><br><span class="line">&#125;</span><br><span class="line"> <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">ChannelWritable</span><span class="params">(Channel channel)</span>&#123;</span><br><span class="line">   channel.flush();</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>这样做，能够充分的利用pipeline来提高I&#x2F;O能力，同时获取异步处理能力。</p>
+<h2 id="多连接短连接的HttpClient"><a href="#多连接短连接的HttpClient" class="headerlink" title="多连接短连接的HttpClient"></a>多连接短连接的HttpClient</h2><p>类似于竞对抓取的项目，往往需要建立无数的HTTP短连接，然后抓取，然后销毁，当需要单机抓取上千网站线程数又受制的时候，怎么保证性能呢?</p>
+<p>何不尝试NIO，单线程进行连接、写、读操作？如果连接、读、写操作系统没有能力处理，简单的注册一个事件，等待下次循环就好了。</p>
+<p>如何存储不同的请求&#x2F;响应呢？由于http是无状态没有版本的协议，又没有办法使用队列，好像办法不多。比较笨的办法是对于不同的socket，直接存储socket的引用作为map的key。</p>
+<h2 id="常见的RPC框架，如Thrift，Dubbo"><a href="#常见的RPC框架，如Thrift，Dubbo" class="headerlink" title="常见的RPC框架，如Thrift，Dubbo"></a>常见的RPC框架，如Thrift，Dubbo</h2><p>这种框架内部一般维护了请求的协议和请求号，可以维护一个以请求号为key，结果的result为future的map，结合NIO+长连接，获取非常不错的性能。</p>
+<h2 id="NIO高级主题"><a href="#NIO高级主题" class="headerlink" title="NIO高级主题"></a>NIO高级主题</h2><h2 id="Proactor与Reactor"><a href="#Proactor与Reactor" class="headerlink" title="Proactor与Reactor"></a>Proactor与Reactor</h2><p>一般情况下，I&#x2F;O 复用机制需要事件分发器（event dispatcher）。 事件分发器的作用，即将那些读写事件源分发给各读写事件的处理者，就像送快递的在楼下喊: 谁谁谁的快递到了， 快来拿吧！开发人员在开始的时候需要在分发器那里注册感兴趣的事件，并提供相应的处理者（event handler)，或者是回调函数；事件分发器在适当的时候，会将请求的事件分发给这些handler或者回调函数。</p>
+<p>涉及到事件分发器的两种模式称为：Reactor和Proactor。 Reactor模式是基于同步I&#x2F;O的，而Proactor模式是和异步I&#x2F;O相关的。在Reactor模式中，事件分发器等待某个事件或者可应用或个操作的状态发生（比如文件描述符可读写，或者是socket可读写），事件分发器就把这个事件传给事先注册的事件处理函数或者回调函数，由后者来做实际的读写操作。</p>
+<p>而在Proactor模式中，事件处理者（或者代由事件分发器发起）直接发起一个异步读写操作（相当于请求），而实际的工作是由操作系统来完成的。发起时，需要提供的参数包括用于存放读到数据的缓存区、读的数据大小或用于存放外发数据的缓存区，以及这个请求完后的回调函数等信息。事件分发器得知了这个请求，它默默等待这个请求的完成，然后转发完成事件给相应的事件处理者或者回调。举例来说，在Windows上事件处理者投递了一个异步IO操作（称为overlapped技术），事件分发器等IO Complete事件完成。这种异步模式的典型实现是基于操作系统底层异步API的，所以我们可称之为“系统级别”的或者“真正意义上”的异步，因为具体的读写是由操作系统代劳的。</p>
+<p>举个例子，将有助于理解Reactor与Proactor二者的差异，以读操作为例（写操作类似）。</p>
+<h3 id="在Reactor中实现读"><a href="#在Reactor中实现读" class="headerlink" title="在Reactor中实现读"></a>在Reactor中实现读</h3><ul>
+<li>注册读就绪事件和相应的事件处理器。</li>
+<li>事件分发器等待事件。</li>
+<li>事件到来，激活分发器，分发器调用事件对应的处理器。</li>
+<li>事件处理器完成实际的读操作，处理读到的数据，注册新的事件，然后返还控制权。</li>
+</ul>
+<h4 id="在Proactor中实现读"><a href="#在Proactor中实现读" class="headerlink" title="在Proactor中实现读"></a>在Proactor中实现读</h4><ul>
+<li>处理器发起异步读操作（注意：操作系统必须支持异步IO）。在这种情况下，处理器无视IO就绪事件，它关注的是完成事件。</li>
+<li>事件分发器等待操作完成事件。</li>
+<li>在分发器等待过程中，操作系统利用并行的内核线程执行实际的读操作，并将结果数据存入用户自定义缓冲区，最后通知事件分发器读操作完成。</li>
+<li>事件分发器呼唤处理器。</li>
+<li>事件处理器处理用户自定义缓冲区中的数据，然后启动一个新的异步操作，并将控制权返回事件分发器。</li>
+</ul>
+<p>可以看出，两个模式的相同点，都是对某个I&#x2F;O事件的事件通知（即告诉某个模块，这个I&#x2F;O操作可以进行或已经完成)。在结构上，两者也有相同点：事件分发器负责提交IO操作（异步)、查询设备是否可操作（同步)，然后当条件满足时，就回调handler；不同点在于，异步情况下（Proactor)，当回调handler时，表示I&#x2F;O操作已经完成；同步情况下（Reactor)，回调handler时，表示I&#x2F;O设备可以进行某个操作（can read 或 can write)。</p>
+<p>下面，我们将尝试应对为Proactor和Reactor模式建立可移植框架的挑战。在改进方案中，我们将Reactor原来位于事件处理器内的Read&#x2F;Write操作移至分发器（不妨将这个思路称为“模拟异步”），以此寻求将Reactor多路同步I&#x2F;O转化为模拟异步I&#x2F;O。以读操作为例子，改进过程如下：</p>
+<ul>
+<li>注册读就绪事件和相应的事件处理器。并为分发器提供数据缓冲区地址，需要读取数据量等信息。</li>
+<li>分发器等待事件（如在select()上等待）。</li>
+<li>事件到来，激活分发器。分发器执行一个非阻塞读操作（它有完成这个操作所需的全部信息），最后调用对应处理器。</li>
+<li>事件处理器处理用户自定义缓冲区的数据，注册新的事件（当然同样要给出数据缓冲区地址，需要读取的数据量等信息），最后将控制权返还分发器。<br>  如我们所见，通过对多路I&#x2F;O模式功能结构的改造，可将Reactor转化为Proactor模式。改造前后，模型实际完成的工作量没有增加，只不过参与者间对工作职责稍加调换。没有工作量的改变，自然不会造成性能的削弱。对如下各步骤的比较，可以证明工作量的恒定：</li>
+</ul>
+<h4 id="标准-典型的Reactor"><a href="#标准-典型的Reactor" class="headerlink" title="标准&#x2F;典型的Reactor"></a>标准&#x2F;典型的Reactor</h4><ul>
+<li>步骤1：等待事件到来（Reactor负责）。</li>
+<li>步骤2：将读就绪事件分发给用户定义的处理器（Reactor负责）。</li>
+<li>步骤3：读数据（用户处理器负责）。</li>
+<li>步骤4：处理数据（用户处理器负责）。</li>
+</ul>
+<h4 id="改进实现的模拟Proactor"><a href="#改进实现的模拟Proactor" class="headerlink" title="改进实现的模拟Proactor"></a>改进实现的模拟Proactor</h4><ul>
+<li><p>步骤1：等待事件到来（Proactor负责）。</p>
+</li>
+<li><p>步骤2：得到读就绪事件，执行读数据（现在由Proactor负责）。</p>
+</li>
+<li><p>步骤3：将读完成事件分发给用户处理器（Proactor负责）。</p>
+</li>
+<li><p>步骤4：处理数据（用户处理器负责）。</p>
+<p>  对于不提供异步I&#x2F;O API的操作系统来说，这种办法可以隐藏Socket API的交互细节，从而对外暴露一个完整的异步接口。借此，我们就可以进一步构建完全可移植的，平台无关的，有通用对外接口的解决方案。</p>
+</li>
+</ul>
+<p>代码示例如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> <span class="title class_">ChannelHandler</span>&#123;</span><br><span class="line">      <span class="keyword">void</span> <span class="title function_">channelReadComplate</span><span class="params">(Channel channel，<span class="type">byte</span>[] data)</span>;</span><br><span class="line">      <span class="keyword">void</span> <span class="title function_">channelWritable</span><span class="params">(Channel channel)</span>;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">class</span> <span class="title class_">Channel</span>&#123;</span><br><span class="line">     Socket socket;</span><br><span class="line">     Event event;<span class="comment">//读，写或者连接</span></span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">//IO线程主循环：</span></span><br><span class="line">   <span class="keyword">class</span> <span class="title class_">IoThread</span> <span class="keyword">extends</span> <span class="title class_">Thread</span>&#123;</span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span>&#123;</span><br><span class="line">   Channel channel;</span><br><span class="line">   <span class="keyword">while</span>(channel=Selector.select())&#123;<span class="comment">//选择就绪的事件和对应的连接</span></span><br><span class="line">      <span class="keyword">if</span>(channel.event==accept)&#123;</span><br><span class="line">         registerNewChannelHandler(channel);<span class="comment">//如果是新连接，则注册一个新的读写处理器</span></span><br><span class="line">         Selector.interested(read);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span>(channel.event==write)&#123;</span><br><span class="line">         getChannelHandler(channel).channelWritable(channel);<span class="comment">//如果可以写，则执行写事件</span></span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span>(channel.event==read)&#123;</span><br><span class="line">          <span class="type">byte</span>[] data = channel.read();</span><br><span class="line">          <span class="keyword">if</span>(channel.read()==<span class="number">0</span>)<span class="comment">//没有读到数据，表示本次数据读完了</span></span><br><span class="line">          &#123;</span><br><span class="line">          getChannelHandler(channel).channelReadComplate(channel，data;<span class="comment">//处理读完成事件</span></span><br><span class="line">          &#125;</span><br><span class="line">          <span class="keyword">if</span>(过载保护)&#123;</span><br><span class="line">          Selector.interested(read);</span><br><span class="line">          &#125;</span><br><span class="line"></span><br><span class="line">      &#125;</span><br><span class="line">     &#125;</span><br><span class="line">    &#125;</span><br><span class="line">   Map&lt;Channel，ChannelHandler&gt; handlerMap;<span class="comment">//所有channel的对应事件处理器</span></span><br><span class="line">   &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="Selector-wakeup"><a href="#Selector-wakeup" class="headerlink" title="Selector.wakeup()"></a>Selector.wakeup()</h2><h3 id="主要作用"><a href="#主要作用" class="headerlink" title="主要作用"></a>主要作用</h3><p>解除阻塞在Selector.select()&#x2F;select(long)上的线程，立即返回。</p>
+<p>两次成功的select之间多次调用wakeup等价于一次调用。</p>
+<p>如果当前没有阻塞在select上，则本次wakeup调用将作用于下一次select——“记忆”作用。</p>
+<p>为什么要唤醒？</p>
+<p>注册了新的channel或者事件。</p>
+<p>channel关闭，取消注册。</p>
+<p>优先级更高的事件触发（如定时器事件），希望及时处理。</p>
+<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>Linux上利用pipe调用创建一个管道，Windows上则是一个loopback的tcp连接。这是因为win32的管道无法加入select的fd set，将管道或者TCP连接加入select fd set。</p>
+<p>wakeup往管道或者连接写入一个字节，阻塞的select因为有I&#x2F;O事件就绪，立即返回。可见，wakeup的调用开销不可忽视。</p>
+<h2 id="Buffer的选择"><a href="#Buffer的选择" class="headerlink" title="Buffer的选择"></a>Buffer的选择</h2><p>通常情况下，操作系统的一次写操作分为两步：</p>
+<ol>
+<li>将数据从用户空间拷贝到系统空间。</li>
+<li>从系统空间往网卡写。同理，读操作也分为两步：<br> ① 将数据从网卡拷贝到系统空间；<br> ② 将数据从系统空间拷贝到用户空间。</li>
+</ol>
+<p>对于NIO来说，缓存的使用可以使用DirectByteBuffer和HeapByteBuffer。如果使用了DirectByteBuffer，一般来说可以减少一次系统空间到用户空间的拷贝。但Buffer创建和销毁的成本更高，更不宜维护，通常会用内存池来提高性能。</p>
+<p>如果数据量比较小的中小应用情况下，可以考虑使用heapBuffer；反之可以用directBuffer。</p>
+<h2 id="NIOServer"><a href="#NIOServer" class="headerlink" title="NIOServer"></a>NIOServer</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.cong.nio.echo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.net.InetSocketAddress;</span><br><span class="line"><span class="keyword">import</span> java.net.ServerSocket;</span><br><span class="line"><span class="keyword">import</span> java.nio.ByteBuffer;</span><br><span class="line"><span class="keyword">import</span> java.nio.channels.*;</span><br><span class="line"><span class="keyword">import</span> java.util.Iterator;</span><br><span class="line"><span class="keyword">import</span> java.util.Set;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">NioServer</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">        <span class="type">Selector</span> <span class="variable">selector</span> <span class="operator">=</span> Selector.open();</span><br><span class="line">        <span class="type">ServerSocketChannel</span> <span class="variable">socketChannel</span> <span class="operator">=</span> ServerSocketChannel.open();</span><br><span class="line">        socketChannel.configureBlocking(<span class="literal">false</span>);</span><br><span class="line">        socketChannel.register(selector, SelectionKey.OP_ACCEPT);</span><br><span class="line"></span><br><span class="line">        <span class="type">ServerSocket</span> <span class="variable">serverSocket</span> <span class="operator">=</span> socketChannel.socket();</span><br><span class="line">        <span class="type">InetSocketAddress</span> <span class="variable">address</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">InetSocketAddress</span>(<span class="number">8888</span>);</span><br><span class="line">        serverSocket.bind(address);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (<span class="literal">true</span>)&#123;</span><br><span class="line">            selector.select();</span><br><span class="line">            Set&lt;SelectionKey&gt; selectionKeys = selector.selectedKeys();</span><br><span class="line">            Iterator&lt;SelectionKey&gt; keyIterator = selectionKeys.iterator();</span><br><span class="line">            <span class="keyword">while</span> (keyIterator.hasNext())&#123;</span><br><span class="line">                <span class="type">SelectionKey</span> <span class="variable">key</span> <span class="operator">=</span> keyIterator.next();</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> (key.isAcceptable())&#123;</span><br><span class="line">                    <span class="type">ServerSocketChannel</span> <span class="variable">channel</span> <span class="operator">=</span> (ServerSocketChannel)key.channel();</span><br><span class="line">                    <span class="type">SocketChannel</span> <span class="variable">socketChannel1</span> <span class="operator">=</span> channel.accept();</span><br><span class="line">                    socketChannel1.configureBlocking(<span class="literal">false</span>);</span><br><span class="line">                    socketChannel1.register(selector,SelectionKey.OP_READ);</span><br><span class="line">                &#125;<span class="keyword">else</span> <span class="keyword">if</span> (key.isReadable())&#123;</span><br><span class="line">                    <span class="type">SocketChannel</span> <span class="variable">socketChannel1</span> <span class="operator">=</span> (SocketChannel) key.channel();</span><br><span class="line">                    System.out.println(readDataFromSocketChannel(socketChannel1));</span><br><span class="line">                    socketChannel1.close();</span><br><span class="line">                &#125;</span><br><span class="line">                keyIterator.remove();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> String <span class="title function_">readDataFromSocketChannel</span><span class="params">(SocketChannel channel)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">        <span class="type">ByteBuffer</span> <span class="variable">buffer</span> <span class="operator">=</span> ByteBuffer.allocate(<span class="number">1024</span>);</span><br><span class="line">        <span class="type">StringBuilder</span> <span class="variable">stringBuilder</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();</span><br><span class="line">        <span class="keyword">while</span> (<span class="literal">true</span>)&#123;</span><br><span class="line">            buffer.clear();</span><br><span class="line">            <span class="type">int</span> <span class="variable">read</span> <span class="operator">=</span> channel.read(buffer);</span><br><span class="line">            <span class="keyword">if</span> (read==-<span class="number">1</span>)&#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            buffer.flip();</span><br><span class="line">            <span class="type">int</span> <span class="variable">limit</span> <span class="operator">=</span> buffer.limit();</span><br><span class="line">            <span class="type">char</span>[] dst = <span class="keyword">new</span> <span class="title class_">char</span>[limit];</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt;limit ; i++) &#123;</span><br><span class="line">                dst[i] =(<span class="type">char</span>) buffer.get(i);</span><br><span class="line">            &#125;</span><br><span class="line">            stringBuilder.append(dst);</span><br><span class="line">            buffer.clear();</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> stringBuilder.toString();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="NIOClient"><a href="#NIOClient" class="headerlink" title="NIOClient"></a>NIOClient</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.cong.nio.echo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.OutputStream;</span><br><span class="line"><span class="keyword">import</span> java.net.Socket;</span><br><span class="line"><span class="keyword">import</span> java.nio.charset.StandardCharsets;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">NioClient</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">        <span class="type">Socket</span> <span class="variable">socket</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Socket</span>(<span class="string">&quot;127.0.0.1&quot;</span>,<span class="number">8888</span>);</span><br><span class="line">        <span class="type">OutputStream</span> <span class="variable">outputStream</span> <span class="operator">=</span> socket.getOutputStream();</span><br><span class="line">        <span class="type">String</span> <span class="variable">s</span> <span class="operator">=</span> <span class="string">&quot;hello world&quot;</span>;</span><br><span class="line">        outputStream.write(s.getBytes(StandardCharsets.UTF_8));</span><br><span class="line">        outputStream.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="NIO存在的问题"><a href="#NIO存在的问题" class="headerlink" title="NIO存在的问题"></a>NIO存在的问题</h2><p>使用NIO !&#x3D; 高性能，当连接数&lt;1000，并发程度不高或者局域网环境下NIO并没有显著的性能优势。</p>
+<p>NIO并没有完全屏蔽平台差异，它仍然是基于各个操作系统的I&#x2F;O系统实现的，差异仍然存在。使用NIO做网络编程构建事件驱动模型并不容易，陷阱重重。</p>
+<p>推荐大家使用成熟的NIO框架，如Netty，MINA等。解决了很多NIO的陷阱，并屏蔽了操作系统的差异，有较好的性能和编程模型。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>最后总结一下到底NIO给我们带来了些什么：</p>
+<blockquote>
+<ul>
+<li>事件驱动模型</li>
+<li>避免多线程</li>
+<li>单线程处理多任务</li>
+<li>非阻塞I&#x2F;O，I&#x2F;O读写不再阻塞，而是返回0</li>
+<li>基于block的传输，通常比基于流的传输更高效</li>
+<li>更高级的IO函数，zero-copy</li>
+<li>IO多路复用大大提高了Java网络应用的可伸缩性和实用性</li>
+</ul>
+</blockquote>
+</div>
+        </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/Java/" rel="tag">Java</a>, <a class="tag-none-link" href="/tags/NIO/" rel="tag">NIO</a>
+                </div>
+                <div class="pull-date">
+                    <time datetime="2025-11-21T06:36:31.541Z" itemprop="dateModified">最后编辑：2025-11-21</time>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" 并行搜索" href="/2019/09/06/2019/09/061402/">&lt; 上一篇</a>
+            </div>
+            
+            
+            <div class="nav-next clearfix">
+                <a title=" InnoDB" href="/2019/09/10/2019/09/101146/">下一篇 &gt;</a>
+            </div>
+            
+        </nav>
+    
+    
+        <link rel="stylesheet" href="/vendors/gitalk@1.7.2/dist/gitalk.css"></script>
+<div id="gitalk-container" class="post-comments lazy-load" style="padding-left:2rem; padding-right:2rem;"></div>
+<script>
+    var load_comm = () => {
+        const init = () => {
+            console.log('Gitalk loading...');
+            const gitalk = new Gitalk(Object.assign({
+                id: '/2019/09/07/2019/09/071101/',
+                path: '/2019/09/07/2019/09/071101/'
+            }, JSON.parse('{"clientID":"56e6a743c63b9c4faa93","clientSecret":"888b7234051c5c2ed6ea7bdf18e8b5a2678775f1","repo":"gitalk-comments","owner":"qbmzc","admin":["qbmzc"]}')));
+
+            gitalk.render('gitalk-container');
+        }
+        if (typeof Gitalk === 'undefined') {
+            const src = '/vendors/gitalk@1.7.2/dist/gitalk.min.js';
+            $.getScript(src, init);
+        } else {
+            init();
+        }
+    };
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a></noscript>
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/avatar.webp" loading="lazy" decoding="auto" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center">流云与风，苍穹游牧</p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                499
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                8
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                229
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">137</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">151</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">29</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/congco/">congco</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/work/">work</a><span class="category-list-count">118</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wuw/">wuw</a><span class="category-list-count">48</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/">技术笔记</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/AES/" style="font-size: 0.6em;">AES</a> <a href="/tags/AI/" style="font-size: 0.7em;">AI</a> <a href="/tags/AWS/" style="font-size: 0.7em;">AWS</a> <a href="/tags/Arch/" style="font-size: 0.6em;">Arch</a> <a href="/tags/Arch-Linux/" style="font-size: 0.8em;">Arch Linux</a> <a href="/tags/ArchLinux/" style="font-size: 0.8em;">ArchLinux</a> <a href="/tags/CAS/" style="font-size: 0.6em;">CAS</a> <a href="/tags/CI-CD/" style="font-size: 0.6em;">CI/CD</a> <a href="/tags/Caffeine/" style="font-size: 0.6em;">Caffeine</a> <a href="/tags/CompletableFuture/" style="font-size: 0.7em;">CompletableFuture</a> <a href="/tags/DNS/" style="font-size: 0.8em;">DNS</a> <a href="/tags/Docker/" style="font-size: 0.6em;">Docker</a> <a href="/tags/Flask/" style="font-size: 0.6em;">Flask</a> <a href="/tags/Future/" style="font-size: 0.7em;">Future</a> <a href="/tags/GC/" style="font-size: 0.6em;">GC</a> <a href="/tags/GPT/" style="font-size: 0.6em;">GPT</a> <a href="/tags/GraalVM/" style="font-size: 0.8em;">GraalVM</a> <a href="/tags/HashMap/" style="font-size: 0.6em;">HashMap</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/14/2025/11/141727/"><i class="fa  fa-book"></i> karakeep</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111335/"><i class="fa  fa-book"></i> SonarQube 扫描支持多 JDK 版本的实践方案</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111045/"><i class="fa  fa-book"></i> 一次修复 PDF 中文乱码的排查记录</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/23/2025/10/221500/"><i class="fa  fa-book"></i> dig命令使用详解</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/13/2025/10/131645/"><i class="fa  fa-book"></i> DNS解析异常导致视频播放缓慢问题排查与解决</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  >
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        <li><a href="mailto:congco@foxmail.com"><i class="fa fa-envelope"></i></a></li>
+                        
+                        
+                        
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://github.com/qbmzc"><i class="fa fa-github"></i></a></li>
+                        <li><a target="_blank" rel="nofollow" href="/rss.xml"><i class="fa fa-rss"></i></a></li>
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2025 沐曦留曳 版权所有.</li>
+                            <li>本站已运行<span id="span_dt">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
+                            <li>Site built with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by cong.</li>
+                        </div>
+                        <div>
+                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
+                            <li>Hosted on <a href="https://github.io" target="_blank">Github Pages</a></li>
+                        </div>
+                        <div>
+                            
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="/vendors/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="/vendors/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+
+    <script defer src="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="/vendors/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>

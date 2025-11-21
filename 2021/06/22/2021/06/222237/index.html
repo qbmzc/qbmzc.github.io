@@ -1,0 +1,1447 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="/images/favicon.ico">
+  
+  <title>FFmpeg使用GPU硬件转码 | 沐曦留曳</title>
+  <meta name="author" content="cong" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="ffmpeg" />
+  
+  <meta property="og:type" content="article">
+<meta property="og:title" content="FFmpeg使用GPU硬件转码">
+<meta property="og:url" content="https://qbmzc.github.io/2021/06/22/2021/06/222237/index.html">
+<meta property="og:site_name" content="沐曦留曳">
+<meta property="og:locale">
+<meta property="og:image" content="https://qbmzc.github.io/images/favicon.ico">
+<meta property="article:published_time" content="2021-06-21T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-11-21T06:36:31.550Z">
+<meta property="article:author" content="cong">
+<meta property="article:tag" content="ffmpeg">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://qbmzc.github.io/images/favicon.ico">
+  <link rel="alternate" href="rss.xml" type="application/atom+xml">
+  <!-- 站点验证相关 -->
+  
+    
+      <meta name="google-site-verification" content="lV4cead5YlJ8KpODToP7dvzi-ihrxSqU0yYStYKj2ao" />
+    
+    
+      <meta name="baidu-site-verification" content="codeva-Zr6WlkDupK" />
+    
+    
+      <meta name="msvalidate.01" content="2D2197DEE362D193B3EC29AFD3306341" />
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" media="all"></script>
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-color-dark.min.css" media="(prefers-color-scheme: dark)"></script>
+    <script src="/js/kr-dark.min.js"></script>
+  
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" media="all"></script>
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="/vendors/font-awesome@4.7.0/css/font-awesome.min.css" media="all"></script>
+  <link rel="stylesheet" id="nprogress-css" href="/vendors/nprogress@0.2.0/nprogress.css" media="all"></script>
+  
+  
+  
+    <link rel="stylesheet" href="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css"></script>
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="/vendors/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/banner.webp');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">沐曦留曳</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>沐曦留曳</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article itemscope itemtype="https://schema.org/Article">
+    
+    <link itemprop="mainEntityOfPage" href="https://qbmzc.github.io/2021/06/22/2021/06/222237/">
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center" itemprop="name headline">FFmpeg使用GPU硬件转码</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><time datetime="2021-06-21T16:00:00.000Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2021-06-22</time></li>
+                <li itemprop="author" itemscope itemtype="https://schema.org/Person">
+                    <i class="fa fa-user"></i> 作者 <span itemprop="name">cong</span>
+                </li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~20.23K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1763706991550"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+            
+            <hr />
+            <div itemprop="articleBody"><p><img src="https://fastly.jsdelivr.net/gh/qbmzc/images/2021/wallhaven-47pwoo.jpg" alt="47pwoo"></p>
+<span id="more"></span>
+
+<h2 id="系统环境"><a href="#系统环境" class="headerlink" title="系统环境"></a>系统环境</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Ubuntu20.04 server</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="安装显卡驱动"><a href="#安装显卡驱动" class="headerlink" title="安装显卡驱动"></a>安装显卡驱动</h2><h3 id="自动安装方式"><a href="#自动安装方式" class="headerlink" title="自动安装方式"></a>自动安装方式</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装工具</span></span><br><span class="line">sudo apt install ubuntu-drivers-common</span><br><span class="line"><span class="comment"># 查看显卡型号</span></span><br><span class="line">ubuntu-drivers devices</span><br><span class="line"><span class="comment"># 自动安装 推荐版本</span></span><br><span class="line">sudo ubuntu-drivers autoinstall</span><br></pre></td></tr></table></figure>
+
+<h3 id="手动安装方式"><a href="#手动安装方式" class="headerlink" title="手动安装方式"></a>手动安装方式</h3><p><a target="_blank" rel="noopener" href="https://www.nvidia.cn/Download/Find.aspx?lang=cn">Nvidia驱动下载</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 卸载显卡驱动</span></span><br><span class="line">sudo apt-get remove –purge nvidia*</span><br><span class="line"><span class="comment">## run文件卸载</span></span><br><span class="line">sudo  sh ./nvidia.run --uninstall</span><br></pre></td></tr></table></figure>
+
+<p><strong>安装</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 执行权限 *替换成对应的版本</span></span><br><span class="line">sudo <span class="built_in">chmod</span> a+x NVIDIA-Linux-x86_64-*.run</span><br><span class="line"></span><br><span class="line"><span class="comment">## 执行安装</span></span><br><span class="line">sudo sh ./NVIDIA-Linux-x86_64-*.run --no-opengl-files</span><br><span class="line"><span class="comment">## –no-opengl-files 只安装驱动文件，不安装OpenGL文件。</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#驱动</span></span><br><span class="line">nvidia-smi</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看硬件设备</span></span><br><span class="line"></span><br><span class="line">lspci | grep VGA <span class="comment"># 查看集成显卡</span></span><br><span class="line"></span><br><span class="line">lspci | grep NVIDIA <span class="comment"># 查看NVIDIA显卡</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># linux查看显卡驱动版本号</span></span><br><span class="line"><span class="built_in">cat</span> /proc/driver/nvidia/version</span><br></pre></td></tr></table></figure>
+
+<h2 id="CUDA"><a href="#CUDA" class="headerlink" title="CUDA"></a>CUDA</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 下载 </span></span><br><span class="line">wget https://developer.download.nvidia.com/compute/cuda/11.2.0/local_installers/cuda_11.2.0_460.27.04_linux.run </span><br><span class="line"><span class="comment"># 安装 </span></span><br><span class="line">sudo sh cuda_11.2.0_460.27.04_linux.run </span><br><span class="line"><span class="comment"># 查看 </span></span><br><span class="line">nvcc -V </span><br></pre></td></tr></table></figure>
+
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>桌面版本可能需要禁用nouveau</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/modprobe.d/blacklist.conf</span><br><span class="line"><span class="comment"># 添加下面内容</span></span><br><span class="line">blacklist nouveau</span><br><span class="line">options nouveau modeset=0</span><br><span class="line"></span><br><span class="line"><span class="comment">## 保存后使其生效</span></span><br><span class="line">sudo update-initramfs -u</span><br><span class="line"></span><br><span class="line"><span class="comment">## 重启</span></span><br><span class="line">sudo reboot</span><br><span class="line"><span class="comment">## 查看nouveau</span></span><br><span class="line">lsmod | grep nouveau</span><br></pre></td></tr></table></figure>
+
+<h2 id="ffmpeg"><a href="#ffmpeg" class="headerlink" title="ffmpeg"></a>ffmpeg</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ubuntu仓库中的可以直接下载安装，新版支持Nvidia，下载时注意说明支持的版本</span></span><br><span class="line"><span class="comment"># github上也有打包好的，下载解压后，配置一下环境变量即可</span></span><br><span class="line">https://github.com/BtbN/FFmpeg-Builds/releases</span><br><span class="line"></span><br><span class="line"><span class="comment"># ffmpeg环境变量</span></span><br><span class="line"><span class="built_in">export</span> PATH=/usr/local/ffmpeg/bin:<span class="variable">$PATH</span></span><br><span class="line"><span class="built_in">export</span> LD_LIBRARY_PATH=/usr/local/ffmpeg/lib/</span><br></pre></td></tr></table></figure>
+
+<h2 id="FfmpegUtils-java"><a href="#FfmpegUtils-java" class="headerlink" title="FfmpegUtils.java"></a>FfmpegUtils.java</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br><span class="line">400</span><br><span class="line">401</span><br><span class="line">402</span><br><span class="line">403</span><br><span class="line">404</span><br><span class="line">405</span><br><span class="line">406</span><br><span class="line">407</span><br><span class="line">408</span><br><span class="line">409</span><br><span class="line">410</span><br><span class="line">411</span><br><span class="line">412</span><br><span class="line">413</span><br><span class="line">414</span><br><span class="line">415</span><br><span class="line">416</span><br><span class="line">417</span><br><span class="line">418</span><br><span class="line">419</span><br><span class="line">420</span><br><span class="line">421</span><br><span class="line">422</span><br><span class="line">423</span><br><span class="line">424</span><br><span class="line">425</span><br><span class="line">426</span><br><span class="line">427</span><br><span class="line">428</span><br><span class="line">429</span><br><span class="line">430</span><br><span class="line">431</span><br><span class="line">432</span><br><span class="line">433</span><br><span class="line">434</span><br><span class="line">435</span><br><span class="line">436</span><br><span class="line">437</span><br><span class="line">438</span><br><span class="line">439</span><br><span class="line">440</span><br><span class="line">441</span><br><span class="line">442</span><br><span class="line">443</span><br><span class="line">444</span><br><span class="line">445</span><br><span class="line">446</span><br><span class="line">447</span><br><span class="line">448</span><br><span class="line">449</span><br><span class="line">450</span><br><span class="line">451</span><br><span class="line">452</span><br><span class="line">453</span><br><span class="line">454</span><br><span class="line">455</span><br><span class="line">456</span><br><span class="line">457</span><br><span class="line">458</span><br><span class="line">459</span><br><span class="line">460</span><br><span class="line">461</span><br><span class="line">462</span><br><span class="line">463</span><br><span class="line">464</span><br><span class="line">465</span><br><span class="line">466</span><br><span class="line">467</span><br><span class="line">468</span><br><span class="line">469</span><br><span class="line">470</span><br><span class="line">471</span><br><span class="line">472</span><br><span class="line">473</span><br><span class="line">474</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.taimeitech.pass.fs.hls.util;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.google.common.collect.Lists;</span><br><span class="line"><span class="keyword">import</span> com.taimeitech.pass.fs.hls.conf.ResolutionEnum;</span><br><span class="line"><span class="keyword">import</span> com.taimeitech.pass.fs.hls.dto.FfmpegParam;</span><br><span class="line"><span class="keyword">import</span> com.taimeitech.pass.fs.hls.dto.VideoInfo;</span><br><span class="line"><span class="keyword">import</span> com.taimeitech.pass.fs.hls.dto.VideoResolution;</span><br><span class="line"><span class="keyword">import</span> lombok.Cleanup;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.io.FileUtils;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.lang3.StringUtils;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.Logger;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.LoggerFactory;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.BufferedReader;</span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"><span class="keyword">import</span> java.io.InputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.InputStreamReader;</span><br><span class="line"><span class="keyword">import</span> java.nio.charset.StandardCharsets;</span><br><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">import</span> java.util.Locale;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.CompletableFuture;</span><br><span class="line"><span class="keyword">import</span> java.util.concurrent.TimeUnit;</span><br><span class="line"><span class="keyword">import</span> java.util.regex.Matcher;</span><br><span class="line"><span class="keyword">import</span> java.util.regex.Pattern;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 转换工具</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> cong.zheng</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 2021/5/20 17:48</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">FfmpegUtils</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">H264</span> <span class="operator">=</span> <span class="string">&quot;h264&quot;</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">HEVC</span> <span class="operator">=</span> <span class="string">&quot;hevc&quot;</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String  MPEG2VIDEO= <span class="string">&quot;mpeg2video&quot;</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">MPEG4</span> <span class="operator">=</span> <span class="string">&quot;mpeg4&quot;</span>;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 日志</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">Logger</span> <span class="variable">log</span> <span class="operator">=</span> LoggerFactory.getLogger(FfmpegUtils.class);</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 本地的ffmpeg.exe路径,注意添加环境变量</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">FFMPEG_PATH</span> <span class="operator">=</span> <span class="string">&quot;ffmpeg&quot;</span>;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 支持的视频格式</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> ArrayList&lt;String&gt; SUPPORT_TYPE = Lists.newArrayList(<span class="string">&quot;wmv&quot;</span>, <span class="string">&quot;mov&quot;</span>, <span class="string">&quot;mp4&quot;</span>, <span class="string">&quot;flv&quot;</span>, <span class="string">&quot;avi&quot;</span>);</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 不支持的视频格式</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> ArrayList&lt;String&gt; NOT_SUPPORT_TYPE = Lists.newArrayList(<span class="string">&quot;wmv9&quot;</span>, <span class="string">&quot;rm&quot;</span>, <span class="string">&quot;rmvb&quot;</span>);</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 支持硬解转码的编码类型，h265对前端不友好</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> ArrayList&lt;String&gt; SUPPORT_CUVID_ENCODE = Lists.newArrayList(H264, MPEG2VIDEO, MPEG4, HEVC);</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取视频长度的正则</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">REGEX_DURATION</span> <span class="operator">=</span> <span class="string">&quot;Duration: (.*?), start: (.*?), bitrate: (\\d*) kb\\/s&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">REGEX_VIDEO</span> <span class="operator">=</span> <span class="string">&quot;Video: (.*?), (.*?), (.*?)[,\\s]&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 简单的视频转换</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * &lt;p&gt;</span></span><br><span class="line"><span class="comment">     * ffmpeg.exe -i .\test2.mp4 -c:v copy -c:a copy -f hls -hls_time 3</span></span><br><span class="line"><span class="comment">     * -hls_playlist_type vod test2.m3u8</span></span><br><span class="line"><span class="comment">     * &lt;/p&gt;</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> inputPath  输入路径</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> outputPath 视频输出路径</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> String <span class="title function_">transVideo</span><span class="params">(String inputPath, String outputPath)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> transVideo(inputPath, outputPath, <span class="literal">null</span>, <span class="literal">null</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 从输出中获取视频信息</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> result 转码输出信息</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 视频信息</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Long <span class="title function_">regInfo</span><span class="params">(String result)</span> &#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 获取视频时长</span></span><br><span class="line">        <span class="type">Pattern</span> <span class="variable">patternDuration</span> <span class="operator">=</span> Pattern.compile(REGEX_DURATION);</span><br><span class="line">        <span class="type">Matcher</span> <span class="variable">matcherDuration</span> <span class="operator">=</span> patternDuration.matcher(result);</span><br><span class="line">        <span class="keyword">if</span> (matcherDuration.find()) &#123;</span><br><span class="line">            <span class="type">String</span> <span class="variable">duration</span> <span class="operator">=</span> matcherDuration.group(<span class="number">1</span>);</span><br><span class="line">            <span class="keyword">if</span> (StringUtils.isNotBlank(duration) &amp;&amp; duration.indexOf(<span class="string">&#x27;:&#x27;</span>) &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">                String[] time = duration.split(<span class="string">&quot;:&quot;</span>);</span><br><span class="line">                <span class="type">int</span> <span class="variable">hour</span> <span class="operator">=</span> Integer.parseInt(time[<span class="number">0</span>]);</span><br><span class="line">                <span class="type">int</span> <span class="variable">minute</span> <span class="operator">=</span> Integer.parseInt(time[<span class="number">1</span>]);</span><br><span class="line">                <span class="type">int</span> <span class="variable">second</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">                <span class="keyword">if</span> (time[<span class="number">2</span>].indexOf(<span class="string">&#x27;.&#x27;</span>) &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">                    second = Integer.parseInt(time[<span class="number">2</span>].substring(<span class="number">0</span>, time[<span class="number">2</span>].indexOf(<span class="string">&#x27;.&#x27;</span>)));</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    second = Integer.parseInt(time[<span class="number">2</span>]);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> (<span class="type">long</span>) ((hour * <span class="number">60</span> * <span class="number">60</span>) + (minute * <span class="number">60</span>) + second);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> VideoInfo <span class="title function_">getVideoInfo</span><span class="params">(String fileUrl)</span> &#123;</span><br><span class="line">        <span class="type">VideoInfo</span> <span class="variable">videoInfo</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">VideoInfo</span>();</span><br><span class="line">        <span class="keyword">if</span> (StringUtils.isNotBlank(fileUrl)) &#123;</span><br><span class="line">            <span class="type">String</span> <span class="variable">buildFfprobe</span> <span class="operator">=</span> buildFfprobe(fileUrl);</span><br><span class="line">            <span class="type">String</span> <span class="variable">doExec</span> <span class="operator">=</span> doExec(buildFfprobe);</span><br><span class="line">            <span class="keyword">return</span> regInfo(doExec, videoInfo);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> videoInfo;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取视频文件信息的命令</span></span><br><span class="line"><span class="comment">     * </span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> fileUrl 文件地址</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 命令</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> String <span class="title function_">buildFfprobe</span><span class="params">(String fileUrl)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;ffprobe&quot;</span> + <span class="string">&quot; -hide_banner&quot;</span> + <span class="string">&quot; &quot;</span> + fileUrl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 从输出中获取视频信息</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> result 转码输出信息</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 视频信息</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> VideoInfo <span class="title function_">regInfo</span><span class="params">(String result, VideoInfo vi)</span> &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (StringUtils.isNotEmpty(result)) &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="literal">null</span> == vi) &#123;</span><br><span class="line">                vi = <span class="keyword">new</span> <span class="title class_">VideoInfo</span>();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 获取视频时长</span></span><br><span class="line">            <span class="type">Pattern</span> <span class="variable">patternDuration</span> <span class="operator">=</span> Pattern.compile(REGEX_DURATION);</span><br><span class="line">            <span class="type">Matcher</span> <span class="variable">matcherDuration</span> <span class="operator">=</span> patternDuration.matcher(result);</span><br><span class="line">            <span class="keyword">if</span> (matcherDuration.find()) &#123;</span><br><span class="line">                <span class="type">String</span> <span class="variable">duration</span> <span class="operator">=</span> matcherDuration.group(<span class="number">1</span>);</span><br><span class="line">                <span class="keyword">if</span> (StringUtils.isNotBlank(duration) &amp;&amp; duration.indexOf(<span class="string">&#x27;:&#x27;</span>) &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">                    String[] time = duration.split(<span class="string">&quot;:&quot;</span>);</span><br><span class="line">                    <span class="type">int</span> <span class="variable">hour</span> <span class="operator">=</span> Integer.parseInt(time[<span class="number">0</span>]);</span><br><span class="line">                    <span class="type">int</span> <span class="variable">minute</span> <span class="operator">=</span> Integer.parseInt(time[<span class="number">1</span>]);</span><br><span class="line">                    <span class="type">int</span> <span class="variable">second</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">                    <span class="keyword">if</span> (time[<span class="number">2</span>].indexOf(<span class="string">&#x27;.&#x27;</span>) &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">                        second = Integer.parseInt(time[<span class="number">2</span>].substring(<span class="number">0</span>, time[<span class="number">2</span>].indexOf(<span class="string">&#x27;.&#x27;</span>)));</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        second = Integer.parseInt(time[<span class="number">2</span>]);</span><br><span class="line">                    &#125;</span><br><span class="line">                    vi.setDuration((<span class="type">long</span>) ((hour * <span class="number">60</span> * <span class="number">60</span>) + (minute * <span class="number">60</span>) + second));</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="type">Pattern</span> <span class="variable">patternVideo</span> <span class="operator">=</span> Pattern.compile(REGEX_VIDEO);</span><br><span class="line">            <span class="type">Matcher</span> <span class="variable">matcherVideo</span> <span class="operator">=</span> patternVideo.matcher(result);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (matcherVideo.find()) &#123;</span><br><span class="line"></span><br><span class="line">                String[] wh = matcherVideo.group(<span class="number">3</span>).split(<span class="string">&quot;x&quot;</span>);</span><br><span class="line">                <span class="keyword">if</span> (wh.length == <span class="number">2</span>) &#123;</span><br><span class="line">                    vi.setResolution(<span class="keyword">new</span> <span class="title class_">VideoResolution</span>(Integer.valueOf(wh[<span class="number">0</span>]), Integer.valueOf(wh[<span class="number">1</span>])));</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="type">String</span> <span class="variable">format</span> <span class="operator">=</span> matcherVideo.group(<span class="number">1</span>);</span><br><span class="line">                <span class="keyword">if</span> (StringUtils.isNotBlank(format)) &#123;</span><br><span class="line">                    vi.setFormat(format.split(<span class="string">&quot; &quot;</span>)[<span class="number">0</span>]);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> vi;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 文件转码加密</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> inputPath  输入文件</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> outputPath 输出文件</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> keyinfo    密钥文件</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 转码是否成功</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> String <span class="title function_">transVideo</span><span class="params">(String inputPath, String outputPath, String keyinfo)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> transVideo(inputPath, outputPath, keyinfo, <span class="literal">null</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 文件转码加密</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> inputPath  输入文件</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> outputPath 输出文件</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> keyinfo    密钥文件</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> watermark  水印</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 转码是否成功</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> String <span class="title function_">transVideo</span><span class="params">(String inputPath, String outputPath, String keyinfo, String watermark)</span> &#123;</span><br><span class="line">        <span class="type">StringBuilder</span> <span class="variable">command</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();</span><br><span class="line">        command.append(FFMPEG_PATH).append(<span class="string">&quot; -i&quot;</span>).append(<span class="string">&quot; &quot;</span>).append(inputPath);</span><br><span class="line">        <span class="keyword">if</span> (StringUtils.isNotBlank(keyinfo)) &#123;</span><br><span class="line">            <span class="comment">// -hls_key_info_file enc.keyinfo</span></span><br><span class="line">            command.append(<span class="string">&quot; -hls_key_info_file&quot;</span>).append(<span class="string">&quot; &quot;</span>).append(keyinfo);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (StringUtils.isNotBlank(watermark)) &#123;</span><br><span class="line">            <span class="comment">// -vf &quot;drawtext=fontfile=sarasa.ttf:text=&#x27;Taimei&#x27;:</span></span><br><span class="line">            <span class="comment">// y=h-line_h-10:x=(mod(2*n\,w+tw)-tw):fontsize=34:fontcolor=yellow:shadowy=2&quot;</span></span><br><span class="line">            command.append(<span class="string">&quot; -vf&quot;</span>).append(<span class="string">&quot; &quot;</span>).append(<span class="string">&quot;drawtext=fontfile=sarasa.ttf:text=&quot;</span>).append(watermark)</span><br><span class="line">                    .append(<span class="string">&quot;: y=h-line_h-10:x=(mod(2*n\\,w+tw)-tw):fontsize=34:fontcolor=yellow:shadowy=2&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        command.append(<span class="string">&quot; -c:v&quot;</span>).append(<span class="string">&quot; copy&quot;</span>).append(<span class="string">&quot; -c:a&quot;</span>).append(<span class="string">&quot; copy&quot;</span>).append(<span class="string">&quot; -f&quot;</span>).append(<span class="string">&quot; hls&quot;</span>)</span><br><span class="line">                .append(<span class="string">&quot; hls_time&quot;</span>).append(<span class="string">&quot; 10&quot;</span>).append(<span class="string">&quot; -hls_list_size&quot;</span>).append(<span class="string">&quot; 0&quot;</span>).append(<span class="string">&quot; -y&quot;</span>).append(<span class="string">&quot; &quot;</span>)</span><br><span class="line">                .append(outputPath);</span><br><span class="line">        <span class="keyword">return</span> doExec(command.toString());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 文件转码加密</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> param</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 转码是否成功</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Boolean <span class="title function_">transVideoDefinition</span><span class="params">(FfmpegParam param)</span> &#123;</span><br><span class="line">        <span class="type">boolean</span> <span class="variable">flag</span> <span class="operator">=</span> <span class="literal">false</span>;</span><br><span class="line">        <span class="comment">// GPU转码</span></span><br><span class="line">        <span class="keyword">if</span> (isGPUAvailable().equalsIgnoreCase(<span class="string">&quot;gpu&quot;</span>) &amp;&amp; SUPPORT_CUVID_ENCODE.contains(param.getEncodeFormat())) &#123;</span><br><span class="line">            log.info(<span class="string">&quot;开始GPU转码&quot;</span>);</span><br><span class="line">            flag = doExecResult(buildFfcmdWithGpu(param));</span><br><span class="line">        &#125;<span class="keyword">else</span></span><br><span class="line">            <span class="comment">// 优先使用GPU，如果GPU转码失败 则换成CPU</span></span><br><span class="line">        &#123;</span><br><span class="line">            log.info(<span class="string">&quot;开始CPU转码&quot;</span>);</span><br><span class="line">            flag = doExecResult(buildFfcmdWithCpu(param));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> flag;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * cpu指令</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> param</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> String <span class="title function_">buildFfcmdWithCpu</span><span class="params">(FfmpegParam param)</span> &#123;</span><br><span class="line">        <span class="type">StringBuilder</span> <span class="variable">command</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();</span><br><span class="line">        command.append(FFMPEG_PATH)</span><br><span class="line">                .append(<span class="string">&quot; -hide_banner&quot;</span>)</span><br><span class="line">                .append(<span class="string">&quot; -y&quot;</span>)</span><br><span class="line">                .append(<span class="string">&quot; -threads&quot;</span>)</span><br><span class="line">                <span class="comment">// 指定八线程</span></span><br><span class="line">                .append(<span class="string">&quot; 8&quot;</span>).append(<span class="string">&quot; -i&quot;</span>).append(<span class="string">&quot; &quot;</span>).append(param.getInputPath());</span><br><span class="line">        <span class="comment">// 输出多种分辨率</span></span><br><span class="line">        <span class="keyword">for</span> (ResolutionEnum anEnum : ResolutionEnum.values()) &#123;</span><br><span class="line">            command.append(<span class="string">&quot; -s&quot;</span>).append(<span class="string">&quot; &quot;</span>).append(anEnum.getResolution()).append(<span class="string">&quot; -c:a&quot;</span>).append(<span class="string">&quot; copy&quot;</span>)</span><br><span class="line">                    .append(<span class="string">&quot; -f&quot;</span>).append(<span class="string">&quot; hls&quot;</span>);</span><br><span class="line">            <span class="keyword">if</span> (StringUtils.isNotBlank(param.getKeyInfo())) &#123;</span><br><span class="line">                <span class="comment">// -hls_key_info_file enc.keyinfo</span></span><br><span class="line">                command.append(<span class="string">&quot; -hls_key_info_file&quot;</span>).append(<span class="string">&quot; &quot;</span>).append(param.getKeyInfo());</span><br><span class="line">            &#125;</span><br><span class="line">            command.append(<span class="string">&quot; -hls_time&quot;</span>).append(<span class="string">&quot; 10&quot;</span>).append(<span class="string">&quot; -hls_list_size&quot;</span>).append(<span class="string">&quot; 0&quot;</span>).append(<span class="string">&quot; &quot;</span>)</span><br><span class="line">                    .append(param.getOutPathMap().get(anEnum.getTitle()));</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> command.toString();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 文件转码加密GPU版本</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> param 转码参数</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 转码是否成功</span></span><br><span class="line"><span class="comment">     *         &lt;p&gt;</span></span><br><span class="line"><span class="comment">     *         time ffmpeg -y -vsync 0 -hwaccel cuda -hwaccel_output_format cuda -i</span></span><br><span class="line"><span class="comment">     *         https://file.trialos.com/resources/8a8181a0796656ba01799d8eb7d02d04.mp4</span></span><br><span class="line"><span class="comment">     *         \ -vf scale_cuda=1920:1080 -c:a copy -c:v h264_nvenc -b:v 5M</span></span><br><span class="line"><span class="comment">     *         -hls_playlist_type vod 1_1080.m3u8 \ -vf scale_cuda=1280:720 -c:a</span></span><br><span class="line"><span class="comment">     *         copy -c:v h264_nvenc -b:v 5M -hls_playlist_type vod 1_720.m3u8 \ -vf</span></span><br><span class="line"><span class="comment">     *         scale_cuda=720:480 -c:a copy -c:v h264_nvenc -b:v 5M</span></span><br><span class="line"><span class="comment">     *         -hls_playlist_type vod 1_480.m3u8</span></span><br><span class="line"><span class="comment">     *         &lt;/p&gt;</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> String <span class="title function_">buildFfcmdWithGpu</span><span class="params">(FfmpegParam param)</span> &#123;</span><br><span class="line">        <span class="type">StringBuilder</span> <span class="variable">command</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();</span><br><span class="line">        command.append(FFMPEG_PATH)</span><br><span class="line">                .append(<span class="string">&quot; -hide_banner&quot;</span>)</span><br><span class="line">                .append(<span class="string">&quot; -y&quot;</span>)<span class="comment">// 覆盖文件</span></span><br><span class="line">                .append(<span class="string">&quot; -hwaccel cuda&quot;</span>) <span class="comment">// 指定硬件解码</span></span><br><span class="line">                .append(<span class="string">&quot; -hwaccel_output_format cuda&quot;</span>);</span><br><span class="line">        <span class="comment">// 源文件是否使用h264编码，是则使用h264硬解</span></span><br><span class="line">        <span class="keyword">if</span> (StringUtils.equals(param.getEncodeFormat(), H264))</span><br><span class="line">            command.append(<span class="string">&quot; -c:v h264_cuvid&quot;</span>);</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (StringUtils.equals(param.getEncodeFormat(), MPEG2VIDEO))</span><br><span class="line">            command.append(<span class="string">&quot; -c:v mpeg2_cuvid&quot;</span>);</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (StringUtils.equals(param.getEncodeFormat(), MPEG4))</span><br><span class="line">            command.append(<span class="string">&quot; -c:v mpeg4_cuvid&quot;</span>);</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (StringUtils.equals(param.getEncodeFormat(), HEVC))</span><br><span class="line">            command.append(<span class="string">&quot; -c:v hevc_cuvid&quot;</span>);</span><br><span class="line">        <span class="comment">// 输入</span></span><br><span class="line">        command.append(<span class="string">&quot; -i&quot;</span>).append(<span class="string">&quot; &quot;</span>).append(param.getInputPath());</span><br><span class="line">        <span class="keyword">for</span> (ResolutionEnum anEnum : ResolutionEnum.values()) &#123;</span><br><span class="line">            command.append(<span class="string">&quot; -vf&quot;</span>).append(<span class="string">&quot; scale_cuda=&quot;</span>).append(anEnum.getScale()).append(<span class="string">&quot; -c:a&quot;</span>).append(<span class="string">&quot; copy&quot;</span>)</span><br><span class="line">                    .append(<span class="string">&quot; -c:v&quot;</span>).append(<span class="string">&quot; h264_nvenc&quot;</span>)<span class="comment">// 硬件编码,统一指定h264编码</span></span><br><span class="line">                    .append(<span class="string">&quot; -b:v 5M&quot;</span>).append(<span class="string">&quot; -f&quot;</span>).append(<span class="string">&quot; hls&quot;</span>);</span><br><span class="line">            <span class="keyword">if</span> (StringUtils.isNotBlank(param.getKeyInfo())) &#123;</span><br><span class="line">                <span class="comment">// 指定加密文件</span></span><br><span class="line">                command.append(<span class="string">&quot; -hls_key_info_file&quot;</span>).append(<span class="string">&quot; &quot;</span>).append(param.getKeyInfo());</span><br><span class="line">            &#125;</span><br><span class="line">            command.append(<span class="string">&quot; -hls_list_size&quot;</span>).append(<span class="string">&quot; 0&quot;</span>).append(<span class="string">&quot; &quot;</span>)</span><br><span class="line">                    .append(param.getOutPathMap().get(anEnum.getTitle()));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> command.toString();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 执行命令并打印执行结果日志</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> command 待执行的命令</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> String <span class="title function_">doExec</span><span class="params">(String command)</span> &#123;</span><br><span class="line">        ProcessBuilder pb;</span><br><span class="line">        <span class="type">Process</span> <span class="variable">process</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        <span class="type">String</span> <span class="variable">result</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">        String[] cmds = <span class="keyword">new</span> <span class="title class_">String</span>[<span class="number">2</span>];</span><br><span class="line">        <span class="keyword">if</span> (OSUtils.WINDOWS) &#123;</span><br><span class="line">            cmds[<span class="number">0</span>] = <span class="string">&quot;cmd&quot;</span>;</span><br><span class="line">            cmds[<span class="number">1</span>] = <span class="string">&quot;/c&quot;</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            cmds[<span class="number">0</span>] = <span class="string">&quot;/bin/sh&quot;</span>;</span><br><span class="line">            cmds[<span class="number">1</span>] = <span class="string">&quot;-c&quot;</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        log.info(<span class="string">&quot;执行的命令为:&#123;&#125;&quot;</span>, Arrays.toString(cmds) + command);</span><br><span class="line">        <span class="type">long</span> <span class="variable">start</span> <span class="operator">=</span> System.currentTimeMillis();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            pb = <span class="keyword">new</span> <span class="title class_">ProcessBuilder</span>(cmds[<span class="number">0</span>], cmds[<span class="number">1</span>], command);</span><br><span class="line">            <span class="comment">// 标准错误将与标准输出合并 在此情况下，合并的数据可从 Process.getInputStream() 返回的流读取</span></span><br><span class="line">            pb.redirectErrorStream(<span class="literal">true</span>);</span><br><span class="line">            process = pb.start();</span><br><span class="line">            <span class="type">InputStream</span> <span class="variable">inputStream</span> <span class="operator">=</span> process.getInputStream();</span><br><span class="line">            CompletableFuture&lt;String&gt; future = CompletableFuture.supplyAsync(() -&gt; handler(inputStream));</span><br><span class="line">            <span class="comment">//增加超时获取，如果超出一定时间，则转码失败，不能一直阻塞进程</span></span><br><span class="line">            <span class="comment">//超时抛出异常，中断进程</span></span><br><span class="line">            result = future.get(<span class="number">1</span>,TimeUnit.HOURS);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            log.error(<span class="string">&quot;command：[&#123;&#125;] execution error，message：&#123;&#125;&quot;</span>, command,e.getMessage(), e);</span><br><span class="line">            <span class="comment">// 销毁进程</span></span><br><span class="line">            <span class="keyword">if</span> (process!=<span class="literal">null</span>)process.destroy();</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> process.waitFor();</span><br><span class="line">            <span class="keyword">if</span> (i != <span class="number">0</span>) &#123;</span><br><span class="line">                log.info(<span class="string">&quot;命令执行失败&quot;</span>);</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                log.info(<span class="string">&quot;命令执行完成，耗时：&#123;&#125; ms&quot;</span>, System.currentTimeMillis() - start);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">            log.error(<span class="string">&quot;转换出现异常，异常信息：&#123;&#125;&quot;</span>, e.getMessage(), e);</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            process.destroy();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 处理FFmpeg输出</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> stream ff的输出流</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 输出结果</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> String <span class="title function_">handler</span><span class="params">(InputStream stream)</span> &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">line</span> <span class="operator">=</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">        ArrayList&lt;String&gt; list = Lists.newArrayListWithCapacity(<span class="number">64</span>);</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="meta">@Cleanup</span></span><br><span class="line">            <span class="type">BufferedReader</span> <span class="variable">reader</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BufferedReader</span>(<span class="keyword">new</span> <span class="title class_">InputStreamReader</span>(stream, StandardCharsets.UTF_8));</span><br><span class="line">            <span class="keyword">while</span> ((line = reader.readLine()) != <span class="literal">null</span>) &#123;</span><br><span class="line">                <span class="comment">// 判断是否出现错误信息，停止转码</span></span><br><span class="line">                <span class="comment">// 由于视频使用的编码器的问题，可能不支持GPU硬解</span></span><br><span class="line">                <span class="keyword">if</span> (StringUtils.containsIgnoreCase(line, <span class="string">&quot;error&quot;</span>))&#123;</span><br><span class="line">                    log.info(<span class="string">&quot;ffmpeg视频转码出现错误，转码失败，错误信息：&#123;&#125;&quot;</span>,line);</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span>(list.size()&lt;<span class="number">64</span>)&#123;</span><br><span class="line">                    list.add(line);</span><br><span class="line">                &#125;</span><br><span class="line">                log.info(<span class="string">&quot;Stream result：&#123;&#125;&quot;</span>, line);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            log.error(<span class="string">&quot;cmd error:&#123;&#125;&quot;</span>, e.getMessage(), e);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> String.join(<span class="string">&quot;\n&quot;</span>, list);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 执行命令并打印执行结果日志</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> command 待执行的命令</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 解析视频时长</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Boolean <span class="title function_">doExecResult</span><span class="params">(String command)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> doExec(command) != <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 合并视频</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> inputPath</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> outputPath</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">mergeVedio</span><span class="params">(String inputPath, String outputPath)</span> &#123;</span><br><span class="line"></span><br><span class="line">        <span class="type">StringBuffer</span> <span class="variable">command</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuffer</span>();</span><br><span class="line">        command.append(FFMPEG_PATH);</span><br><span class="line">        command.append(<span class="string">&quot; -y&quot;</span>);</span><br><span class="line">        command.append(<span class="string">&quot; -allowed_extensions&quot;</span>);</span><br><span class="line">        command.append(<span class="string">&quot; ALL&quot;</span>);</span><br><span class="line">        command.append(<span class="string">&quot; -i&quot;</span>);</span><br><span class="line">        command.append(<span class="string">&quot; &quot;</span>).append(inputPath);</span><br><span class="line">        command.append(<span class="string">&quot; -c&quot;</span>);</span><br><span class="line">        command.append(<span class="string">&quot; copy&quot;</span>);</span><br><span class="line">        command.append(<span class="string">&quot; &quot;</span>).append(outputPath);</span><br><span class="line"></span><br><span class="line">        doExec(command.toString());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 检测是否是FFmpeg支持的格式</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> inputPath</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 是否是支持的类型，0支持，1，暂时不支持，-1类型，不支持</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Integer <span class="title function_">checkContentType</span><span class="params">(String inputPath)</span> &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">type</span> <span class="operator">=</span> StringUtils.substring(inputPath, inputPath.lastIndexOf(<span class="string">&quot;.&quot;</span>) + <span class="number">1</span>, inputPath.length())</span><br><span class="line">                .toLowerCase(Locale.ROOT);</span><br><span class="line">        <span class="keyword">if</span> (SUPPORT_TYPE.contains(type)) &#123;</span><br><span class="line">            log.info(<span class="string">&quot;文件原格式：&#123;&#125;&quot;</span>, type);</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (NOT_SUPPORT_TYPE.contains(type)) &#123;</span><br><span class="line">            <span class="comment">// TODO 未来可能支持，采用mencoder转码</span></span><br><span class="line">            log.info(<span class="string">&quot;该格式&#123;&#125;暂时不支持&quot;</span>, type);</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        log.info(<span class="string">&quot;不支持的格式：&#123;&#125;&quot;</span>, type);</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * GPU是否可用</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> cpu/gpu</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> String <span class="title function_">isGPUAvailable</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">notFound</span> <span class="operator">=</span> <span class="string">&quot;command not found&quot;</span>;</span><br><span class="line">        <span class="type">String</span> <span class="variable">cmd</span> <span class="operator">=</span> <span class="string">&quot;nvidia-smi&quot;</span>;</span><br><span class="line">        <span class="type">String</span> <span class="variable">s</span> <span class="operator">=</span> doExec(cmd);</span><br><span class="line">        <span class="keyword">if</span> (StringUtils.contains(s, notFound))</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;cpu&quot;</span>;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;gpu&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</div>
+        </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/ffmpeg/" rel="tag">ffmpeg</a>
+                </div>
+                <div class="pull-date">
+                    <time datetime="2025-11-21T06:36:31.550Z" itemprop="dateModified">最后编辑：2025-11-21</time>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" shell执行时间计时以及写入文件" href="/2021/06/15/2021/06/152258/">&lt; 上一篇</a>
+            </div>
+            
+            
+            <div class="nav-next clearfix">
+                <a title=" wsl2" href="/2021/06/24/2021/06/242211/">下一篇 &gt;</a>
+            </div>
+            
+        </nav>
+    
+    
+        <link rel="stylesheet" href="/vendors/gitalk@1.7.2/dist/gitalk.css"></script>
+<div id="gitalk-container" class="post-comments lazy-load" style="padding-left:2rem; padding-right:2rem;"></div>
+<script>
+    var load_comm = () => {
+        const init = () => {
+            console.log('Gitalk loading...');
+            const gitalk = new Gitalk(Object.assign({
+                id: '/2021/06/22/2021/06/222237/',
+                path: '/2021/06/22/2021/06/222237/'
+            }, JSON.parse('{"clientID":"56e6a743c63b9c4faa93","clientSecret":"888b7234051c5c2ed6ea7bdf18e8b5a2678775f1","repo":"gitalk-comments","owner":"qbmzc","admin":["qbmzc"]}')));
+
+            gitalk.render('gitalk-container');
+        }
+        if (typeof Gitalk === 'undefined') {
+            const src = '/vendors/gitalk@1.7.2/dist/gitalk.min.js';
+            $.getScript(src, init);
+        } else {
+            init();
+        }
+    };
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a></noscript>
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/avatar.webp" loading="lazy" decoding="auto" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center">流云与风，苍穹游牧</p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                499
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                8
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                229
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">137</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">151</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">29</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/congco/">congco</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/work/">work</a><span class="category-list-count">118</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wuw/">wuw</a><span class="category-list-count">48</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/">技术笔记</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/AES/" style="font-size: 0.6em;">AES</a> <a href="/tags/AI/" style="font-size: 0.7em;">AI</a> <a href="/tags/AWS/" style="font-size: 0.7em;">AWS</a> <a href="/tags/Arch/" style="font-size: 0.6em;">Arch</a> <a href="/tags/Arch-Linux/" style="font-size: 0.8em;">Arch Linux</a> <a href="/tags/ArchLinux/" style="font-size: 0.8em;">ArchLinux</a> <a href="/tags/CAS/" style="font-size: 0.6em;">CAS</a> <a href="/tags/CI-CD/" style="font-size: 0.6em;">CI/CD</a> <a href="/tags/Caffeine/" style="font-size: 0.6em;">Caffeine</a> <a href="/tags/CompletableFuture/" style="font-size: 0.7em;">CompletableFuture</a> <a href="/tags/DNS/" style="font-size: 0.8em;">DNS</a> <a href="/tags/Docker/" style="font-size: 0.6em;">Docker</a> <a href="/tags/Flask/" style="font-size: 0.6em;">Flask</a> <a href="/tags/Future/" style="font-size: 0.7em;">Future</a> <a href="/tags/GC/" style="font-size: 0.6em;">GC</a> <a href="/tags/GPT/" style="font-size: 0.6em;">GPT</a> <a href="/tags/GraalVM/" style="font-size: 0.8em;">GraalVM</a> <a href="/tags/HashMap/" style="font-size: 0.6em;">HashMap</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/14/2025/11/141727/"><i class="fa  fa-book"></i> karakeep</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111335/"><i class="fa  fa-book"></i> SonarQube 扫描支持多 JDK 版本的实践方案</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111045/"><i class="fa  fa-book"></i> 一次修复 PDF 中文乱码的排查记录</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/23/2025/10/221500/"><i class="fa  fa-book"></i> dig命令使用详解</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/13/2025/10/131645/"><i class="fa  fa-book"></i> DNS解析异常导致视频播放缓慢问题排查与解决</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  >
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        <li><a href="mailto:congco@foxmail.com"><i class="fa fa-envelope"></i></a></li>
+                        
+                        
+                        
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://github.com/qbmzc"><i class="fa fa-github"></i></a></li>
+                        <li><a target="_blank" rel="nofollow" href="/rss.xml"><i class="fa fa-rss"></i></a></li>
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2025 沐曦留曳 版权所有.</li>
+                            <li>本站已运行<span id="span_dt">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
+                            <li>Site built with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by cong.</li>
+                        </div>
+                        <div>
+                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
+                            <li>Hosted on <a href="https://github.io" target="_blank">Github Pages</a></li>
+                        </div>
+                        <div>
+                            
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="/vendors/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="/vendors/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+
+    <script defer src="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="/vendors/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>

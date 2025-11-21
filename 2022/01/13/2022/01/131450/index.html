@@ -1,0 +1,1496 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="/images/favicon.ico">
+  
+  <title>Java8中Lambda表达式示例 | 沐曦留曳</title>
+  <meta name="author" content="cong" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="java" />
+  
+  <meta property="og:type" content="article">
+<meta property="og:title" content="Java8中Lambda表达式示例">
+<meta property="og:url" content="https://qbmzc.github.io/2022/01/13/2022/01/131450/index.html">
+<meta property="og:site_name" content="沐曦留曳">
+<meta property="og:locale">
+<meta property="og:image" content="https://qbmzc.github.io/images/favicon.ico">
+<meta property="article:published_time" content="2022-01-12T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-11-21T06:36:31.554Z">
+<meta property="article:author" content="cong">
+<meta property="article:tag" content="java">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://qbmzc.github.io/images/favicon.ico">
+  <link rel="alternate" href="rss.xml" type="application/atom+xml">
+  <!-- 站点验证相关 -->
+  
+    
+      <meta name="google-site-verification" content="lV4cead5YlJ8KpODToP7dvzi-ihrxSqU0yYStYKj2ao" />
+    
+    
+      <meta name="baidu-site-verification" content="codeva-Zr6WlkDupK" />
+    
+    
+      <meta name="msvalidate.01" content="2D2197DEE362D193B3EC29AFD3306341" />
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" media="all"></script>
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-color-dark.min.css" media="(prefers-color-scheme: dark)"></script>
+    <script src="/js/kr-dark.min.js"></script>
+  
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" media="all"></script>
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="/vendors/font-awesome@4.7.0/css/font-awesome.min.css" media="all"></script>
+  <link rel="stylesheet" id="nprogress-css" href="/vendors/nprogress@0.2.0/nprogress.css" media="all"></script>
+  
+  
+  
+    <link rel="stylesheet" href="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css"></script>
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="/vendors/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/banner.webp');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">沐曦留曳</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>沐曦留曳</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article itemscope itemtype="https://schema.org/Article">
+    
+    <link itemprop="mainEntityOfPage" href="https://qbmzc.github.io/2022/01/13/2022/01/131450/">
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center" itemprop="name headline">Java8中Lambda表达式示例</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><time datetime="2022-01-12T16:00:00.000Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2022-01-13</time></li>
+                <li itemprop="author" itemscope itemtype="https://schema.org/Person">
+                    <i class="fa fa-user"></i> 作者 <span itemprop="name">cong</span>
+                </li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~8.26K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1763706991554"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+            
+            <hr />
+            <div itemprop="articleBody"><p><img src="https://fastly.jsdelivr.net/gh/qbmzc/images/2022/202201131400798.png" alt="202201131400798"></p>
+<span id="more"></span>
+
+<h2 id="例1-用Lambda表达式实现Runnable接口"><a href="#例1-用Lambda表达式实现Runnable接口" class="headerlink" title="例1 用Lambda表达式实现Runnable接口"></a>例1 用Lambda表达式实现Runnable接口</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Before Java 8:  </span></span><br><span class="line"><span class="keyword">new</span> <span class="title class_">Thread</span>(<span class="keyword">new</span> <span class="title class_">Runnable</span>() &#123;  </span><br><span class="line"><span class="meta">@Override</span>  </span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;  </span><br><span class="line">    System.out.println(<span class="string">&quot;Before Java8, too much code for too little to do&quot;</span>);  </span><br><span class="line">&#125;  </span><br><span class="line">&#125;).start();  </span><br><span class="line"><span class="comment">//Java 8 way:  </span></span><br><span class="line"><span class="keyword">new</span> <span class="title class_">Thread</span>( () -&gt; System.out.println(<span class="string">&quot;In Java8, Lambda expression rocks !!&quot;</span>) ).start();  </span><br></pre></td></tr></table></figure>
+
+<p>输出: </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">too much code, <span class="keyword">for</span> too little to <span class="keyword">do</span> </span><br><span class="line">Lambda expression rocks !! </span><br></pre></td></tr></table></figure>
+
+<p>这个例子使我们学到了java8中Lambda表达式的书写方式：<br>(参数) -&gt; 表达式<br>(参数) -&gt; 语句<br>(参数) -&gt; { 语句 }<br>例如，如果你的方法只是在控制台打印信息，则可以这么写： </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">() -&gt; System.out.println(<span class="string">&quot;Hello Lambda Expressions&quot;</span>);  </span><br></pre></td></tr></table></figure>
+
+<p>如果你的方法接收两个参数，那么： </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(<span class="type">int</span> even, <span class="type">int</span> odd) -&gt; even + odd  </span><br></pre></td></tr></table></figure>
+
+<p>顺带提一句，一般来说在Lambda表达式中要尽量保持变量的简洁性。这会使你的代码简短而能保持在一行之内。所以像上面的代码可以选择变量名类似a,b或者x,y之类的，比起even和odd来会更好。 </p>
+<h2 id="例2-用Lambda表达式写事件监听程序"><a href="#例2-用Lambda表达式写事件监听程序" class="headerlink" title="例2 用Lambda表达式写事件监听程序"></a>例2 用Lambda表达式写事件监听程序</h2><p>要是你用过Swing API，那就少不了事件监听代码，这是使用匿名类的经典例子。现在我们可以用Lambda表达式来抒写更好的事件处理代码。 </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Before Java 8:  </span></span><br><span class="line"><span class="type">JButton</span> <span class="variable">show</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">JButton</span>(<span class="string">&quot;Show&quot;</span>);  </span><br><span class="line">show.addActionListener(<span class="keyword">new</span> <span class="title class_">ActionListener</span>() &#123;  </span><br><span class="line">    <span class="meta">@Override</span>  </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">actionPerformed</span><span class="params">(ActionEvent e)</span> &#123;  </span><br><span class="line">        System.out.println(<span class="string">&quot;Event handling without lambda expression is boring&quot;</span>);  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;);  </span><br><span class="line"><span class="comment">// Java 8 way:  </span></span><br><span class="line">show.addActionListener((e) -&gt; &#123;  </span><br><span class="line">    System.out.println(<span class="string">&quot;Light, Camera, Action !! Lambda expressions Rocks&quot;</span>);  </span><br><span class="line">&#125;);  </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>另外一个常用匿名类的地方是给Collections.sort()方法提供自定义的Comparator接口实现。这个地方也可以用Lambda表达式。 </p>
+<h2 id="例3-用Lambda表达式进行List迭代"><a href="#例3-用Lambda表达式进行List迭代" class="headerlink" title="例3 用Lambda表达式进行List迭代"></a>例3 用Lambda表达式进行List迭代</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Prior Java 8 :  </span></span><br><span class="line"><span class="type">List</span> <span class="variable">features</span> <span class="operator">=</span> Arrays.asList(<span class="string">&quot;Lambdas&quot;</span>, <span class="string">&quot;Default Method&quot;</span>, <span class="string">&quot;Stream API&quot;</span>, <span class="string">&quot;Date and Time API&quot;</span>);  </span><br><span class="line"><span class="keyword">for</span> (String feature : features) &#123;  </span><br><span class="line">    System.out.println(feature);  </span><br><span class="line">&#125;  </span><br><span class="line"><span class="comment">//In Java 8:  </span></span><br><span class="line"><span class="type">List</span> <span class="variable">features</span> <span class="operator">=</span> Arrays.asList(<span class="string">&quot;Lambdas&quot;</span>, <span class="string">&quot;Default Method&quot;</span>, <span class="string">&quot;Stream API&quot;</span>, <span class="string">&quot;Date and Time API&quot;</span>);  </span><br><span class="line">features.forEach(n -&gt; System.out.println(n));  </span><br></pre></td></tr></table></figure>
+
+<p>&#x2F;&#x2F; 用java8的方法引用更好，方法引用由::(双冒号)操作符来完成,看起来像c++中的作用域操作符 </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">features.forEach(System.out::println);  </span><br></pre></td></tr></table></figure>
+
+<p>输出: </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Lambdas </span><br><span class="line">Default Method </span><br><span class="line">Stream API </span><br><span class="line">Date and Time API </span><br></pre></td></tr></table></figure>
+
+<h2 id="例4-使用Lambda表达式和函数式接口Predicate"><a href="#例4-使用Lambda表达式和函数式接口Predicate" class="headerlink" title="例4 使用Lambda表达式和函数式接口Predicate"></a>例4 使用Lambda表达式和函数式接口Predicate</h2><p>除了提供函数式编程语言级别的支持外，java8同时也新增了一个新的包java.util.function。其中包含了许多类来支持java函数式编程。其中之一是Predicate接口，使用这个接口和lamb表达式就可以以更少的代码为API方法添加更多的动态行为。<br>以下是Predicate的使用范例，展示了过滤集合数据的许多共性。 </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(args[])</span>&#123;  </span><br><span class="line">    <span class="type">List</span> <span class="variable">languages</span> <span class="operator">=</span> Arrays.asList(<span class="string">&quot;Java&quot;</span>, <span class="string">&quot;Scala&quot;</span>, <span class="string">&quot;C++&quot;</span>, <span class="string">&quot;Haskell&quot;</span>, <span class="string">&quot;Lisp&quot;</span>);  </span><br><span class="line">    System.out.println(<span class="string">&quot;Languages which starts with J :&quot;</span>);  </span><br><span class="line">    filter(languages, (str)-&gt;str.startsWith(<span class="string">&quot;J&quot;</span>));  </span><br><span class="line">    System.out.println(<span class="string">&quot;Languages which ends with a &quot;</span>);  </span><br><span class="line">    filter(languages, (str)-&gt;str.endsWith(<span class="string">&quot;a&quot;</span>));  </span><br><span class="line">    System.out.println(<span class="string">&quot;Print all languages :&quot;</span>);  </span><br><span class="line">    filter(languages, (str)-&gt;<span class="literal">true</span>);  </span><br><span class="line">    System.out.println(<span class="string">&quot;Print no language : &quot;</span>);  </span><br><span class="line">    filter(languages, (str)-&gt;<span class="literal">false</span>);  </span><br><span class="line">    System.out.println(<span class="string">&quot;Print language whose length greater than 4:&quot;</span>);  </span><br><span class="line">    filter(languages, (str)-&gt;str.length() &gt; <span class="number">4</span>);  </span><br><span class="line">&#125;  </span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">filter</span><span class="params">(List names, Predicate condition)</span> &#123;  </span><br><span class="line">    <span class="keyword">for</span>(String name: names) &#123;  </span><br><span class="line">        <span class="keyword">if</span>(condition.test(name)) &#123;  </span><br><span class="line">            System.out.println(name + <span class="string">&quot; &quot;</span>);  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
+
+<p>输出: </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Languages which starts with J : </span><br><span class="line">Java </span><br><span class="line">Languages which ends with a </span><br><span class="line">Java </span><br><span class="line">Scala </span><br><span class="line">Print all languages : </span><br><span class="line">Java </span><br><span class="line">Scala </span><br><span class="line">C++ </span><br><span class="line">Haskell </span><br><span class="line">Lisp </span><br><span class="line">Print no language : </span><br><span class="line">Print language whose length greater than <span class="number">4</span>: </span><br><span class="line">Scala </span><br><span class="line">Haskell </span><br></pre></td></tr></table></figure>
+<p>Java代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//更佳的方式  </span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">filter</span><span class="params">(List names, Predicate condition)</span> &#123;  </span><br><span class="line">    names.stream().filter((name) -&gt; (condition.test(name))).forEach((name) -&gt; &#123;  </span><br><span class="line">        System.out.println(name + <span class="string">&quot; &quot;</span>);  </span><br><span class="line">    &#125;);  </span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
+
+<p>可以看到Stream API的filter方法也接受一个Predicate，意味着可以用内联代码直接替换我们自定义的filter()方法。这就是Lambda表达式的威力所在。除此之外Predicate接口也可以测试多个条件，将会在下面的例子中加以说明。</p>
+<h2 id="例5-Lambda表达式结合Predicate"><a href="#例5-Lambda表达式结合Predicate" class="headerlink" title="例5: Lambda表达式结合Predicate"></a>例5: Lambda表达式结合Predicate</h2><p>就像上个例子所说，Predicate允许组合两个以上的条件，它提供了类似于逻辑与和或的操作and(),or()和xor()，这些方法可以用来组合传递到filter方法中的多个条件。例如为了获取所有以J开头并有四个字符长度的语言，可以定义两个单独的Predicate实例覆盖每个条件然后用and方法将他们组合在一起。看例子： </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Predicate&lt;String&gt; startsWithJ = (n) -&gt; n.startsWith(<span class="string">&quot;J&quot;</span>);  </span><br><span class="line">Predicate&lt;String&gt; fourLetterLong = (n) -&gt; n.length() == <span class="number">4</span>;  </span><br><span class="line">names.stream().filter(startsWithJ.and(fourLetterLong)).forEach((n) -&gt; System.out.print(<span class="string">&quot;\nName, which starts with &#x27;J&#x27; and four letter long is : &quot;</span> + n));  </span><br></pre></td></tr></table></figure>
+
+<p>类似可以用or或者xor。这个例子也强调了单独用或者按需组合用Predicate的重要性。简而言之用Predicate和Lambda表达式的优势你可以写的更少做得更多。 </p>
+<h2 id="例6-Map和Reduce的例子"><a href="#例6-Map和Reduce的例子" class="headerlink" title="例6 Map和Reduce的例子"></a>例6 Map和Reduce的例子</h2><h3 id="6-1-Map"><a href="#6-1-Map" class="headerlink" title="6.1 Map"></a>6.1 Map</h3><p>在这个例子中，我们要将costBeforeTax的每个元素以加上他们的增值税。传递一个Lambda表达式给map方法使之应用于每个元素，之后在用forEach打印结果。 </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Without lambda expressions:  </span></span><br><span class="line"><span class="type">List</span> <span class="variable">costBeforeTax</span> <span class="operator">=</span> Arrays.asList(<span class="number">100</span>, <span class="number">200</span>, <span class="number">300</span>, <span class="number">400</span>, <span class="number">500</span>);  </span><br><span class="line"><span class="keyword">for</span> (Integer cost : costBeforeTax) &#123;  </span><br><span class="line">    <span class="type">double</span> <span class="variable">price</span> <span class="operator">=</span> cost + <span class="number">.12</span>*cost;  </span><br><span class="line">    System.out.println(price);  </span><br><span class="line">&#125;   </span><br><span class="line"><span class="comment">// With Lambda expression:  </span></span><br><span class="line"><span class="type">List</span> <span class="variable">costBeforeTax</span> <span class="operator">=</span> Arrays.asList(<span class="number">100</span>, <span class="number">200</span>, <span class="number">300</span>, <span class="number">400</span>, <span class="number">500</span>);  </span><br><span class="line">costBeforeTax.stream().map((cost) -&gt; cost + <span class="number">.12</span>*cost).forEach(System.out::println);  </span><br></pre></td></tr></table></figure>
+
+<p>输出 </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">112.0</span> </span><br><span class="line"><span class="number">224.0</span> </span><br><span class="line"><span class="number">336.0</span> </span><br><span class="line"><span class="number">448.0</span> </span><br><span class="line"><span class="number">560.0</span> </span><br><span class="line"><span class="number">112.0</span> </span><br><span class="line"><span class="number">224.0</span> </span><br><span class="line"><span class="number">336.0</span> </span><br><span class="line"><span class="number">448.0</span> </span><br><span class="line"><span class="number">560.0</span> </span><br></pre></td></tr></table></figure>
+<h3 id="6-2-Reduce"><a href="#6-2-Reduce" class="headerlink" title="6.2 Reduce"></a>6.2 Reduce</h3><p>还有另外一个函数reduce可以将所有值转换为一个值。map跟reduce操作是函数式编程的核心，reduce也被称作折叠操作。reduce并不是一种新的操作，在SQL中我们用的一些聚集函数比如sum，avg，count等他们实际上也是reduce操作，因为他们也是将多个值进行操作然后返回一个值。Stream API定义了reduce函数，可以接受一个Lambda表达式然后组合所有值。Stream类中像IntStream都有内置的方法像average(), count(), sum(), mapToLong(), mapToDouble()等转换方法。我们可以用内置的方法也可以自定义。 </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Old way:  </span></span><br><span class="line"><span class="type">List</span> <span class="variable">costBeforeTax</span> <span class="operator">=</span> Arrays.asList(<span class="number">100</span>, <span class="number">200</span>, <span class="number">300</span>, <span class="number">400</span>, <span class="number">500</span>);  </span><br><span class="line"><span class="type">double</span> <span class="variable">total</span> <span class="operator">=</span> <span class="number">0</span>;  </span><br><span class="line"><span class="keyword">for</span> (Integer cost : costBeforeTax) &#123;  </span><br><span class="line">    <span class="type">double</span> <span class="variable">price</span> <span class="operator">=</span> cost + <span class="number">.12</span>*cost;  </span><br><span class="line">    total = total + price;  </span><br><span class="line">&#125;  </span><br><span class="line">System.out.println(<span class="string">&quot;Total : &quot;</span> + total);  </span><br><span class="line"><span class="comment">// New way:  </span></span><br><span class="line"><span class="type">List</span> <span class="variable">costBeforeTax</span> <span class="operator">=</span> Arrays.asList(<span class="number">100</span>, <span class="number">200</span>, <span class="number">300</span>, <span class="number">400</span>, <span class="number">500</span>);  </span><br><span class="line"><span class="type">double</span> <span class="variable">bill</span> <span class="operator">=</span> costBeforeTax.stream().map((cost) -&gt; cost + <span class="number">.12</span>*cost).reduce((sum, cost) -&gt; sum  </span><br><span class="line">+ cost).get();  </span><br><span class="line">System.out.println(<span class="string">&quot;Total : &quot;</span> + bill);  </span><br></pre></td></tr></table></figure>
+
+<p>输出 </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Total : <span class="number">1680.0</span> </span><br><span class="line">Total : <span class="number">1680.0</span> </span><br></pre></td></tr></table></figure>
+
+<h2 id="例7-用filter创建一个字符串List"><a href="#例7-用filter创建一个字符串List" class="headerlink" title="例7 用filter创建一个字符串List"></a>例7 用filter创建一个字符串List</h2><p>在java开发中对大的集合进行过滤是常用的操作。用Lambda表达式和Stream API会让操作变得简单易懂。<br>Stream提供了一个filter()方法，接受一个Predicate对象。这意味着可以传递一个Lambda表达式作为过滤逻辑，看例子: </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//创建一个长度大于两个字符的字符串List  </span></span><br><span class="line">List&lt;String&gt; filtered = strList.stream().filter(x -&gt; x.length()&gt;  </span><br><span class="line"><span class="number">2</span>).collect(Collectors.toList());  </span><br><span class="line">System.out.printf(<span class="string">&quot;Original List : %s, filtered list : %s %n&quot;</span>, strList, filtered);  </span><br></pre></td></tr></table></figure>
+
+<p>输出 : </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Original List : [abc, , bcd, , defg, jk], filtered list : [abc, bcd, defg] </span><br></pre></td></tr></table></figure>
+
+<h2 id="例8-给每个List元素应用函数"><a href="#例8-给每个List元素应用函数" class="headerlink" title="例8 给每个List元素应用函数"></a>例8 给每个List元素应用函数</h2><p>在工作中我们经常会碰到这样的情况：给List中每个元素加以一定的操作例如乘以或者除以某个值等。这些操作用map方法再好不过了，我们可以将转换逻辑以Lambda表达式传给map方法来应用于每个元素：<br>&#x2F;&#x2F;将字符串转为大写然后用逗号连起来 </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; G7 = Arrays.asList(<span class="string">&quot;USA&quot;</span>, <span class="string">&quot;Japan&quot;</span>, <span class="string">&quot;France&quot;</span>, <span class="string">&quot;Germany&quot;</span>, <span class="string">&quot;Italy&quot;</span>,<span class="string">&quot;U.K.&quot;</span>,<span class="string">&quot;Canada&quot;</span>);  </span><br><span class="line"><span class="type">String</span> <span class="variable">G7Countries</span> <span class="operator">=</span> G7.stream().map(x -&gt; x.toUpperCase()).collect(Collectors.joining(<span class="string">&quot;, &quot;</span>));  </span><br><span class="line">System.out.println(G7Countries);  </span><br></pre></td></tr></table></figure>
+
+<p>输出: </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">USA, JAPAN, FRANCE, GERMANY, ITALY, U.K., CANADA </span><br></pre></td></tr></table></figure>
+
+<h2 id="例9-复制不同值到子列表"><a href="#例9-复制不同值到子列表" class="headerlink" title="例9 复制不同值到子列表"></a>例9 复制不同值到子列表</h2><p>本例演示如何利用Stream类的distinct方法过滤重复值到集合中。 </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Integer&gt; numbers = Arrays.asList(<span class="number">9</span>, <span class="number">10</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">7</span>, <span class="number">3</span>, <span class="number">4</span>);  </span><br><span class="line">List&lt;Integer&gt; distinct = numbers.stream().map( i -&gt;i*i).distinct().collect(Collectors.toList());  </span><br><span class="line">System.out.printf(<span class="string">&quot;Original List : %s, Square Without duplicates : %s %n&quot;</span>, numbers, distinct);  </span><br></pre></td></tr></table></figure>
+
+<p>输出 : </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Original List : [<span class="number">9</span>, <span class="number">10</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">7</span>, <span class="number">3</span>, <span class="number">4</span>], Square Without duplicates : [<span class="number">81</span>, <span class="number">100</span>, <span class="number">9</span>, <span class="number">16</span>, <span class="number">49</span>] </span><br></pre></td></tr></table></figure>
+
+<h2 id="例10-计算List中元素的最大，最小，和以及平均值"><a href="#例10-计算List中元素的最大，最小，和以及平均值" class="headerlink" title="例10 计算List中元素的最大，最小，和以及平均值"></a>例10 计算List中元素的最大，最小，和以及平均值</h2><p>在Stream类中像IntStream, LongStream and DoubleStream有一个非常有用的方法summaryStattics()，返回IntSummaryStatistics, LongSummaryStatistics or DoubleSummaryStatistics其描述了这个流中元素的统计数据。下面的例子中我们用这个方法来计算一个List中的最大最小值总和以及均值: </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Integer&gt; primes = Arrays.asList(<span class="number">2</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">11</span>, <span class="number">13</span>, <span class="number">17</span>, <span class="number">19</span>, <span class="number">23</span>, <span class="number">29</span>);  </span><br><span class="line"><span class="type">IntSummaryStatistics</span> <span class="variable">stats</span> <span class="operator">=</span> primes.stream().mapToInt((x) -&gt; x).summaryStatistics();  </span><br><span class="line">System.out.println(<span class="string">&quot;Highest prime number in List : &quot;</span> + stats.getMax());  </span><br><span class="line">System.out.println(<span class="string">&quot;Lowest prime number in List : &quot;</span> + stats.getMin());  </span><br><span class="line">System.out.println(<span class="string">&quot;Sum of all prime numbers : &quot;</span> + stats.getSum());  </span><br><span class="line">System.out.println(<span class="string">&quot;Average of all prime numbers : &quot;</span> + stats.getAverage());  </span><br></pre></td></tr></table></figure>
+
+<p>输出: </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Highest prime number in List : <span class="number">29</span> </span><br><span class="line">Lowest prime number in List : <span class="number">2</span> </span><br><span class="line">Sum of all prime numbers : <span class="number">129</span> </span><br><span class="line">Average of all prime numbers : <span class="number">12.9</span></span><br></pre></td></tr></table></figure>
+
+</div>
+        </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/java/" rel="tag">java</a>
+                </div>
+                <div class="pull-date">
+                    <time datetime="2025-11-21T06:36:31.554Z" itemprop="dateModified">最后编辑：2025-11-21</time>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" Ubuntu20.04更换清华源" href="/2022/01/11/2022/01/111040/">&lt; 上一篇</a>
+            </div>
+            
+            
+            <div class="nav-next clearfix">
+                <a title=" 一条SQL引发的OOM" href="/2022/01/14/2022/01/141038/">下一篇 &gt;</a>
+            </div>
+            
+        </nav>
+    
+    
+        <link rel="stylesheet" href="/vendors/gitalk@1.7.2/dist/gitalk.css"></script>
+<div id="gitalk-container" class="post-comments lazy-load" style="padding-left:2rem; padding-right:2rem;"></div>
+<script>
+    var load_comm = () => {
+        const init = () => {
+            console.log('Gitalk loading...');
+            const gitalk = new Gitalk(Object.assign({
+                id: '/2022/01/13/2022/01/131450/',
+                path: '/2022/01/13/2022/01/131450/'
+            }, JSON.parse('{"clientID":"56e6a743c63b9c4faa93","clientSecret":"888b7234051c5c2ed6ea7bdf18e8b5a2678775f1","repo":"gitalk-comments","owner":"qbmzc","admin":["qbmzc"]}')));
+
+            gitalk.render('gitalk-container');
+        }
+        if (typeof Gitalk === 'undefined') {
+            const src = '/vendors/gitalk@1.7.2/dist/gitalk.min.js';
+            $.getScript(src, init);
+        } else {
+            init();
+        }
+    };
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a></noscript>
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/avatar.webp" loading="lazy" decoding="auto" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center">流云与风，苍穹游牧</p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                499
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                8
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                229
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">137</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">151</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">29</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/congco/">congco</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/work/">work</a><span class="category-list-count">118</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wuw/">wuw</a><span class="category-list-count">48</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/">技术笔记</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/AES/" style="font-size: 0.6em;">AES</a> <a href="/tags/AI/" style="font-size: 0.7em;">AI</a> <a href="/tags/AWS/" style="font-size: 0.7em;">AWS</a> <a href="/tags/Arch/" style="font-size: 0.6em;">Arch</a> <a href="/tags/Arch-Linux/" style="font-size: 0.8em;">Arch Linux</a> <a href="/tags/ArchLinux/" style="font-size: 0.8em;">ArchLinux</a> <a href="/tags/CAS/" style="font-size: 0.6em;">CAS</a> <a href="/tags/CI-CD/" style="font-size: 0.6em;">CI/CD</a> <a href="/tags/Caffeine/" style="font-size: 0.6em;">Caffeine</a> <a href="/tags/CompletableFuture/" style="font-size: 0.7em;">CompletableFuture</a> <a href="/tags/DNS/" style="font-size: 0.8em;">DNS</a> <a href="/tags/Docker/" style="font-size: 0.6em;">Docker</a> <a href="/tags/Flask/" style="font-size: 0.6em;">Flask</a> <a href="/tags/Future/" style="font-size: 0.7em;">Future</a> <a href="/tags/GC/" style="font-size: 0.6em;">GC</a> <a href="/tags/GPT/" style="font-size: 0.6em;">GPT</a> <a href="/tags/GraalVM/" style="font-size: 0.8em;">GraalVM</a> <a href="/tags/HashMap/" style="font-size: 0.6em;">HashMap</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/14/2025/11/141727/"><i class="fa  fa-book"></i> karakeep</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111335/"><i class="fa  fa-book"></i> SonarQube 扫描支持多 JDK 版本的实践方案</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111045/"><i class="fa  fa-book"></i> 一次修复 PDF 中文乱码的排查记录</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/23/2025/10/221500/"><i class="fa  fa-book"></i> dig命令使用详解</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/13/2025/10/131645/"><i class="fa  fa-book"></i> DNS解析异常导致视频播放缓慢问题排查与解决</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  >
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        <li><a href="mailto:congco@foxmail.com"><i class="fa fa-envelope"></i></a></li>
+                        
+                        
+                        
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://github.com/qbmzc"><i class="fa fa-github"></i></a></li>
+                        <li><a target="_blank" rel="nofollow" href="/rss.xml"><i class="fa fa-rss"></i></a></li>
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2025 沐曦留曳 版权所有.</li>
+                            <li>本站已运行<span id="span_dt">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
+                            <li>Site built with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by cong.</li>
+                        </div>
+                        <div>
+                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
+                            <li>Hosted on <a href="https://github.io" target="_blank">Github Pages</a></li>
+                        </div>
+                        <div>
+                            
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="/vendors/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="/vendors/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+
+    <script defer src="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="/vendors/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>

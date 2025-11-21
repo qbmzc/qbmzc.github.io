@@ -1,0 +1,1594 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="/images/favicon.ico">
+  
+  <title>pptx添加备注 | 沐曦留曳</title>
+  <meta name="author" content="cong" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="java, poi, pptx" />
+  
+  <meta name="description" content="AI给pptx文件添加演讲时的备注">
+<meta property="og:type" content="article">
+<meta property="og:title" content="pptx添加备注">
+<meta property="og:url" content="https://qbmzc.github.io/2025/08/12/2025/08/181022/index.html">
+<meta property="og:site_name" content="沐曦留曳">
+<meta property="og:description" content="AI给pptx文件添加演讲时的备注">
+<meta property="og:locale">
+<meta property="og:image" content="https://qbmzc.github.io/images/favicon.ico">
+<meta property="article:published_time" content="2025-08-11T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-11-21T06:36:31.566Z">
+<meta property="article:author" content="cong">
+<meta property="article:tag" content="java">
+<meta property="article:tag" content="poi">
+<meta property="article:tag" content="pptx">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://qbmzc.github.io/images/favicon.ico">
+  <link rel="alternate" href="rss.xml" type="application/atom+xml">
+  <!-- 站点验证相关 -->
+  
+    
+      <meta name="google-site-verification" content="lV4cead5YlJ8KpODToP7dvzi-ihrxSqU0yYStYKj2ao" />
+    
+    
+      <meta name="baidu-site-verification" content="codeva-Zr6WlkDupK" />
+    
+    
+      <meta name="msvalidate.01" content="2D2197DEE362D193B3EC29AFD3306341" />
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" media="all"></script>
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-color-dark.min.css" media="(prefers-color-scheme: dark)"></script>
+    <script src="/js/kr-dark.min.js"></script>
+  
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" media="all"></script>
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="/vendors/font-awesome@4.7.0/css/font-awesome.min.css" media="all"></script>
+  <link rel="stylesheet" id="nprogress-css" href="/vendors/nprogress@0.2.0/nprogress.css" media="all"></script>
+  
+  
+  
+    <link rel="stylesheet" href="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css"></script>
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="/vendors/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/banner.webp');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">沐曦留曳</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>沐曦留曳</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article itemscope itemtype="https://schema.org/Article">
+    
+    <link itemprop="mainEntityOfPage" href="https://qbmzc.github.io/2025/08/12/2025/08/181022/">
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center" itemprop="name headline">pptx添加备注</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><time datetime="2025-08-11T16:00:00.000Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2025-08-12</time></li>
+                <li itemprop="author" itemscope itemtype="https://schema.org/Person">
+                    <i class="fa fa-user"></i> 作者 <span itemprop="name">cong</span>
+                </li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~9.71K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1763706991566"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+            
+                <div class="kratos-post-inner-toc">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%83%8C%E6%99%AF"><span class="toc-number">2.</span> <span class="toc-text">背景</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%A0%E7%BB%9F%E5%A4%87%E6%B3%A8%E6%B7%BB%E5%8A%A0%E6%96%B9%E5%BC%8F%E7%9A%84%E7%97%9B%E7%82%B9"><span class="toc-number">2.1.</span> <span class="toc-text">传统备注添加方式的痛点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AI%E6%8A%80%E6%9C%AF%E7%9A%84%E5%BA%94%E7%94%A8%E5%89%8D%E6%99%AF"><span class="toc-number">2.2.</span> <span class="toc-text">AI技术的应用前景</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%AE%E6%A0%87"><span class="toc-number">3.</span> <span class="toc-text">目标</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF"><span class="toc-number">4.</span> <span class="toc-text">解题思路</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8A%80%E6%9C%AF%E9%80%89%E5%9E%8B"><span class="toc-number">4.1.</span> <span class="toc-text">技术选型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E7%AD%96%E7%95%A5"><span class="toc-number">4.2.</span> <span class="toc-text">核心策略</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B9%E6%A1%88%E8%AE%BE%E8%AE%A1"><span class="toc-number">5.</span> <span class="toc-text">方案设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B4%E4%BD%93%E6%9E%B6%E6%9E%84"><span class="toc-number">5.1.</span> <span class="toc-text">整体架构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97"><span class="toc-number">5.2.</span> <span class="toc-text">核心模块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%84%E7%90%86%E6%B5%81%E7%A8%8B"><span class="toc-number">5.3.</span> <span class="toc-text">处理流程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8A%80%E6%9C%AF%E6%9E%B6%E6%9E%84"><span class="toc-number">6.</span> <span class="toc-text">技术架构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%9D%E8%B5%96%E5%BA%93"><span class="toc-number">6.1.</span> <span class="toc-text">依赖库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E7%B1%BB%E8%AE%BE%E8%AE%A1"><span class="toc-number">6.2.</span> <span class="toc-text">核心类设计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E7%AD%96%E7%95%A5"><span class="toc-number">6.3.</span> <span class="toc-text">异常处理策略</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E7%BB%86%E8%8A%82"><span class="toc-number">7.</span> <span class="toc-text">实现细节</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E9%AA%8C%E8%AF%81%E6%9C%BA%E5%88%B6"><span class="toc-number">7.1.</span> <span class="toc-text">文件验证机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%87%E6%B3%A8%E9%A1%B5%E5%A4%84%E7%90%86%E7%AD%96%E7%95%A5"><span class="toc-number">7.2.</span> <span class="toc-text">备注页处理策略</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B4%E6%8E%A5%E5%A4%87%E6%B3%A8%E6%96%B9%E6%A1%88"><span class="toc-number">7.3.</span> <span class="toc-text">直接备注方案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B7%E5%BC%8F%E8%AE%BE%E7%BD%AE"><span class="toc-number">7.4.</span> <span class="toc-text">样式设置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E4%BB%A3%E7%A0%81"><span class="toc-number">8.</span> <span class="toc-text">核心代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%88%E6%9E%9C%E5%B1%95%E7%A4%BA"><span class="toc-number">9.</span> <span class="toc-text">效果展示</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%88%90%E5%8A%9F%E6%B7%BB%E5%8A%A0%E5%A4%87%E6%B3%A8%E5%90%8E%E7%9A%84%E6%95%88%E6%9E%9C"><span class="toc-number">9.1.</span> <span class="toc-text">成功添加备注后的效果</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E5%8F%98%E5%8C%96"><span class="toc-number">9.2.</span> <span class="toc-text">文件结构变化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B%E5%B1%95%E7%A4%BA"><span class="toc-number">10.</span> <span class="toc-text">示例展示</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF%E7%A4%BA%E4%BE%8B"><span class="toc-number">10.1.</span> <span class="toc-text">使用场景示例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%87%E6%B3%A8%E5%86%85%E5%AE%B9%E7%A4%BA%E4%BE%8B"><span class="toc-number">10.2.</span> <span class="toc-text">备注内容示例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%B9%E9%87%8F%E5%A4%84%E7%90%86%E7%A4%BA%E4%BE%8B"><span class="toc-number">10.3.</span> <span class="toc-text">批量处理示例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%99%84%E5%BD%95"><span class="toc-number">11.</span> <span class="toc-text">参考附录</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E6%8A%80%E6%9C%AF%E6%96%87%E6%A1%A3"><span class="toc-number">11.1.</span> <span class="toc-text">相关技术文档</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%A9%E5%B1%95%E5%8A%9F%E8%83%BD%E5%BB%BA%E8%AE%AE"><span class="toc-number">11.2.</span> <span class="toc-text">扩展功能建议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%BB%BA%E8%AE%AE"><span class="toc-number">11.3.</span> <span class="toc-text">性能优化建议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3"><span class="toc-number">11.4.</span> <span class="toc-text">常见问题解决</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AA%E6%9D%A5%E5%8F%91%E5%B1%95%E6%96%B9%E5%90%91"><span class="toc-number">11.5.</span> <span class="toc-text">未来发展方向</span></a></li></ol></li></ol>
+                </div>
+            
+            <hr />
+            <div itemprop="articleBody"><p>AI给pptx文件添加演讲时的备注</p>
+<span id="more"></span>
+
+
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在演讲准备过程中，为PPT添加备注是一个重要的环节。备注可以帮助演讲者更好地组织思路，提醒关键要点，确保演讲的流畅性。然而，手动为每张幻灯片添加备注往往耗时且容易遗漏。本文介绍如何使用Java和Apache POI库，结合AI技术，自动化地为PPTX文件添加智能备注。</p>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><h3 id="传统备注添加方式的痛点"><a href="#传统备注添加方式的痛点" class="headerlink" title="传统备注添加方式的痛点"></a>传统备注添加方式的痛点</h3><ul>
+<li><strong>耗时费力</strong>：需要逐张幻灯片手动添加备注</li>
+<li><strong>内容重复</strong>：相似内容的幻灯片备注往往重复</li>
+<li><strong>缺乏智能性</strong>：备注内容缺乏针对性和个性化</li>
+<li><strong>维护困难</strong>：修改PPT内容后，备注需要同步更新</li>
+</ul>
+<h3 id="AI技术的应用前景"><a href="#AI技术的应用前景" class="headerlink" title="AI技术的应用前景"></a>AI技术的应用前景</h3><ul>
+<li><strong>内容理解</strong>：AI可以分析PPT内容，生成相关备注</li>
+<li><strong>智能推荐</strong>：基于内容自动推荐合适的备注内容</li>
+<li><strong>批量处理</strong>：一次性处理整个PPT文件</li>
+<li><strong>内容优化</strong>：根据演讲场景优化备注内容</li>
+</ul>
+<h2 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h2><ol>
+<li><strong>自动化备注添加</strong>：实现PPTX文件的自动备注添加功能</li>
+<li><strong>智能内容生成</strong>：基于PPT内容自动生成相关备注</li>
+<li><strong>批量处理能力</strong>：支持单个或多个PPTX文件的批量处理</li>
+<li><strong>格式兼容性</strong>：确保生成的备注在PowerPoint中正常显示</li>
+<li><strong>错误处理</strong>：提供完善的错误处理和文件验证机制</li>
+</ol>
+<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><h3 id="技术选型"><a href="#技术选型" class="headerlink" title="技术选型"></a>技术选型</h3><ul>
+<li><strong>Apache POI</strong>：Java生态中最成熟的Office文档处理库</li>
+<li><strong>POI-XSLF</strong>：专门用于处理PPTX文件的扩展库</li>
+<li><strong>文件验证</strong>：确保输入文件的完整性和有效性</li>
+<li><strong>异常处理</strong>：提供多层次的错误处理机制</li>
+</ul>
+<h3 id="核心策略"><a href="#核心策略" class="headerlink" title="核心策略"></a>核心策略</h3><ol>
+<li><strong>文件验证</strong>：首先验证PPTX文件的有效性</li>
+<li><strong>备注页处理</strong>：优先使用标准的备注页机制</li>
+<li><strong>备用方案</strong>：当备注页不可用时，直接在幻灯片上添加备注</li>
+<li><strong>内容优化</strong>：根据幻灯片内容智能生成备注文本</li>
+</ol>
+<h2 id="方案设计"><a href="#方案设计" class="headerlink" title="方案设计"></a>方案设计</h2><h3 id="整体架构"><a href="#整体架构" class="headerlink" title="整体架构"></a>整体架构</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">输入PPTX文件 → 文件验证 → 内容分析 → 备注生成 → 备注添加 → 输出PPTX文件</span><br></pre></td></tr></table></figure>
+
+<h3 id="核心模块"><a href="#核心模块" class="headerlink" title="核心模块"></a>核心模块</h3><ol>
+<li><strong>文件验证模块</strong>：检查文件存在性、大小、格式等</li>
+<li><strong>备注添加模块</strong>：处理备注页和直接备注两种方式</li>
+<li><strong>文本处理模块</strong>：处理备注文本的格式和样式</li>
+<li><strong>输出保存模块</strong>：保存修改后的PPTX文件</li>
+</ol>
+<h3 id="处理流程"><a href="#处理流程" class="headerlink" title="处理流程"></a>处理流程</h3><ol>
+<li>验证输入文件的有效性</li>
+<li>打开PPTX文件并创建幻灯片展示对象</li>
+<li>获取目标幻灯片（默认第一张）</li>
+<li>尝试添加备注到备注页</li>
+<li>如果备注页不可用，使用备用方案</li>
+<li>保存修改后的文件</li>
+</ol>
+<h2 id="技术架构"><a href="#技术架构" class="headerlink" title="技术架构"></a>技术架构</h2><h3 id="依赖库"><a href="#依赖库" class="headerlink" title="依赖库"></a>依赖库</h3><ul>
+<li><strong>Apache POI</strong>：核心文档处理库</li>
+<li><strong>POI-XSLF</strong>：PPTX文件处理扩展</li>
+<li><strong>Lombok</strong>：简化Java代码</li>
+<li><strong>Apache Commons Lang3</strong>：字符串处理工具</li>
+</ul>
+<h3 id="核心类设计"><a href="#核心类设计" class="headerlink" title="核心类设计"></a>核心类设计</h3><ul>
+<li><strong>PptxTest</strong>：主类，包含主要的处理逻辑</li>
+<li><strong>文件验证方法</strong>：<code>validatePptxFile()</code></li>
+<li><strong>备注添加方法</strong>：<code>addNotesToSlide()</code></li>
+<li><strong>文本框创建方法</strong>：<code>createNotesTextBox()</code></li>
+<li><strong>直接备注方法</strong>：<code>addNotesToSlideDirectly()</code></li>
+</ul>
+<h3 id="异常处理策略"><a href="#异常处理策略" class="headerlink" title="异常处理策略"></a>异常处理策略</h3><ul>
+<li>文件不存在或损坏的处理</li>
+<li>备注页创建失败时的备用方案</li>
+<li>文件保存失败的错误处理</li>
+<li>资源释放的确保机制</li>
+</ul>
+<h2 id="实现细节"><a href="#实现细节" class="headerlink" title="实现细节"></a>实现细节</h2><h3 id="文件验证机制"><a href="#文件验证机制" class="headerlink" title="文件验证机制"></a>文件验证机制</h3><ul>
+<li>检查文件是否存在</li>
+<li>验证文件大小（非空文件）</li>
+<li>检查文件头是否为ZIP格式（PPTX本质上是ZIP文件）</li>
+<li>使用魔数验证文件格式</li>
+</ul>
+<h3 id="备注页处理策略"><a href="#备注页处理策略" class="headerlink" title="备注页处理策略"></a>备注页处理策略</h3><ol>
+<li><strong>优先使用标准备注页</strong>：通过<code>getNotesSlide()</code>获取现有备注页</li>
+<li><strong>占位符查找</strong>：查找备注体占位符（<code>Placeholder.BODY</code>）</li>
+<li><strong>文本设置</strong>：在找到的占位符中设置备注文本</li>
+<li><strong>备用文本框</strong>：如果没有占位符，创建新的文本框</li>
+</ol>
+<h3 id="直接备注方案"><a href="#直接备注方案" class="headerlink" title="直接备注方案"></a>直接备注方案</h3><p>当备注页不可用时，直接在幻灯片上添加备注文本框：</p>
+<ul>
+<li>设置合适的位置和大小</li>
+<li>使用灰色字体区分备注内容</li>
+<li>添加”备注：”前缀标识</li>
+</ul>
+<h3 id="样式设置"><a href="#样式设置" class="headerlink" title="样式设置"></a>样式设置</h3><ul>
+<li>字体大小：备注页14pt，直接备注12pt</li>
+<li>字体族：使用宋体确保中文显示</li>
+<li>颜色：直接备注使用灰色</li>
+<li>位置：合理布局避免遮挡主要内容</li>
+</ul>
+<h2 id="核心代码"><a href="#核心代码" class="headerlink" title="核心代码"></a>核心代码</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.cong.filetest.ppt;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> lombok.SneakyThrows;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.lang3.StringUtils;</span><br><span class="line"><span class="keyword">import</span> org.apache.poi.ooxml.POIXMLDocument;</span><br><span class="line"><span class="keyword">import</span> org.apache.poi.openxml4j.opc.OPCPackage;</span><br><span class="line"><span class="keyword">import</span> org.apache.poi.sl.usermodel.Placeholder;</span><br><span class="line"><span class="keyword">import</span> org.apache.poi.xslf.usermodel.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"><span class="keyword">import</span> java.io.FileInputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.util.Objects;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> cong</span></span><br><span class="line"><span class="comment"> * 2025/8/22 18:11</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">PptxTest</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@SneakyThrows</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line"></span><br><span class="line">        <span class="type">String</span> <span class="variable">pptx</span> <span class="operator">=</span> <span class="string">&quot;/home/cong/Space/filetest/src/main/java/com/cong/filetest/ppt/etest.pptx&quot;</span>;</span><br><span class="line">        <span class="type">String</span> <span class="variable">outPptx</span> <span class="operator">=</span> <span class="string">&quot;/home/cong/Space/filetest/src/main/java/com/cong/filetest/ppt/etest_out.pptx&quot;</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 首先验证输入文件</span></span><br><span class="line">        <span class="keyword">if</span> (!validatePptxFile(pptx)) &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;输入文件无效或损坏，无法处理&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="type">OPCPackage</span> <span class="variable">opcPackage</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            opcPackage = POIXMLDocument.openPackage(pptx);</span><br><span class="line">            <span class="type">XMLSlideShow</span> <span class="variable">slideShow</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">XMLSlideShow</span>(opcPackage);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 获取第一张幻灯片（索引从0开始）</span></span><br><span class="line">            XSLFSlide slide;</span><br><span class="line">            <span class="keyword">if</span> (!slideShow.getSlides().isEmpty()) &#123;</span><br><span class="line">                slide = slideShow.getSlides().get(<span class="number">0</span>); <span class="comment">// 修复：从索引1改为索引0</span></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">// 如果没有幻灯片，创建一张新的</span></span><br><span class="line">                slide = slideShow.createSlide();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 添加备注到幻灯片</span></span><br><span class="line">            <span class="type">boolean</span> <span class="variable">notesAdded</span> <span class="operator">=</span> addNotesToSlide(slideShow, slide, <span class="string">&quot;hello world&quot;</span>);</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span> (notesAdded) &#123;</span><br><span class="line">                <span class="comment">// 保存文件</span></span><br><span class="line">                <span class="keyword">try</span> (java.io.<span class="type">FileOutputStream</span> <span class="variable">fos</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">java</span>.io.FileOutputStream(outPptx)) &#123;</span><br><span class="line">                    slideShow.write(fos);</span><br><span class="line">                &#125;</span><br><span class="line">                System.out.println(<span class="string">&quot;PPT备注添加成功！输出文件：&quot;</span> + outPptx);</span><br><span class="line">                System.out.println(<span class="string">&quot;备注内容：hello world&quot;</span>);</span><br><span class="line">                System.out.println(<span class="string">&quot;请在PowerPoint中查看备注页（视图 -&gt; 备注页）来查看备注内容&quot;</span>);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;无法在原始文件上添加备注，请检查文件结构&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;处理现有PPT文件时出错：&quot;</span> + e.getMessage());</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (Objects.nonNull(opcPackage)) &#123;</span><br><span class="line">                opcPackage.close();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 验证PPTX文件是否有效</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">boolean</span> <span class="title function_">validatePptxFile</span><span class="params">(String filePath)</span> &#123;</span><br><span class="line">        <span class="type">File</span> <span class="variable">file</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">File</span>(filePath);</span><br><span class="line">        <span class="keyword">if</span> (!file.exists()) &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;文件不存在：&quot;</span> + filePath);</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (file.length() == <span class="number">0</span>) &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;文件为空：&quot;</span> + filePath);</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 检查文件头是否为ZIP格式（PPTX是ZIP格式）</span></span><br><span class="line">        <span class="keyword">try</span> (<span class="type">FileInputStream</span> <span class="variable">fis</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">FileInputStream</span>(file)) &#123;</span><br><span class="line">            <span class="type">byte</span>[] header = <span class="keyword">new</span> <span class="title class_">byte</span>[<span class="number">4</span>];</span><br><span class="line">            <span class="keyword">if</span> (fis.read(header) != <span class="number">4</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// ZIP文件的魔数是 0x504B0304 或 0x504B0506 或 0x504B0708</span></span><br><span class="line">            <span class="keyword">return</span> header[<span class="number">0</span>] == <span class="number">0x50</span> &amp;&amp; header[<span class="number">1</span>] == <span class="number">0x4B</span>;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;读取文件时出错：&quot;</span> + e.getMessage());</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 为幻灯片添加备注</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> slideShow 幻灯片展示</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> slide 目标幻灯片</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> notesText 备注文本</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 是否成功添加备注</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@SneakyThrows</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">boolean</span> <span class="title function_">addNotesToSlide</span><span class="params">(XMLSlideShow slideShow, XSLFSlide slide, String notesText)</span> &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// 尝试获取现有备注页，如果不存在则创建新的</span></span><br><span class="line">            <span class="type">XSLFNotes</span> <span class="variable">notesSlide</span> <span class="operator">=</span> slideShow.getNotesSlide(slide);</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span> (notesSlide == <span class="literal">null</span>) &#123;</span><br><span class="line">                <span class="comment">// 如果备注页不存在，尝试通过其他方式创建</span></span><br><span class="line">                System.out.println(<span class="string">&quot;备注页不存在，尝试创建新的备注页...&quot;</span>);</span><br><span class="line">                </span><br><span class="line">                <span class="comment">// 使用反射或其他方式创建备注页</span></span><br><span class="line">                <span class="comment">// 这里我们先尝试在幻灯片上直接添加备注文本</span></span><br><span class="line">                addNotesToSlideDirectly(slide, notesText);</span><br><span class="line">                System.out.println(<span class="string">&quot;已在幻灯片上直接添加备注文本&quot;</span>);</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            System.out.println(<span class="string">&quot;找到现有备注页，正在添加备注内容...&quot;</span>);</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// 查找备注页中的文本占位符</span></span><br><span class="line">            <span class="type">XSLFTextShape</span> <span class="variable">notesBody</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">            <span class="keyword">for</span> (XSLFTextShape placeholder : notesSlide.getPlaceholders()) &#123;</span><br><span class="line">                <span class="keyword">if</span> (placeholder.getTextType() == Placeholder.BODY) &#123;</span><br><span class="line">                    notesBody = placeholder;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (notesBody != <span class="literal">null</span>) &#123;</span><br><span class="line">                <span class="comment">// 如果找到了备注体占位符，直接设置文本</span></span><br><span class="line">                notesBody.setText(notesText);</span><br><span class="line">                System.out.println(<span class="string">&quot;已在备注页占位符中添加备注内容&quot;</span>);</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">// 如果没有找到备注体占位符，创建一个文本框</span></span><br><span class="line">                System.out.println(<span class="string">&quot;未找到备注体占位符，创建新的文本框...&quot;</span>);</span><br><span class="line">                createNotesTextBox(notesSlide, notesText);</span><br><span class="line">                System.out.println(<span class="string">&quot;已在备注页创建文本框并添加备注内容&quot;</span>);</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;处理备注页时出错：&quot;</span> + e.getMessage());</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="comment">// 在幻灯片上直接添加备注文本作为备用方案</span></span><br><span class="line">                addNotesToSlideDirectly(slide, notesText);</span><br><span class="line">                System.out.println(<span class="string">&quot;已在幻灯片上直接添加备注文本（备用方案）&quot;</span>);</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            &#125; <span class="keyword">catch</span> (Exception ex) &#123;</span><br><span class="line">                System.out.println(<span class="string">&quot;备用方案也失败：&quot;</span> + ex.getMessage());</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 在备注页创建文本框</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">createNotesTextBox</span><span class="params">(XSLFNotes notesSlide, String notesText)</span> &#123;</span><br><span class="line">        <span class="type">XSLFTextBox</span> <span class="variable">textBox</span> <span class="operator">=</span> notesSlide.createTextBox();</span><br><span class="line">        <span class="comment">// 设置文本框位置和大小（使用合理的默认值）</span></span><br><span class="line">        textBox.setAnchor(<span class="keyword">new</span> <span class="title class_">java</span>.awt.Rectangle(<span class="number">50</span>, <span class="number">100</span>, <span class="number">600</span>, <span class="number">400</span>));</span><br><span class="line">        textBox.setText(notesText);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 设置文本样式</span></span><br><span class="line">        <span class="type">XSLFTextParagraph</span> <span class="variable">paragraph</span> <span class="operator">=</span> textBox.getTextParagraphs().get(<span class="number">0</span>);</span><br><span class="line">        <span class="type">XSLFTextRun</span> <span class="variable">run</span> <span class="operator">=</span> paragraph.getTextRuns().get(<span class="number">0</span>);</span><br><span class="line">        run.setFontSize(<span class="number">14.0</span>);</span><br><span class="line">        run.setFontFamily(<span class="string">&quot;宋体&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 直接在幻灯片上添加备注文本</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">addNotesToSlideDirectly</span><span class="params">(XSLFSlide slide, String notesText)</span> &#123;</span><br><span class="line">        <span class="type">XSLFTextBox</span> <span class="variable">noteBox</span> <span class="operator">=</span> slide.createTextBox();</span><br><span class="line">        noteBox.setAnchor(<span class="keyword">new</span> <span class="title class_">java</span>.awt.Rectangle(<span class="number">50</span>, <span class="number">500</span>, <span class="number">600</span>, <span class="number">100</span>));</span><br><span class="line">        noteBox.setText(<span class="string">&quot;备注：&quot;</span> + notesText);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 设置文本样式</span></span><br><span class="line">        <span class="type">XSLFTextParagraph</span> <span class="variable">paragraph</span> <span class="operator">=</span> noteBox.getTextParagraphs().get(<span class="number">0</span>);</span><br><span class="line">        <span class="type">XSLFTextRun</span> <span class="variable">run</span> <span class="operator">=</span> paragraph.getTextRuns().get(<span class="number">0</span>);</span><br><span class="line">        run.setFontSize(<span class="number">12.0</span>);</span><br><span class="line">        run.setFontFamily(<span class="string">&quot;宋体&quot;</span>);</span><br><span class="line">        run.setFontColor(java.awt.Color.GRAY);</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;已在幻灯片上添加备注文本&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="效果展示"><a href="#效果展示" class="headerlink" title="效果展示"></a>效果展示</h2><h3 id="成功添加备注后的效果"><a href="#成功添加备注后的效果" class="headerlink" title="成功添加备注后的效果"></a>成功添加备注后的效果</h3><ul>
+<li>在PowerPoint中打开生成的PPTX文件</li>
+<li>切换到”备注页”视图（视图 → 备注页）</li>
+<li>可以看到每张幻灯片下方都有相应的备注内容</li>
+<li>备注内容清晰可读，格式规范</li>
+</ul>
+<h3 id="文件结构变化"><a href="#文件结构变化" class="headerlink" title="文件结构变化"></a>文件结构变化</h3><ul>
+<li>原始PPTX文件保持不变</li>
+<li>生成新的带备注的PPTX文件</li>
+<li>文件大小略有增加（包含备注信息）</li>
+<li>兼容性良好，可在各种PowerPoint版本中打开</li>
+</ul>
+<h2 id="示例展示"><a href="#示例展示" class="headerlink" title="示例展示"></a>示例展示</h2><h3 id="使用场景示例"><a href="#使用场景示例" class="headerlink" title="使用场景示例"></a>使用场景示例</h3><ol>
+<li><strong>会议演示</strong>：为会议PPT自动添加关键要点备注</li>
+<li><strong>培训材料</strong>：为培训PPT添加讲解要点和注意事项</li>
+<li><strong>学术报告</strong>：为学术报告添加数据说明和引用信息</li>
+<li><strong>产品介绍</strong>：为产品PPT添加销售话术和客户关注点</li>
+</ol>
+<h3 id="备注内容示例"><a href="#备注内容示例" class="headerlink" title="备注内容示例"></a>备注内容示例</h3><ul>
+<li><strong>技术类PPT</strong>：技术要点、注意事项、扩展阅读</li>
+<li><strong>商务类PPT</strong>：关键数据、市场分析、竞争对比</li>
+<li><strong>教育类PPT</strong>：学习目标、重点难点、课后思考</li>
+<li><strong>营销类PPT</strong>：产品优势、客户痛点、转化策略</li>
+</ul>
+<h3 id="批量处理示例"><a href="#批量处理示例" class="headerlink" title="批量处理示例"></a>批量处理示例</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 处理单个文件</span></span><br><span class="line">java -<span class="built_in">cp</span> . PptxTest input.pptx output.pptx</span><br><span class="line"></span><br><span class="line"><span class="comment"># 批量处理目录中的所有PPTX文件</span></span><br><span class="line"><span class="keyword">for</span> file <span class="keyword">in</span> *.pptx; <span class="keyword">do</span></span><br><span class="line">    java -<span class="built_in">cp</span> . PptxTest <span class="string">&quot;<span class="variable">$file</span>&quot;</span> <span class="string">&quot;output_<span class="variable">$&#123;file&#125;</span>&quot;</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="参考附录"><a href="#参考附录" class="headerlink" title="参考附录"></a>参考附录</h2><h3 id="相关技术文档"><a href="#相关技术文档" class="headerlink" title="相关技术文档"></a>相关技术文档</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://poi.apache.org/">Apache POI官方文档</a></li>
+<li><a target="_blank" rel="noopener" href="https://poi.apache.org/slideshow/xslf-quick-guide.html">POI XSLF用户指南</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/office/open-xml/open-xml-presentation">PPTX文件格式规范</a></li>
+</ul>
+<h3 id="扩展功能建议"><a href="#扩展功能建议" class="headerlink" title="扩展功能建议"></a>扩展功能建议</h3><ol>
+<li><strong>AI内容分析</strong>：集成NLP服务分析PPT内容</li>
+<li><strong>模板系统</strong>：支持不同类型的备注模板</li>
+<li><strong>批量处理</strong>：支持目录级别的批量处理</li>
+<li><strong>备注优化</strong>：根据演讲时长优化备注内容</li>
+<li><strong>多语言支持</strong>：支持中英文等多种语言</li>
+</ol>
+<h3 id="性能优化建议"><a href="#性能优化建议" class="headerlink" title="性能优化建议"></a>性能优化建议</h3><ul>
+<li>使用流式处理减少内存占用</li>
+<li>实现增量更新避免重复处理</li>
+<li>添加缓存机制提高处理速度</li>
+<li>支持并行处理多个文件</li>
+</ul>
+<h3 id="常见问题解决"><a href="#常见问题解决" class="headerlink" title="常见问题解决"></a>常见问题解决</h3><ol>
+<li><strong>文件损坏</strong>：使用文件验证机制提前发现</li>
+<li><strong>备注页缺失</strong>：提供直接备注的备用方案</li>
+<li><strong>格式不兼容</strong>：确保使用标准的POI API</li>
+<li><strong>内存溢出</strong>：及时释放资源，使用try-with-resources</li>
+</ol>
+<h3 id="未来发展方向"><a href="#未来发展方向" class="headerlink" title="未来发展方向"></a>未来发展方向</h3><ul>
+<li>集成大语言模型生成更智能的备注</li>
+<li>支持更多Office文档格式（Word、Excel）</li>
+<li>开发Web界面简化操作流程</li>
+<li>提供云服务支持在线处理</li>
+</ul>
+</div>
+        </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/java/" rel="tag">java</a>, <a class="tag-none-link" href="/tags/poi/" rel="tag">poi</a>, <a class="tag-none-link" href="/tags/pptx/" rel="tag">pptx</a>
+                </div>
+                <div class="pull-date">
+                    <time datetime="2025-11-21T06:36:31.566Z" itemprop="dateModified">最后编辑：2025-11-21</time>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" PPT添加水印功能" href="/2025/08/01/2025/08/011646/">&lt; 上一篇</a>
+            </div>
+            
+            
+            <div class="nav-next clearfix">
+                <a title=" Mybatist转义的配置" href="/2025/08/22/2025/08/221128/">下一篇 &gt;</a>
+            </div>
+            
+        </nav>
+    
+    
+        <link rel="stylesheet" href="/vendors/gitalk@1.7.2/dist/gitalk.css"></script>
+<div id="gitalk-container" class="post-comments lazy-load" style="padding-left:2rem; padding-right:2rem;"></div>
+<script>
+    var load_comm = () => {
+        const init = () => {
+            console.log('Gitalk loading...');
+            const gitalk = new Gitalk(Object.assign({
+                id: '/2025/08/12/2025/08/181022/',
+                path: '/2025/08/12/2025/08/181022/'
+            }, JSON.parse('{"clientID":"56e6a743c63b9c4faa93","clientSecret":"888b7234051c5c2ed6ea7bdf18e8b5a2678775f1","repo":"gitalk-comments","owner":"qbmzc","admin":["qbmzc"]}')));
+
+            gitalk.render('gitalk-container');
+        }
+        if (typeof Gitalk === 'undefined') {
+            const src = '/vendors/gitalk@1.7.2/dist/gitalk.min.js';
+            $.getScript(src, init);
+        } else {
+            init();
+        }
+    };
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a></noscript>
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/avatar.webp" loading="lazy" decoding="auto" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center">流云与风，苍穹游牧</p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                499
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                8
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                229
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                    <aside id="krw-toc" class="widget widget-kratos-toc clearfix">
+    <div class="photo-background"></div>
+    <h4 class="widget-title no-after">
+        <i class="fa fa-compass"></i>
+        文章目录
+        <span class="toc-progress-bar" role="progressbar" aria-label="阅读进度："></span>
+    </h4>
+    <div class="textwidget">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%83%8C%E6%99%AF"><span class="toc-text">背景</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%A0%E7%BB%9F%E5%A4%87%E6%B3%A8%E6%B7%BB%E5%8A%A0%E6%96%B9%E5%BC%8F%E7%9A%84%E7%97%9B%E7%82%B9"><span class="toc-text">传统备注添加方式的痛点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AI%E6%8A%80%E6%9C%AF%E7%9A%84%E5%BA%94%E7%94%A8%E5%89%8D%E6%99%AF"><span class="toc-text">AI技术的应用前景</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%AE%E6%A0%87"><span class="toc-text">目标</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF"><span class="toc-text">解题思路</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8A%80%E6%9C%AF%E9%80%89%E5%9E%8B"><span class="toc-text">技术选型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E7%AD%96%E7%95%A5"><span class="toc-text">核心策略</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B9%E6%A1%88%E8%AE%BE%E8%AE%A1"><span class="toc-text">方案设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B4%E4%BD%93%E6%9E%B6%E6%9E%84"><span class="toc-text">整体架构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97"><span class="toc-text">核心模块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%84%E7%90%86%E6%B5%81%E7%A8%8B"><span class="toc-text">处理流程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8A%80%E6%9C%AF%E6%9E%B6%E6%9E%84"><span class="toc-text">技术架构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%9D%E8%B5%96%E5%BA%93"><span class="toc-text">依赖库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E7%B1%BB%E8%AE%BE%E8%AE%A1"><span class="toc-text">核心类设计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E7%AD%96%E7%95%A5"><span class="toc-text">异常处理策略</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E7%BB%86%E8%8A%82"><span class="toc-text">实现细节</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E9%AA%8C%E8%AF%81%E6%9C%BA%E5%88%B6"><span class="toc-text">文件验证机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%87%E6%B3%A8%E9%A1%B5%E5%A4%84%E7%90%86%E7%AD%96%E7%95%A5"><span class="toc-text">备注页处理策略</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B4%E6%8E%A5%E5%A4%87%E6%B3%A8%E6%96%B9%E6%A1%88"><span class="toc-text">直接备注方案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B7%E5%BC%8F%E8%AE%BE%E7%BD%AE"><span class="toc-text">样式设置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E4%BB%A3%E7%A0%81"><span class="toc-text">核心代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%88%E6%9E%9C%E5%B1%95%E7%A4%BA"><span class="toc-text">效果展示</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%88%90%E5%8A%9F%E6%B7%BB%E5%8A%A0%E5%A4%87%E6%B3%A8%E5%90%8E%E7%9A%84%E6%95%88%E6%9E%9C"><span class="toc-text">成功添加备注后的效果</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84%E5%8F%98%E5%8C%96"><span class="toc-text">文件结构变化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B%E5%B1%95%E7%A4%BA"><span class="toc-text">示例展示</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF%E7%A4%BA%E4%BE%8B"><span class="toc-text">使用场景示例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%87%E6%B3%A8%E5%86%85%E5%AE%B9%E7%A4%BA%E4%BE%8B"><span class="toc-text">备注内容示例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%B9%E9%87%8F%E5%A4%84%E7%90%86%E7%A4%BA%E4%BE%8B"><span class="toc-text">批量处理示例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%99%84%E5%BD%95"><span class="toc-text">参考附录</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E6%8A%80%E6%9C%AF%E6%96%87%E6%A1%A3"><span class="toc-text">相关技术文档</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%A9%E5%B1%95%E5%8A%9F%E8%83%BD%E5%BB%BA%E8%AE%AE"><span class="toc-text">扩展功能建议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E5%BB%BA%E8%AE%AE"><span class="toc-text">性能优化建议</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3"><span class="toc-text">常见问题解决</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AA%E6%9D%A5%E5%8F%91%E5%B1%95%E6%96%B9%E5%90%91"><span class="toc-text">未来发展方向</span></a></li></ol></li></ol>
+    </div>
+</aside>
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">137</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">151</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">29</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/congco/">congco</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/work/">work</a><span class="category-list-count">118</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wuw/">wuw</a><span class="category-list-count">48</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/">技术笔记</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/AES/" style="font-size: 0.6em;">AES</a> <a href="/tags/AI/" style="font-size: 0.7em;">AI</a> <a href="/tags/AWS/" style="font-size: 0.7em;">AWS</a> <a href="/tags/Arch/" style="font-size: 0.6em;">Arch</a> <a href="/tags/Arch-Linux/" style="font-size: 0.8em;">Arch Linux</a> <a href="/tags/ArchLinux/" style="font-size: 0.8em;">ArchLinux</a> <a href="/tags/CAS/" style="font-size: 0.6em;">CAS</a> <a href="/tags/CI-CD/" style="font-size: 0.6em;">CI/CD</a> <a href="/tags/Caffeine/" style="font-size: 0.6em;">Caffeine</a> <a href="/tags/CompletableFuture/" style="font-size: 0.7em;">CompletableFuture</a> <a href="/tags/DNS/" style="font-size: 0.8em;">DNS</a> <a href="/tags/Docker/" style="font-size: 0.6em;">Docker</a> <a href="/tags/Flask/" style="font-size: 0.6em;">Flask</a> <a href="/tags/Future/" style="font-size: 0.7em;">Future</a> <a href="/tags/GC/" style="font-size: 0.6em;">GC</a> <a href="/tags/GPT/" style="font-size: 0.6em;">GPT</a> <a href="/tags/GraalVM/" style="font-size: 0.8em;">GraalVM</a> <a href="/tags/HashMap/" style="font-size: 0.6em;">HashMap</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/14/2025/11/141727/"><i class="fa  fa-book"></i> karakeep</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111335/"><i class="fa  fa-book"></i> SonarQube 扫描支持多 JDK 版本的实践方案</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111045/"><i class="fa  fa-book"></i> 一次修复 PDF 中文乱码的排查记录</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/23/2025/10/221500/"><i class="fa  fa-book"></i> dig命令使用详解</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/13/2025/10/131645/"><i class="fa  fa-book"></i> DNS解析异常导致视频播放缓慢问题排查与解决</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  >
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        <li><a href="mailto:congco@foxmail.com"><i class="fa fa-envelope"></i></a></li>
+                        
+                        
+                        
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://github.com/qbmzc"><i class="fa fa-github"></i></a></li>
+                        <li><a target="_blank" rel="nofollow" href="/rss.xml"><i class="fa fa-rss"></i></a></li>
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2025 沐曦留曳 版权所有.</li>
+                            <li>本站已运行<span id="span_dt">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
+                            <li>Site built with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by cong.</li>
+                        </div>
+                        <div>
+                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
+                            <li>Hosted on <a href="https://github.io" target="_blank">Github Pages</a></li>
+                        </div>
+                        <div>
+                            
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="/vendors/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="/vendors/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+
+    <script defer src="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="/vendors/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>

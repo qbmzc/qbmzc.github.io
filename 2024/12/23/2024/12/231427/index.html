@@ -1,0 +1,1584 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="/images/favicon.ico">
+  
+  <title>挂载对象存储为本地磁盘 | 沐曦留曳</title>
+  <meta name="author" content="cong" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="AWS, s3" />
+  
+  <meta name="description" content="s3fs挂载 安装  123# ubuntusudo apt updatesudo apt install -y s3fs   设置 AWS 凭据  12# 创建一个文件 &#x2F;etc&#x2F;passwd-s3fs，内容为：&lt;AWS_ACCESS_KEY_ID&gt;:&lt;AWS_SECRET_ACCESS_KEY&gt;  修改权限  1sudo chmod 600 &#x2F;etc&#x2F;passwd-s3">
+<meta property="og:type" content="article">
+<meta property="og:title" content="挂载对象存储为本地磁盘">
+<meta property="og:url" content="https://qbmzc.github.io/2024/12/23/2024/12/231427/index.html">
+<meta property="og:site_name" content="沐曦留曳">
+<meta property="og:description" content="s3fs挂载 安装  123# ubuntusudo apt updatesudo apt install -y s3fs   设置 AWS 凭据  12# 创建一个文件 &#x2F;etc&#x2F;passwd-s3fs，内容为：&lt;AWS_ACCESS_KEY_ID&gt;:&lt;AWS_SECRET_ACCESS_KEY&gt;  修改权限  1sudo chmod 600 &#x2F;etc&#x2F;passwd-s3">
+<meta property="og:locale">
+<meta property="og:image" content="https://qbmzc.github.io/images/favicon.ico">
+<meta property="article:published_time" content="2024-12-22T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-11-21T06:36:31.564Z">
+<meta property="article:author" content="cong">
+<meta property="article:tag" content="AWS">
+<meta property="article:tag" content="s3">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://qbmzc.github.io/images/favicon.ico">
+  <link rel="alternate" href="rss.xml" type="application/atom+xml">
+  <!-- 站点验证相关 -->
+  
+    
+      <meta name="google-site-verification" content="lV4cead5YlJ8KpODToP7dvzi-ihrxSqU0yYStYKj2ao" />
+    
+    
+      <meta name="baidu-site-verification" content="codeva-Zr6WlkDupK" />
+    
+    
+      <meta name="msvalidate.01" content="2D2197DEE362D193B3EC29AFD3306341" />
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" media="all"></script>
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-color-dark.min.css" media="(prefers-color-scheme: dark)"></script>
+    <script src="/js/kr-dark.min.js"></script>
+  
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" media="all"></script>
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="/vendors/font-awesome@4.7.0/css/font-awesome.min.css" media="all"></script>
+  <link rel="stylesheet" id="nprogress-css" href="/vendors/nprogress@0.2.0/nprogress.css" media="all"></script>
+  
+  
+  
+    <link rel="stylesheet" href="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css"></script>
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="/vendors/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/banner.webp');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">沐曦留曳</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>沐曦留曳</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article itemscope itemtype="https://schema.org/Article">
+    
+    <link itemprop="mainEntityOfPage" href="https://qbmzc.github.io/2024/12/23/2024/12/231427/">
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center" itemprop="name headline">挂载对象存储为本地磁盘</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><time datetime="2024-12-22T16:00:00.000Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2024-12-23</time></li>
+                <li itemprop="author" itemscope itemtype="https://schema.org/Person">
+                    <i class="fa fa-user"></i> 作者 <span itemprop="name">cong</span>
+                </li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~4.87K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1763706991564"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+            
+                <div class="kratos-post-inner-toc">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#s3fs%E6%8C%82%E8%BD%BD"><span class="toc-number">1.</span> <span class="toc-text">s3fs挂载</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#rclone%E6%8C%82%E8%BD%BD-Linux"><span class="toc-number">2.</span> <span class="toc-text">rclone挂载(Linux)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#rclone-%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C"><span class="toc-number">3.</span> <span class="toc-text">rclone 常用操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#rclone-sync"><span class="toc-number">4.</span> <span class="toc-text">rclone sync</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE%E8%87%AA%E5%8A%A8%E6%8C%82%E8%BD%BD%EF%BC%88%E5%8F%AF%E9%80%89%EF%BC%89"><span class="toc-number">5.</span> <span class="toc-text">设置自动挂载（可选）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Win%E4%B8%8B%E6%8C%82%E8%BD%BD"><span class="toc-number">6.</span> <span class="toc-text">Win下挂载</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#daemon-mode"><span class="toc-number">6.1.</span> <span class="toc-text">daemon mode</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95"><span class="toc-number">6.2.</span> <span class="toc-text">解决方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E4%BD%BF%E7%94%A8-no-console-%E5%8F%82%E6%95%B0"><span class="toc-number">6.2.1.</span> <span class="toc-text">1. 使用 --no-console 参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E4%BD%BF%E7%94%A8-vfs-cache-mode-%E5%8F%82%E6%95%B0"><span class="toc-number">6.2.2.</span> <span class="toc-text">2. 使用 --vfs-cache-mode 参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E4%BD%BF%E7%94%A8-volname-%E5%8F%82%E6%95%B0%EF%BC%88%E5%8F%AF%E9%80%89%EF%BC%89"><span class="toc-number">6.2.3.</span> <span class="toc-text">3. 使用 --volname 参数（可选）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E4%BB%A5%E6%99%AE%E9%80%9A%E6%A8%A1%E5%BC%8F%E8%BF%90%E8%A1%8C"><span class="toc-number">6.2.4.</span> <span class="toc-text">4. 以普通模式运行</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B%E5%91%BD%E4%BB%A4"><span class="toc-number">6.3.</span> <span class="toc-text">示例命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">6.4.</span> <span class="toc-text">注意事项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-nssm-%E5%B0%86-rclone-mount-%E5%8C%85%E8%A3%85%E4%B8%BA%E6%9C%8D%E5%8A%A1"><span class="toc-number">6.5.</span> <span class="toc-text">使用 nssm 将 rclone mount 包装为服务</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E4%B8%8B%E8%BD%BD-nssm"><span class="toc-number">6.5.1.</span> <span class="toc-text">1. 下载 nssm</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%88%9B%E5%BB%BA%E6%9C%8D%E5%8A%A1"><span class="toc-number">6.5.2.</span> <span class="toc-text">2. 创建服务</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E5%90%AF%E5%8A%A8%E6%9C%8D%E5%8A%A1"><span class="toc-number">6.5.3.</span> <span class="toc-text">3. 启动服务</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">6.6.</span> <span class="toc-text">总结</span></a></li></ol></li></ol>
+                </div>
+            
+            <hr />
+            <div itemprop="articleBody"><h2 id="s3fs挂载"><a href="#s3fs挂载" class="headerlink" title="s3fs挂载"></a>s3fs挂载</h2><ol>
+<li>安装</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ubuntu</span></span><br><span class="line">sudo apt update</span><br><span class="line">sudo apt install -y s3fs</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><strong>设置 AWS 凭据</strong></li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建一个文件 /etc/passwd-s3fs，内容为：</span></span><br><span class="line">&lt;AWS_ACCESS_KEY_ID&gt;:&lt;AWS_SECRET_ACCESS_KEY&gt;</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>修改权限</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo <span class="built_in">chmod</span> 600 /etc/passwd-s3fs</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li><strong>挂载 S3 存储桶</strong></li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s3fs tm-fs-test:/music -o use_cache=/tmp -o allow_other -o uid=1001 -o mp_umask=002 -o multireq_max=5 -o url=https://s3.amazonaws.com /home/cong/Space/mys3bucket -o sigv4 -o dbglevel=info -f -o curldbg -o endpoint=us-west-2 -o passwd_file=/home/cong/.aws/passwd-s3fs</span><br></pre></td></tr></table></figure>
+
+<h2 id="rclone挂载-Linux"><a href="#rclone挂载-Linux" class="headerlink" title="rclone挂载(Linux)"></a>rclone挂载(Linux)</h2><ol>
+<li>安装</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl https://rclone.org/install.sh | sudo bash</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li><strong>配置 S3 存储桶</strong></li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rclone config</span><br></pre></td></tr></table></figure>
+
+<p>• 选择 n 创建新配置。</p>
+<p>• 提供一个名称（如 my-s3）。</p>
+<p>• 选择 4 (Amazon S3)。</p>
+<p>• 填写 AWS Access Key ID 和 AWS Secret Access Key。</p>
+<p>• 根据需要选择存储桶区域和其他设置。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># linux下需要fuse</span></span><br><span class="line"><span class="comment"># MacOSX对应需要macfuse</span></span><br><span class="line"><span class="comment"># win winfsp</span></span><br><span class="line"><span class="comment"># s3 tm-fs-test</span></span><br><span class="line">rclone mount my-s3:/tm-fs-test/music /home/cong/Space/mys3bucket --daemon</span><br><span class="line"></span><br><span class="line"><span class="comment"># test-fsservice</span></span><br><span class="line">rclone mount my-oss:/test-fsservice/CONG /home/cong/Space/oss --daemon</span><br></pre></td></tr></table></figure>
+
+<h2 id="rclone-常用操作"><a href="#rclone-常用操作" class="headerlink" title="rclone 常用操作"></a>rclone 常用操作</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">rclone config - 以控制会话的形式添加rclone的配置，配置保存在.rclone.conf文件中。</span><br><span class="line">rclone copy - 将文件从源复制到目的地址，跳过已复制完成的。</span><br><span class="line">rclone <span class="built_in">sync</span> - 将源数据同步到目的地址，只更新目的地址的数据。   –dry-run标志来检查要复制、删除的数据</span><br><span class="line">rclone move - 将源数据移动到目的地址。</span><br><span class="line">rclone delete - 删除指定路径下的文件内容。</span><br><span class="line">rclone purge - 清空指定路径下所有文件数据。</span><br><span class="line">rclone <span class="built_in">mkdir</span> - 创建一个新目录。</span><br><span class="line">rclone <span class="built_in">rmdir</span> - 删除空目录。</span><br><span class="line">rclone check - 检查源和目的地址数据是否匹配。</span><br><span class="line">rclone <span class="built_in">ls</span> - 列出指定路径下所有的文件以及文件大小和路径。</span><br><span class="line">rclone lsd - 列出指定路径下所有的目录/容器/桶。</span><br><span class="line">rclone lsl - 列出指定路径下所有文件以及修改时间、文件大小和路径。</span><br><span class="line">rclone <span class="built_in">md5sum</span> - 为指定路径下的所有文件产生一个<span class="built_in">md5sum</span>文件。</span><br><span class="line">rclone <span class="built_in">sha1sum</span> - 为指定路径下的所有文件产生一个<span class="built_in">sha1sum</span>文件。</span><br><span class="line">rclone size - 获取指定路径下，文件内容的总大小。.</span><br><span class="line">rclone version - 查看当前版本。</span><br><span class="line">rclone cleanup - 清空remote。</span><br><span class="line">rclone dedupe - 交互式查找重复文件，进行删除/重命名操作。</span><br><span class="line">rclone mount - 挂载云盘为本地硬盘</span><br><span class="line">fusermount -qzu LocalFolder  - 卸载挂载的云盘</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="http://test-fsservice.oss-cn-shanghai.aliyuncs.com/fs/test/2024/202412231547503.jpeg" alt="Image"></p>
+<h2 id="rclone-sync"><a href="#rclone-sync" class="headerlink" title="rclone sync"></a>rclone sync</h2><p>rclone sync 命令显示进度条。默认情况下，rclone 在终端运行时会显示实时的同步进度信息，包括文件传输的进度条。</p>
+<p> <strong>确保输出中有进度条</strong>：</p>
+<p>• 添加 -P 或 –progress 参数可以确保强制显示进度条，即使某些环境中默认没有进度。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rclone <span class="built_in">sync</span> /source/path remote:/destination/path -P</span><br></pre></td></tr></table></figure>
+
+<p>• 输出示例：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Transferred:       10.5 MiB / 100 GiB, 0%, 1.5 MiB/s, ETA 1h50m</span><br><span class="line"></span><br><span class="line">Checks:              100 / 100, 100%</span><br><span class="line"></span><br><span class="line">Transferred:           3 / 1000, 0%</span><br><span class="line"></span><br><span class="line">Elapsed time:         10s</span><br><span class="line"></span><br><span class="line">```  </span><br><span class="line"></span><br><span class="line">**详细日志模式**：</span><br><span class="line"></span><br><span class="line">• 如果需要更多的详细信息（包括每个文件的传输状态），可以使用 -v（verbose 模式）或 -vv（超详细模式）。</span><br><span class="line"></span><br><span class="line">```bash</span><br><span class="line">rclone <span class="built_in">sync</span> /source/path remote:/destination/path -P -v</span><br></pre></td></tr></table></figure>
+
+<p> <strong>静默模式（无进度条）</strong>：</p>
+<p>如果不想看到任何进度条，可以使用 –quiet（或 -q）参数。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rclone <span class="built_in">sync</span> /source/path remote:/destination/path --quiet</span><br></pre></td></tr></table></figure>
+
+<h2 id="设置自动挂载（可选）"><a href="#设置自动挂载（可选）" class="headerlink" title="设置自动挂载（可选）"></a><strong>设置自动挂载（可选）</strong></h2><p>为确保系统重启后挂载自动生效，可以设置 rclone 挂载服务。</p>
+<p><strong>使用 Systemd 创建服务：</strong></p>
+<ol>
+<li>创建 Systemd 服务文件：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/systemd/system/rclone-mount.service</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>添加以下内容</li>
+</ol>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[Unit]</span></span><br><span class="line"><span class="attr">Description</span>=Rclone Mount</span><br><span class="line"><span class="attr">After</span>=network-<span class="literal">on</span>line.target</span><br><span class="line"></span><br><span class="line"><span class="section">[Service]</span></span><br><span class="line"><span class="attr">Type</span>=simple</span><br><span class="line"><span class="attr">ExecStart</span>=/usr/bin/rclone mount my-oss:/test-fsservice/CONG/music /mnt/music --vfs-cache-mode full</span><br><span class="line"><span class="attr">ExecStop</span>=/bin/fusermount -uz /mnt/music</span><br><span class="line"><span class="attr">Restart</span>=always</span><br><span class="line"><span class="attr">User</span>=your-username</span><br><span class="line"></span><br><span class="line"><span class="section">[Install]</span></span><br><span class="line"><span class="attr">WantedBy</span>=default.target</span><br></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>启用并启动服务</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl <span class="built_in">enable</span> rclone-mount</span><br><span class="line">sudo systemctl start rclone-mount</span><br></pre></td></tr></table></figure>
+
+<h2 id="Win下挂载"><a href="#Win下挂载" class="headerlink" title="Win下挂载"></a>Win下挂载</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://winfsp.dev/rel/">安装winfsp</a> 安装时需要开启dev模式<a target="_blank" rel="noopener" href="https://github.com/winfsp/winfsp">github</a></li>
+<li>安装rclone<br>Z</li>
+</ul>
+<h3 id="daemon-mode"><a href="#daemon-mode" class="headerlink" title="daemon mode"></a>daemon mode</h3><p><code>rclone</code> 在 Windows 平台上不支持守护进程模式（daemon mode），因此当你尝试在 Windows 上使用 <code>rclone mount</code> 命令时，会报错：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">2025/01/14 16:47:05 CRITICAL: Fatal error: daemon mode is not supported on the windows platform</span><br></pre></td></tr></table></figure>
+
+<p>这是因为 <code>rclone mount</code> 在 Windows 上默认会尝试以守护进程模式运行，而 Windows 不支持这种模式。</p>
+<hr>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a><strong>解决方法</strong></h3><h4 id="1-使用-no-console-参数"><a href="#1-使用-no-console-参数" class="headerlink" title="1. 使用 --no-console 参数"></a><strong>1. 使用 <code>--no-console</code> 参数</strong></h4><p>在 Windows 上运行 <code>rclone mount</code> 时，可以通过添加 <code>--no-console</code> 参数来避免守护进程模式。这个参数会阻止 <code>rclone</code> 尝试以守护进程模式运行。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rclone mount remote:path X: --no-console</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>remote:path</code>：你的远程存储配置和路径。</li>
+<li><code>X:</code>：你想要挂载到的本地驱动器字母（例如 <code>X:</code>）。</li>
+<li><code>--no-console</code>：避免守护进程模式。</li>
+</ul>
+<h4 id="2-使用-vfs-cache-mode-参数"><a href="#2-使用-vfs-cache-mode-参数" class="headerlink" title="2. 使用 --vfs-cache-mode 参数"></a><strong>2. 使用 <code>--vfs-cache-mode</code> 参数</strong></h4><p>如果你需要缓存功能，可以添加 <code>--vfs-cache-mode</code> 参数。例如：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rclone mount remote:path X: --no-console --vfs-cache-mode full</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>--vfs-cache-mode full</code>：启用完整的缓存模式，适合频繁读写的场景。</li>
+</ul>
+<h4 id="3-使用-volname-参数（可选）"><a href="#3-使用-volname-参数（可选）" class="headerlink" title="3. 使用 --volname 参数（可选）"></a><strong>3. 使用 <code>--volname</code> 参数（可选）</strong></h4><p>你可以为挂载的驱动器指定一个名称，方便识别：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rclone mount remote:path X: --no-console --volname <span class="string">&quot;MyCloudDrive&quot;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>--volname &quot;MyCloudDrive&quot;</code>：将挂载的驱动器命名为 <code>MyCloudDrive</code>。</li>
+</ul>
+<h4 id="4-以普通模式运行"><a href="#4-以普通模式运行" class="headerlink" title="4. 以普通模式运行"></a><strong>4. 以普通模式运行</strong></h4><p>如果你不需要守护进程模式，可以直接运行 <code>rclone mount</code>，但需要保持命令行窗口打开，否则挂载会终止。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rclone mount remote:path X:</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="示例命令"><a href="#示例命令" class="headerlink" title="示例命令"></a><strong>示例命令</strong></h3><p>假设你的远程存储配置名为 <code>mydrive</code>，路径为 <code>Documents</code>，你想将其挂载到本地驱动器 <code>X:</code>，可以使用以下命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rclone mount mydrive:Documents X: --no-console --vfs-cache-mode full --volname <span class="string">&quot;MyCloudDrive&quot;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a><strong>注意事项</strong></h3><ol>
+<li><p><strong>保持命令行窗口打开</strong>：</p>
+<ul>
+<li>在 Windows 上运行 <code>rclone mount</code> 时，必须保持命令行窗口打开。如果关闭窗口，挂载会终止。</li>
+</ul>
+</li>
+<li><p><strong>使用任务计划程序（Task Scheduler）</strong>：</p>
+<ul>
+<li>如果你希望 <code>rclone mount</code> 在后台运行，可以使用 Windows 的任务计划程序来启动挂载命令。</li>
+</ul>
+</li>
+<li><p><strong>使用第三方工具</strong>：</p>
+<ul>
+<li>你可以使用第三方工具（如 <code>nssm</code>）将 <code>rclone mount</code> 包装为 Windows 服务，从而实现后台运行。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="使用-nssm-将-rclone-mount-包装为服务"><a href="#使用-nssm-将-rclone-mount-包装为服务" class="headerlink" title="使用 nssm 将 rclone mount 包装为服务"></a><strong>使用 <code>nssm</code> 将 <code>rclone mount</code> 包装为服务</strong></h3><p>如果你希望 <code>rclone mount</code> 在后台运行，可以按照以下步骤操作：</p>
+<h4 id="1-下载-nssm"><a href="#1-下载-nssm" class="headerlink" title="1. 下载 nssm"></a><strong>1. 下载 <code>nssm</code></strong></h4><p>从 <a target="_blank" rel="noopener" href="https://nssm.cc/">nssm 官网</a> 下载并解压 <code>nssm</code>。</p>
+<h4 id="2-创建服务"><a href="#2-创建服务" class="headerlink" title="2. 创建服务"></a><strong>2. 创建服务</strong></h4><p>打开命令提示符（以管理员身份运行），然后执行以下命令：</p>
+<p> <em><strong>管理员身份 配置文件需要复制到</strong></em><br> <code>C:\Windows\System32\config\systemprofile\AppData\Roaming\rclone\rclone.conf</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nssm install RcloneMount</span><br></pre></td></tr></table></figure>
+
+<p>在弹出的窗口中配置服务：</p>
+<ul>
+<li><strong>Path</strong>：<code>rclone.exe</code> 的完整路径（例如 <code>C:\rclone\rclone.exe</code>）。</li>
+<li><strong>Startup directory</strong>：<code>rclone.exe</code> 所在的目录（例如 <code>C:\rclone</code>）。</li>
+<li><strong>Arguments</strong>：<code>mount mydrive:Documents X: --no-console --vfs-cache-mode full</code>。</li>
+</ul>
+<p>点击 <code>Install service</code> 完成服务创建。</p>
+<h4 id="3-启动服务"><a href="#3-启动服务" class="headerlink" title="3. 启动服务"></a><strong>3. 启动服务</strong></h4><p>在命令提示符中运行以下命令启动服务：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nssm start RcloneMount</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a><strong>总结</strong></h3><ul>
+<li>在 Windows 上使用 <code>rclone mount</code> 时，添加 <code>--no-console</code> 参数以避免守护进程模式。</li>
+<li>如果需要后台运行，可以使用任务计划程序或 <code>nssm</code> 将 <code>rclone mount</code> 包装为服务。</li>
+<li>保持命令行窗口打开，否则挂载会终止。</li>
+</ul>
+<p>通过以上方法，你可以在 Windows 上成功挂载远程存储。</p>
+</div>
+        </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/AWS/" rel="tag">AWS</a>, <a class="tag-none-link" href="/tags/s3/" rel="tag">s3</a>
+                </div>
+                <div class="pull-date">
+                    <time datetime="2025-11-21T06:36:31.564Z" itemprop="dateModified">最后编辑：2025-11-21</time>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" docker: &#39;buildx&#39; is not a docker command" href="/2024/12/21/2024/12/211314/">&lt; 上一篇</a>
+            </div>
+            
+            
+            <div class="nav-next clearfix">
+                <a title=" docker使用rclone挂载S3" href="/2024/12/24/2024/12/241018/">下一篇 &gt;</a>
+            </div>
+            
+        </nav>
+    
+    
+        <link rel="stylesheet" href="/vendors/gitalk@1.7.2/dist/gitalk.css"></script>
+<div id="gitalk-container" class="post-comments lazy-load" style="padding-left:2rem; padding-right:2rem;"></div>
+<script>
+    var load_comm = () => {
+        const init = () => {
+            console.log('Gitalk loading...');
+            const gitalk = new Gitalk(Object.assign({
+                id: '/2024/12/23/2024/12/231427/',
+                path: '/2024/12/23/2024/12/231427/'
+            }, JSON.parse('{"clientID":"56e6a743c63b9c4faa93","clientSecret":"888b7234051c5c2ed6ea7bdf18e8b5a2678775f1","repo":"gitalk-comments","owner":"qbmzc","admin":["qbmzc"]}')));
+
+            gitalk.render('gitalk-container');
+        }
+        if (typeof Gitalk === 'undefined') {
+            const src = '/vendors/gitalk@1.7.2/dist/gitalk.min.js';
+            $.getScript(src, init);
+        } else {
+            init();
+        }
+    };
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a></noscript>
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/avatar.webp" loading="lazy" decoding="auto" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center">流云与风，苍穹游牧</p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                499
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                8
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                229
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                    <aside id="krw-toc" class="widget widget-kratos-toc clearfix">
+    <div class="photo-background"></div>
+    <h4 class="widget-title no-after">
+        <i class="fa fa-compass"></i>
+        文章目录
+        <span class="toc-progress-bar" role="progressbar" aria-label="阅读进度："></span>
+    </h4>
+    <div class="textwidget">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#s3fs%E6%8C%82%E8%BD%BD"><span class="toc-text">s3fs挂载</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#rclone%E6%8C%82%E8%BD%BD-Linux"><span class="toc-text">rclone挂载(Linux)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#rclone-%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C"><span class="toc-text">rclone 常用操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#rclone-sync"><span class="toc-text">rclone sync</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE%E8%87%AA%E5%8A%A8%E6%8C%82%E8%BD%BD%EF%BC%88%E5%8F%AF%E9%80%89%EF%BC%89"><span class="toc-text">设置自动挂载（可选）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Win%E4%B8%8B%E6%8C%82%E8%BD%BD"><span class="toc-text">Win下挂载</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#daemon-mode"><span class="toc-text">daemon mode</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95"><span class="toc-text">解决方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E4%BD%BF%E7%94%A8-no-console-%E5%8F%82%E6%95%B0"><span class="toc-text">1. 使用 --no-console 参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E4%BD%BF%E7%94%A8-vfs-cache-mode-%E5%8F%82%E6%95%B0"><span class="toc-text">2. 使用 --vfs-cache-mode 参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E4%BD%BF%E7%94%A8-volname-%E5%8F%82%E6%95%B0%EF%BC%88%E5%8F%AF%E9%80%89%EF%BC%89"><span class="toc-text">3. 使用 --volname 参数（可选）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E4%BB%A5%E6%99%AE%E9%80%9A%E6%A8%A1%E5%BC%8F%E8%BF%90%E8%A1%8C"><span class="toc-text">4. 以普通模式运行</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B%E5%91%BD%E4%BB%A4"><span class="toc-text">示例命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-text">注意事项</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-nssm-%E5%B0%86-rclone-mount-%E5%8C%85%E8%A3%85%E4%B8%BA%E6%9C%8D%E5%8A%A1"><span class="toc-text">使用 nssm 将 rclone mount 包装为服务</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E4%B8%8B%E8%BD%BD-nssm"><span class="toc-text">1. 下载 nssm</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%88%9B%E5%BB%BA%E6%9C%8D%E5%8A%A1"><span class="toc-text">2. 创建服务</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E5%90%AF%E5%8A%A8%E6%9C%8D%E5%8A%A1"><span class="toc-text">3. 启动服务</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol></li></ol>
+    </div>
+</aside>
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/DevOps/">DevOps</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">137</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">151</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">29</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/congco/">congco</a><span class="category-list-count">13</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/work/">work</a><span class="category-list-count">118</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wuw/">wuw</a><span class="category-list-count">48</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/">技术笔记</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/AES/" style="font-size: 0.6em;">AES</a> <a href="/tags/AI/" style="font-size: 0.7em;">AI</a> <a href="/tags/AWS/" style="font-size: 0.7em;">AWS</a> <a href="/tags/Arch/" style="font-size: 0.6em;">Arch</a> <a href="/tags/Arch-Linux/" style="font-size: 0.8em;">Arch Linux</a> <a href="/tags/ArchLinux/" style="font-size: 0.8em;">ArchLinux</a> <a href="/tags/CAS/" style="font-size: 0.6em;">CAS</a> <a href="/tags/CI-CD/" style="font-size: 0.6em;">CI/CD</a> <a href="/tags/Caffeine/" style="font-size: 0.6em;">Caffeine</a> <a href="/tags/CompletableFuture/" style="font-size: 0.7em;">CompletableFuture</a> <a href="/tags/DNS/" style="font-size: 0.8em;">DNS</a> <a href="/tags/Docker/" style="font-size: 0.6em;">Docker</a> <a href="/tags/Flask/" style="font-size: 0.6em;">Flask</a> <a href="/tags/Future/" style="font-size: 0.7em;">Future</a> <a href="/tags/GC/" style="font-size: 0.6em;">GC</a> <a href="/tags/GPT/" style="font-size: 0.6em;">GPT</a> <a href="/tags/GraalVM/" style="font-size: 0.8em;">GraalVM</a> <a href="/tags/HashMap/" style="font-size: 0.6em;">HashMap</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/14/2025/11/141727/"><i class="fa  fa-book"></i> karakeep</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111335/"><i class="fa  fa-book"></i> SonarQube 扫描支持多 JDK 版本的实践方案</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/11/11/2025/11/111045/"><i class="fa  fa-book"></i> 一次修复 PDF 中文乱码的排查记录</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/23/2025/10/221500/"><i class="fa  fa-book"></i> dig命令使用详解</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/10/13/2025/10/131645/"><i class="fa  fa-book"></i> DNS解析异常导致视频播放缓慢问题排查与解决</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  >
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        <li><a href="mailto:congco@foxmail.com"><i class="fa fa-envelope"></i></a></li>
+                        
+                        
+                        
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://github.com/qbmzc"><i class="fa fa-github"></i></a></li>
+                        <li><a target="_blank" rel="nofollow" href="/rss.xml"><i class="fa fa-rss"></i></a></li>
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2025 沐曦留曳 版权所有.</li>
+                            <li>本站已运行<span id="span_dt">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
+                            <li>Site built with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by cong.</li>
+                        </div>
+                        <div>
+                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
+                            <li>Hosted on <a href="https://github.io" target="_blank">Github Pages</a></li>
+                        </div>
+                        <div>
+                            
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="/vendors/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="/vendors/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+
+    <script defer src="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="/vendors/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>
