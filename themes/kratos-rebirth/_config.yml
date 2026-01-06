@@ -2,7 +2,7 @@
 site_analytics: ''
 hoster: <a href="https://github.io" target="_blank">Github Pages</a>
 site_logo: '/images/favicon.ico'
-snow: false
+snow: true
 click_animate_js: 'candy'
 enable_dark: true
 highlight_theme: night-eighties # 代码高亮主题（light | night | night-eighties | night-blue | night-bright）
@@ -229,7 +229,7 @@ friends:
     title: "好伙伴们"
     comments: false
     description: "好伙伴们在哪里~"
-    updated: "2021-01-18"
+    updated: "2026-01-06"
   list:
   # - name: "猫猫①号"
   #   bio: "喵~"
