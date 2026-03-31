@@ -1,3 +1,3 @@
-# 个人博客
-
-[地址:qbmzc](https://qbmzc.github.io/)
+# 笔记
+ 
+ 一些碎片
