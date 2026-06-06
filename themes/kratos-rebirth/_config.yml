@@ -140,7 +140,7 @@ waline:
 ## id 会在页面自动生成，不必加入
 gitalk:
   clientID: '56e6a743c63b9c4faa93'
-  clientSecret: '888b7234051c5c2ed6ea7bdf18e8b5a2678775f1'
+  clientSecret: 'ae0e88ac992270e3a9ad65fabd60a845e367286e'
   repo: 'gitalk-comments'
   owner: 'qbmzc'
   admin: 
