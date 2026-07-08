@@ -1,6 +1,6 @@
 # AGENTS.md — qbmzc.github.io
 
-Personal blog built with **Hexo 8.x** + **Kratos-Rebirth** theme. Deployed to GitHub Pages.
+Personal blog built with **Hexo 8.1.2** + **Kratos-Rebirth** theme. Deployed to GitHub Pages.
 
 ## Dev commands
 
@@ -53,3 +53,5 @@ Drafts go to `source/_drafts/` (no date field needed).
 - `scaffolds/` contains post/page/draft templates.
 - Theme search generates `search.json` in `public/` (configured in theme config).
 - RSS feed at `/rss.xml` (20 posts limit, configured in `_config.yml`).
+- `source/.nojekyll` present for GitHub Pages compatibility.
+- Theme is vendored under `themes/kratos-rebirth/` (not a symlink).
