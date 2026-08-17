@@ -1,0 +1,1488 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="/images/favicon.ico">
+  
+  <title>在手机上 Vibe Coding：UU远程与终端代理的折腾记录 | 沐曦留曳</title>
+  <meta name="author" content="cong" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="daily, proxy, shell, tool" />
+  
+  <meta name="description" content="最近有个场景越来越多：不在电脑前的时候，突然想改点代码、跑个脚本、或者干脆就是手痒想敲几行命令。手机虽然屏幕小，但配合 AI 辅助写代码（也就是所谓的 Vibe Coding），其实体验没有想象中那么差。 关键问题是：怎么从手机连到服务器？ UU远程：最省心的方案UU远程（网易出的远程控制工具）自带终端功能，这可能是目前在手机上 ssh 到服务器最省事的方式了。 优点很明显：  不需要自己搞端口映">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在手机上 Vibe Coding：UU远程与终端代理的折腾记录">
+<meta property="og:url" content="https://qbmzc.github.io/2026/06/14/2026/06/14210000/index.html">
+<meta property="og:site_name" content="沐曦留曳">
+<meta property="og:description" content="最近有个场景越来越多：不在电脑前的时候，突然想改点代码、跑个脚本、或者干脆就是手痒想敲几行命令。手机虽然屏幕小，但配合 AI 辅助写代码（也就是所谓的 Vibe Coding），其实体验没有想象中那么差。 关键问题是：怎么从手机连到服务器？ UU远程：最省心的方案UU远程（网易出的远程控制工具）自带终端功能，这可能是目前在手机上 ssh 到服务器最省事的方式了。 优点很明显：  不需要自己搞端口映">
+<meta property="og:locale">
+<meta property="og:image" content="https://qbmzc.github.io/images/favicon.ico">
+<meta property="article:published_time" content="2026-06-14T13:00:00.000Z">
+<meta property="article:modified_time" content="2026-08-17T07:13:47.954Z">
+<meta property="article:author" content="cong">
+<meta property="article:tag" content="daily">
+<meta property="article:tag" content="proxy">
+<meta property="article:tag" content="shell">
+<meta property="article:tag" content="tool">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://qbmzc.github.io/images/favicon.ico">
+  <link rel="alternate" href="rss.xml" type="application/atom+xml">
+  <!-- 站点验证相关 -->
+  
+    
+      <meta name="google-site-verification" content="lV4cead5YlJ8KpODToP7dvzi-ihrxSqU0yYStYKj2ao" />
+    
+    
+      <meta name="baidu-site-verification" content="codeva-Zr6WlkDupK" />
+    
+    
+      <meta name="msvalidate.01" content="2D2197DEE362D193B3EC29AFD3306341" />
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" media="all"></script>
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-color-dark.min.css" media="(prefers-color-scheme: dark)"></script>
+    <script src="/js/kr-dark.min.js"></script>
+  
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" media="all"></script>
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="/vendors/font-awesome@4.7.0/css/font-awesome.min.css" media="all"></script>
+  <link rel="stylesheet" id="nprogress-css" href="/vendors/nprogress@0.2.0/nprogress.css" media="all"></script>
+  
+  
+  
+    <link rel="stylesheet" href="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css"></script>
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="/vendors/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/banner.webp');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">沐曦留曳</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>沐曦留曳</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article itemscope itemtype="https://schema.org/Article">
+    
+    <link itemprop="mainEntityOfPage" href="https://qbmzc.github.io/2026/06/14/2026/06/14210000/">
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center" itemprop="name headline">在手机上 Vibe Coding：UU远程与终端代理的折腾记录</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><time datetime="2026-06-14T13:00:00.000Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2026-06-14</time></li>
+                <li itemprop="author" itemscope itemtype="https://schema.org/Person">
+                    <i class="fa fa-user"></i> 作者 <span itemprop="name">cong</span>
+                </li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~1.60K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1786950827954"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+            
+            <hr />
+            <div itemprop="articleBody"><p>最近有个场景越来越多：不在电脑前的时候，突然想改点代码、跑个脚本、或者干脆就是手痒想敲几行命令。手机虽然屏幕小，但配合 AI 辅助写代码（也就是所谓的 Vibe Coding），其实体验没有想象中那么差。</p>
+<p>关键问题是：<strong>怎么从手机连到服务器？</strong></p>
+<h2 id="UU远程：最省心的方案"><a href="#UU远程：最省心的方案" class="headerlink" title="UU远程：最省心的方案"></a>UU远程：最省心的方案</h2><p>UU远程（网易出的远程控制工具）自带终端功能，这可能是目前在手机上 ssh 到服务器最省事的方式了。</p>
+<p>优点很明显：</p>
+<ul>
+<li>不需要自己搞端口映射、内网穿透这些东西</li>
+<li>手机端有专门的终端界面，键盘布局针对命令行做了优化，<code>Tab</code>、<code>Ctrl</code>、方向键都有</li>
+<li>延迟在可接受范围内，打几个命令、看看日志完全够用</li>
+<li>支持多台主机管理，切换方便</li>
+</ul>
+<p>实际用下来，写代码肯定不现实，但做这些事情很舒服：</p>
+<ul>
+<li>跑个 <code>docker ps</code> 看看容器状态</li>
+<li><code>tail -f</code> 追一下日志</li>
+<li>执行个部署脚本</li>
+<li>用 vim 改个配置文件里的几行</li>
+</ul>
+<p>配合 Claude 或者 ChatGPT 在手机浏览器里生成命令，复制粘贴到 UU远程的终端里执行，这就是一套完整的手机端 Vibe Coding 工作流。</p>
+<h2 id="自带终端-App：更自由但要自己搞定网络"><a href="#自带终端-App：更自由但要自己搞定网络" class="headerlink" title="自带终端 App：更自由但要自己搞定网络"></a>自带终端 App：更自由但要自己搞定网络</h2><p>如果你用的是 iOS 上的 Termius、a-Shell，或者 Android 上的 Termux，体验会更接近原生终端。这些 App 本身做得都不错，尤其是 Termux，几乎就是一个完整的 Linux 环境。</p>
+<p>但问题来了：<strong>你的服务器大概率不在公网，或者你不想暴露 SSH 端口。</strong></p>
+<p>这时候就得自己搞代理&#x2F;隧道了。几种常见的路子：</p>
+<h3 id="1-WireGuard-Tailscale-组网"><a href="#1-WireGuard-Tailscale-组网" class="headerlink" title="1. WireGuard &#x2F; Tailscale 组网"></a>1. WireGuard &#x2F; Tailscale 组网</h3><p>最推荐的方案。在手机和服务器上都装一个，组建一个虚拟局域网，然后手机就能直接 <code>ssh user@10.0.0.x</code> 了。</p>
+<p>Tailscale 更傻瓜一些，注册登录就能用。WireGuard 需要自己搭服务端，但更轻量、更快。两个方案我都用过，日常使用体感差别不大。</p>
+<h3 id="2-Cloudflare-Tunnel"><a href="#2-Cloudflare-Tunnel" class="headerlink" title="2. Cloudflare Tunnel"></a>2. Cloudflare Tunnel</h3><p>如果服务器上有跑 Web 服务，可以用 Cloudflare Tunnel 把 SSH 也暴露出来。手机端通过 Cloudflare 的客户端连接，安全性不错，就是配置稍微麻烦一点。</p>
+<h3 id="3-frp-ngrok-内网穿透"><a href="#3-frp-ngrok-内网穿透" class="headerlink" title="3. frp &#x2F; ngrok 内网穿透"></a>3. frp &#x2F; ngrok 内网穿透</h3><p>老方案了。在公网 VPS 上跑个 frps，家里服务器跑 frpc，把 SSH 端口映射出来。能用，但需要维护一台公网机器，而且 frp 的配置格式改过好几次，每次重新搞都要翻文档。</p>
+<h3 id="4-直接走代理"><a href="#4-直接走代理" class="headerlink" title="4. 直接走代理"></a>4. 直接走代理</h3><p>如果服务器上已经有代理（比如 clash、v2ray），手机装个代理客户端连上，然后通过代理转发 SSH 流量。这个方案最灵活但也最折腾，需要配 ProxyCommand 或者用支持代理的 SSH 客户端。</p>
+<p>Termux 里可以直接装 <code>openssh</code> 和 <code>proxychains</code>，在手机上就能搞定整条链路。iOS 这边就麻烦一些，a-Shell 的 SSH 不支持代理配置，Termius 可以但高级功能要付费。</p>
+<h2 id="实际体验"><a href="#实际体验" class="headerlink" title="实际体验"></a>实际体验</h2><p>说实话，手机上写代码这件事，”能做”和”想做”之间有很大差距。</p>
+<p>大部分时候我用手机连服务器，做的都是运维性质的操作：看看服务状态、重启个容器、改个配置。真正写代码的场景不多，除非是那种”就差改一行就能跑通了”的情况。</p>
+<p>但 Vibe Coding 改变了这个比例。有了 AI 辅助，你只需要描述意图，AI 生成代码，你复制粘贴执行。手机上的输入量大幅减少，体验也就上来了。以前在手机上敲一行 <code>sed</code> 命令都痛苦，现在直接让 AI 生成，复制过去就行。</p>
+<p>所以结论是：<strong>手机 Vibe Coding 的可行性，取决于你的网络方案有多顺畅。</strong> UU远程适合懒人（比如我），开箱即用；自带终端 App 适合愿意折腾网络的人，上限更高。两种方式都能用，选哪个看你的折腾意愿和场景需求。</p>
+</div>
+        </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/daily/" rel="tag">daily</a>, <a class="tag-none-link" href="/tags/proxy/" rel="tag">proxy</a>, <a class="tag-none-link" href="/tags/shell/" rel="tag">shell</a>, <a class="tag-none-link" href="/tags/tool/" rel="tag">tool</a>
+                </div>
+                <div class="pull-date">
+                    <time datetime="2026-08-17T07:13:47.954Z" itemprop="dateModified">最后编辑：2026-08-17</time>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" 当博客遇到AI：写作的意义正在被重新定义" href="/2026/06/13/2026/06/175813/">&lt; 上一篇</a>
+            </div>
+            
+            
+            <div class="nav-next clearfix">
+                <a title=" 从 zlib compressed data 到 PDF：一次文件解压的排查记录" href="/2026/06/15/2026/06/200000/">下一篇 &gt;</a>
+            </div>
+            
+        </nav>
+    
+    
+        <link rel="stylesheet" href="/vendors/gitalk@1.7.2/dist/gitalk.css"></script>
+<div id="gitalk-container" class="post-comments lazy-load" style="padding-left:2rem; padding-right:2rem;"></div>
+<script>
+    var load_comm = () => {
+        const init = () => {
+            console.log('Gitalk loading...');
+            const gitalk = new Gitalk(Object.assign({
+                id: '/2026/06/14/2026/06/14210000/',
+                path: '/2026/06/14/2026/06/14210000/'
+            }, JSON.parse('{"clientID":"56e6a743c63b9c4faa93","clientSecret":"ae0e88ac992270e3a9ad65fabd60a845e367286e","repo":"gitalk-comments","owner":"qbmzc","admin":["qbmzc"]}')));
+
+            gitalk.render('gitalk-container');
+        }
+        if (typeof Gitalk === 'undefined') {
+            const src = '/vendors/gitalk@1.7.2/dist/gitalk.min.js';
+            $.getScript(src, init);
+        } else {
+            init();
+        }
+    };
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a></noscript>
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/avatar.webp" loading="lazy" decoding="auto" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center">流云与风，苍穹游牧</p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                512
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                7
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                233
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">139</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">156</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">29</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/congco/">congco</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/work/">work</a><span class="category-list-count">117</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wuw/">wuw</a><span class="category-list-count">50</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/">技术笔记</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/AES/" style="font-size: 0.6em;">AES</a> <a href="/tags/AI/" style="font-size: 0.8em;">AI</a> <a href="/tags/ASUS/" style="font-size: 0.6em;">ASUS</a> <a href="/tags/AWS/" style="font-size: 0.7em;">AWS</a> <a href="/tags/Arch/" style="font-size: 0.6em;">Arch</a> <a href="/tags/Arch-Linux/" style="font-size: 0.8em;">Arch Linux</a> <a href="/tags/ArchLinux/" style="font-size: 0.8em;">ArchLinux</a> <a href="/tags/CAS/" style="font-size: 0.6em;">CAS</a> <a href="/tags/Caffeine/" style="font-size: 0.6em;">Caffeine</a> <a href="/tags/CompletableFuture/" style="font-size: 0.7em;">CompletableFuture</a> <a href="/tags/DNS/" style="font-size: 0.8em;">DNS</a> <a href="/tags/Docker/" style="font-size: 0.6em;">Docker</a> <a href="/tags/Flask/" style="font-size: 0.6em;">Flask</a> <a href="/tags/Future/" style="font-size: 0.7em;">Future</a> <a href="/tags/GC/" style="font-size: 0.6em;">GC</a> <a href="/tags/GPT/" style="font-size: 0.6em;">GPT</a> <a href="/tags/GraalVM/" style="font-size: 0.8em;">GraalVM</a> <a href="/tags/HashMap/" style="font-size: 0.6em;">HashMap</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2026/08/17/2026/08/171508/"><i class="fa  fa-book"></i> 中兴小方糖 Z503 刷 Z506 固件：让坑货也能 Mesh 组网</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2026/07/08/2026/07/101937/"><i class="fa  fa-book"></i> PdfCheckUtil 文件句柄泄漏排查与修复</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2026/07/08/2026/07/101513/"><i class="fa  fa-book"></i> 查询条件退化为全表扫描导致的 OOM 及参数校验修复</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2026/06/15/2026/06/200000/"><i class="fa  fa-book"></i> 从 zlib compressed data 到 PDF：一次文件解压的排查记录</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2026/06/14/2026/06/14210000/"><i class="fa  fa-book"></i> 在手机上 Vibe Coding：UU远程与终端代理的折腾记录</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  >
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        <li><a href="mailto:congco@foxmail.com"><i class="fa fa-envelope"></i></a></li>
+                        
+                        
+                        
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://github.com/qbmzc"><i class="fa fa-github"></i></a></li>
+                        <li><a target="_blank" rel="nofollow" href="/rss.xml"><i class="fa fa-rss"></i></a></li>
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2026 沐曦留曳 版权所有.</li>
+                            <li>本站已运行<span id="span_dt">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
+                            <li>Site built with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by cong.</li>
+                        </div>
+                        <div>
+                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
+                            <li>Hosted on <a href="https://github.io" target="_blank">Github Pages</a></li>
+                        </div>
+                        <div>
+                            
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="/vendors/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="/vendors/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+    <div>
+        <canvas id="snow"></canvas>
+        <script async src="/js/snow.min.js"></script>
+    </div>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+
+    <script defer src="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="/vendors/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>

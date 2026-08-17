@@ -1,0 +1,1546 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="/images/favicon.ico">
+  
+  <title>WireGuard 快速配置指南 | 沐曦留曳</title>
+  <meta name="author" content="cong" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="VPN, WireGuard, macOS" />
+  
+  <meta name="description" content="简介WireGuard 是一种轻量、高性能的 VPN 协议，内核级实现，配置简单，相比 OpenVPN&#x2F;IPsec 有显著的性能优势。 安装12345678# macOSbrew install wireguard-tools# Linuxapt install wireguard# 也可通过官网下载 GUI 客户端# https:&#x2F;&#x2F;www.wireguard.com&#x2F;install&#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WireGuard 快速配置指南">
+<meta property="og:url" content="https://qbmzc.github.io/2026/03/21/2026/03/211837/index.html">
+<meta property="og:site_name" content="沐曦留曳">
+<meta property="og:description" content="简介WireGuard 是一种轻量、高性能的 VPN 协议，内核级实现，配置简单，相比 OpenVPN&#x2F;IPsec 有显著的性能优势。 安装12345678# macOSbrew install wireguard-tools# Linuxapt install wireguard# 也可通过官网下载 GUI 客户端# https:&#x2F;&#x2F;www.wireguard.com&#x2F;install&#x2F;">
+<meta property="og:locale">
+<meta property="og:image" content="https://qbmzc.github.io/images/favicon.ico">
+<meta property="article:published_time" content="2026-03-21T10:37:00.000Z">
+<meta property="article:modified_time" content="2026-08-17T07:13:47.954Z">
+<meta property="article:author" content="cong">
+<meta property="article:tag" content="VPN">
+<meta property="article:tag" content="WireGuard">
+<meta property="article:tag" content="macOS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://qbmzc.github.io/images/favicon.ico">
+  <link rel="alternate" href="rss.xml" type="application/atom+xml">
+  <!-- 站点验证相关 -->
+  
+    
+      <meta name="google-site-verification" content="lV4cead5YlJ8KpODToP7dvzi-ihrxSqU0yYStYKj2ao" />
+    
+    
+      <meta name="baidu-site-verification" content="codeva-Zr6WlkDupK" />
+    
+    
+      <meta name="msvalidate.01" content="2D2197DEE362D193B3EC29AFD3306341" />
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" media="all"></script>
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-color-dark.min.css" media="(prefers-color-scheme: dark)"></script>
+    <script src="/js/kr-dark.min.js"></script>
+  
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" media="all"></script>
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="/vendors/font-awesome@4.7.0/css/font-awesome.min.css" media="all"></script>
+  <link rel="stylesheet" id="nprogress-css" href="/vendors/nprogress@0.2.0/nprogress.css" media="all"></script>
+  
+  
+  
+    <link rel="stylesheet" href="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css"></script>
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="/vendors/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/banner.webp');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">沐曦留曳</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>沐曦留曳</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article itemscope itemtype="https://schema.org/Article">
+    
+    <link itemprop="mainEntityOfPage" href="https://qbmzc.github.io/2026/03/21/2026/03/211837/">
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center" itemprop="name headline">WireGuard 快速配置指南</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><time datetime="2026-03-21T10:37:00.000Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2026-03-21</time></li>
+                <li itemprop="author" itemscope itemtype="https://schema.org/Person">
+                    <i class="fa fa-user"></i> 作者 <span itemprop="name">cong</span>
+                </li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~2.78K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1786950827954"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+            
+                <div class="kratos-post-inner-toc">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">2.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%86%E9%92%A5%E7%94%9F%E6%88%90"><span class="toc-number">3.</span> <span class="toc-text">密钥生成</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-number">4.</span> <span class="toc-text">配置文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="toc-number">5.</span> <span class="toc-text">常用命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#macOS-%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7"><span class="toc-number">6.</span> <span class="toc-text">macOS 使用技巧</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">7.</span> <span class="toc-text">常见问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#wg-quick-%E5%90%AF%E5%8A%A8%E6%8A%A5%E9%94%99%EF%BC%9Abash-%E7%89%88%E6%9C%AC%E8%BF%87%E4%BD%8E"><span class="toc-number">7.1.</span> <span class="toc-text">wg-quick 启动报错：bash 版本过低</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%92%E9%9A%9C"><span class="toc-number">8.</span> <span class="toc-text">排障</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%83%BD%E5%8F%91%E9%80%81%E4%B8%8D%E8%83%BD%E6%8E%A5%E6%94%B6%EF%BC%880-B-received-30-KiB-sent%EF%BC%89"><span class="toc-number">8.1.</span> <span class="toc-text">能发送不能接收（0 B received, 30 KiB sent）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F%E4%B8%8B%E8%B7%AF%E7%94%B1%E5%99%A8%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91%E4%B8%8D%E7%94%9F%E6%95%88"><span class="toc-number">8.2.</span> <span class="toc-text">桥接模式下路由器端口转发不生效</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E7%94%A8%E6%A3%80%E6%9F%A5"><span class="toc-number">8.3.</span> <span class="toc-text">通用检查</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">9.</span> <span class="toc-text">参考</span></a></li></ol>
+                </div>
+            
+            <hr />
+            <div itemprop="articleBody"><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>WireGuard 是一种轻量、高性能的 VPN 协议，内核级实现，配置简单，相比 OpenVPN&#x2F;IPsec 有显著的性能优势。</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># macOS</span></span><br><span class="line">brew install wireguard-tools</span><br><span class="line"></span><br><span class="line"><span class="comment"># Linux</span></span><br><span class="line">apt install wireguard</span><br><span class="line"></span><br><span class="line"><span class="comment"># 也可通过官网下载 GUI 客户端</span></span><br><span class="line"><span class="comment"># https://www.wireguard.com/install/</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="密钥生成"><a href="#密钥生成" class="headerlink" title="密钥生成"></a>密钥生成</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 生成私钥</span></span><br><span class="line">wg genkey | <span class="built_in">tee</span> privatekey</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成公钥</span></span><br><span class="line">wg pubkey &lt; privatekey &gt; publickey</span><br></pre></td></tr></table></figure>
+
+<h2 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h2><p>服务端 <code>/etc/wireguard/wg0.conf</code>：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[Interface]</span></span><br><span class="line"><span class="attr">Address</span> = <span class="number">10.0</span>.<span class="number">0.1</span>/<span class="number">24</span></span><br><span class="line"><span class="attr">ListenPort</span> = <span class="number">51820</span></span><br><span class="line"><span class="attr">PrivateKey</span> = &lt;server-private-key&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 客户端 A</span></span><br><span class="line"><span class="section">[Peer]</span></span><br><span class="line"><span class="attr">PublicKey</span> = &lt;client-a-public-key&gt;</span><br><span class="line"><span class="attr">AllowedIPs</span> = <span class="number">10.0</span>.<span class="number">0.2</span>/<span class="number">32</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 客户端 B</span></span><br><span class="line"><span class="section">[Peer]</span></span><br><span class="line"><span class="attr">PublicKey</span> = &lt;client-b-public-key&gt;</span><br><span class="line"><span class="attr">AllowedIPs</span> = <span class="number">10.0</span>.<span class="number">0.3</span>/<span class="number">32</span></span><br></pre></td></tr></table></figure>
+
+<p>客户端配置：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">[Interface]</span></span><br><span class="line"><span class="attr">Address</span> = <span class="number">10.0</span>.<span class="number">0.2</span>/<span class="number">24</span></span><br><span class="line"><span class="attr">PrivateKey</span> = &lt;client-private-key&gt;</span><br><span class="line"><span class="attr">DNS</span> = <span class="number">8.8</span>.<span class="number">8.8</span></span><br><span class="line"></span><br><span class="line"><span class="section">[Peer]</span></span><br><span class="line"><span class="attr">PublicKey</span> = &lt;server-public-key&gt;</span><br><span class="line"><span class="attr">Endpoint</span> = your-server.com:<span class="number">51820</span></span><br><span class="line"><span class="attr">AllowedIPs</span> = <span class="number">0.0</span>.<span class="number">0.0</span>/<span class="number">0</span>, ::/<span class="number">0</span></span><br><span class="line"><span class="attr">PersistentKeepalive</span> = <span class="number">25</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>wg-quick up wg0</code></td>
+<td>启动接口</td>
+</tr>
+<tr>
+<td><code>wg-quick down wg0</code></td>
+<td>关闭接口</td>
+</tr>
+<tr>
+<td><code>wg show</code></td>
+<td>查看连接状态</td>
+</tr>
+<tr>
+<td><code>systemctl enable wg-quick@wg0</code></td>
+<td>设置开机自启</td>
+</tr>
+</tbody></table>
+<h2 id="macOS-使用技巧"><a href="#macOS-使用技巧" class="headerlink" title="macOS 使用技巧"></a>macOS 使用技巧</h2><ol>
+<li><strong>命令行启动</strong>：<code>sudo wg-quick up wg0</code></li>
+<li><strong>GUI 工具</strong>：推荐 <a target="_blank" rel="noopener" href="https://apps.apple.com/app/wireguard/id1451685025">WireGuard macOS App</a></li>
+<li><strong>随航模式</strong>：按需连接（On-Demand）可配置为排除内网段</li>
+</ol>
+<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><h3 id="wg-quick-启动报错：bash-版本过低"><a href="#wg-quick-启动报错：bash-版本过低" class="headerlink" title="wg-quick 启动报错：bash 版本过低"></a>wg-quick 启动报错：bash 版本过低</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wg-quick: Version mismatch: bash 3 detected, when bash 4+ required</span><br></pre></td></tr></table></figure>
+
+<p>macOS 默认 bash 为 3.2，wg-quick 需要 bash 4+。解决方案：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 用 brew 安装 bash 4+</span></span><br><span class="line">brew install bash</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 确认新 bash 路径</span></span><br><span class="line"><span class="built_in">which</span> bash</span><br><span class="line"><span class="comment"># /opt/homebrew/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 修改 wg-quick 首行 shebang（通过 brew 安装的 wireguard-tools 通常已修复此问题）</span></span><br><span class="line"><span class="comment"># 若仍报错，手动指定 bash 运行</span></span><br><span class="line">sudo /opt/homebrew/bin/bash /opt/homebrew/bin/wg-quick up wg0</span><br></pre></td></tr></table></figure>
+
+<p>如果使用 brew 安装的 <code>wireguard-tools</code>，重新安装可自动修复：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew reinstall wireguard-tools</span><br></pre></td></tr></table></figure>
+
+<h2 id="排障"><a href="#排障" class="headerlink" title="排障"></a>排障</h2><h3 id="能发送不能接收（0-B-received-30-KiB-sent）"><a href="#能发送不能接收（0-B-received-30-KiB-sent）" class="headerlink" title="能发送不能接收（0 B received, 30 KiB sent）"></a>能发送不能接收（0 B received, 30 KiB sent）</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">transfer: 0 B received, 30.21 KiB sent</span><br></pre></td></tr></table></figure>
+
+<p>客户端有发送量但无接收量，通常为服务端侧问题：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 检查服务端端口是否监听</span></span><br><span class="line">ss -tulpn | grep 51820</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 检查防火墙是否放行 UDP 51820</span></span><br><span class="line">iptables -L -n | grep 51820</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 确认服务端 Peer 配置中的 PublicKey 与客户端 PrivateKey 匹配</span></span><br><span class="line"><span class="comment"># 服务端:</span></span><br><span class="line"><span class="comment"># [Peer]</span></span><br><span class="line"><span class="comment"># PublicKey = &lt;client-public-key&gt;   ← 必须与客户端私钥对应</span></span><br><span class="line"><span class="comment"># AllowedIPs = 10.0.0.2/32          ← 必须包含客户端 IP</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. 检查 NAT/端口转发（如果服务端在内网）</span></span><br><span class="line"><span class="comment"># 路由器需将 UDP 51820 转发到服务端内网 IP</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="桥接模式下路由器端口转发不生效"><a href="#桥接模式下路由器端口转发不生效" class="headerlink" title="桥接模式下路由器端口转发不生效"></a>桥接模式下路由器端口转发不生效</h3><p><strong>现象</strong>：NAS 作为 WireGuard 服务端，端口转发已正确配置，但从外网始终无法访问。</p>
+<p><strong>原因</strong>：当 NAS 通过「桥接路由器」接入主路由器时，主路由器的 ARP 表中，该 NAS 内网 IP 对应的 MAC 地址会变成桥接路由器的 MAC，而不是 NAS 实际的物理网卡 MAC。导致主路由器的端口转发规则（部分路由器基于 MAC 绑定做转发）无法将数据包正确送达 NAS。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">网络拓扑:</span><br><span class="line"></span><br><span class="line">外网 → 主路由器（端口转发）→ 桥接路由器（AP/桥接模式）→ NAS</span><br><span class="line"></span><br><span class="line">主路由器 ARP 表:</span><br><span class="line">  192.168.1.100 → MAC: &lt;桥接路由器的MAC&gt;   ← 不是 NAS 的 MAC</span><br></pre></td></tr></table></figure>
+
+<p><strong>解决</strong>：</p>
+<ol>
+<li><p><strong>使用 IP 地址做端口转发</strong>（推荐）：在主路由器中将端口转发目标设为 NAS 的内网 IP（而非 MAC 地址），并为 NAS 的桥接路由器分配固定 IP。</p>
+</li>
+<li><p><strong>改用有线中继（AP 模式）</strong>：将桥接路由器设为 AP 模式并以有线方式连接主路由，让 NAS 的 MAC 地址直接暴露给主路由（无线桥接因 WDS 封装会改写 MAC）。</p>
+</li>
+<li><p><strong>DMZ 主机</strong>：临时测试可将 DMZ 主机指向桥接路由器的 IP，验证是否为 MAC 绑定问题。</p>
+</li>
+<li><p><strong>验证 ARP 表</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在主路由器管理页面或 SSH 中查看 ARP 表</span></span><br><span class="line">arp -a | grep &lt;NAS的内网IP&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 对比 NAS 实际 MAC</span></span><br><span class="line"> ip <span class="built_in">link</span> show   <span class="comment"># 在 NAS 上执行</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="通用检查"><a href="#通用检查" class="headerlink" title="通用检查"></a>通用检查</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 检查端口是否可达</span></span><br><span class="line">nc -zvu your-server.com 51820</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看 WireGuard 状态</span></span><br><span class="line">sudo wg show wg0</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看连接日志</span></span><br><span class="line">sudo wg show wg0 latest-handshakes</span><br><span class="line"></span><br><span class="line"><span class="comment"># 内核日志</span></span><br><span class="line">sudo dmesg | grep wireguard</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.wireguard.com/">WireGuard 官网</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.wireguard.com/quickstart/">Quick Start</a></li>
+</ul>
+</div>
+        </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/VPN/" rel="tag">VPN</a>, <a class="tag-none-link" href="/tags/WireGuard/" rel="tag">WireGuard</a>, <a class="tag-none-link" href="/tags/macOS/" rel="tag">macOS</a>
+                </div>
+                <div class="pull-date">
+                    <time datetime="2026-08-17T07:13:47.954Z" itemprop="dateModified">最后编辑：2026-08-17</time>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" iperf3使用说明" href="/2026/02/22/2026/02/221115/">&lt; 上一篇</a>
+            </div>
+            
+            
+            <div class="nav-next clearfix">
+                <a title=" Mac使用蓝牙耳机音质下降或爆音" href="/2026/04/08/2026/04/081414/">下一篇 &gt;</a>
+            </div>
+            
+        </nav>
+    
+    
+        <link rel="stylesheet" href="/vendors/gitalk@1.7.2/dist/gitalk.css"></script>
+<div id="gitalk-container" class="post-comments lazy-load" style="padding-left:2rem; padding-right:2rem;"></div>
+<script>
+    var load_comm = () => {
+        const init = () => {
+            console.log('Gitalk loading...');
+            const gitalk = new Gitalk(Object.assign({
+                id: '/2026/03/21/2026/03/211837/',
+                path: '/2026/03/21/2026/03/211837/'
+            }, JSON.parse('{"clientID":"56e6a743c63b9c4faa93","clientSecret":"ae0e88ac992270e3a9ad65fabd60a845e367286e","repo":"gitalk-comments","owner":"qbmzc","admin":["qbmzc"]}')));
+
+            gitalk.render('gitalk-container');
+        }
+        if (typeof Gitalk === 'undefined') {
+            const src = '/vendors/gitalk@1.7.2/dist/gitalk.min.js';
+            $.getScript(src, init);
+        } else {
+            init();
+        }
+    };
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a></noscript>
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/avatar.webp" loading="lazy" decoding="auto" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center">流云与风，苍穹游牧</p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                512
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                7
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                233
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                    <aside id="krw-toc" class="widget widget-kratos-toc clearfix">
+    <div class="photo-background"></div>
+    <h4 class="widget-title no-after">
+        <i class="fa fa-compass"></i>
+        文章目录
+        <span class="toc-progress-bar" role="progressbar" aria-label="阅读进度："></span>
+    </h4>
+    <div class="textwidget">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-text">安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%86%E9%92%A5%E7%94%9F%E6%88%90"><span class="toc-text">密钥生成</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-text">配置文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="toc-text">常用命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#macOS-%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7"><span class="toc-text">macOS 使用技巧</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-text">常见问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#wg-quick-%E5%90%AF%E5%8A%A8%E6%8A%A5%E9%94%99%EF%BC%9Abash-%E7%89%88%E6%9C%AC%E8%BF%87%E4%BD%8E"><span class="toc-text">wg-quick 启动报错：bash 版本过低</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%92%E9%9A%9C"><span class="toc-text">排障</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%83%BD%E5%8F%91%E9%80%81%E4%B8%8D%E8%83%BD%E6%8E%A5%E6%94%B6%EF%BC%880-B-received-30-KiB-sent%EF%BC%89"><span class="toc-text">能发送不能接收（0 B received, 30 KiB sent）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F%E4%B8%8B%E8%B7%AF%E7%94%B1%E5%99%A8%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91%E4%B8%8D%E7%94%9F%E6%95%88"><span class="toc-text">桥接模式下路由器端口转发不生效</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E7%94%A8%E6%A3%80%E6%9F%A5"><span class="toc-text">通用检查</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li></ol>
+    </div>
+</aside>
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">139</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">156</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">29</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/congco/">congco</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/work/">work</a><span class="category-list-count">117</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wuw/">wuw</a><span class="category-list-count">50</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/">技术笔记</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/AES/" style="font-size: 0.6em;">AES</a> <a href="/tags/AI/" style="font-size: 0.8em;">AI</a> <a href="/tags/ASUS/" style="font-size: 0.6em;">ASUS</a> <a href="/tags/AWS/" style="font-size: 0.7em;">AWS</a> <a href="/tags/Arch/" style="font-size: 0.6em;">Arch</a> <a href="/tags/Arch-Linux/" style="font-size: 0.8em;">Arch Linux</a> <a href="/tags/ArchLinux/" style="font-size: 0.8em;">ArchLinux</a> <a href="/tags/CAS/" style="font-size: 0.6em;">CAS</a> <a href="/tags/Caffeine/" style="font-size: 0.6em;">Caffeine</a> <a href="/tags/CompletableFuture/" style="font-size: 0.7em;">CompletableFuture</a> <a href="/tags/DNS/" style="font-size: 0.8em;">DNS</a> <a href="/tags/Docker/" style="font-size: 0.6em;">Docker</a> <a href="/tags/Flask/" style="font-size: 0.6em;">Flask</a> <a href="/tags/Future/" style="font-size: 0.7em;">Future</a> <a href="/tags/GC/" style="font-size: 0.6em;">GC</a> <a href="/tags/GPT/" style="font-size: 0.6em;">GPT</a> <a href="/tags/GraalVM/" style="font-size: 0.8em;">GraalVM</a> <a href="/tags/HashMap/" style="font-size: 0.6em;">HashMap</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2026/08/17/2026/08/171508/"><i class="fa  fa-book"></i> 中兴小方糖 Z503 刷 Z506 固件：让坑货也能 Mesh 组网</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2026/07/08/2026/07/101937/"><i class="fa  fa-book"></i> PdfCheckUtil 文件句柄泄漏排查与修复</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2026/07/08/2026/07/101513/"><i class="fa  fa-book"></i> 查询条件退化为全表扫描导致的 OOM 及参数校验修复</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2026/06/15/2026/06/200000/"><i class="fa  fa-book"></i> 从 zlib compressed data 到 PDF：一次文件解压的排查记录</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2026/06/14/2026/06/14210000/"><i class="fa  fa-book"></i> 在手机上 Vibe Coding：UU远程与终端代理的折腾记录</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  >
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        <li><a href="mailto:congco@foxmail.com"><i class="fa fa-envelope"></i></a></li>
+                        
+                        
+                        
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://github.com/qbmzc"><i class="fa fa-github"></i></a></li>
+                        <li><a target="_blank" rel="nofollow" href="/rss.xml"><i class="fa fa-rss"></i></a></li>
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2026 沐曦留曳 版权所有.</li>
+                            <li>本站已运行<span id="span_dt">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
+                            <li>Site built with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by cong.</li>
+                        </div>
+                        <div>
+                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
+                            <li>Hosted on <a href="https://github.io" target="_blank">Github Pages</a></li>
+                        </div>
+                        <div>
+                            
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="/vendors/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="/vendors/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+    <div>
+        <canvas id="snow"></canvas>
+        <script async src="/js/snow.min.js"></script>
+    </div>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+
+    <script defer src="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="/vendors/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>

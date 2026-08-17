@@ -1,0 +1,1526 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="/images/favicon.ico">
+  
+  <title>中兴小方糖 Z503 刷 Z506 固件：让坑货也能 Mesh 组网 | 沐曦留曳</title>
+  <meta name="author" content="cong" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="Mesh, Python, ZTE" />
+  
+  <meta name="description" content="前言中兴小方糖系列硬件完全一致，只有固件不同：  h196a：国际版 Z500：国内电信版 Z503：国内移动版 Z507：国内联通版 Z506：国内公版固件  我手上的 Z503 是 v1.0.0 的”坑货”，不支持 Mesh 组网，于是开始折腾刷机。 整个项目开源在 GitHub&#x2F;Gitee，核心是两个 Python 工具：  ztetool.py：加解密用户配置文件 config.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="中兴小方糖 Z503 刷 Z506 固件：让坑货也能 Mesh 组网">
+<meta property="og:url" content="https://qbmzc.github.io/2026/08/17/2026/08/171508/index.html">
+<meta property="og:site_name" content="沐曦留曳">
+<meta property="og:description" content="前言中兴小方糖系列硬件完全一致，只有固件不同：  h196a：国际版 Z500：国内电信版 Z503：国内移动版 Z507：国内联通版 Z506：国内公版固件  我手上的 Z503 是 v1.0.0 的”坑货”，不支持 Mesh 组网，于是开始折腾刷机。 整个项目开源在 GitHub&#x2F;Gitee，核心是两个 Python 工具：  ztetool.py：加解密用户配置文件 config.">
+<meta property="og:locale">
+<meta property="og:image" content="https://qbmzc.github.io/images/favicon.ico">
+<meta property="article:published_time" content="2026-08-17T04:00:00.000Z">
+<meta property="article:modified_time" content="2026-08-17T07:13:47.955Z">
+<meta property="article:author" content="cong">
+<meta property="article:tag" content="Mesh">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="ZTE">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://qbmzc.github.io/images/favicon.ico">
+  <link rel="alternate" href="rss.xml" type="application/atom+xml">
+  <!-- 站点验证相关 -->
+  
+    
+      <meta name="google-site-verification" content="lV4cead5YlJ8KpODToP7dvzi-ihrxSqU0yYStYKj2ao" />
+    
+    
+      <meta name="baidu-site-verification" content="codeva-Zr6WlkDupK" />
+    
+    
+      <meta name="msvalidate.01" content="2D2197DEE362D193B3EC29AFD3306341" />
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" media="all"></script>
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-color-dark.min.css" media="(prefers-color-scheme: dark)"></script>
+    <script src="/js/kr-dark.min.js"></script>
+  
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" media="all"></script>
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="/vendors/font-awesome@4.7.0/css/font-awesome.min.css" media="all"></script>
+  <link rel="stylesheet" id="nprogress-css" href="/vendors/nprogress@0.2.0/nprogress.css" media="all"></script>
+  
+  
+  
+    <link rel="stylesheet" href="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css"></script>
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="/vendors/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/banner.webp');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">沐曦留曳</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>沐曦留曳</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article itemscope itemtype="https://schema.org/Article">
+    
+    <link itemprop="mainEntityOfPage" href="https://qbmzc.github.io/2026/08/17/2026/08/171508/">
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center" itemprop="name headline">中兴小方糖 Z503 刷 Z506 固件：让坑货也能 Mesh 组网</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><time datetime="2026-08-17T04:00:00.000Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2026-08-17</time></li>
+                <li itemprop="author" itemscope itemtype="https://schema.org/Person">
+                    <i class="fa fa-user"></i> 作者 <span itemprop="name">cong</span>
+                </li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~3.95K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1786950827955"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+            
+            <hr />
+            <div itemprop="articleBody"><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>中兴小方糖系列硬件完全一致，只有固件不同：</p>
+<ul>
+<li><strong>h196a</strong>：国际版</li>
+<li><strong>Z500</strong>：国内电信版</li>
+<li><strong>Z503</strong>：国内移动版</li>
+<li><strong>Z507</strong>：国内联通版</li>
+<li><strong>Z506</strong>：国内公版固件</li>
+</ul>
+<p>我手上的 Z503 是 v1.0.0 的”坑货”，不支持 Mesh 组网，于是开始折腾刷机。</p>
+<p>整个项目开源在 GitHub&#x2F;Gitee，核心是两个 Python 工具：</p>
+<ul>
+<li><code>ztetool.py</code>：加解密用户配置文件 <code>config.bin</code></li>
+<li><code>mod_tags.py</code>：修改 <code>tags.bin</code>（&#x2F;dev&#x2F;mtdblock2 tags 分区 dump）</li>
+</ul>
+<h2 id="1-开启-Telnet"><a href="#1-开启-Telnet" class="headerlink" title="1. 开启 Telnet"></a>1. 开启 Telnet</h2><h3 id="1-1-备份并解密配置"><a href="#1-1-备份并解密配置" class="headerlink" title="1.1 备份并解密配置"></a>1.1 备份并解密配置</h3><p>进入路由器后台，在”管理与诊断”里找到”备份用户配置”，备份得到 <code>config.bin</code>。该文件使用 AES 加密，密钥和 IV 由设备序列号、MAC 等派生，<code>ztetool.py</code> 实现了完整加解密流程（含一个 buggy 的 SHA256 实现，与设备端算法保持一致）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uv run ztetool.py -d -r z503 config.bin config_z503.xml</span><br></pre></td></tr></table></figure>
+
+<p>解密后得到 XML 格式的用户配置，修改 <code>TelnetCfg</code> 表开启 Telnet：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Tbl</span> <span class="attr">name</span>=<span class="string">&quot;TelnetCfg&quot;</span> <span class="attr">RowCount</span>=<span class="string">&quot;1&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">Row</span> <span class="attr">No</span>=<span class="string">&quot;0&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">DM</span> <span class="attr">name</span>=<span class="string">&quot;TS_Enable&quot;</span> <span class="attr">val</span>=<span class="string">&quot;1&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">DM</span> <span class="attr">name</span>=<span class="string">&quot;Wan_Enable&quot;</span> <span class="attr">val</span>=<span class="string">&quot;0&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">DM</span> <span class="attr">name</span>=<span class="string">&quot;Lan_Enable&quot;</span> <span class="attr">val</span>=<span class="string">&quot;1&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">DM</span> <span class="attr">name</span>=<span class="string">&quot;TS_Port&quot;</span> <span class="attr">val</span>=<span class="string">&quot;23&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">DM</span> <span class="attr">name</span>=<span class="string">&quot;TS_UName&quot;</span> <span class="attr">val</span>=<span class="string">&quot;root&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">DM</span> <span class="attr">name</span>=<span class="string">&quot;TS_UPwd&quot;</span> <span class="attr">val</span>=<span class="string">&quot;root123&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">DM</span> <span class="attr">name</span>=<span class="string">&quot;Max_Con_Num&quot;</span> <span class="attr">val</span>=<span class="string">&quot;5&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">DM</span> <span class="attr">name</span>=<span class="string">&quot;Max_Auth_Tries&quot;</span> <span class="attr">val</span>=<span class="string">&quot;3&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">DM</span> <span class="attr">name</span>=<span class="string">&quot;Auth_Lock_Time&quot;</span> <span class="attr">val</span>=<span class="string">&quot;60&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">DM</span> <span class="attr">name</span>=<span class="string">&quot;ProcType&quot;</span> <span class="attr">val</span>=<span class="string">&quot;0&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">DM</span> <span class="attr">name</span>=<span class="string">&quot;Level&quot;</span> <span class="attr">val</span>=<span class="string">&quot;3&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">Row</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">Tbl</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="1-2-重新打包并恢复"><a href="#1-2-重新打包并恢复" class="headerlink" title="1.2 重新打包并恢复"></a>1.2 重新打包并恢复</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uv run ztetool.py -e -r z503 config_z503.xml config_telnet_enabled.bin</span><br></pre></td></tr></table></figure>
+
+<p>用修改后的 bin 在后台”恢复用户配置”，系统重启后 Telnet 即开启。账号密码：<code>root/root123</code>。</p>
+<h2 id="2-扩容-var"><a href="#2-扩容-var" class="headerlink" title="2. 扩容 &#x2F;var"></a>2. 扩容 &#x2F;var</h2><p>Telnet 进路由器后执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mount -o remount,size=32M /var</span><br></pre></td></tr></table></figure>
+
+<p><strong>这一步必须做。</strong> Z506 V1.0.0.2B2.8000 固件有 20M，超过 &#x2F;var 默认容量，不扩容刷机时会提示”文件上传失败”。</p>
+<h2 id="3-升级固件"><a href="#3-升级固件" class="headerlink" title="3. 升级固件"></a>3. 升级固件</h2><ol>
+<li>进入”系统升级”页面</li>
+<li>上传 <code>zxhnze50x_hv100_fv1002b28000_firmware-20230615093954.bin</code> 固件</li>
+<li>确认升级，系统自动重启后就是 Z506 了</li>
+<li>管理密码与 Z503 保持一致</li>
+</ol>
+<p>固件可在 <a target="_blank" rel="noopener" href="https://archive.org/download/zxhnze50x_hv100_fv1002b28000_firmware-20230615093954">archive.org</a> 下载。</p>
+<h2 id="4-Mesh-组网"><a href="#4-Mesh-组网" class="headerlink" title="4. Mesh 组网"></a>4. Mesh 组网</h2><p>刷机的目的就是让 Z503 V1.0.0 也能 Mesh 组网：</p>
+<ol>
+<li>牙签戳 reset 键约 10 秒，恢复出厂设置</li>
+<li>主路由 LAN 口接小方糖 WAN 口，等待 1 分钟自动组网</li>
+</ol>
+<h2 id="5-修复-Z506-的”马甲”"><a href="#5-修复-Z506-的”马甲”" class="headerlink" title="5. 修复 Z506 的”马甲”"></a>5. 修复 Z506 的”马甲”</h2><p>进到 Z506 后发现问题：主页上属于 Z506 的图显示不出来，因为设备标识还留在 Z503。</p>
+<h3 id="5-1-重新开启-Telnet"><a href="#5-1-重新开启-Telnet" class="headerlink" title="5.1 重新开启 Telnet"></a>5.1 重新开启 Telnet</h3><p>同第 1 节，用 <code>-r z506</code> 重新加解密：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">uv run ztetool.py -d -r z506 config_z506.bin config_z506.xml</span><br><span class="line"><span class="comment"># 修改 TelnetCfg 后：</span></span><br><span class="line">uv run ztetool.py -e -r z506 config_z506.xml config_telnet_enabled_z506.bin</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-2-备份-tags-bin"><a href="#5-2-备份-tags-bin" class="headerlink" title="5.2 备份 tags.bin"></a>5.2 备份 tags.bin</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> /dev/mtdblock2 &gt; /tmp/tags.bin</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-3-回传-tags-bin"><a href="#5-3-回传-tags-bin" class="headerlink" title="5.3 回传 tags.bin"></a>5.3 回传 tags.bin</h3><p>主机起一个 ftpd：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uv tool run --from pyftpdlib python -m pyftpdlib -w -u user -P 123456 -p 2121</span><br></pre></td></tr></table></figure>
+
+<p>路由器上回传：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wput_ftp /tmp/tags.bin ftp://user:123456@192.168.5.2:2121/tags.bin</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-4-修改-tags-bin"><a href="#5-4-修改-tags-bin" class="headerlink" title="5.4 修改 tags.bin"></a>5.4 修改 tags.bin</h3><p><code>tags.bin</code> 是中兴的 tags 分区，格式为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[0..3]   magic   = 0x33333333</span><br><span class="line">[4..7]   size    = 数据段长度</span><br><span class="line">[8..11]  crc32   = zlib.crc32(data[12:12+size])</span><br><span class="line">[12..]   数据段  = 若干 param 条目（key_len/value_len/reserved/key/value）</span><br></pre></td></tr></table></figure>
+
+<p>用 <code>mod_tags.py</code> 查看：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">uv run scripts/mod_tags.py tags.bin list</span><br><span class="line">file    : tags.bin</span><br><span class="line">magic   : 0x33333333</span><br><span class="line">size    : 0x13C (316)</span><br><span class="line">crc     : 0x81F8F550</span><br><span class="line">entries : 12</span><br><span class="line">======================================================================</span><br><span class="line">[  0]     0x0100  -&gt;  hex:***</span><br><span class="line">[  1]     0x0101  -&gt;  hex:***</span><br><span class="line">[  2]     0x0400  -&gt;  str:CMCC-2aDc</span><br><span class="line">[  3]     0x0404  -&gt;  str:CMCC-pgCz</span><br><span class="line">[  4]     0x0510  -&gt;  str:***</span><br><span class="line">[  5]     0x0530  -&gt;  str:***</span><br><span class="line">[  6]     0x0701  -&gt;  str:***</span><br><span class="line">[  7]     0x8100  -&gt;  str:ZXHN Z503</span><br><span class="line">[  8]     0x0200  -&gt;  str:***</span><br><span class="line">[  9]     0x0300  -&gt;  str:***</span><br><span class="line">[ 10]     0x8010  -&gt;  str:***</span><br><span class="line">[ 11]     0x0807  -&gt;  str:1</span><br></pre></td></tr></table></figure>
+
+<p>（星号为打码的串号等敏感信息，实际都是明文。）</p>
+<p>把 Z503 改成 Z506：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">uv run scripts/mod_tags.py tags.bin <span class="built_in">set</span> 0x8100 <span class="string">&quot;ZXHN Z506&quot;</span></span><br><span class="line">[+] wrote tags.bin: size=316 crc=0x86F35EF1 total=1048576</span><br><span class="line">[+] <span class="built_in">set</span> 0x8100 = str:ZXHN Z506</span><br></pre></td></tr></table></figure>
+
+<p>脚本会自动重算 CRC，并用 0xFF 填充回原始文件大小（NAND 擦除特性），支持 list &#x2F; dump &#x2F; get &#x2F; set &#x2F; del &#x2F; verify 等命令。</p>
+<h3 id="5-5-刷入-tags-bin"><a href="#5-5-刷入-tags-bin" class="headerlink" title="5.5 刷入 tags.bin"></a>5.5 刷入 tags.bin</h3><p>主机起 http 服务：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 -m http.server</span><br></pre></td></tr></table></figure>
+
+<p>路由器上下载并刷写：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget http://192.168.5.2:8000/tags.bin -O /tmp/tags.bin</span><br><span class="line"><span class="built_in">cat</span> /tmp/tags.bin &gt; /dev/mtdblock2</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-重启"><a href="#6-重启" class="headerlink" title="6. 重启"></a>6. 重启</h2><p>重启后完美收工。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://orca.pet/zteh3600p/">https://orca.pet/zteh3600p/</a> —— console 环境变量覆盖 kernel commandline 强入 shell、tags.bin、config.bin 解密</li>
+<li><a target="_blank" rel="noopener" href="https://blog.rop.la/en/reversing-zte-h3600p-gpon-ont-routers-part1.html">https://blog.rop.la/en/reversing...-routers-part1.html</a> —— 指定 <code>init=/bin/sh</code> 进入 shell</li>
+<li><a target="_blank" rel="noopener" href="https://voz.vn/t/unlock-mesh-zte-h3600p-ban-quoc-te.903294/">https://voz.vn/t/unlock-mesh-zte...ban-quoc-te.903294/</a> —— bootloader 启动密码 <code>5cE080@fyBD</code></li>
+</ol>
+</div>
+        </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/Mesh/" rel="tag">Mesh</a>, <a class="tag-none-link" href="/tags/Python/" rel="tag">Python</a>, <a class="tag-none-link" href="/tags/ZTE/" rel="tag">ZTE</a>
+                </div>
+                <div class="pull-date">
+                    <time datetime="2026-08-17T07:13:47.955Z" itemprop="dateModified">最后编辑：2026-08-17</time>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" PdfCheckUtil 文件句柄泄漏排查与修复" href="/2026/07/08/2026/07/101937/">&lt; 上一篇</a>
+            </div>
+            
+            
+        </nav>
+    
+    
+        <link rel="stylesheet" href="/vendors/gitalk@1.7.2/dist/gitalk.css"></script>
+<div id="gitalk-container" class="post-comments lazy-load" style="padding-left:2rem; padding-right:2rem;"></div>
+<script>
+    var load_comm = () => {
+        const init = () => {
+            console.log('Gitalk loading...');
+            const gitalk = new Gitalk(Object.assign({
+                id: '/2026/08/17/2026/08/171508/',
+                path: '/2026/08/17/2026/08/171508/'
+            }, JSON.parse('{"clientID":"56e6a743c63b9c4faa93","clientSecret":"ae0e88ac992270e3a9ad65fabd60a845e367286e","repo":"gitalk-comments","owner":"qbmzc","admin":["qbmzc"]}')));
+
+            gitalk.render('gitalk-container');
+        }
+        if (typeof Gitalk === 'undefined') {
+            const src = '/vendors/gitalk@1.7.2/dist/gitalk.min.js';
+            $.getScript(src, init);
+        } else {
+            init();
+        }
+    };
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a></noscript>
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/avatar.webp" loading="lazy" decoding="auto" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center">流云与风，苍穹游牧</p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                512
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                7
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                233
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">139</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">156</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">29</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/congco/">congco</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/work/">work</a><span class="category-list-count">117</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wuw/">wuw</a><span class="category-list-count">50</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/">技术笔记</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/AES/" style="font-size: 0.6em;">AES</a> <a href="/tags/AI/" style="font-size: 0.8em;">AI</a> <a href="/tags/ASUS/" style="font-size: 0.6em;">ASUS</a> <a href="/tags/AWS/" style="font-size: 0.7em;">AWS</a> <a href="/tags/Arch/" style="font-size: 0.6em;">Arch</a> <a href="/tags/Arch-Linux/" style="font-size: 0.8em;">Arch Linux</a> <a href="/tags/ArchLinux/" style="font-size: 0.8em;">ArchLinux</a> <a href="/tags/CAS/" style="font-size: 0.6em;">CAS</a> <a href="/tags/Caffeine/" style="font-size: 0.6em;">Caffeine</a> <a href="/tags/CompletableFuture/" style="font-size: 0.7em;">CompletableFuture</a> <a href="/tags/DNS/" style="font-size: 0.8em;">DNS</a> <a href="/tags/Docker/" style="font-size: 0.6em;">Docker</a> <a href="/tags/Flask/" style="font-size: 0.6em;">Flask</a> <a href="/tags/Future/" style="font-size: 0.7em;">Future</a> <a href="/tags/GC/" style="font-size: 0.6em;">GC</a> <a href="/tags/GPT/" style="font-size: 0.6em;">GPT</a> <a href="/tags/GraalVM/" style="font-size: 0.8em;">GraalVM</a> <a href="/tags/HashMap/" style="font-size: 0.6em;">HashMap</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2026/08/17/2026/08/171508/"><i class="fa  fa-book"></i> 中兴小方糖 Z503 刷 Z506 固件：让坑货也能 Mesh 组网</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2026/07/08/2026/07/101937/"><i class="fa  fa-book"></i> PdfCheckUtil 文件句柄泄漏排查与修复</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2026/07/08/2026/07/101513/"><i class="fa  fa-book"></i> 查询条件退化为全表扫描导致的 OOM 及参数校验修复</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2026/06/15/2026/06/200000/"><i class="fa  fa-book"></i> 从 zlib compressed data 到 PDF：一次文件解压的排查记录</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2026/06/14/2026/06/14210000/"><i class="fa  fa-book"></i> 在手机上 Vibe Coding：UU远程与终端代理的折腾记录</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  >
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        <li><a href="mailto:congco@foxmail.com"><i class="fa fa-envelope"></i></a></li>
+                        
+                        
+                        
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://github.com/qbmzc"><i class="fa fa-github"></i></a></li>
+                        <li><a target="_blank" rel="nofollow" href="/rss.xml"><i class="fa fa-rss"></i></a></li>
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2026 沐曦留曳 版权所有.</li>
+                            <li>本站已运行<span id="span_dt">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
+                            <li>Site built with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by cong.</li>
+                        </div>
+                        <div>
+                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
+                            <li>Hosted on <a href="https://github.io" target="_blank">Github Pages</a></li>
+                        </div>
+                        <div>
+                            
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="/vendors/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="/vendors/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+    <div>
+        <canvas id="snow"></canvas>
+        <script async src="/js/snow.min.js"></script>
+    </div>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+
+    <script defer src="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="/vendors/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>

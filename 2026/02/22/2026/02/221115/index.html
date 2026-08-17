@@ -1,0 +1,1567 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="/images/favicon.ico">
+  
+  <title>iperf3使用说明 | 沐曦留曳</title>
+  <meta name="author" content="cong" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="iperf3, network" />
+  
+  <meta name="description" content="iperf3 是一个常用的网络测速工具，适合排查带宽不足、延迟抖动、丢包等问题。它不像网页测速那样“只给一个结果”，而是可以精确控制测试方向、协议、时长和并发，更适合运维和开发场景。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iperf3使用说明">
+<meta property="og:url" content="https://qbmzc.github.io/2026/02/22/2026/02/221115/index.html">
+<meta property="og:site_name" content="沐曦留曳">
+<meta property="og:description" content="iperf3 是一个常用的网络测速工具，适合排查带宽不足、延迟抖动、丢包等问题。它不像网页测速那样“只给一个结果”，而是可以精确控制测试方向、协议、时长和并发，更适合运维和开发场景。">
+<meta property="og:locale">
+<meta property="og:image" content="https://qbmzc.github.io/images/favicon.ico">
+<meta property="article:published_time" content="2026-02-22T03:06:09.000Z">
+<meta property="article:modified_time" content="2026-08-17T07:13:47.954Z">
+<meta property="article:author" content="cong">
+<meta property="article:tag" content="iperf3">
+<meta property="article:tag" content="network">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://qbmzc.github.io/images/favicon.ico">
+  <link rel="alternate" href="rss.xml" type="application/atom+xml">
+  <!-- 站点验证相关 -->
+  
+    
+      <meta name="google-site-verification" content="lV4cead5YlJ8KpODToP7dvzi-ihrxSqU0yYStYKj2ao" />
+    
+    
+      <meta name="baidu-site-verification" content="codeva-Zr6WlkDupK" />
+    
+    
+      <meta name="msvalidate.01" content="2D2197DEE362D193B3EC29AFD3306341" />
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" media="all"></script>
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-color-dark.min.css" media="(prefers-color-scheme: dark)"></script>
+    <script src="/js/kr-dark.min.js"></script>
+  
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" media="all"></script>
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="/vendors/font-awesome@4.7.0/css/font-awesome.min.css" media="all"></script>
+  <link rel="stylesheet" id="nprogress-css" href="/vendors/nprogress@0.2.0/nprogress.css" media="all"></script>
+  
+  
+  
+    <link rel="stylesheet" href="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css"></script>
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="/vendors/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/banner.webp');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">沐曦留曳</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>沐曦留曳</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article itemscope itemtype="https://schema.org/Article">
+    
+    <link itemprop="mainEntityOfPage" href="https://qbmzc.github.io/2026/02/22/2026/02/221115/">
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center" itemprop="name headline">iperf3使用说明</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><time datetime="2026-02-22T03:06:09.000Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2026-02-22</time></li>
+                <li itemprop="author" itemscope itemtype="https://schema.org/Person">
+                    <i class="fa fa-user"></i> 作者 <span itemprop="name">cong</span>
+                </li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~1.86K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1786950827954"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+            
+                <div class="kratos-post-inner-toc">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#iperf3-%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">2.</span> <span class="toc-text">iperf3 是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">3.</span> <span class="toc-text">适用场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E6%96%B9%E5%BC%8F"><span class="toc-number">4.</span> <span class="toc-text">安装方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Debian-Ubuntu"><span class="toc-number">4.1.</span> <span class="toc-text">Debian &#x2F; Ubuntu</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CentOS-Rocky-AlmaLinux"><span class="toc-number">4.2.</span> <span class="toc-text">CentOS &#x2F; Rocky &#x2F; AlmaLinux</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#macOS"><span class="toc-number">4.3.</span> <span class="toc-text">macOS</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E5%B0%8F%E5%8F%AF%E7%94%A8%E7%A4%BA%E4%BE%8B"><span class="toc-number">5.</span> <span class="toc-text">最小可用示例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E5%90%AF%E5%8A%A8%E6%9C%8D%E5%8A%A1%E7%AB%AF"><span class="toc-number">5.1.</span> <span class="toc-text">第一步：启动服务端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%9A%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%8F%91%E8%B5%B7%E6%B5%8B%E8%AF%95"><span class="toc-number">5.2.</span> <span class="toc-text">第二步：客户端发起测试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E5%8F%82%E6%95%B0%EF%BC%88%E6%9C%80%E5%AE%9E%E7%94%A8%EF%BC%89"><span class="toc-number">6.</span> <span class="toc-text">常用命令参数（最实用）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%8C%87%E5%AE%9A%E6%B5%8B%E8%AF%95%E6%97%B6%E9%95%BF"><span class="toc-number">6.1.</span> <span class="toc-text">1) 指定测试时长</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%A2%9E%E5%8A%A0%E5%B9%B6%E5%8F%91%E8%BF%9E%E6%8E%A5"><span class="toc-number">6.2.</span> <span class="toc-text">2) 增加并发连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%8F%8D%E5%90%91%E6%B5%8B%E8%AF%95%EF%BC%88%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%8F%91%E5%9B%9E%E5%AE%A2%E6%88%B7%E7%AB%AF%EF%BC%89"><span class="toc-number">6.3.</span> <span class="toc-text">3) 反向测试（服务端发回客户端）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-UDP-%E6%B5%8B%E8%AF%95%EF%BC%88%E7%9C%8B%E4%B8%A2%E5%8C%85%E5%92%8C%E6%8A%96%E5%8A%A8%EF%BC%89"><span class="toc-number">6.4.</span> <span class="toc-text">4) UDP 测试（看丢包和抖动）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E6%8C%87%E5%AE%9A%E7%AB%AF%E5%8F%A3"><span class="toc-number">6.5.</span> <span class="toc-text">5) 指定端口</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E6%9E%9C%E6%80%8E%E4%B9%88%E8%A7%A3%E8%AF%BB%EF%BC%88%E9%80%9A%E7%94%A8%E5%88%A4%E6%96%AD%EF%BC%89"><span class="toc-number">7.</span> <span class="toc-text">结果怎么解读（通用判断）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5"><span class="toc-number">8.</span> <span class="toc-text">常见问题排查</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E8%BF%9E%E6%8E%A5%E5%A4%B1%E8%B4%A5-unable-to-connect-to-server"><span class="toc-number">8.1.</span> <span class="toc-text">1) 连接失败 unable to connect to server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E8%B7%91%E4%B8%8D%E6%BB%A1%E5%B8%A6%E5%AE%BD"><span class="toc-number">8.2.</span> <span class="toc-text">2) 跑不满带宽</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-UDP-%E4%B8%A2%E5%8C%85%E8%BF%87%E9%AB%98"><span class="toc-number">8.3.</span> <span class="toc-text">3) UDP 丢包过高</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E6%88%98%E5%BB%BA%E8%AE%AE"><span class="toc-number">9.</span> <span class="toc-text">实战建议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">10.</span> <span class="toc-text">总结</span></a></li></ol>
+                </div>
+            
+            <hr />
+            <div itemprop="articleBody"><p><code>iperf3</code> 是一个常用的网络测速工具，适合排查带宽不足、延迟抖动、丢包等问题。它不像网页测速那样“只给一个结果”，而是可以精确控制测试方向、协议、时长和并发，更适合运维和开发场景。</p>
+<span id="more"></span>
+
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>很多时候我们会遇到这些问题：</p>
+<ul>
+<li>服务器下载慢，到底是出口带宽不够，还是链路质量差？</li>
+<li>业务偶发超时，是应用问题，还是网络抖动导致？</li>
+<li>迁移机房后，链路是否真的达到运营商承诺带宽？</li>
+</ul>
+<p>这时候，<code>iperf3</code> 就非常有用。</p>
+<h2 id="iperf3-是什么"><a href="#iperf3-是什么" class="headerlink" title="iperf3 是什么"></a>iperf3 是什么</h2><p><code>iperf3</code> 采用“客户端-服务端”模式：</p>
+<ul>
+<li>一端运行服务端：负责接收或发送测试流量</li>
+<li>另一端运行客户端：发起测试并输出结果</li>
+</ul>
+<p>简单理解：你可以把它当成“可编程的网络体检工具”。</p>
+<h2 id="适用场景"><a href="#适用场景" class="headerlink" title="适用场景"></a>适用场景</h2><ul>
+<li>机房间专线验收</li>
+<li>云服务器到本地的链路测试</li>
+<li>容器或虚拟机网络性能对比</li>
+<li>高并发业务上线前压测网络基础能力</li>
+</ul>
+<h2 id="安装方式"><a href="#安装方式" class="headerlink" title="安装方式"></a>安装方式</h2><p>不同系统安装命令略有区别，常见如下。</p>
+<h3 id="Debian-Ubuntu"><a href="#Debian-Ubuntu" class="headerlink" title="Debian &#x2F; Ubuntu"></a>Debian &#x2F; Ubuntu</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt install -y iperf3</span><br></pre></td></tr></table></figure>
+
+<h3 id="CentOS-Rocky-AlmaLinux"><a href="#CentOS-Rocky-AlmaLinux" class="headerlink" title="CentOS &#x2F; Rocky &#x2F; AlmaLinux"></a>CentOS &#x2F; Rocky &#x2F; AlmaLinux</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install -y epel-release</span><br><span class="line">sudo yum install -y iperf3</span><br></pre></td></tr></table></figure>
+
+<h3 id="macOS"><a href="#macOS" class="headerlink" title="macOS"></a>macOS</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install iperf3</span><br></pre></td></tr></table></figure>
+
+<p>安装后可用以下命令确认版本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iperf3 --version</span><br></pre></td></tr></table></figure>
+
+<h2 id="最小可用示例"><a href="#最小可用示例" class="headerlink" title="最小可用示例"></a>最小可用示例</h2><p>下面用两台机器演示（假设服务端 IP 为 <code>10.0.0.10</code>）。</p>
+<h3 id="第一步：启动服务端"><a href="#第一步：启动服务端" class="headerlink" title="第一步：启动服务端"></a>第一步：启动服务端</h3><p>在服务端执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iperf3 -s</span><br></pre></td></tr></table></figure>
+
+<p>默认监听 TCP 端口 <code>5201</code>。</p>
+<h3 id="第二步：客户端发起测试"><a href="#第二步：客户端发起测试" class="headerlink" title="第二步：客户端发起测试"></a>第二步：客户端发起测试</h3><p>在客户端执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iperf3 -c 10.0.0.10</span><br></pre></td></tr></table></figure>
+
+<p>输出里最重要的是：</p>
+<ul>
+<li><code>sender/receiver</code> 吞吐量（bits&#x2F;sec）</li>
+<li><code>retransmits</code>（TCP 重传次数，越少越好）</li>
+</ul>
+<h2 id="常用命令参数（最实用）"><a href="#常用命令参数（最实用）" class="headerlink" title="常用命令参数（最实用）"></a>常用命令参数（最实用）</h2><h3 id="1-指定测试时长"><a href="#1-指定测试时长" class="headerlink" title="1) 指定测试时长"></a>1) 指定测试时长</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iperf3 -c 10.0.0.10 -t 30</span><br></pre></td></tr></table></figure>
+<p>表示测试 30 秒，避免短时波动影响判断。</p>
+<h3 id="2-增加并发连接"><a href="#2-增加并发连接" class="headerlink" title="2) 增加并发连接"></a>2) 增加并发连接</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iperf3 -c 10.0.0.10 -P 4</span><br></pre></td></tr></table></figure>
+<p><code>-P</code> 表示并发流数。单连接跑不满时，可以提高并发观察峰值能力。</p>
+<h3 id="3-反向测试（服务端发回客户端）"><a href="#3-反向测试（服务端发回客户端）" class="headerlink" title="3) 反向测试（服务端发回客户端）"></a>3) 反向测试（服务端发回客户端）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iperf3 -c 10.0.0.10 -R</span><br></pre></td></tr></table></figure>
+<p>可以快速判断上下行是否对称。</p>
+<h3 id="4-UDP-测试（看丢包和抖动）"><a href="#4-UDP-测试（看丢包和抖动）" class="headerlink" title="4) UDP 测试（看丢包和抖动）"></a>4) UDP 测试（看丢包和抖动）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iperf3 -c 10.0.0.10 -u -b 100M -t 20</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>-u</code> 使用 UDP</li>
+<li><code>-b 100M</code> 指定发送速率 100Mbps</li>
+</ul>
+<p>UDP 场景重点看：</p>
+<ul>
+<li><code>jitter</code>（抖动）</li>
+<li><code>lost/total datagrams</code>（丢包率）</li>
+</ul>
+<h3 id="5-指定端口"><a href="#5-指定端口" class="headerlink" title="5) 指定端口"></a>5) 指定端口</h3><p>如果服务端用了其他端口：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">iperf3 -s -p 6000</span><br><span class="line">iperf3 -c 10.0.0.10 -p 6000</span><br></pre></td></tr></table></figure>
+
+<h2 id="结果怎么解读（通用判断）"><a href="#结果怎么解读（通用判断）" class="headerlink" title="结果怎么解读（通用判断）"></a>结果怎么解读（通用判断）</h2><p>没有绝对“好坏”，但可以先按下面经验判断：</p>
+<ul>
+<li><strong>吞吐量低</strong>：可能带宽瓶颈、限速策略、单流性能不足</li>
+<li><strong>TCP 重传高</strong>：可能链路丢包、网卡&#x2F;驱动问题、队列拥塞</li>
+<li><strong>UDP 丢包高</strong>：发送速率超过链路承载，或中间设备丢包</li>
+<li><strong>抖动大</strong>：链路不稳定，不适合实时音视频类业务</li>
+</ul>
+<p>建议至少跑 3 次取中位值，不要只看一次结果。</p>
+<h2 id="常见问题排查"><a href="#常见问题排查" class="headerlink" title="常见问题排查"></a>常见问题排查</h2><h3 id="1-连接失败-unable-to-connect-to-server"><a href="#1-连接失败-unable-to-connect-to-server" class="headerlink" title="1) 连接失败 unable to connect to server"></a>1) 连接失败 <code>unable to connect to server</code></h3><p>先检查：</p>
+<ul>
+<li>服务端是否启动 <code>iperf3 -s</code></li>
+<li>防火墙是否放行 <code>5201</code></li>
+<li>安全组&#x2F;ACL 是否允许对应端口</li>
+</ul>
+<h3 id="2-跑不满带宽"><a href="#2-跑不满带宽" class="headerlink" title="2) 跑不满带宽"></a>2) 跑不满带宽</h3><p>可以尝试：</p>
+<ul>
+<li>增大并发 <code>-P 4</code> 或 <code>-P 8</code></li>
+<li>延长测试时长 <code>-t 60</code></li>
+<li>分别测试正向与反向（加 <code>-R</code>）</li>
+<li>排除 CPU 打满、虚拟化限速和网卡协商异常</li>
+</ul>
+<h3 id="3-UDP-丢包过高"><a href="#3-UDP-丢包过高" class="headerlink" title="3) UDP 丢包过高"></a>3) UDP 丢包过高</h3><p>先把 <code>-b</code> 降低到链路能力以内，再逐步上调，找到稳定阈值。</p>
+<h2 id="实战建议"><a href="#实战建议" class="headerlink" title="实战建议"></a>实战建议</h2><ul>
+<li>尽量在业务低峰测试，减少干扰</li>
+<li>记录测试时间、命令和结果，方便复现</li>
+<li>跨地域测试要区分“网络问题”和“物理距离导致的时延上限”</li>
+<li>与监控系统结合（带宽、丢包、CPU）一起分析更准确</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><code>iperf3</code> 上手很简单，但价值很高。只要掌握“服务端启动 + 客户端发起 + 看关键指标”这三步，就能快速定位大部分网络性能问题。</p>
+<p>如果你刚开始使用，建议先从这三条命令练手：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">iperf3 -s</span><br><span class="line">iperf3 -c 10.0.0.10 -t 30</span><br><span class="line">iperf3 -c 10.0.0.10 -u -b 100M -t 20</span><br></pre></td></tr></table></figure>
+
+</div>
+        </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/iperf3/" rel="tag">iperf3</a>, <a class="tag-none-link" href="/tags/network/" rel="tag">network</a>
+                </div>
+                <div class="pull-date">
+                    <time datetime="2026-08-17T07:13:47.954Z" itemprop="dateModified">最后编辑：2026-08-17</time>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" ASUS配置DDNS" href="/2026/01/14/2026/01/121448/">&lt; 上一篇</a>
+            </div>
+            
+            
+            <div class="nav-next clearfix">
+                <a title=" WireGuard 快速配置指南" href="/2026/03/21/2026/03/211837/">下一篇 &gt;</a>
+            </div>
+            
+        </nav>
+    
+    
+        <link rel="stylesheet" href="/vendors/gitalk@1.7.2/dist/gitalk.css"></script>
+<div id="gitalk-container" class="post-comments lazy-load" style="padding-left:2rem; padding-right:2rem;"></div>
+<script>
+    var load_comm = () => {
+        const init = () => {
+            console.log('Gitalk loading...');
+            const gitalk = new Gitalk(Object.assign({
+                id: '/2026/02/22/2026/02/221115/',
+                path: '/2026/02/22/2026/02/221115/'
+            }, JSON.parse('{"clientID":"56e6a743c63b9c4faa93","clientSecret":"ae0e88ac992270e3a9ad65fabd60a845e367286e","repo":"gitalk-comments","owner":"qbmzc","admin":["qbmzc"]}')));
+
+            gitalk.render('gitalk-container');
+        }
+        if (typeof Gitalk === 'undefined') {
+            const src = '/vendors/gitalk@1.7.2/dist/gitalk.min.js';
+            $.getScript(src, init);
+        } else {
+            init();
+        }
+    };
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a></noscript>
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/avatar.webp" loading="lazy" decoding="auto" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center">流云与风，苍穹游牧</p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                512
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                7
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                233
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                    <aside id="krw-toc" class="widget widget-kratos-toc clearfix">
+    <div class="photo-background"></div>
+    <h4 class="widget-title no-after">
+        <i class="fa fa-compass"></i>
+        文章目录
+        <span class="toc-progress-bar" role="progressbar" aria-label="阅读进度："></span>
+    </h4>
+    <div class="textwidget">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#iperf3-%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-text">iperf3 是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-text">适用场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E6%96%B9%E5%BC%8F"><span class="toc-text">安装方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Debian-Ubuntu"><span class="toc-text">Debian &#x2F; Ubuntu</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CentOS-Rocky-AlmaLinux"><span class="toc-text">CentOS &#x2F; Rocky &#x2F; AlmaLinux</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#macOS"><span class="toc-text">macOS</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E5%B0%8F%E5%8F%AF%E7%94%A8%E7%A4%BA%E4%BE%8B"><span class="toc-text">最小可用示例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E5%90%AF%E5%8A%A8%E6%9C%8D%E5%8A%A1%E7%AB%AF"><span class="toc-text">第一步：启动服务端</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%9A%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%8F%91%E8%B5%B7%E6%B5%8B%E8%AF%95"><span class="toc-text">第二步：客户端发起测试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E5%8F%82%E6%95%B0%EF%BC%88%E6%9C%80%E5%AE%9E%E7%94%A8%EF%BC%89"><span class="toc-text">常用命令参数（最实用）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%8C%87%E5%AE%9A%E6%B5%8B%E8%AF%95%E6%97%B6%E9%95%BF"><span class="toc-text">1) 指定测试时长</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%A2%9E%E5%8A%A0%E5%B9%B6%E5%8F%91%E8%BF%9E%E6%8E%A5"><span class="toc-text">2) 增加并发连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%8F%8D%E5%90%91%E6%B5%8B%E8%AF%95%EF%BC%88%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%8F%91%E5%9B%9E%E5%AE%A2%E6%88%B7%E7%AB%AF%EF%BC%89"><span class="toc-text">3) 反向测试（服务端发回客户端）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-UDP-%E6%B5%8B%E8%AF%95%EF%BC%88%E7%9C%8B%E4%B8%A2%E5%8C%85%E5%92%8C%E6%8A%96%E5%8A%A8%EF%BC%89"><span class="toc-text">4) UDP 测试（看丢包和抖动）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E6%8C%87%E5%AE%9A%E7%AB%AF%E5%8F%A3"><span class="toc-text">5) 指定端口</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E6%9E%9C%E6%80%8E%E4%B9%88%E8%A7%A3%E8%AF%BB%EF%BC%88%E9%80%9A%E7%94%A8%E5%88%A4%E6%96%AD%EF%BC%89"><span class="toc-text">结果怎么解读（通用判断）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5"><span class="toc-text">常见问题排查</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E8%BF%9E%E6%8E%A5%E5%A4%B1%E8%B4%A5-unable-to-connect-to-server"><span class="toc-text">1) 连接失败 unable to connect to server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E8%B7%91%E4%B8%8D%E6%BB%A1%E5%B8%A6%E5%AE%BD"><span class="toc-text">2) 跑不满带宽</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-UDP-%E4%B8%A2%E5%8C%85%E8%BF%87%E9%AB%98"><span class="toc-text">3) UDP 丢包过高</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E6%88%98%E5%BB%BA%E8%AE%AE"><span class="toc-text">实战建议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol>
+    </div>
+</aside>
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">139</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">156</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">29</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/congco/">congco</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/work/">work</a><span class="category-list-count">117</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wuw/">wuw</a><span class="category-list-count">50</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/">技术笔记</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/AES/" style="font-size: 0.6em;">AES</a> <a href="/tags/AI/" style="font-size: 0.8em;">AI</a> <a href="/tags/ASUS/" style="font-size: 0.6em;">ASUS</a> <a href="/tags/AWS/" style="font-size: 0.7em;">AWS</a> <a href="/tags/Arch/" style="font-size: 0.6em;">Arch</a> <a href="/tags/Arch-Linux/" style="font-size: 0.8em;">Arch Linux</a> <a href="/tags/ArchLinux/" style="font-size: 0.8em;">ArchLinux</a> <a href="/tags/CAS/" style="font-size: 0.6em;">CAS</a> <a href="/tags/Caffeine/" style="font-size: 0.6em;">Caffeine</a> <a href="/tags/CompletableFuture/" style="font-size: 0.7em;">CompletableFuture</a> <a href="/tags/DNS/" style="font-size: 0.8em;">DNS</a> <a href="/tags/Docker/" style="font-size: 0.6em;">Docker</a> <a href="/tags/Flask/" style="font-size: 0.6em;">Flask</a> <a href="/tags/Future/" style="font-size: 0.7em;">Future</a> <a href="/tags/GC/" style="font-size: 0.6em;">GC</a> <a href="/tags/GPT/" style="font-size: 0.6em;">GPT</a> <a href="/tags/GraalVM/" style="font-size: 0.8em;">GraalVM</a> <a href="/tags/HashMap/" style="font-size: 0.6em;">HashMap</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2026/08/17/2026/08/171508/"><i class="fa  fa-book"></i> 中兴小方糖 Z503 刷 Z506 固件：让坑货也能 Mesh 组网</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2026/07/08/2026/07/101937/"><i class="fa  fa-book"></i> PdfCheckUtil 文件句柄泄漏排查与修复</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2026/07/08/2026/07/101513/"><i class="fa  fa-book"></i> 查询条件退化为全表扫描导致的 OOM 及参数校验修复</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2026/06/15/2026/06/200000/"><i class="fa  fa-book"></i> 从 zlib compressed data 到 PDF：一次文件解压的排查记录</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2026/06/14/2026/06/14210000/"><i class="fa  fa-book"></i> 在手机上 Vibe Coding：UU远程与终端代理的折腾记录</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  >
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        <li><a href="mailto:congco@foxmail.com"><i class="fa fa-envelope"></i></a></li>
+                        
+                        
+                        
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://github.com/qbmzc"><i class="fa fa-github"></i></a></li>
+                        <li><a target="_blank" rel="nofollow" href="/rss.xml"><i class="fa fa-rss"></i></a></li>
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2026 沐曦留曳 版权所有.</li>
+                            <li>本站已运行<span id="span_dt">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
+                            <li>Site built with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by cong.</li>
+                        </div>
+                        <div>
+                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
+                            <li>Hosted on <a href="https://github.io" target="_blank">Github Pages</a></li>
+                        </div>
+                        <div>
+                            
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="/vendors/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="/vendors/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+    <div>
+        <canvas id="snow"></canvas>
+        <script async src="/js/snow.min.js"></script>
+    </div>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+
+    <script defer src="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="/vendors/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>

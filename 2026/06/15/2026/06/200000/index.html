@@ -1,0 +1,1519 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="/images/favicon.ico">
+  
+  <title>从 zlib compressed data 到 PDF：一次文件解压的排查记录 | 沐曦留曳</title>
+  <meta name="author" content="cong" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="command, file, gz, mac, python, shell" />
+  
+  <meta name="description" content="当你用 file 命令看到 zlib compressed data，而压缩软件纷纷报错时，别急着放弃。一个小脚本就能搞定。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从 zlib compressed data 到 PDF：一次文件解压的排查记录">
+<meta property="og:url" content="https://qbmzc.github.io/2026/06/15/2026/06/200000/index.html">
+<meta property="og:site_name" content="沐曦留曳">
+<meta property="og:description" content="当你用 file 命令看到 zlib compressed data，而压缩软件纷纷报错时，别急着放弃。一个小脚本就能搞定。">
+<meta property="og:locale">
+<meta property="og:image" content="https://qbmzc.github.io/images/favicon.ico">
+<meta property="article:published_time" content="2026-06-15T12:00:00.000Z">
+<meta property="article:modified_time" content="2026-08-17T07:13:47.955Z">
+<meta property="article:author" content="cong">
+<meta property="article:tag" content="command">
+<meta property="article:tag" content="file">
+<meta property="article:tag" content="gz">
+<meta property="article:tag" content="mac">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="shell">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://qbmzc.github.io/images/favicon.ico">
+  <link rel="alternate" href="rss.xml" type="application/atom+xml">
+  <!-- 站点验证相关 -->
+  
+    
+      <meta name="google-site-verification" content="lV4cead5YlJ8KpODToP7dvzi-ihrxSqU0yYStYKj2ao" />
+    
+    
+      <meta name="baidu-site-verification" content="codeva-Zr6WlkDupK" />
+    
+    
+      <meta name="msvalidate.01" content="2D2197DEE362D193B3EC29AFD3306341" />
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" media="all"></script>
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-color-dark.min.css" media="(prefers-color-scheme: dark)"></script>
+    <script src="/js/kr-dark.min.js"></script>
+  
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" media="all"></script>
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="/vendors/font-awesome@4.7.0/css/font-awesome.min.css" media="all"></script>
+  <link rel="stylesheet" id="nprogress-css" href="/vendors/nprogress@0.2.0/nprogress.css" media="all"></script>
+  
+  
+  
+    <link rel="stylesheet" href="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css"></script>
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="/vendors/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/banner.webp');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">沐曦留曳</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>沐曦留曳</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article itemscope itemtype="https://schema.org/Article">
+    
+    <link itemprop="mainEntityOfPage" href="https://qbmzc.github.io/2026/06/15/2026/06/200000/">
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center" itemprop="name headline">从 zlib compressed data 到 PDF：一次文件解压的排查记录</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><time datetime="2026-06-15T12:00:00.000Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2026-06-15</time></li>
+                <li itemprop="author" itemscope itemtype="https://schema.org/Person">
+                    <i class="fa fa-user"></i> 作者 <span itemprop="name">cong</span>
+                </li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~2.49K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1786950827955"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+            
+            <hr />
+            <div itemprop="articleBody"><p>当你用 <code>file</code> 命令看到 <code>zlib compressed data</code>，而压缩软件纷纷报错时，别急着放弃。一个小脚本就能搞定。</p>
+<span id="more"></span>
+
+<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>今天收到一个文件，名字是 <code>20231013140814700-855795.pdf</code>，但用 <code>file</code> 命令一看，它并不是 PDF：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ file 20231013140814700-855795.pdf</span><br><span class="line">20231013140814700-855795.pdf: zlib compressed data</span><br></pre></td></tr></table></figure>
+
+<p>我试图用 <strong>Keka</strong>（macOS 上的压缩工具）直接打开——失败。将文件改名为 <code>.gz</code> 再用 Keka 打开，依然失败，报错信息是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ERROR: Cannot open the file as [gzip] archive</span><br><span class="line">Is not archive</span><br></pre></td></tr></table></figure>
+
+<p>难道文件损坏了？还是另有玄机？我决定从头排查。</p>
+<h2 id="第一步：理解-zlib-compressed-data"><a href="#第一步：理解-zlib-compressed-data" class="headerlink" title="第一步：理解 zlib compressed data"></a>第一步：理解 zlib compressed data</h2><p><code>file</code> 命令的判断依据是文件开头的”魔法字节”。对于 zlib 压缩数据，典型头部是 <code>0x78 0x9C</code>、<code>0x78 0xDA</code> 或 <code>0x78 0x01</code>。这确实是一种压缩数据，但它<strong>不是</strong>标准的压缩包格式（如 <code>.zip</code>、<code>.gz</code>）。</p>
+<p><strong>关键区别</strong>：</p>
+<ul>
+<li><strong>gzip 文件</strong>：头部固定为 <code>0x1F 0x8B</code>，包含文件名、时间戳等元信息。</li>
+<li><strong>zlib 数据流</strong>：只有 2 字节的压缩参数头 + 纯粹的压缩数据，<strong>没有</strong>文件封装。</li>
+</ul>
+<p>因此，像 Keka、7-Zip 这类工具会检查文件头，发现不是 <code>0x1F 0x8B</code> 就拒绝处理——即使文件内容本身是有效的 zlib 压缩数据。</p>
+<h2 id="第二步：尝试用命令行解压"><a href="#第二步：尝试用命令行解压" class="headerlink" title="第二步：尝试用命令行解压"></a>第二步：尝试用命令行解压</h2><p>我首先尝试了 macOS 自带的 <code>gunzip</code>，同样失败：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ gunzip 20231013140814700-855795.pdf.gz</span><br><span class="line">gunzip: 20231013140814700-855795.pdf.gz: not <span class="keyword">in</span> gzip format</span><br></pre></td></tr></table></figure>
+
+<p>接着使用 <code>openssl zlib</code>，但我的 macOS 版本上的 OpenSSL 未包含该命令。于是转向 Python —— 这个办法几乎在所有系统上都通用。</p>
+<h2 id="第三步：用-Python-的-zlib-模块解压"><a href="#第三步：用-Python-的-zlib-模块解压" class="headerlink" title="第三步：用 Python 的 zlib 模块解压"></a>第三步：用 Python 的 zlib 模块解压</h2><p>Python 内置的 <code>zlib</code> 模块可以完美处理原始 zlib 数据流。一行命令搞定：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ python3 -c <span class="string">&quot;import sys, zlib; sys.stdout.buffer.write(zlib.decompress(sys.stdin.buffer.read()))&quot;</span> &lt; 20231013140814700-855795.pdf &gt; output.bin</span><br></pre></td></tr></table></figure>
+
+<p>运行后没有报错，生成了 <code>output.bin</code>。再用 <code>file</code> 检查：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ file output.bin</span><br><span class="line">output.bin: PDF document, version 1.3</span><br></pre></td></tr></table></figure>
+
+<p><strong>成功了！</strong> 原来文件是一个被裸 zlib 压缩的 PDF 文档。将其重命名为 <code>.pdf</code> 即可正常打开。</p>
+<h2 id="为什么会这样？"><a href="#为什么会这样？" class="headerlink" title="为什么会这样？"></a>为什么会这样？</h2><p>这种”裸 zlib 压缩”常见于：</p>
+<ul>
+<li>某些底层库或嵌入式系统，直接调用 <code>zlib</code> 压缩数据，却不加容器格式。</li>
+<li>PDF 生成过程中，部分数据块被单独压缩后拼接。</li>
+<li>文件在传输或备份时，外层的 gzip&#x2F;zip 容器头意外丢失。</li>
+</ul>
+<p>无论原因如何，压缩软件无法识别，但编程语言中的 zlib 库都能直接解压。</p>
+<h2 id="解决方案总结"><a href="#解决方案总结" class="headerlink" title="解决方案总结"></a>解决方案总结</h2><p>如果你也遇到 <code>zlib compressed data</code> 且解压工具无法打开：</p>
+<ol>
+<li><p><strong>确认头部字节</strong>（可选）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xxd 文件名 | <span class="built_in">head</span> -n 1</span><br></pre></td></tr></table></figure>
+<p>看到 <code>78 9c</code>、<code>78 da</code> 或 <code>78 01</code> 开头，基本确定是原始 zlib 流。</p>
+</li>
+<li><p><strong>使用 Python 解压</strong>（通用方法）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 -c <span class="string">&quot;import sys, zlib; sys.stdout.buffer.write(zlib.decompress(sys.stdin.buffer.read()))&quot;</span> &lt; 原文件 &gt; 解压后文件</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>检查解压后文件的真实格式</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">file 解压后文件</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>如果解压后仍是 zlib 数据</strong>（例如多层压缩），重复步骤 2 即可。</p>
+</li>
+</ol>
+<h3 id="备选工具"><a href="#备选工具" class="headerlink" title="备选工具"></a>备选工具</h3><ul>
+<li><strong><code>zlib-flate</code></strong>（来自 <code>qpdf</code> 包）：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">brew install qpdf</span><br><span class="line">zlib-flate -uncompress &lt; 原文件 &gt; 解压后文件</span><br></pre></td></tr></table></figure></li>
+<li><strong>Perl</strong>（如果系统自带）：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">perl -MCompress::Zlib -e <span class="string">&#x27;undef $/; print uncompress(&lt;&gt;)&#x27;</span> &lt; 原文件 &gt; 解压后文件</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="一点感悟"><a href="#一点感悟" class="headerlink" title="一点感悟"></a>一点感悟</h2><p>这次排查提醒我：<code>file</code> 命令的输出虽然准确，但”zlib compressed data”并不代表它是一个标准压缩包。理解数据格式的细微差别，善用编程语言的内置库，往往能解决图形界面工具无能为力的问题。</p>
+<p>希望这篇记录能帮你省下一些排查时间。</p>
+<hr>
+<p><strong>附录：一键脚本</strong></p>
+<p>将以下内容保存为 <code>unzlib.sh</code>，给予执行权限（<code>chmod +x unzlib.sh</code>），然后运行 <code>./unzlib.sh 你的文件</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">INFILE=<span class="string">&quot;<span class="variable">$1</span>&quot;</span></span><br><span class="line">OUTFILE=<span class="string">&quot;<span class="variable">$&#123;INFILE&#125;</span>.decompressed&quot;</span></span><br><span class="line">python3 -c <span class="string">&quot;import sys, zlib; sys.stdout.buffer.write(zlib.decompress(sys.stdin.buffer.read()))&quot;</span> &lt; <span class="string">&quot;<span class="variable">$INFILE</span>&quot;</span> &gt; <span class="string">&quot;<span class="variable">$OUTFILE</span>&quot;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;Decompressed to: <span class="variable">$OUTFILE</span>&quot;</span></span><br><span class="line">file <span class="string">&quot;<span class="variable">$OUTFILE</span>&quot;</span></span><br></pre></td></tr></table></figure>
+</div>
+        </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/command/" rel="tag">command</a>, <a class="tag-none-link" href="/tags/file/" rel="tag">file</a>, <a class="tag-none-link" href="/tags/gz/" rel="tag">gz</a>, <a class="tag-none-link" href="/tags/mac/" rel="tag">mac</a>, <a class="tag-none-link" href="/tags/python/" rel="tag">python</a>, <a class="tag-none-link" href="/tags/shell/" rel="tag">shell</a>
+                </div>
+                <div class="pull-date">
+                    <time datetime="2026-08-17T07:13:47.955Z" itemprop="dateModified">最后编辑：2026-08-17</time>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" 在手机上 Vibe Coding：UU远程与终端代理的折腾记录" href="/2026/06/14/2026/06/14210000/">&lt; 上一篇</a>
+            </div>
+            
+            
+            <div class="nav-next clearfix">
+                <a title=" 查询条件退化为全表扫描导致的 OOM 及参数校验修复" href="/2026/07/08/2026/07/101513/">下一篇 &gt;</a>
+            </div>
+            
+        </nav>
+    
+    
+        <link rel="stylesheet" href="/vendors/gitalk@1.7.2/dist/gitalk.css"></script>
+<div id="gitalk-container" class="post-comments lazy-load" style="padding-left:2rem; padding-right:2rem;"></div>
+<script>
+    var load_comm = () => {
+        const init = () => {
+            console.log('Gitalk loading...');
+            const gitalk = new Gitalk(Object.assign({
+                id: '/2026/06/15/2026/06/200000/',
+                path: '/2026/06/15/2026/06/200000/'
+            }, JSON.parse('{"clientID":"56e6a743c63b9c4faa93","clientSecret":"ae0e88ac992270e3a9ad65fabd60a845e367286e","repo":"gitalk-comments","owner":"qbmzc","admin":["qbmzc"]}')));
+
+            gitalk.render('gitalk-container');
+        }
+        if (typeof Gitalk === 'undefined') {
+            const src = '/vendors/gitalk@1.7.2/dist/gitalk.min.js';
+            $.getScript(src, init);
+        } else {
+            init();
+        }
+    };
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a></noscript>
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/avatar.webp" loading="lazy" decoding="auto" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center">流云与风，苍穹游牧</p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                512
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                7
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                233
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">139</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">156</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">29</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/congco/">congco</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/work/">work</a><span class="category-list-count">117</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wuw/">wuw</a><span class="category-list-count">50</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/">技术笔记</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/AES/" style="font-size: 0.6em;">AES</a> <a href="/tags/AI/" style="font-size: 0.8em;">AI</a> <a href="/tags/ASUS/" style="font-size: 0.6em;">ASUS</a> <a href="/tags/AWS/" style="font-size: 0.7em;">AWS</a> <a href="/tags/Arch/" style="font-size: 0.6em;">Arch</a> <a href="/tags/Arch-Linux/" style="font-size: 0.8em;">Arch Linux</a> <a href="/tags/ArchLinux/" style="font-size: 0.8em;">ArchLinux</a> <a href="/tags/CAS/" style="font-size: 0.6em;">CAS</a> <a href="/tags/Caffeine/" style="font-size: 0.6em;">Caffeine</a> <a href="/tags/CompletableFuture/" style="font-size: 0.7em;">CompletableFuture</a> <a href="/tags/DNS/" style="font-size: 0.8em;">DNS</a> <a href="/tags/Docker/" style="font-size: 0.6em;">Docker</a> <a href="/tags/Flask/" style="font-size: 0.6em;">Flask</a> <a href="/tags/Future/" style="font-size: 0.7em;">Future</a> <a href="/tags/GC/" style="font-size: 0.6em;">GC</a> <a href="/tags/GPT/" style="font-size: 0.6em;">GPT</a> <a href="/tags/GraalVM/" style="font-size: 0.8em;">GraalVM</a> <a href="/tags/HashMap/" style="font-size: 0.6em;">HashMap</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2026/08/17/2026/08/171508/"><i class="fa  fa-book"></i> 中兴小方糖 Z503 刷 Z506 固件：让坑货也能 Mesh 组网</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2026/07/08/2026/07/101937/"><i class="fa  fa-book"></i> PdfCheckUtil 文件句柄泄漏排查与修复</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2026/07/08/2026/07/101513/"><i class="fa  fa-book"></i> 查询条件退化为全表扫描导致的 OOM 及参数校验修复</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2026/06/15/2026/06/200000/"><i class="fa  fa-book"></i> 从 zlib compressed data 到 PDF：一次文件解压的排查记录</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2026/06/14/2026/06/14210000/"><i class="fa  fa-book"></i> 在手机上 Vibe Coding：UU远程与终端代理的折腾记录</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  >
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        <li><a href="mailto:congco@foxmail.com"><i class="fa fa-envelope"></i></a></li>
+                        
+                        
+                        
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://github.com/qbmzc"><i class="fa fa-github"></i></a></li>
+                        <li><a target="_blank" rel="nofollow" href="/rss.xml"><i class="fa fa-rss"></i></a></li>
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2026 沐曦留曳 版权所有.</li>
+                            <li>本站已运行<span id="span_dt">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
+                            <li>Site built with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by cong.</li>
+                        </div>
+                        <div>
+                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
+                            <li>Hosted on <a href="https://github.io" target="_blank">Github Pages</a></li>
+                        </div>
+                        <div>
+                            
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="/vendors/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="/vendors/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+    <div>
+        <canvas id="snow"></canvas>
+        <script async src="/js/snow.min.js"></script>
+    </div>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+
+    <script defer src="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="/vendors/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>
