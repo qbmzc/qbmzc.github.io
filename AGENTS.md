@@ -28,6 +28,10 @@ Drafts go to `source/_drafts/` (no date field needed).
 
 **Tags & categories**: must be chosen from the existing lists in `scaffolds/metadata.md` — do not invent new ones.
 
+**引用与出处**: 引用、参考他人内容必须注明来源，并在文末列出参考链接；转载或翻译需先取得原作者授权。
+
+**原创占比**: 若文章以摘录、整理他人内容为主（自身原创内容较少），不要发布到博客，仅在笔记中留存即可。
+
 ## CI / Deploy
 
 - Push to `main` → GitHub Actions builds & deploys (`.github/workflows/main.yml`).
