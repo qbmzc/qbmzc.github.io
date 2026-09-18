@@ -1,0 +1,1670 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  <link rel="icon" href="/images/favicon.ico">
+  
+  <title>浏览器播放 4K60 H.264 视频黑屏但有声音：一次 AMD 硬件解码问题排查记录 | 沐曦留曳</title>
+  <meta name="author" content="cong" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="video" />
+  
+  <meta name="description" content="Edge&#x2F;Chrome 播放 4K60 H.264 视频黑屏只有声音，关闭硬件加速后正常：AMD 显卡驱动问题排查">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浏览器播放 4K60 H.264 视频黑屏但有声音：一次 AMD 硬件解码问题排查记录">
+<meta property="og:url" content="https://qbmzc.github.io/2026/09/09/2026/09/092145/index.html">
+<meta property="og:site_name" content="沐曦留曳">
+<meta property="og:description" content="Edge&#x2F;Chrome 播放 4K60 H.264 视频黑屏只有声音，关闭硬件加速后正常：AMD 显卡驱动问题排查">
+<meta property="og:locale">
+<meta property="og:image" content="https://qbmzc.github.io/images/favicon.ico">
+<meta property="article:published_time" content="2026-09-09T13:47:09.000Z">
+<meta property="article:modified_time" content="2026-09-18T09:15:28.030Z">
+<meta property="article:author" content="cong">
+<meta property="article:tag" content="video">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://qbmzc.github.io/images/favicon.ico">
+  <link rel="alternate" href="rss.xml" type="application/atom+xml">
+  <!-- 站点验证相关 -->
+  
+    
+      <meta name="google-site-verification" content="lV4cead5YlJ8KpODToP7dvzi-ihrxSqU0yYStYKj2ao" />
+    
+    
+      <meta name="baidu-site-verification" content="codeva-Zr6WlkDupK" />
+    
+    
+      <meta name="msvalidate.01" content="2D2197DEE362D193B3EC29AFD3306341" />
+    
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kratosr.min.css" media="all"></script>
+  
+    <link rel="stylesheet" id="darkmode-css" href="/css/kr-color-dark.min.css" media="(prefers-color-scheme: dark)"></script>
+    <script src="/js/kr-dark.min.js"></script>
+  
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/night-eighties.min.css" media="all"></script>
+  
+  
+  <link rel="stylesheet" id="fontawe-css" href="/vendors/font-awesome@4.7.0/css/font-awesome.min.css" media="all"></script>
+  <link rel="stylesheet" id="nprogress-css" href="/vendors/nprogress@0.2.0/nprogress.css" media="all"></script>
+  
+  
+  
+    <link rel="stylesheet" href="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css"></script>
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  <script src="/vendors/jquery@3.6.0/dist/jquery.min.js"></script>
+  
+  
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('/images/banner.webp');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('/images/bg.webp');
+        }
+      }
+    
+  </style>
+  
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    
+                                    
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">沐曦留曳</a></div>
+                    <div class="nav-toggle">
+                        <a class="kratos-nav-toggle js-kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>沐曦留曳</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+                    
+
+        
+
+            <section class="col-md-8">
+
+        
+
+            <article itemscope itemtype="https://schema.org/Article">
+    
+    <link itemprop="mainEntityOfPage" href="https://qbmzc.github.io/2026/09/09/2026/09/092145/">
+    <div class="kratos-hentry kratos-post-inner clearfix">
+        <header class="kratos-entry-header">
+            
+                <h1 class="kratos-entry-title text-center" itemprop="name headline">浏览器播放 4K60 H.264 视频黑屏但有声音：一次 AMD 硬件解码问题排查记录</h1>
+            
+            
+            <ul class="kratos-post-meta text-center">
+                <li><time datetime="2026-09-09T13:47:09.000Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2026-09-09</time></li>
+                <li itemprop="author" itemscope itemtype="https://schema.org/Person">
+                    <i class="fa fa-user"></i> 作者 <span itemprop="name">cong</span>
+                </li>
+                <li>
+                    <i class="fa fa-edit"></i> 
+                    
+                    
+                        ~4.68K
+                    
+                    字
+                </li>
+                
+            </ul>
+        </header>
+        <div class="kratos-post-content">
+            
+            <div id="expire-alert" class="alert alert-warning hidden" role="alert">
+                <div class="icon"><i class="fa fa-warning"></i></div>
+                <div class="text"><p>本文最后编辑于 <time datetime="1789722928030"></time> 前，其中的内容可能需要更新。</p></div>
+            </div>
+            
+            
+                <div class="kratos-post-inner-toc">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E8%A7%86%E9%A2%91%E5%9F%BA%E6%9C%AC%E4%BF%A1%E6%81%AF"><span class="toc-number">1.</span> <span class="toc-text">一、视频基本信息</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E8%BF%9B%E4%B8%80%E6%AD%A5%E4%BD%BF%E7%94%A8-ffprobe-%E6%A3%80%E6%9F%A5%E7%BC%96%E7%A0%81%E5%8F%82%E6%95%B0"><span class="toc-number">2.</span> <span class="toc-text">二、进一步使用 ffprobe 检查编码参数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88%E5%A3%B0%E9%9F%B3%E6%AD%A3%E5%B8%B8%EF%BC%8C%E8%A7%86%E9%A2%91%E5%8D%B4%E9%BB%91%E5%B1%8F%EF%BC%9F"><span class="toc-number">3.</span> <span class="toc-text">三、为什么声音正常，视频却黑屏？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%9C%80%E5%85%B3%E9%94%AE%E7%9A%84%E6%B5%8B%E8%AF%95%EF%BC%9A%E5%85%B3%E9%97%AD%E6%B5%8F%E8%A7%88%E5%99%A8%E7%A1%AC%E4%BB%B6%E5%8A%A0%E9%80%9F"><span class="toc-number">4.</span> <span class="toc-text">四、最关键的测试：关闭浏览器硬件加速</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E7%94%B5%E8%84%91%E7%A1%AC%E4%BB%B6%E7%8E%AF%E5%A2%83"><span class="toc-number">5.</span> <span class="toc-text">五、电脑硬件环境</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E5%8F%91%E7%8E%B0-AMD-Adrenalin-%E9%A9%B1%E5%8A%A8%E7%8E%AF%E5%A2%83%E5%BC%82%E5%B8%B8"><span class="toc-number">6.</span> <span class="toc-text">六、发现 AMD Adrenalin 驱动环境异常</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E6%9C%80%E7%BB%88%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%EF%BC%9A%E9%87%8D%E6%96%B0%E6%95%B4%E7%90%86-AMD-%E9%A9%B1%E5%8A%A8%E7%8E%AF%E5%A2%83"><span class="toc-number">7.</span> <span class="toc-text">七、最终解决方案：重新整理 AMD 驱动环境</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E5%BB%BA%E8%AE%AE%E7%AC%AC%E4%B8%80%E6%97%B6%E9%97%B4%E8%BD%AC%E7%A0%81%EF%BC%9F"><span class="toc-number">8.</span> <span class="toc-text">八、为什么不建议第一时间转码？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B9%9D%E3%80%81%E9%81%87%E5%88%B0%E7%B1%BB%E4%BC%BC%E9%97%AE%E9%A2%98%E5%8F%AF%E4%BB%A5%E6%80%8E%E4%B9%88%E5%BF%AB%E9%80%9F%E5%88%A4%E6%96%AD%EF%BC%9F"><span class="toc-number">9.</span> <span class="toc-text">九、遇到类似问题可以怎么快速判断？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8D%81%E3%80%81%E6%80%BB%E7%BB%93"><span class="toc-number">10.</span> <span class="toc-text">十、总结</span></a></li></ol>
+                </div>
+            
+            <hr />
+            <div itemprop="articleBody"><p>Edge&#x2F;Chrome 播放 4K60 H.264 视频黑屏只有声音，关闭硬件加速后正常：AMD 显卡驱动问题排查</p>
+<span id="more"></span>
+
+
+
+<p>最近遇到一个比较有意思的视频播放问题。</p>
+<p>手机拍摄的视频上传到 NAS 后，在浏览器中播放时出现：</p>
+<blockquote>
+<p><strong>视频黑屏，但是声音正常播放。</strong></p>
+</blockquote>
+<p>同一个视频使用 VLC、PotPlayer 等本地播放器却可以正常播放。</p>
+<p>一开始很容易怀疑是视频损坏、浏览器不支持编码格式，或者 MP4 封装有问题。但最终排查发现，真正的问题出在：</p>
+<blockquote>
+<p><strong>AMD 显卡驱动与浏览器硬件视频解码链路的兼容性。</strong></p>
+</blockquote>
+<p>本文记录一下完整排查过程。</p>
+<hr>
+<h2 id="一、视频基本信息"><a href="#一、视频基本信息" class="headerlink" title="一、视频基本信息"></a>一、视频基本信息</h2><p>视频来自 Xiaomi 13，拍摄规格为 4K 60FPS。</p>
+<p>使用 ExifTool 查看部分信息：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">AndroidManufacturer: Xiaomi</span><br><span class="line">AndroidModel: 2211133C</span><br><span class="line">XiaomiProductMarketname: Xiaomi 13</span><br><span class="line"></span><br><span class="line">ImageSize: 3840x2160</span><br><span class="line">VideoFrameRate: 59.979</span><br><span class="line">AvgBitrate: 62.7 Mbps</span><br><span class="line"></span><br><span class="line">CompressorID: avc1</span><br><span class="line">AudioFormat: mp4a</span><br><span class="line"></span><br><span class="line">ColorPrimaries: BT.709</span><br><span class="line">TransferCharacteristics: BT.709</span><br><span class="line">MatrixCoefficients: BT.709</span><br><span class="line"></span><br><span class="line">Rotation: 90</span><br></pre></td></tr></table></figure>
+
+<p>从这里可以看到：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">分辨率：3840 × 2160</span><br><span class="line">帧率：约 60 FPS</span><br><span class="line">平均码率：约 62.7 Mbps</span><br><span class="line">视频编码：H.264 / AVC</span><br><span class="line">音频编码：AAC</span><br></pre></td></tr></table></figure>
+
+<p>MP4、H.264 和 AAC 理论上都属于浏览器支持非常成熟的格式。</p>
+<p>但浏览器播放时仍然只有声音，没有画面。</p>
+<hr>
+<h1 id="二、进一步使用-ffprobe-检查编码参数"><a href="#二、进一步使用-ffprobe-检查编码参数" class="headerlink" title="二、进一步使用 ffprobe 检查编码参数"></a>二、进一步使用 ffprobe 检查编码参数</h1><p>ExifTool 没有完整显示 H.264 Profile、Level 和像素格式，所以进一步使用 ffprobe：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ffprobe <span class="literal">-v</span> error `</span><br><span class="line"><span class="literal">-select_streams</span> v:<span class="number">0</span> `</span><br><span class="line"><span class="literal">-show_entries</span> stream=codec_name,profile,level,pix_fmt,width,height,r_frame_rate,avg_frame_rate,bit_rate `</span><br><span class="line"><span class="literal">-of</span> default=noprint_wrappers=<span class="number">1</span> `</span><br><span class="line">VID_20260908_224700.mp4</span><br></pre></td></tr></table></figure>
+
+<p>得到：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">codec_name=h264</span><br><span class="line">profile=High</span><br><span class="line">width=3840</span><br><span class="line">height=2160</span><br><span class="line">pix_fmt=yuv420p</span><br><span class="line">level=52</span><br><span class="line">r_frame_rate=60/1</span><br><span class="line">avg_frame_rate=55620000/927329</span><br><span class="line">bit_rate=62573269</span><br></pre></td></tr></table></figure>
+
+<p>整理之后就是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Codec       : H.264</span><br><span class="line">Profile     : High</span><br><span class="line">Level       : 5.2</span><br><span class="line">Resolution  : 3840 × 2160</span><br><span class="line">Frame Rate  : 60 FPS</span><br><span class="line">Pixel Format: yuv420p</span><br><span class="line">Bitrate     : 62.6 Mbps</span><br></pre></td></tr></table></figure>
+
+<p>其中最值得关注的是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">H.264 High Profile</span><br><span class="line">Level 5.2</span><br><span class="line">4K</span><br><span class="line">60 FPS</span><br><span class="line">62 Mbps</span><br></pre></td></tr></table></figure>
+
+<p>这已经属于规格比较高的 H.264 视频。</p>
+<hr>
+<h1 id="三、为什么声音正常，视频却黑屏？"><a href="#三、为什么声音正常，视频却黑屏？" class="headerlink" title="三、为什么声音正常，视频却黑屏？"></a>三、为什么声音正常，视频却黑屏？</h1><p>这里其实是一个重要线索。</p>
+<p>音频编码是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AAC / mp4a</span><br></pre></td></tr></table></figure>
+
+<p>浏览器可以正常解码，因此声音正常。</p>
+<p>但视频是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">H.264 High Profile Level 5.2</span><br><span class="line">3840×2160 @ 60FPS</span><br></pre></td></tr></table></figure>
+
+<p>浏览器播放视频时，如果开启了硬件加速，一般会优先调用 GPU 的视频解码能力。</p>
+<p>大致链路可以理解为：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">MP4</span><br><span class="line">  ↓</span><br><span class="line">Chromium / Edge</span><br><span class="line">  ↓</span><br><span class="line">Windows Media Foundation / D3D11</span><br><span class="line">  ↓</span><br><span class="line">GPU Hardware Video Decoder</span><br><span class="line">  ↓</span><br><span class="line">画面输出</span><br></pre></td></tr></table></figure>
+
+<p>如果 GPU 驱动在解码这个视频时出现兼容问题，就可能出现一种比较特殊的状态：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">音频解码成功</span><br><span class="line">+</span><br><span class="line">视频解码失败</span><br><span class="line">=</span><br><span class="line">有声音但是黑屏</span><br></pre></td></tr></table></figure>
+
+<p>所以“能听到声音”并不能说明整个视频播放链路都是正常的。</p>
+<hr>
+<h1 id="四、最关键的测试：关闭浏览器硬件加速"><a href="#四、最关键的测试：关闭浏览器硬件加速" class="headerlink" title="四、最关键的测试：关闭浏览器硬件加速"></a>四、最关键的测试：关闭浏览器硬件加速</h1><p>在 Edge 中进入：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">edge://settings/system</span><br></pre></td></tr></table></figure>
+
+<p>关闭：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">可用时使用图形加速</span><br></pre></td></tr></table></figure>
+
+<p>然后彻底退出 Edge，再重新打开。</p>
+<p>重新播放原视频。</p>
+<p>结果：</p>
+<blockquote>
+<p><strong>视频立刻可以正常播放。</strong></p>
+</blockquote>
+<p>到这一步，其实问题已经基本锁定。</p>
+<p>关闭硬件加速后，浏览器不再依赖原来的 GPU 视频硬件解码路径，而是使用软件解码或其他 fallback 路径。</p>
+<p>也就是说：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">硬件加速开启</span><br><span class="line">    ↓</span><br><span class="line">黑屏 + 有声音</span><br><span class="line"></span><br><span class="line">硬件加速关闭</span><br><span class="line">    ↓</span><br><span class="line">正常播放</span><br></pre></td></tr></table></figure>
+
+<p>这说明：</p>
+<blockquote>
+<p>视频文件本身基本没有问题。</p>
+</blockquote>
+<p>问题更可能存在于：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">浏览器</span><br><span class="line">↓</span><br><span class="line">D3D11 / DXVA / Media Foundation</span><br><span class="line">↓</span><br><span class="line">AMD GPU 驱动</span><br><span class="line">↓</span><br><span class="line">硬件视频解码</span><br></pre></td></tr></table></figure>
+
+<p>这一整条链路。</p>
+<hr>
+<h1 id="五、电脑硬件环境"><a href="#五、电脑硬件环境" class="headerlink" title="五、电脑硬件环境"></a>五、电脑硬件环境</h1><p>这台电脑是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HP 战66 AMD 锐龙版</span><br></pre></td></tr></table></figure>
+
+<p>处理器：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AMD Ryzen 7 PRO 4750U with Radeon Graphics</span><br></pre></td></tr></table></figure>
+
+<p>显卡：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AMD Radeon(TM) Graphics</span><br></pre></td></tr></table></figure>
+
+<p>当时 Windows 中显示的驱动信息：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">驱动程序版本：31.0.21912.2004</span><br><span class="line">驱动程序日期：2024/06/18</span><br><span class="line">DirectX：12</span><br></pre></td></tr></table></figure>
+
+<p>Ryzen 7 PRO 4750U 属于 Renoir 平台。</p>
+<p>它本身具备 H.264 硬件视频解码能力，因此 4K60 H.264 并不是一个明显超出硬件能力范围的视频。</p>
+<p>这时问题的重点就进一步从：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GPU 能不能解</span><br></pre></td></tr></table></figure>
+
+<p>变成了：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">当前驱动能不能正常解</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="六、发现-AMD-Adrenalin-驱动环境异常"><a href="#六、发现-AMD-Adrenalin-驱动环境异常" class="headerlink" title="六、发现 AMD Adrenalin 驱动环境异常"></a>六、发现 AMD Adrenalin 驱动环境异常</h1><p>尝试打开 AMD Software: Adrenalin Edition 时，又出现了一个非常关键的提示：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">The version of AMD Software that you have launched</span><br><span class="line">is not compatible with your currently installed AMD graphics driver.</span><br></pre></td></tr></table></figure>
+
+<p>即 AMD 的：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PA-300</span><br></pre></td></tr></table></figure>
+
+<p>错误。</p>
+<p>简单理解就是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">AMD Software 版本</span><br><span class="line">        ↓</span><br><span class="line">和</span><br><span class="line">        ↓</span><br><span class="line">当前实际安装的 AMD 显卡驱动</span><br><span class="line"></span><br><span class="line">不匹配</span><br></pre></td></tr></table></figure>
+
+<p>例如可能出现：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">AMD Adrenalin：版本 A</span><br><span class="line"></span><br><span class="line">Windows 当前显卡驱动：版本 B</span><br></pre></td></tr></table></figure>
+
+<p>这种状态经常发生在：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Windows Update 自动替换显卡驱动</span><br></pre></td></tr></table></figure>
+
+<p>之后。</p>
+<p>驱动被 Windows 更新成另外一个版本，但原来的 AMD Software 控制面板没有同步更新，于是形成版本错配。</p>
+<hr>
+<h1 id="七、最终解决方案：重新整理-AMD-驱动环境"><a href="#七、最终解决方案：重新整理-AMD-驱动环境" class="headerlink" title="七、最终解决方案：重新整理 AMD 驱动环境"></a>七、最终解决方案：重新整理 AMD 驱动环境</h1><p>由于同时出现了两个现象：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1. 浏览器开启 GPU 加速后 4K60 H.264 黑屏</span><br><span class="line"></span><br><span class="line">2. AMD Software 报 PA-300</span><br></pre></td></tr></table></figure>
+
+<p>因此没有继续折腾浏览器，而是直接处理显卡驱动。</p>
+<p>处理思路为：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">AMD Cleanup Utility</span><br><span class="line">        ↓</span><br><span class="line">清理现有 AMD 驱动</span><br><span class="line">        ↓</span><br><span class="line">重启</span><br><span class="line">        ↓</span><br><span class="line">重新安装匹配的 AMD 显卡驱动</span><br><span class="line">        ↓</span><br><span class="line">重启</span><br><span class="line">        ↓</span><br><span class="line">重新开启浏览器硬件加速</span><br></pre></td></tr></table></figure>
+
+<p>对于 HP 战66 这种品牌笔记本，一般有两个驱动来源：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">HP OEM 驱动</span><br><span class="line"></span><br><span class="line">或者</span><br><span class="line"></span><br><span class="line">AMD 官方 Adrenalin 驱动</span><br></pre></td></tr></table></figure>
+
+<p>原则上优先考虑 HP 针对具体机型验证过的 OEM 驱动。</p>
+<p>但是如果 HP 提供的驱动版本非常老，或者已经出现明显的视频解码兼容问题，也可以考虑 AMD 官方提供的新版本驱动。</p>
+<p>重新整理并安装正确驱动后，问题得到解决。</p>
+<p>最终：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Edge 硬件加速：开启</span><br><span class="line"></span><br><span class="line">4K60 H.264：正常播放</span><br><span class="line"></span><br><span class="line">无需转码</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="八、为什么不建议第一时间转码？"><a href="#八、为什么不建议第一时间转码？" class="headerlink" title="八、为什么不建议第一时间转码？"></a>八、为什么不建议第一时间转码？</h1><p>一开始其实很容易想到一个解决方案：</p>
+<p>把：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">3840×2160</span><br><span class="line">60FPS</span><br><span class="line">H.264 High Level 5.2</span><br><span class="line">62Mbps</span><br></pre></td></tr></table></figure>
+
+<p>转成：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1920×1080</span><br><span class="line">H.264</span><br><span class="line">8~12Mbps</span><br></pre></td></tr></table></figure>
+
+<p>这样确实很可能可以播放。</p>
+<p>但是这里存在一个问题：</p>
+<blockquote>
+<p><strong>转码只是绕过了问题，并没有找到问题。</strong></p>
+</blockquote>
+<p>因为原视频实际上是标准：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">H.264</span><br><span class="line">yuv420p</span><br><span class="line">MP4</span><br><span class="line">AAC</span><br></pre></td></tr></table></figure>
+
+<p>并不存在非常奇怪的编码格式。</p>
+<p>而且设备本身也具有对应的硬件解码能力。</p>
+<p>如果只是为了浏览器兼容而把大量手机 4K 视频全部转码，会产生几个额外问题：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">画质损失</span><br><span class="line">大量 CPU/GPU 消耗</span><br><span class="line">NAS 转码压力</span><br><span class="line">额外存储空间</span><br><span class="line">等待时间</span><br></pre></td></tr></table></figure>
+
+<p>所以如果设备理论上具备解码能力，更合理的方式应该是先排查：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">浏览器</span><br><span class="line">显卡驱动</span><br><span class="line">硬件加速</span><br><span class="line">视频解码器</span><br></pre></td></tr></table></figure>
+
+<p>而不是立即修改源视频。</p>
+<hr>
+<h1 id="九、遇到类似问题可以怎么快速判断？"><a href="#九、遇到类似问题可以怎么快速判断？" class="headerlink" title="九、遇到类似问题可以怎么快速判断？"></a>九、遇到类似问题可以怎么快速判断？</h1><p>以后如果再遇到：</p>
+<blockquote>
+<p>MP4 浏览器播放黑屏，但是有声音</p>
+</blockquote>
+<p>可以按下面顺序快速检查：</p>
+<ol>
+<li>用 <code>ffprobe</code> 查看视频编码、Profile、Level、分辨率、帧率和像素格式。</li>
+<li>用 VLC &#x2F; PotPlayer 测试源文件，排除视频本身损坏。</li>
+<li>关闭 Chrome &#x2F; Edge 硬件加速测试。</li>
+<li>如果关闭硬件加速恢复正常，重点检查 GPU 驱动和硬件解码。</li>
+<li>查看 <code>edge://gpu</code> 判断 Video Decode 是否启用了硬件加速。</li>
+<li>查看 <code>edge://media-internals</code> 判断浏览器实际使用的 Video Decoder。</li>
+<li>更新或重新安装显卡驱动。</li>
+<li>最后才考虑视频转码。</li>
+</ol>
+<p>其中一个非常有效的判断方法就是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">开启硬件加速 → 黑屏</span><br><span class="line"></span><br><span class="line">关闭硬件加速 → 正常</span><br></pre></td></tr></table></figure>
+
+<p>如果出现这个现象，通常就不要继续怀疑 MP4 文件了。</p>
+<p>应该优先调查 GPU 硬解。</p>
+<hr>
+<h1 id="十、总结"><a href="#十、总结" class="headerlink" title="十、总结"></a>十、总结</h1><p>整个问题最终可以概括成一句话：</p>
+<blockquote>
+<p><strong>Xiaomi 13 拍摄的 H.264 High Profile Level 5.2、4K60 视频，在 Edge 中播放时，由于 AMD 显卡驱动硬件视频解码链路异常导致黑屏；关闭硬件加速后软件解码正常，最终通过修复和更新 AMD 驱动解决，无需对原视频进行转码。</strong></p>
+</blockquote>
+<p>这次排查中几个比较值得记录的经验是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">有声音不代表视频文件正常播放</span><br><span class="line">浏览器支持 H.264 ≠ 所有 H.264 都走同一条解码路径</span><br><span class="line">播放器能播放 ≠ 浏览器 GPU 硬解一定能播放</span><br><span class="line">关闭浏览器硬件加速是非常有效的诊断手段</span><br><span class="line">PA-300 往往意味着 AMD Software 和驱动版本已经不匹配</span><br><span class="line">品牌机 OEM 驱动、Windows Update 和 AMD 官方驱动可能互相覆盖</span><br></pre></td></tr></table></figure>
+
+<p>最终问题不是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">H.264 不支持</span><br></pre></td></tr></table></figure>
+
+<p>也不是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">4K60 太高</span><br></pre></td></tr></table></figure>
+
+<p>更准确地说是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">AMD GPU</span><br><span class="line">+</span><br><span class="line">驱动版本/状态异常</span><br><span class="line">+</span><br><span class="line">Chromium 硬件视频解码</span><br><span class="line">=</span><br><span class="line">4K60 H.264 黑屏</span><br></pre></td></tr></table></figure>
+
+<p>修复驱动之后，原视频可以继续保持 <strong>4K60、62Mbps 原始质量</strong>，浏览器也能够正常使用硬件加速播放。</p>
+</div>
+        </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    <a class="tag-none-link" href="/tags/video/" rel="tag">video</a>
+                </div>
+                <div class="pull-date">
+                    <time datetime="2026-09-18T09:15:28.030Z" itemprop="dateModified">最后编辑：2026-09-18</time>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" PdfCheckUtil 文件句柄泄漏排查与修复" href="/2026/07/08/2026/07/101937/">&lt; 上一篇</a>
+            </div>
+            
+            
+        </nav>
+    
+    
+        <link rel="stylesheet" href="/vendors/gitalk@1.7.2/dist/gitalk.css"></script>
+<div id="gitalk-container" class="post-comments lazy-load" style="padding-left:2rem; padding-right:2rem;"></div>
+<script>
+    var load_comm = () => {
+        const init = () => {
+            console.log('Gitalk loading...');
+            const gitalk = new Gitalk(Object.assign({
+                id: '/2026/09/09/2026/09/092145/',
+                path: '/2026/09/09/2026/09/092145/'
+            }, JSON.parse('{"clientID":"56e6a743c63b9c4faa93","clientSecret":"ae0e88ac992270e3a9ad65fabd60a845e367286e","repo":"gitalk-comments","owner":"qbmzc","admin":["qbmzc"]}')));
+
+            gitalk.render('gitalk-container');
+        }
+        if (typeof Gitalk === 'undefined') {
+            const src = '/vendors/gitalk@1.7.2/dist/gitalk.min.js';
+            $.getScript(src, init);
+        } else {
+            init();
+        }
+    };
+</script>
+<noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="https://github.com/gitalk/gitalk">comments powered by Gitalk.</a></noscript>
+    
+</article>
+
+        
+
+            </section>
+
+        
+
+                
+            
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="/images/avatar.webp" loading="lazy" decoding="auto" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center">流云与风，苍穹游牧</p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                512
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                7
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                231
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                    <aside id="krw-toc" class="widget widget-kratos-toc clearfix">
+    <div class="photo-background"></div>
+    <h4 class="widget-title no-after">
+        <i class="fa fa-compass"></i>
+        文章目录
+        <span class="toc-progress-bar" role="progressbar" aria-label="阅读进度："></span>
+    </h4>
+    <div class="textwidget">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E8%A7%86%E9%A2%91%E5%9F%BA%E6%9C%AC%E4%BF%A1%E6%81%AF"><span class="toc-text">一、视频基本信息</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E8%BF%9B%E4%B8%80%E6%AD%A5%E4%BD%BF%E7%94%A8-ffprobe-%E6%A3%80%E6%9F%A5%E7%BC%96%E7%A0%81%E5%8F%82%E6%95%B0"><span class="toc-text">二、进一步使用 ffprobe 检查编码参数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88%E5%A3%B0%E9%9F%B3%E6%AD%A3%E5%B8%B8%EF%BC%8C%E8%A7%86%E9%A2%91%E5%8D%B4%E9%BB%91%E5%B1%8F%EF%BC%9F"><span class="toc-text">三、为什么声音正常，视频却黑屏？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%9C%80%E5%85%B3%E9%94%AE%E7%9A%84%E6%B5%8B%E8%AF%95%EF%BC%9A%E5%85%B3%E9%97%AD%E6%B5%8F%E8%A7%88%E5%99%A8%E7%A1%AC%E4%BB%B6%E5%8A%A0%E9%80%9F"><span class="toc-text">四、最关键的测试：关闭浏览器硬件加速</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E7%94%B5%E8%84%91%E7%A1%AC%E4%BB%B6%E7%8E%AF%E5%A2%83"><span class="toc-text">五、电脑硬件环境</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E5%8F%91%E7%8E%B0-AMD-Adrenalin-%E9%A9%B1%E5%8A%A8%E7%8E%AF%E5%A2%83%E5%BC%82%E5%B8%B8"><span class="toc-text">六、发现 AMD Adrenalin 驱动环境异常</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E6%9C%80%E7%BB%88%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%EF%BC%9A%E9%87%8D%E6%96%B0%E6%95%B4%E7%90%86-AMD-%E9%A9%B1%E5%8A%A8%E7%8E%AF%E5%A2%83"><span class="toc-text">七、最终解决方案：重新整理 AMD 驱动环境</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E5%BB%BA%E8%AE%AE%E7%AC%AC%E4%B8%80%E6%97%B6%E9%97%B4%E8%BD%AC%E7%A0%81%EF%BC%9F"><span class="toc-text">八、为什么不建议第一时间转码？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B9%9D%E3%80%81%E9%81%87%E5%88%B0%E7%B1%BB%E4%BC%BC%E9%97%AE%E9%A2%98%E5%8F%AF%E4%BB%A5%E6%80%8E%E4%B9%88%E5%BF%AB%E9%80%9F%E5%88%A4%E6%96%AD%EF%BC%9F"><span class="toc-text">九、遇到类似问题可以怎么快速判断？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8D%81%E3%80%81%E6%80%BB%E7%BB%93"><span class="toc-text">十、总结</span></a></li></ol>
+    </div>
+</aside>
+                
+                
+  <aside id="krw-categories" class="widget widget-kratos-categories clearfix">
+    <h4 class="widget-title"><i class="fa fa-folder"></i>分类目录</h4>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a><span class="category-list-count">139</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">155</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">29</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/congco/">congco</a><span class="category-list-count">15</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/work/">work</a><span class="category-list-count">117</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/wuw/">wuw</a><span class="category-list-count">51</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%8A%80%E6%9C%AF%E7%AC%94%E8%AE%B0/">技术笔记</a><span class="category-list-count">1</span></li></ul>
+  </aside>
+
+
+            
+                
+  <aside id="krw-tags" class="widget widget-kratos-tags clearfix">
+    <h4 class="widget-title"><i class="fa fa-tags"></i>标签聚合</h4>
+      <div class="tag-clouds">
+        <a href="/tags/AES/" style="font-size: 0.6em;">AES</a> <a href="/tags/AI/" style="font-size: 0.8em;">AI</a> <a href="/tags/ASUS/" style="font-size: 0.6em;">ASUS</a> <a href="/tags/AWS/" style="font-size: 0.7em;">AWS</a> <a href="/tags/Arch/" style="font-size: 0.6em;">Arch</a> <a href="/tags/Arch-Linux/" style="font-size: 0.8em;">Arch Linux</a> <a href="/tags/ArchLinux/" style="font-size: 0.8em;">ArchLinux</a> <a href="/tags/CAS/" style="font-size: 0.6em;">CAS</a> <a href="/tags/Caffeine/" style="font-size: 0.6em;">Caffeine</a> <a href="/tags/CompletableFuture/" style="font-size: 0.7em;">CompletableFuture</a> <a href="/tags/DNS/" style="font-size: 0.8em;">DNS</a> <a href="/tags/Docker/" style="font-size: 0.6em;">Docker</a> <a href="/tags/Flask/" style="font-size: 0.6em;">Flask</a> <a href="/tags/Future/" style="font-size: 0.7em;">Future</a> <a href="/tags/GC/" style="font-size: 0.6em;">GC</a> <a href="/tags/GPT/" style="font-size: 0.6em;">GPT</a> <a href="/tags/GraalVM/" style="font-size: 0.8em;">GraalVM</a> <a href="/tags/HashMap/" style="font-size: 0.6em;">HashMap</a>
+      </div>
+  </aside>
+
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2026/09/09/2026/09/092145/"><i class="fa  fa-book"></i> 浏览器播放 4K60 H.264 视频黑屏但有声音：一次 AMD 硬件解码问题排查记录</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2026/07/08/2026/07/101937/"><i class="fa  fa-book"></i> PdfCheckUtil 文件句柄泄漏排查与修复</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2026/07/08/2026/07/101513/"><i class="fa  fa-book"></i> 查询条件退化为全表扫描导致的 OOM 及参数校验修复</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2026/06/15/2026/06/200000/"><i class="fa  fa-book"></i> 从 zlib compressed data 到 PDF：一次文件解压的排查记录</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2026/06/14/2026/06/14210000/"><i class="fa  fa-book"></i> 在手机上 Vibe Coding：UU远程与终端代理的折腾记录</a>
+            
+          
+        
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+        
+        </div>
+    </div>
+</div>
+<footer>
+    <div id="footer"  >
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                        <li><a href="mailto:congco@foxmail.com"><i class="fa fa-envelope"></i></a></li>
+                        
+                        
+                        
+                        
+                        
+                        <li><a target="_blank" rel="nofollow" href="https://github.com/qbmzc"><i class="fa fa-github"></i></a></li>
+                        <li><a target="_blank" rel="nofollow" href="/rss.xml"><i class="fa fa-rss"></i></a></li>
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2026 沐曦留曳 版权所有.</li>
+                            <li>本站已运行<span id="span_dt">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>Theme <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a></li>
+                            <li>Site built with&nbsp;<i class="fa fa-heart throb" style="color:#d43f57"></i>&nbsp;by cong.</li>
+                        </div>
+                        <div>
+                            <li>Powered by <a href="https://hexo.io" target="_blank" rel="nofollow">Hexo</a></li>
+                            <li>Hosted on <a href="https://github.io" target="_blank">Github Pages</a></li>
+                        </div>
+                        <div>
+                            
+                            
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search/">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="box theme-box" id="darkmode-switch">
+                        <span class="fa fa-adjust"></span>
+                    </div>
+                
+                
+            </div>
+            <div class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+        <script defer src="/vendors/bootstrap@3.3.4/dist/js/bootstrap.min.js"></script>
+<script defer src="/vendors/nprogress@0.2.0/nprogress.js"></script>
+<script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+    <div>
+        <canvas id="snow"></canvas>
+        <script async src="/js/snow.min.js"></script>
+    </div>
+
+
+    <script async src="/js/candy.min.js"></script>
+
+
+
+
+    <script defer src="/vendors/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+
+<script defer src="/vendors/clipboard@2.0.6/dist/clipboard.min.js"></script>
+<script defer src="/js/kratosr.min.js"></script>
+<script defer src="/js/pjax.min.js"></script>
+
+
+
+<!-- Extra support for third-party plguins  -->
+
+
+    </body>
+</html>
